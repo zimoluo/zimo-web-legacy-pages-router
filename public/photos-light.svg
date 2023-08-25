@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 657.356 657.356" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<g id="Layer-1" vectornator:layerName="Layer 1">
+<g opacity="1" vectornator:layerName="Group 1">
+<path d="M17.39 142.894C17.39 73.5803 73.5803 17.39 142.894 17.39L514.462 17.39C583.776 17.39 639.966 73.5803 639.966 142.894L639.966 514.462C639.966 583.776 583.776 639.966 514.462 639.966L142.894 639.966C73.5803 639.966 17.39 583.776 17.39 514.462L17.39 142.894Z" fill="none" opacity="1" stroke="#000000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="25" vectornator:layerName="Rectangle 1"/>
+<path d="M183.576 328.678C183.576 248.54 248.54 183.576 328.678 183.576C408.816 183.576 473.781 248.54 473.781 328.678C473.781 408.816 408.816 473.781 328.678 473.781C248.54 473.781 183.576 408.816 183.576 328.678Z" fill="none" opacity="1" stroke="#000000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="25" vectornator:layerName="Oval 1"/>
+<path d="M328.678 17.39L328.678 183.576" fill="#000000" fill-rule="nonzero" opacity="1" stroke="#000000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="25" vectornator:layerName="Line 1"/>
+<path d="M328.678 473.781L328.678 639.966" fill="#000000" fill-rule="nonzero" opacity="1" stroke="#000000" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="25" vectornator:layerName="Line 2"/>
+<path d="M487.299 121.852C487.299 101.363 503.909 84.7528 524.398 84.7528C544.887 84.7528 561.497 101.363 561.497 121.852C561.497 142.341 544.887 158.951 524.398 158.951C503.909 158.951 487.299 142.341 487.299 121.852Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Oval 2"/>
+</g>
+</g>
+</svg>

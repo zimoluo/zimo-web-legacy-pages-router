@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1920 1920" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<linearGradient gradientTransform="matrix(1 0 0 1 0 0)" gradientUnits="userSpaceOnUse" id="LinearGradient" x1="490.961" x2="1488.95" y1="875.063" y2="284.185">
+<stop offset="0" stop-color="#ffede5"/>
+<stop offset="1" stop-color="#fffbe4"/>
+</linearGradient>
+<radialGradient cx="697.299" cy="1115.08" gradientTransform="matrix(2.92426 0 0 2.92426 -1926.17 -1770.63)" gradientUnits="userSpaceOnUse" id="RadialGradient" r="396.353">
+<stop offset="0" stop-color="#f1c5ff"/>
+<stop offset="1" stop-color="#ffebf1" stop-opacity="0"/>
+</radialGradient>
+<radialGradient cx="1042.87" cy="838.569" gradientTransform="matrix(3.05305 0 0 3.05305 -1585.76 -640.193)" gradientUnits="userSpaceOnUse" id="RadialGradient_2" r="440.015">
+<stop offset="0" stop-color="#abedff"/>
+<stop offset="1" stop-color="#ebffee" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<clipPath id="ArtboardFrame">
+<rect height="1920" width="1920" x="0" y="0"/>
+</clipPath>
+<g clip-path="url(#ArtboardFrame)" id="Layer-2" vectornator:layerName="Layer 2">
+<path d="M0 0L1920 0L1920 1920L0 1920L0 0Z" fill="url(#LinearGradient)" fill-rule="nonzero" opacity="0" stroke="none" vectornator:layerName="Rectangle 2"/>
+<path d="M-1046.13 1490.14C-1046.13 850.024-527.211 331.106 112.908 331.106C753.027 331.106 1271.95 850.024 1271.95 1490.14C1271.95 2130.26 753.027 2649.18 112.908 2649.18C-527.211 2649.18-1046.13 2130.26-1046.13 1490.14Z" fill="url(#RadialGradient)" fill-rule="nonzero" opacity="0" stroke="none" vectornator:layerName="Oval 1"/>
+<path d="M254.799 1920C254.799 1178.07 856.254 576.612 1598.19 576.612C2340.12 576.612 2941.57 1178.07 2941.57 1920C2941.57 2661.93 2340.12 3263.39 1598.19 3263.39C856.254 3263.39 254.799 2661.93 254.799 1920Z" fill="url(#RadialGradient_2)" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Oval 2"/>
+</g>
+</svg>

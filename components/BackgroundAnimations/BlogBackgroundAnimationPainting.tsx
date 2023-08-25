@@ -1,0 +1,25 @@
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+const BlogBackgroundAnimationPainting = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const images: string[] = ['mountain', 'tower', 'eunoe'];
+    const randomIndex = Math.floor(Math.random() * images.length);
+    setSelectedImage(images[randomIndex]);
+  }, []);
+
+  return selectedImage ? (
+    <Image
+      src={`/blog-painting-${selectedImage}.svg`}
+      alt="Blog Painting"
+      height="0"
+      width="0"
+      layout="fixed"
+      className={`absolute pointer-events-none painting-size`}
+    />
+  ) : null;
+};
+
+export default BlogBackgroundAnimationPainting;
