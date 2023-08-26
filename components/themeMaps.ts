@@ -1,3 +1,5 @@
+export type ThemeType = 'zimo' | 'photos' | 'blog' | 'projects' | 'about';
+
 // Map for dynamic favicon
 export const faviconMap: { [key: string]: string } = {
     "zimo": "/zimo-favicon.svg",
@@ -59,8 +61,6 @@ export const topIconMap: { [key: string]: string } = {
   'projects': 'projects-light.svg',
   'about': 'about-light.svg',
 };
-
-export type ThemeType = 'zimo' | 'photos' | 'blog' | 'projects' | 'about';
 
 export const backgroundImageMap: { [key: string]: string } = {
   'zimo': 'zimo-bg-light-static.svg',

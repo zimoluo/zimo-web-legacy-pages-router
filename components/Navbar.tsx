@@ -39,7 +39,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
         </Link>
       </div>
       <div className="flex flex-grow"></div>
-      <div className={`flex flex-grow space-x-3 justify-between font-arial`}>
+      <div className={`flex flex-grow-navbar space-x-3 justify-between font-arial`}>
       {['photos', 'blog', 'projects', 'about'].map((item) => (
         <NavbarButton key={item} item={item as 'photos' | 'blog' | 'projects' | 'about'} theme={theme} />
       ))}
