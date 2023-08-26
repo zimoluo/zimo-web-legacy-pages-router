@@ -34,7 +34,7 @@ const KawarageAnimation: React.FC = () => {
       clearExistingTexts();
 
       const windowWidth = window.innerWidth;
-      const newInterval = 1150000 / windowWidth;
+      const newInterval = 950000 / windowWidth;
 
       intervalId = setInterval(addText, newInterval);
     };

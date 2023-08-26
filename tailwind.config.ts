@@ -48,7 +48,7 @@ const config: Config = {
         'spin-revolution': 'spin 80s linear infinite'
       },
       boxShadow: {
-        'favicon-glow': 'inset 0 0 15px 0px #ffffff, 0 0 15px 2px #ffffff', // Adjust the color and blur-radius as needed
+        'favicon-glow': 'inset 0 0 15px 0px #ffffff, 0 0 15px 2px #ffffff',
       },
     }
   },

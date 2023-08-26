@@ -5,6 +5,7 @@ const BlogBackgroundAnimationPainting = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
+    // Optional: chatgpt. It really doesn't fit the art style so I removed it.
     const images: string[] = ['mountain', 'tower', 'eunoe'];
     const randomIndex = Math.floor(Math.random() * images.length);
     setSelectedImage(images[randomIndex]);

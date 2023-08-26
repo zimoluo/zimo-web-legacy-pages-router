@@ -69,3 +69,11 @@ export const backgroundImageMap: { [key: string]: string } = {
   'projects': 'projects-pane.svg',
   'about': 'about-pane-base.svg',
 };
+
+export const backgroundClassMap: { [key: string]: string } = {
+  'zimo': 'bg-zimo-bg-light',
+  'photos': 'bg-photos-bg-light',
+  'blog': 'bg-blog-bg-light',
+  'projects': 'bg-projects-bg-light',
+  'about': 'bg-about-bg-light',
+};

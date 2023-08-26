@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import BackgroundImage from './BackgroundImage';
 import BackgroundAnimation from './BackgroundAnimation';
+import BlurEffect from './BlurEffect';
 import { ThemeType, textColorMap, faviconMap } from './themeMaps';
 
 interface LayoutProps {
