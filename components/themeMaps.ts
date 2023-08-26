@@ -77,3 +77,11 @@ export const backgroundClassMap: { [key: string]: string } = {
   'projects': 'bg-projects-bg-light',
   'about': 'bg-about-bg-light',
 };
+
+export const simpleTitleMap: { [key: string]: string } = {
+  'zimo': 'Zimo',
+  'photos': 'Album - Zimo',
+  'blog': 'Blog - Zimo',
+  'projects': 'Projects - Zimo',
+  'about': 'About - Zimo',
+};

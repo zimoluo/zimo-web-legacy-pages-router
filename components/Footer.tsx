@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
 
   return (
-    <div className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial`}>
+    <div className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial backdrop-blur-lg`}>
       <div className="flex items-center mb-4 text-xl font-bold">
         <img src={faviconSrc} alt="Dynamic logo" className="h-8 mr-3" />
         <div>Zimo</div>

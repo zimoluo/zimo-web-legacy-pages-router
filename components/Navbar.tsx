@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const barColor = scrollY > 25 ? barColorClass : 'bg-opacity-0';
 
   return (
-    <div id="navbar" className={`${textColorClass} ${barColor} bg-opacity-0 px-4 h-12 transition-all duration-600 fixed w-full top-0 opacity-80 flex items-center justify-between z-20`}>
+    <div id="navbar" className={`${textColorClass} ${barColor} bg-opacity-0 px-4 h-12 transition-all duration-600 fixed w-full top-0 opacity-100 flex items-center justify-between z-20 backdrop-blur-lg`}>
       <div className="flex-none">
         <Link href={`/`} passHref>
         <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Website Icon" width="0" height="0"/>
