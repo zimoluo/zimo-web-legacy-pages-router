@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { backgroundImageMap, ThemeType, backgroundClassMap } from './themeMaps';
+import { backgroundImageMap, ThemeType, backgroundClassMap } from '../interfaces/themeMaps';
 
 type BackgroundImageProps = {
   theme: ThemeType;

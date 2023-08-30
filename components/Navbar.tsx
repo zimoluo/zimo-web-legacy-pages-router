@@ -1,6 +1,6 @@
 import NavbarButton from './NavbarButton';
 import React, { useEffect, useState } from 'react';
-import { barColorMap, textColorMap, ThemeType, faviconMap, svgFilterMap } from './themeMaps';
+import { barColorMap, textColorMap, ThemeType, faviconMap, svgFilterMap } from '../interfaces/themeMaps';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,10 +15,33 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const faviconSrc = faviconMap[theme] || faviconMap["zimo"];
 
   const [scrollY, setScrollY] = useState(0);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [navbarVisible, setNavbarVisible] = useState(true);
+
+  const scrollThreshold = 8;
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const currentScrollY = window.scrollY;
+      const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
+      
+      setScrollY(currentScrollY);
+
+      if (currentScrollY < 40) {
+        setNavbarVisible(true);
+      } else {
+        if (distanceScrolled >= scrollThreshold) {
+          if (currentScrollY > lastScrollY) {
+            // Scrolling down
+            setNavbarVisible(false);
+          } else {
+            // Scrolling up
+            setNavbarVisible(true);
+          }
+        }
+      }
+
+      setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -27,26 +50,27 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [lastScrollY]);
 
-  const barColor = scrollY > 25 ? barColorClass : 'bg-opacity-0';
+  const barColor = scrollY > 25 ? `${barColorClass} backdrop-blur-lg` : 'bg-opacity-0';
+  const navbarClass = `${textColorClass} ${barColor} px-4 h-12 transition-all duration-300 ease-in fixed w-full top-0 opacity-100 flex items-center justify-between z-20`;
 
   return (
-    <div id="navbar" className={`${textColorClass} ${barColor} bg-opacity-0 px-4 h-12 transition-all duration-600 fixed w-full top-0 opacity-100 flex items-center justify-between z-20 backdrop-blur-lg`}>
+    <div id="navbar" className={navbarVisible ? navbarClass : `${navbarClass} -top-12`}>
       <div className="flex-none">
         <Link href={`/`} passHref>
-        <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Website Icon" width="0" height="0"/>
+        <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Home Icon" width={24} height={24} />
         </Link>
       </div>
       <div className="flex flex-grow"></div>
-      <div className={`flex flex-grow-navbar space-x-3 justify-between font-arial`}>
+      <div className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}>
       {['photos', 'blog', 'projects', 'about'].map((item) => (
         <NavbarButton key={item} item={item as 'photos' | 'blog' | 'projects' | 'about'} theme={theme} />
       ))}
     </div>
       <div className="flex flex-grow"></div>
       <div className="flex-none">
-        <Image src="/mode-light.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="Light Dark Mode Switch" width="0" height="0" />
+        <Image src="/mode-light.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="Light Dark Mode Switch" width={24} height={24} />
       </div>
     </div>
   );

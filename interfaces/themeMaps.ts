@@ -56,18 +56,18 @@ export const iconTextMap: { [key: string]: string } = {
 
 // Map for light icons
 export const topIconMap: { [key: string]: string } = {
-  'photos': 'photos-light.svg',
-  'blog': 'blog-light.svg',
-  'projects': 'projects-light.svg',
-  'about': 'about-light.svg',
+  'photos': '/photos-light.svg',
+  'blog': '/blog-light.svg',
+  'projects': '/projects-light.svg',
+  'about': '/about-light.svg',
 };
 
 export const backgroundImageMap: { [key: string]: string } = {
-  'zimo': 'zimo-bg-light-static.svg',
-  'photos': 'photos-pane.svg',
-  'blog': 'blog-pane.svg',
-  'projects': 'projects-pane.svg',
-  'about': 'about-pane-base.svg',
+  'zimo': '/zimo-bg-light-static.svg',
+  'photos': '/photos-pane.svg',
+  'blog': '/blog-pane.svg',
+  'projects': '/projects-pane.svg',
+  'about': '/about-pane-base.svg',
 };
 
 export const backgroundClassMap: { [key: string]: string } = {

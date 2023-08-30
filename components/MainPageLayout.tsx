@@ -4,7 +4,7 @@ import Footer from './Footer';
 import BackgroundImage from './BackgroundImage';
 import BackgroundAnimation from './BackgroundAnimation';
 import BlurEffect from './BlurEffect';
-import { ThemeType, textColorMap, faviconMap, simpleTitleMap } from './themeMaps';
+import { ThemeType, textColorMap, faviconMap, simpleTitleMap } from '../interfaces/themeMaps';
 
 interface LayoutProps {
   theme: ThemeType;

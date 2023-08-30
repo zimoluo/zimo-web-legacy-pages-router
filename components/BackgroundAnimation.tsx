@@ -4,7 +4,7 @@ import BlogBackgroundAnimation from "./BackgroundAnimations/BlogBackgroundAnimat
 import AboutBackgroundAnimation from "./BackgroundAnimations/AboutBackgroundAnimation";
 import ProjectsBackgroundAnimation from "./BackgroundAnimations/ProjectsBackgroundAnimation";
 import PhotosBackgroundAnimationWebkit from "./BackgroundAnimations/PhotoBackgroundAnimationWebkit";
-import { ThemeType } from './themeMaps';
+import { ThemeType } from '../interfaces/themeMaps';
 import { useEffect, useState } from 'react';
 
 interface BackgroundAnimationProps {

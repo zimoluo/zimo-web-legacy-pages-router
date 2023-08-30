@@ -19,8 +19,9 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
-        'arial-black': ['"Arial Black"', 'sans-serif'],
-        'arial': ['"Arial"', 'sans-serif']
+        'arial-black': ['"Arial Black"', '"Arial-Black-Local"', 'sans-serif'],
+        'arial': ['"Arial"', '"Arial-Local"', 'sans-serif'],
+        'tnr': ['"Times New Roman"', '"TNR-Local"', 'serif']
       },
       animation: {
         'zimo-scale-1': 'move-about-bg 40s ease-in-out infinite',

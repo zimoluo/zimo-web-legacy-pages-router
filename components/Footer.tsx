@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { faviconMap, barColorMap, textColorMap, borderColorMap, ThemeType } from './themeMaps';
+import { faviconMap, barColorMap, textColorMap, borderColorMap, ThemeType } from '../interfaces/themeMaps';
+import Image from 'next/image';
 
 type FooterProps = {
   theme: ThemeType;
@@ -15,7 +16,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
   return (
     <div className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial backdrop-blur-lg`}>
       <div className="flex items-center mb-4 text-xl font-bold">
-        <img src={faviconSrc} alt="Dynamic logo" className="h-8 mr-3" />
+        <Image src={faviconSrc} alt="Dynamic logo" className="h-8 mr-3" height={32} width={32} />
         <div>Zimo</div>
       </div>
       <div className={`border-t ${borderColorClass} my-4`}></div>

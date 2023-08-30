@@ -257,3 +257,88 @@
 .flex-grow-navbar {
     flex-grow: 2;
 }
+
+.blog-view {
+    background-color: rgba(251, 240, 255, 0.8);
+}
+
+.blog-card-color {
+    background-color: rgba(251, 240, 255, 0.7);
+}
+
+.blog-grid {
+    width: 16rem;
+}
+
+.-z-5 {
+    z-index: -5;
+}
+
+@media (min-width: 768px) {
+    .md\:blog-view-middle {
+        width: 52rem;
+    }
+}
+
+@font-face {
+    font-family: 'Arial-Black-Local';
+    src: url('/fonts/Arial Black.ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Arial-Local";
+    src: url("/fonts/Arial/Arial.ttf");
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+@font-face {
+    font-family: "Arial-Local";
+    src: url("/fonts/Arial/Arial Bold.ttf");
+    font-style: normal;
+    font-weight: 700;
+}
+  
+@font-face {
+    font-family: "Arial-Local";
+    src: url("/fonts/Arial/Arial Italic.ttf");
+    font-style: italic;
+    font-weight: 400;
+}
+  
+@font-face {
+    font-family: "Arial-Local";
+    src: url("/fonts/Arial/Arial Bold Italic.ttf");
+    font-style: italic;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "TNR-Local";
+    src: url("/fonts/TNR/Times New Roman.ttf");
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+@font-face {
+    font-family: "TNR-Local";
+    src: url("/fonts/TNR/Times New Roman Bold.ttf");
+    font-style: normal;
+    font-weight: 700;
+}
+  
+@font-face {
+    font-family: "TNR-Local";
+    src: url("/fonts/TNR/Timrs New Roman Italic.ttf");
+    font-style: italic;
+    font-weight: 400;
+}
+  
+@font-face {
+    font-family: "TNR-Local";
+    src: url("/fonts/TNR/Times New Roman Bold Italic.ttf");
+    font-style: italic;
+    font-weight: 700;
+}

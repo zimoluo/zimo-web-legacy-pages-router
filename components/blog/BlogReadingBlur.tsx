@@ -1,0 +1,14 @@
+const BlogReadingBlur: React.FC = () => {
+
+  return (
+    <div className="flex justify-center items-center fixed inset-0 -z-5">
+      <div
+      className={`backdrop-blur pointer-events-none h-full w-full`}
+    >
+    </div>
+    </div>
+    
+  );
+};
+
+export default BlogReadingBlur;

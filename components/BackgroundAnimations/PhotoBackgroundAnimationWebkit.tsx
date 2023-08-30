@@ -9,7 +9,7 @@ const PhotosBackgroundAnimationWebkit: React.FC = () => {
     // Enable animation after a short delay
     const timer = setTimeout(() => {
       setEnableAnimation(true);
-    }, 15000);
+    }, 30000);
 
     // Cleanup
     return () => {
