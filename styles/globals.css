@@ -342,3 +342,15 @@
     font-style: italic;
     font-weight: 700;
 }
+
+.first-pov-text {
+    color: #a21caf;
+}
+
+.second-pov-text {
+    color: #be123c;
+}
+
+.prophet-pov-text {
+    color: #ea580c;
+}

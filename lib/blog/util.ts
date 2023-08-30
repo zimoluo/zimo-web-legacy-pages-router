@@ -1,20 +1,20 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
-import { remark } from 'remark'
-import html from 'remark-html'
 import { SyntheticEvent } from 'react';
+import { awsBucketAddress } from '../constants';
+import { marked } from 'marked';
 
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
 
 export default async function markdownToHtml(markdown: string) {
-  const result = await remark().use(html).process(markdown);
-  return result.toString();
-}
+  const htmlContent = marked(markdown);
+  return htmlContent;
+};
 
 export const getAuthorImageSrc = (authorId: string): string => {
-    return `/blog/author/${authorId}.svg`;
+    return `${awsBucketAddress}/blog/author/${authorId}`;
 };
 
 export const getCoverSrc = (coverImage: string, slug: string): string => {
@@ -27,7 +27,7 @@ export const getCoverSrc = (coverImage: string, slug: string): string => {
   }
 
   const strippedPath = coverImage.substring(1);
-  const newPath = `/blog/posts/${slug}/${strippedPath}`;
+  const newPath = `${awsBucketAddress}/blog/posts/${slug}/${strippedPath}`;
 
   return newPath;
 };

@@ -3,7 +3,6 @@ import MainPageTitle from '@/components/MainPageTitle'
 import BlogCardGrid from '@/components/blog/BlogCardGrid'
 import PostData from '@/interfaces/blog/postData'
 import { getAllPosts } from '@/lib/blog/api'
-import Head from 'next/head'
 
 type Props = {
   allPosts: PostData[]
@@ -19,7 +18,7 @@ export default function Home({ allPosts }: Props) {
 }
 
 export const getStaticProps = async () => {
-  const allPosts = getAllPosts([
+  const allPosts = await getAllPosts([
     'title',
     'date',
     'slug',
