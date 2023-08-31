@@ -1,4 +1,4 @@
-import { imageFallback } from "@/lib/blog/util";
+import { imageFallback } from "@/lib/util";
 import BlogContent from "./BlogContent";
 import BlogHeader from "./BlogHeader";
 import Image from "next/image";
