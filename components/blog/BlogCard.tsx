@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { formatDate, getAuthorImageSrc, imageFallback, readingTime } from "@/lib/blog/util";
+import { getAuthorImageSrc, readingTime } from "@/lib/blog/util";
 import Link from "next/link";
 import PostData from "@/interfaces/blog/postData";
+import { formatDate, imageFallback } from "@/lib/util";
 
 const BlogCard = ({
   title,
@@ -20,14 +21,16 @@ const BlogCard = ({
     <div className="flex flex-row px-4 py-4 rounded-xl backdrop-blur-md shadow-lg blog-card-color">
       <div className="flex flex-col flex-grow">
         <div className="flex flex-row items-center">
-          <Image
-            src={`${getAuthorImageSrc(authorId)}`}
-            alt={`${author}'s Profile`}
-            className="h-6 w-fit"
-            width={25}
-            height={25}
-            onError={imageFallback('/blog-zimo.svg')}
-          />
+          <div className="rounded-full overflow-hidden h-6 w-fit flex justify-center items-center">
+            <Image
+              src={`${getAuthorImageSrc(authorId)}`}
+              alt={`${author}'s Profile`}
+              className="h-full w-fit"
+              width={25}
+              height={25}
+              onError={imageFallback('/blog-zimo.svg')}
+            />
+          </div>
           <p className="ml-2 text-sm font-bold">{author}</p>
         </div>
 
@@ -45,13 +48,13 @@ const BlogCard = ({
       </div>
 
       <div className="flex items-center">
-        <div className="w-auto h-28 md:h-36 ml-2 rounded-xl overflow-hidden">
+        <div className="w-auto h-28 md:h-36 ml-2 rounded-xl overflow-hidden max-w-60 md:max-w-80">
           <Image
             className="h-full w-auto object-cover"
             src={coverImage}
             alt={`Cover of ${title}`}
-            width={128}
-            height={80}
+            width={320}
+            height={144}
             onError={imageFallback('/blog-fallback.svg')}
           />
         </div>

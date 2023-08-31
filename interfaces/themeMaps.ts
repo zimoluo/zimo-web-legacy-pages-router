@@ -1,3 +1,5 @@
+import { rgbDataURL } from "@/lib/util";
+
 export type ThemeType = 'zimo' | 'photos' | 'blog' | 'projects' | 'about';
 
 // Map for dynamic favicon
@@ -16,6 +18,15 @@ export const barColorMap: { [key: string]: string } = {
     "blog": "bar-color-blog",
     "projects": "bar-color-projects",
     "about": "bar-color-about",
+};
+
+// Map for background blur
+export const blurColorMap: { [key: string]: string } = {
+    "zimo": rgbDataURL(250, 250, 250),
+    "photos": rgbDataURL(255, 247, 237),
+    "blog": rgbDataURL(253, 244, 255),
+    "projects": rgbDataURL(240, 253, 250),
+    "about": rgbDataURL(255, 251, 228),
 };
 
 // Map for svg filter
@@ -85,3 +96,4 @@ export const simpleTitleMap: { [key: string]: string } = {
   'projects': 'Projects - Zimo',
   'about': 'About - Zimo',
 };
+

@@ -3,11 +3,12 @@ import BlogMainLayout from "@/components/blog/BlogMainLayout";
 import BlogReadingBlur from "@/components/blog/BlogReadingBlur";
 import PostData from "@/interfaces/blog/postData"
 import { getAllPosts, getPostBySlug } from "@/lib/blog/api";
-import markdownToHtml, { getCoverSrc } from "@/lib/blog/util";
+import { getCoverSrc } from "@/lib/blog/util";
+import markdownToHtml from "@/lib/util";
 import Head from 'next/head';
 
 type PostType = {
-    post: PostData
+    post: PostData & { displayCover: boolean }
 }
 
 export default function Post({ post }: PostType) {
@@ -29,6 +30,7 @@ export default function Post({ post }: PostType) {
               content={post.content}
               date={post.date}
               coverSrc={coverSrc}
+              displayCover={post.displayCover}
             ></BlogMainLayout>
       </MainPageLayout>
     )
@@ -50,6 +52,7 @@ export async function getStaticProps({ params }: Params) {
     'coverImage',
     'description',
     'authorId',
+    'displayCover'
   ])
   const content = await markdownToHtml(post.content || '')
 

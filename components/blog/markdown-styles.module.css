@@ -1,5 +1,13 @@
 .markdown {
-  @apply text-lg md:text-xl leading-relaxed my-4;
+  @apply text-lg md:text-xl my-4 leading-relaxed;
+}
+
+.markdown img {
+  @apply h-auto w-full object-cover max-h-96 my-10 rounded-xl;
+}
+
+.markdown p {
+  @apply my-8 leading-relaxed;
 }
 
 .markdown p,
@@ -55,25 +63,25 @@
 }
 
 .markdown h1 {
-  @apply text-2xl md:text-3xl my-8 leading-snug font-bold;
+  @apply text-3xl my-8 leading-snug font-bold font-arial;
 }
 
 .markdown h2 {
-  @apply text-xl md:text-2xl my-8 leading-snug font-bold;
+  @apply text-2xl my-8 leading-snug font-bold font-arial;
 }
 
 .markdown h3 {
-  @apply text-xl my-6 leading-snug font-bold;
+  @apply text-xl my-6 leading-snug font-bold font-arial;
 }
 
 .markdown h4 {
-  @apply text-xl my-4 leading-snug font-bold;
+  @apply text-xl my-4 leading-snug font-bold font-arial;
 }
 
 .markdown h5 {
-  @apply text-base md:text-lg my-2 leading-snug font-bold;
+  @apply text-base md:text-lg my-2 leading-snug font-bold font-arial;
 }
 
 .markdown h6 {
-  @apply text-base md:text-lg my-2 leading-snug;
+  @apply text-base md:text-lg my-2 leading-snug font-arial;
 }

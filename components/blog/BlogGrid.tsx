@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { formatDate, getAuthorImageSrc, readingTime } from '@/lib/blog/util';
+import { getAuthorImageSrc, readingTime } from '@/lib/blog/util';
+import { formatDate, imageFallback } from "@/lib/util";
 
 interface BlogGridProps {
     authorId: string;
@@ -22,6 +23,7 @@ const BlogGrid = ({ authorId, author, content, date }: BlogGridProps) => {
               className='h-full w-fit'
               width={50}
               height={50}
+              onError={imageFallback('/blog-zimo.svg')}
             />
           </div>
         </div>

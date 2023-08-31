@@ -198,7 +198,7 @@
 }
 
 .cog-size {
-    height: min(50vw, 50vh);
+    height: min(75vw, 75vh);
     width: auto
 }
 
@@ -278,6 +278,10 @@
     .md\:blog-view-middle {
         width: 52rem;
     }
+
+    .md\:max-w-80 {
+        max-width: 20rem/* 320px */;
+    }
 }
 
 @font-face {
@@ -353,4 +357,8 @@
 
 .prophet-pov-text {
     color: #ea580c;
+}
+
+.max-w-60 {
+    max-width: 15rem/* 240px */;
 }

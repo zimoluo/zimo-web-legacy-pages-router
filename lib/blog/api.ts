@@ -1,15 +1,16 @@
 import AWS from "aws-sdk";
 import matter from "gray-matter"; // assuming you are using gray-matter for front-matter
-import { awsBucket } from "../constants";
+import { awsBucket, awsBucketRegion } from "../constants";
+import { keyId, secretKey } from "../awskey";
 
 type Items = {
   [key: string]: any;
 };
 
 const s3 = new AWS.S3({
-  region: "us-east-2",
-  accessKeyId: 'AKIAWH7CAZB2CAV3QRE6',
-  secretAccessKey: '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',
+  region: awsBucketRegion,
+  accessKeyId: keyId,
+  secretAccessKey: secretKey,
 });
 
 const postsDirectory = "blog/text";

@@ -52,8 +52,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     };
   }, [lastScrollY]);
 
-  const barColor = scrollY > 25 ? `${barColorClass} backdrop-blur-lg` : 'bg-opacity-0';
-  const navbarClass = `${textColorClass} ${barColor} px-4 h-12 transition-all duration-300 ease-in fixed w-full top-0 opacity-100 flex items-center justify-between z-20`;
+  const barColor = scrollY > 25 ? `${barColorClass} backdrop-blur-md` : 'bg-opacity-0';
+  const navbarClass = `${textColorClass} ${barColor} px-4 h-12 transition-all duration-300 ease-out fixed w-full top-0 opacity-100 flex items-center justify-between z-20`;
 
   return (
     <div id="navbar" className={navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`}>

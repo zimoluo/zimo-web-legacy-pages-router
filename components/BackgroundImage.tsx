@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { backgroundImageMap, ThemeType, backgroundClassMap } from '../interfaces/themeMaps';
+import { backgroundImageMap, ThemeType, backgroundClassMap, blurColorMap } from '../interfaces/themeMaps';
 
 type BackgroundImageProps = {
   theme: ThemeType;
@@ -7,16 +7,20 @@ type BackgroundImageProps = {
 
 const BackgroundImage: React.FC<BackgroundImageProps> = ({ theme }) => {
   
-    const backgroundImageSrc = backgroundImageMap[theme] || backgroundImageMap["zimo"];
-    const backgroundClassSrc = backgroundClassMap[theme] || backgroundClassMap["zimo"];
+  const backgroundImageSrc = backgroundImageMap[theme] || backgroundImageMap["zimo"];
+  const blurSrc = blurColorMap[theme] || blurColorMap["zimo"];
 
   return (
     <div className={`fixed -z-50 pointer-events-none inset-0 flex items-center justify-center h-screen isolate bg-cover bg-center bg-fixed`}>
       <Image
         src={backgroundImageSrc}
         className='w-full h-full object-cover'
-        layout="fill"
+        height={2000}
+        width={1200}
         alt="Background image"
+        placeholder='blur'
+        priority={true}
+        blurDataURL={blurSrc}
       />
     </div>
   );

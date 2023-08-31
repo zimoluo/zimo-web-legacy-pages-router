@@ -11,6 +11,8 @@ const AboutBackgroundAnimation: React.FC = () => {
           width="0"
           layout="fixed"
           className="object-cover w-full h-full animate-zimo-scale-1"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -22,6 +24,8 @@ const AboutBackgroundAnimation: React.FC = () => {
           width="0"
           layout="fixed"
           className="object-cover w-full h-full animate-zimo-scale-2"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -33,6 +37,8 @@ const AboutBackgroundAnimation: React.FC = () => {
           width="0"
           layout="fixed"
           className="object-cover zimo-profile-size"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -44,6 +50,8 @@ const AboutBackgroundAnimation: React.FC = () => {
           width="0"
           layout="fixed"
           className="object-cover zimo-vertical-size opacity-40"
+          placeholder='empty'
+          priority={true}
         />
       </div>
     </>

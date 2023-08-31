@@ -11,6 +11,8 @@ const ProjectsBackgroundAnimation = () => {
           height="0"
           width="0"
           layout="fixed"
+          placeholder='empty'
+          priority={true}
           className="pointer-events-none opacity-90 cog-size rotate-cog-yang animate-spin-cog -z-10"
         />
       </div>
@@ -21,6 +23,8 @@ const ProjectsBackgroundAnimation = () => {
           height="0"
           width="0"
           layout="fixed"
+          placeholder='empty'
+          priority={true}
           className="pointer-events-none opacity-90 cog-size rotate-cog-yin animate-spin-cog-reverse -z-10"
         />
       </div>

@@ -8,10 +8,11 @@ const BlogBackgroundAnimation = () => {
         <Image
           src="/blog-pane-eunoe.svg" 
           alt="Eunoe Text"
-          height="0"
-          width="0"
-          layout="fixed"
+          height={2000}
+          width={1200}
           className="object-cover w-full h-full"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -23,6 +24,8 @@ const BlogBackgroundAnimation = () => {
           width="0"
           layout="fixed"
           className="absolute pointer-events-none painting-size animate-move-painting-glow"
+          placeholder='empty'
+          priority={true}
         />
         <Image
           src="/blog-painting-base-orb.svg"
@@ -31,6 +34,8 @@ const BlogBackgroundAnimation = () => {
           width="0"
           layout="fixed"
           className="absolute pointer-events-none painting-size"
+          placeholder='empty'
+          priority={true}
         />
         <BlogBackgroundAnimationPainting />
       </div>

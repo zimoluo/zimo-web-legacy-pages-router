@@ -11,6 +11,8 @@ const ZimoBackgroundAnimation = () => {
           layout="fixed"
           className="object-cover w-full h-full" 
           alt="Background moving image 1"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -22,6 +24,8 @@ const ZimoBackgroundAnimation = () => {
           layout="fixed"
           className="object-cover w-full h-full" 
           alt="Background moving image 3"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -32,6 +36,8 @@ const ZimoBackgroundAnimation = () => {
           width="0"
           className="object-cover w-full h-auto" 
           alt="Background text light for desktop"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -42,6 +48,8 @@ const ZimoBackgroundAnimation = () => {
           width="0"
           className="object-cover w-full h-auto" 
           alt="Background text light for mobile"
+          placeholder='empty'
+          priority={true}
         />
       </div>
 
@@ -53,6 +61,8 @@ const ZimoBackgroundAnimation = () => {
           layout="fixed"
           className="object-cover w-full h-full" 
           alt="Background moving image 2"
+          placeholder='empty'
+          priority={true}
         />
       </div>
     </>
