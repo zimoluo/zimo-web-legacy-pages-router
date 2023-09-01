@@ -13,6 +13,9 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
 
+  const currentYear = new Date().getFullYear();
+  const displayYear = currentYear > 2023 ? `2023-${currentYear}` : '2023';
+
   return (
     <div className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial backdrop-blur-md`}>
       <div className="flex items-center mb-4 text-xl font-bold">
@@ -28,7 +31,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         <Link href="/about" passHref><div className="hover:underline cursor-pointer">About</div></Link>
       </div>
       <div className="text-center text-sm">
-        &copy; 2023 Zimo Luo. All Rights Reserved.
+        &copy; {displayYear} Zimo Luo. All Rights Reserved.
       </div>
     </div>
   );

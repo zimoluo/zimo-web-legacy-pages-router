@@ -1,6 +1,6 @@
 import MainPageLayout from "@/components/MainPageLayout"
 import BlogMainLayout from "@/components/blog/BlogMainLayout";
-import BlogReadingBlur from "@/components/blog/BlogReadingBlur";
+import ReadingBlur from "@/components/ReadingBlur";
 import PostData from "@/interfaces/blog/postData"
 import { getAllPosts, getPostBySlug } from "@/lib/blog/api";
 import { getCoverSrc } from "@/lib/blog/util";
@@ -21,7 +21,7 @@ export default function Post({ post }: PostType) {
                 <title>{title}</title>
                 <meta property="og:image" content={coverSrc ? coverSrc : '/blog-zimo.svg'} />
             </Head>
-            <BlogReadingBlur></BlogReadingBlur>
+            <ReadingBlur />
             <BlogMainLayout
               title={post.title}
               description={post.description}

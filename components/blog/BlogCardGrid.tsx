@@ -8,7 +8,7 @@ type Props = {
 
 const BlogCardGrid = ({ posts }: Props) => {
     return (
-        <div className="grid grid-cols-1 gap-y-10 mb-24 px-8 md:px-36">
+        <div className="grid grid-cols-1 gap-y-8 md:gap-y-10 mb-24 px-8 md:px-36">
           {posts.map((post) => (
             <BlogCard
               key={post.slug}

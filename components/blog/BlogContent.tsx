@@ -1,4 +1,4 @@
-import markdownStyles from './markdown-styles.module.css'
+import markdownStyles from './blog-markdown-styles.module.css'
 
 type BlogContentProps = {
   content: string

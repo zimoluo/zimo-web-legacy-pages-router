@@ -10,7 +10,6 @@ const ProjectsBackgroundAnimation = () => {
           alt="Cog Yang"
           height="0"
           width="0"
-          layout="fixed"
           placeholder='empty'
           priority={true}
           className="pointer-events-none opacity-90 cog-size rotate-cog-yang animate-spin-cog -z-10"
@@ -22,7 +21,6 @@ const ProjectsBackgroundAnimation = () => {
           alt="Cog Yin"
           height="0"
           width="0"
-          layout="fixed"
           placeholder='empty'
           priority={true}
           className="pointer-events-none opacity-90 cog-size rotate-cog-yin animate-spin-cog-reverse -z-10"

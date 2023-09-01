@@ -67,3 +67,10 @@ export default async function markdownToHtml(markdown: string) {
   const htmlContent = marked(markdown);
   return htmlContent;
 }
+
+export const formatAltText = (key: string) => {
+  return key
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};

@@ -198,8 +198,8 @@
 }
 
 .cog-size {
-    height: min(75vw, 75vh);
-    width: auto
+    height: min(90vw, 90vh);
+    width: auto;
 }
 
 .zimo-profile-size {

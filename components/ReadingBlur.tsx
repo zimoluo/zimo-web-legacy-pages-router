@@ -1,4 +1,4 @@
-const BlogReadingBlur: React.FC = () => {
+const ReadingBlur: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center fixed inset-0 -z-5">
@@ -11,4 +11,4 @@ const BlogReadingBlur: React.FC = () => {
   );
 };
 
-export default BlogReadingBlur;
+export default ReadingBlur;
