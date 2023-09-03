@@ -4,10 +4,10 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { SyntheticEvent } from "react";
 import { marked } from "marked";
 
-let JSDOM: typeof import('jsdom').JSDOM | null = null;
+let JSDOM: typeof import("jsdom").JSDOM | null = null;
 
-if (typeof window === 'undefined') {
-  JSDOM = require('jsdom').JSDOM;
+if (typeof window === "undefined") {
+  JSDOM = require("jsdom").JSDOM;
 }
 
 dayjs.extend(relativeTime);
@@ -74,28 +74,37 @@ export async function markdownToHtml(markdown: string): Promise<string> {
   return htmlContent;
 }
 
-function updateImgElements(doc: Document, defaultHeight: string, defaultWidth: string) {
-  const imgElements: HTMLCollectionOf<HTMLImageElement> = doc.getElementsByTagName('img');
+function updateImgElements(
+  doc: Document,
+  defaultHeight: string,
+  defaultWidth: string
+) {
+  const imgElements: HTMLCollectionOf<HTMLImageElement> =
+    doc.getElementsByTagName("img");
   for (let i = 0; i < imgElements.length; i++) {
     const img: HTMLImageElement = imgElements[i];
 
-    if (!img.hasAttribute('height')) {
-      img.setAttribute('height', defaultHeight);
+    if (!img.hasAttribute("height")) {
+      img.setAttribute("height", defaultHeight);
     }
 
-    if (!img.hasAttribute('width')) {
-      img.setAttribute('width', defaultWidth);
+    if (!img.hasAttribute("width")) {
+      img.setAttribute("width", defaultWidth);
     }
   }
 }
 
-export function updateImageAttributes(htmlContent: string, defaultHeight: string = '320', defaultWidth: string = '40'): string {
+export function updateImageAttributes(
+  htmlContent: string,
+  defaultHeight: string = "320",
+  defaultWidth: string = "40"
+): string {
   let updatedHtmlContent: string;
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     // Client-side code
     const parser: DOMParser = new DOMParser();
-    const doc: Document = parser.parseFromString(htmlContent, 'text/html');
+    const doc: Document = parser.parseFromString(htmlContent, "text/html");
     updateImgElements(doc, defaultHeight, defaultWidth);
     updatedHtmlContent = doc.documentElement.outerHTML;
   } else {
@@ -115,9 +124,9 @@ export function updateImageAttributes(htmlContent: string, defaultHeight: string
 
 export const formatAltText = (key: string) => {
   return key
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 };
 
 export const applyImageViewerTransition = (
@@ -130,12 +139,12 @@ export const applyImageViewerTransition = (
   element.style.transform = transform;
 
   const onTransitionEnd = () => {
-    element.style.transition = 'none';
-    element.removeEventListener('transitionend', onTransitionEnd);
+    element.style.transition = "none";
+    element.removeEventListener("transitionend", onTransitionEnd);
     onComplete();
   };
 
-  element.addEventListener('transitionend', onTransitionEnd);
+  element.addEventListener("transitionend", onTransitionEnd);
 };
 
 export function imagesParser(input: ImagesData): ImagesData {
@@ -150,7 +159,7 @@ export function imagesParser(input: ImagesData): ImagesData {
   } else if (textLength > urlLength) {
     outputText = text.slice(0, urlLength);
   } else {
-    outputText = [...text, ...new Array(urlLength - textLength).fill('')];
+    outputText = [...text, ...new Array(urlLength - textLength).fill("")];
   }
 
   return {
@@ -159,3 +168,14 @@ export function imagesParser(input: ImagesData): ImagesData {
     aspectRatio,
   };
 }
+
+export const calculateGridViewTransformStyle = (
+  index: number,
+  gridLength: number
+) => {
+  return `translate(${
+    ((index % gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
+  }%, ${
+    (Math.floor(index / gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
+  }%) scale(${1 / gridLength})`;
+};

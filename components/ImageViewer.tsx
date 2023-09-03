@@ -2,31 +2,53 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import ImagePageIndicator from "./ImagePageIndicator";
-import { applyImageViewerTransition } from "@/lib/util";
+import {
+  applyImageViewerTransition,
+  calculateGridViewTransformStyle,
+} from "@/lib/util";
 
-type Props = {
-  images: string[];
-  aspectRatio: string;
-  descriptions?: string[];
-};
-
-const ImageViewer: React.FC<Props> = ({
-  images,
-  aspectRatio,
-  descriptions = [],
-}) => {
+function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
   const [currentPage, setCurrentPage] = useState(0);
   const [descriptionVisible, setDescriptionVisible] = useState(true);
+  const [leftButtonVisible, setLeftButtonVisible] = useState(false);
+  const [rightButtonVisible, setRightButtonVisible] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
 
-  const actualDescriptions = descriptions.length
-    ? descriptions
-    : Array(images.length).fill("");
+  const [isGridView, setGridView] = useState(false);
+
+  const toggleGridView = () => {
+    setGridView(!isGridView);
+  };
+
+  const computeGridDimensions = (numImages: number) => {
+    let dimension = Math.ceil(Math.sqrt(numImages));
+    return dimension;
+  };
+
+  const gridLength = computeGridDimensions(url.length);
+
+  const actualDescriptions = text.length ? text : Array(url.length).fill("");
 
   const [widthRatio, heightRatio] = aspectRatio.split(":").map(Number);
 
+  const setButtonVisibility = (page: number) => {
+    if (page === 0) {
+      setLeftButtonVisible(false);
+    } else {
+      setLeftButtonVisible(true);
+    }
+
+    if (page === url.length - 1) {
+      setRightButtonVisible(false);
+    } else {
+      setRightButtonVisible(true);
+    }
+  };
+
   const goToPage = (page: number) => {
     setDescriptionVisible(false);
+    setButtonVisibility(page);
+
     if (imageContainerRef.current) {
       const transform = `translateX(-${page * 100}%)`;
       applyImageViewerTransition(
@@ -48,8 +70,119 @@ const ImageViewer: React.FC<Props> = ({
   };
 
   const goToNextPage = () => {
-    if (currentPage < images.length - 1) {
+    if (currentPage < url.length - 1) {
       goToPage(currentPage + 1);
+    }
+  };
+
+  const enableGridView = () => {
+    setGridView(true);
+    if (imageContainerRef.current) {
+      const container = imageContainerRef.current;
+      const imageNodes = Array.from(imageContainerRef.current.childNodes);
+
+      imageNodes.forEach((node, index) => {
+        if (node instanceof HTMLElement) {
+          if (index === currentPage) {
+            node.style.zIndex = "50";
+            console.log(node.style.zIndex);
+            container.style.transform = "translateX(0%)";
+            node.style.transform = "translateX(0%)";
+          }
+        }
+      });
+
+      imageNodes.forEach((node, index) => {
+        if (index === currentPage) return;
+
+        if (node instanceof HTMLElement) {
+          node.style.transition = "none 0s";
+          node.style.transform = calculateGridViewTransformStyle(
+            index,
+            gridLength
+          );
+          node.style.zIndex = "1";
+        }
+      });
+
+      // Delay third forEach loop by 0.1 seconds (100 milliseconds)
+      setTimeout(() => {
+        imageNodes.forEach((node, index) => {
+          if (node instanceof HTMLElement) {
+            if (index === currentPage) {
+              node.style.transform = calculateGridViewTransformStyle(
+                index,
+                gridLength
+              );
+              node.style.transition = "all 0.2s ease-out";
+
+              const handleTransitionEnd = () => {
+                node.style.zIndex = "1";
+
+                node.removeEventListener("transitionend", handleTransitionEnd);
+              };
+
+              node.addEventListener("transitionend", handleTransitionEnd);
+            }
+          }
+        });
+      }, 100);
+    }
+  };
+
+  const turnOffGridView = (chosenIndex: number) => {
+    if (imageContainerRef.current) {
+      const container = imageContainerRef.current;
+      const imageNodes = Array.from(imageContainerRef.current.childNodes);
+      setCurrentPage(chosenIndex);
+
+      imageNodes.forEach((node, index) => {
+        if (node instanceof HTMLElement) {
+          if (index === chosenIndex) {
+            node.style.transform = `translate(0%, 0%) scale(1.0)`;
+            node.style.transition = "all 0.2s ease-out";
+            node.style.zIndex = "50";
+
+            const handleTransitionEnd = () => {
+              imageNodes.forEach((node, index) => {
+                if (index === chosenIndex) return;
+
+                if (node instanceof HTMLElement) {
+                  node.style.transition = "none 0s";
+                  node.style.transform = `translate(${
+                    index * 100
+                  }%, 0%) scale(1.0)`;
+                  node.style.zIndex = "1";
+                }
+              });
+
+              setTimeout(() => {
+                imageNodes.forEach((node, index) => {
+                  if (node instanceof HTMLElement) {
+                    if (index === chosenIndex) {
+                      node.style.zIndex = "1";
+                      console.log(node.style.zIndex);
+                      container.style.transition = "none 0s";
+                      container.style.transform = `translate(${
+                        -index * 100
+                      }%, 0%)`;
+                      node.style.transition = "none 0s";
+                      node.style.transform = `translate(${index * 100}%, 0%)`;
+                    }
+                  }
+                });
+                setButtonVisibility(chosenIndex);
+                setGridView(false);
+              }, 100);
+
+              // Remove the event listener to avoid multiple calls
+              node.removeEventListener("transitionend", handleTransitionEnd);
+            };
+
+            node.addEventListener("transitionend", handleTransitionEnd);
+          }
+        }
+      });
     }
   };
 
@@ -61,27 +194,28 @@ const ImageViewer: React.FC<Props> = ({
         className="w-full relative"
         style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
       >
-        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-xl">
           <div ref={imageContainerRef} className="flex w-full h-full">
-            {images.map((src, index) => (
+            {url.map((src, index) => (
               <Image
                 key={index}
                 src={src}
                 alt={actualDescriptions[index] || `Image ${index}`}
-                className="absolute inset-0 w-full h-full object-cover"
+                className={`absolute inset-0 w-full h-full object-cover`}
                 height={heightRatio * 1000}
                 width={widthRatio * 1000}
                 unoptimized={false}
-                priority={true}
+                priority={false}
                 style={{
                   transform: `translateX(${index * 100}%)`,
                 }}
+                onClick={() => isGridView && turnOffGridView(index)}
               />
             ))}
           </div>
         </div>
 
-        {currentDescription && (
+        {currentDescription && !isGridView && (
           <div
             className={`absolute bottom-12 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
               descriptionVisible ? "opacity-100" : "opacity-0"
@@ -92,15 +226,17 @@ const ImageViewer: React.FC<Props> = ({
         )}
 
         {/* Pagination Circles */}
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
-          <ImagePageIndicator
-            totalPages={images.length}
-            currentPage={currentPage}
-            onPageChange={goToPage}
-          />
-        </div>
+        {!isGridView && (
+          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+            <ImagePageIndicator
+              totalPages={url.length}
+              currentPage={currentPage}
+              onPageChange={goToPage}
+            />
+          </div>
+        )}
 
-        {currentPage > 0 && (
+        {currentPage > 0 && leftButtonVisible && !isGridView && (
           <button
             className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10"
             onClick={goToPreviousPage}
@@ -115,7 +251,7 @@ const ImageViewer: React.FC<Props> = ({
           </button>
         )}
 
-        {currentPage < images.length - 1 && (
+        {currentPage < url.length - 1 && rightButtonVisible && !isGridView && (
           <button
             className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10"
             onClick={goToNextPage}
@@ -129,9 +265,26 @@ const ImageViewer: React.FC<Props> = ({
             />
           </button>
         )}
+
+        {!isGridView && (
+          <button
+            className={`absolute top-2 left-2 z-50 ${
+              isGridView ? "hidden" : ""
+            }`}
+            onClick={enableGridView}
+          >
+            <Image
+              src="/blog-zimo.svg" // Replace with your right arrow sprite path
+              alt="Grid View"
+              width={48}
+              height={48}
+              className="h-8 w-auto"
+            />
+          </button>
+        )}
       </div>
     </div>
   );
-};
+}
 
 export default ImageViewer;

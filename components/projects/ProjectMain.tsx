@@ -13,7 +13,7 @@ export default function ProjectMain({ entry }: ProjectType) {
     return (
         <div className="grid grid-cols-[2fr,3fr]">
             <div>
-                <ImageViewer images={parsedImage.url} descriptions={parsedImage.text} aspectRatio={parsedImage.aspectRatio} />
+                <ImageViewer url={parsedImage.url} text={parsedImage.text} aspectRatio={parsedImage.aspectRatio} />
             </div>
             <div>
                 <ProjectTextSide
