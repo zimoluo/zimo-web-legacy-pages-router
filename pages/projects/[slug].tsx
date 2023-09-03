@@ -1,12 +1,10 @@
 import MainPageLayout from "@/components/MainPageLayout"
 import ProjectData from "@/interfaces/projects/projectData";
 import { getProjectFavicon } from "@/lib/projects/util";
-import markdownToHtml from "@/lib/util";
+import { markdownToHtml, updateImageAttributes } from "@/lib/util";
 import Head from 'next/head';
 import ReadingBlur from "@/components/ReadingBlur";
-import ProjectTextSide from "@/components/projects/ProjectTextSide";
 import { getAllEntries, getEntryBySlug } from "@/lib/api";
-import ProjectImages from "@/components/projects/ProjectImages";
 import ProjectMain from "@/components/projects/ProjectMain";
 
 type ProjectType = {
@@ -49,7 +47,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'images',
   ])
-  const content = await markdownToHtml(entry.content.join('\n') || '')
+  const content = updateImageAttributes(await markdownToHtml(entry.content.join('\n') || ''));
 
   return {
     props: {

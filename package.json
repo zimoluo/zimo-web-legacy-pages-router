@@ -19,6 +19,7 @@
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
     "gray-matter": "^4.0.3",
+    "jsdom": "^22.1.0",
     "marked": "^7.0.5",
     "next": "13.4.19",
     "postcss": "8.4.28",
@@ -35,6 +36,7 @@
     "unified": "^11.0.2"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0"
+    "@types/glob": "^8.1.0",
+    "@types/jsdom": "^21.1.2"
   }
 }

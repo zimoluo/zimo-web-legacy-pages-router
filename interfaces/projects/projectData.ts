@@ -7,7 +7,7 @@ type ProjectData = {
   slug: string;
   faviconFormat: string;
   content: string;
-  images: string[];
+  images: ImagesData;
 }
   
 export default ProjectData

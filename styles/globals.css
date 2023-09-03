@@ -362,3 +362,7 @@
 .max-w-60 {
     max-width: 15rem/* 240px */;
 }
+
+.max-w-96 {
+    max-width: 24rem/* 384px */;
+}

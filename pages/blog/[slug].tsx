@@ -4,7 +4,7 @@ import ReadingBlur from "@/components/ReadingBlur";
 import PostData from "@/interfaces/blog/postData"
 import { getAllPosts, getPostBySlug } from "@/lib/blog/api";
 import { getCoverSrc } from "@/lib/blog/util";
-import markdownToHtml from "@/lib/util";
+import { markdownToHtml, updateImageAttributes } from "@/lib/util";
 import Head from 'next/head';
 
 type PostType = {
@@ -14,6 +14,7 @@ type PostType = {
 export default function Post({ post }: PostType) {
     const title = `${post.title} | Blog - Zimo`
     const coverSrc = getCoverSrc(post.coverImage, post.slug);
+    const updatedContent = updateImageAttributes(post.content);
 
     return (
       <MainPageLayout theme='blog' >
@@ -27,7 +28,7 @@ export default function Post({ post }: PostType) {
               description={post.description}
               authorId={post.authorId}
               author={post.author}
-              content={post.content}
+              content={updatedContent}
               date={post.date}
               coverSrc={coverSrc}
               displayCover={post.displayCover}

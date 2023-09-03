@@ -1,16 +1,19 @@
 import ProjectData from "@/interfaces/projects/projectData"
-import ProjectImages from "./ProjectImages"
 import ProjectTextSide from "./ProjectTextSide"
+import ImageViewer from "../ImageViewer"
+import { imagesParser } from "@/lib/util"
 
 type ProjectType = {
     entry: ProjectData
 }
 
 export default function ProjectMain({ entry }: ProjectType) {
+    const parsedImage = imagesParser(entry.images);
+
     return (
         <div className="grid grid-cols-[2fr,3fr]">
             <div>
-                <ProjectImages images={entry.images}/>
+                <ImageViewer images={parsedImage.url} descriptions={parsedImage.text} aspectRatio={parsedImage.aspectRatio} />
             </div>
             <div>
                 <ProjectTextSide
