@@ -366,3 +366,8 @@
 .max-w-96 {
     max-width: 24rem/* 384px */;
 }
+
+.image-popup-size {
+    height: min(90vw, 90vh);
+    width: auto;
+}

@@ -177,5 +177,5 @@ export const calculateGridViewTransformStyle = (
     ((index % gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
   }%, ${
     (Math.floor(index / gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
-  }%) scale(${1 / gridLength})`;
+  }%) scale(${1 / gridLength - 0.008})`;
 };
