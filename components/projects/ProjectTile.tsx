@@ -5,51 +5,52 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import DarkOverlay from "../DarkOverlay";
 import ProjectMainPopup from "./ProjectMainPopUp";
+import { useRouter } from "next/router";
 
-type Props = {
-  entry: ProjectData;
-};
-
-const ProjectTile: React.FC<Props> = ({ entry }) => {
+const ProjectTile: React.FC<ProjectData> = ({
+  title,
+  description,
+  links,
+  date,
+  images,
+  authors,
+  slug,
+  faviconFormat,
+  content,
+}) => {
   const [showPopup, setShowPopup] = useState(false);
 
+  const router = useRouter();
+
   const projectClick = () => {
-    setShowPopup(true);
+    if (window.innerWidth > 768) {
+      setShowPopup(true);
+      window.history.pushState({ popupOpen: true }, "", `#${slug}`);
+    } else {
+      router.push(`/projects/${slug}`);
+    }
   };
 
   const closePopUp = () => {
     setShowPopup(false);
   };
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closePopUp();
-      }
-    };
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
-
   return (
     <>
       <button
-        className="group flex items-center justify-center h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bar-color-projects overflow-hidden"
+        className="group flex items-center justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bar-color-projects overflow-hidden"
         onClick={projectClick}
       >
         <Image
           height={32}
           width={32}
-          src={getProjectFavicon(entry.slug, entry.faviconFormat)}
-          className="h-20 w-auto transform transition-transform ease-in duration-200 group-hover:scale-125 opacity-90"
-          alt={entry.title}
+          src={getProjectFavicon(slug, faviconFormat)}
+          className="h-12 md:h-20 w-auto transform transition-transform ease-in duration-200 group-hover:scale-110 opacity-90"
+          alt={title}
           onError={imageFallback("/projects-zimo.svg")}
         />
-        <p className="absolute top-40 left-1/2 -translate-x-1/2 w-44 text-center font-bold text-teal-700 transition-all ease-in duration-200 opacity-0 group-hover:opacity-60 group-hover:top-38">
-          {entry.title}
+        <p className="absolute top-28 md:top-40 left-1/2 -translate-x-1/2 w-44 text-center font-bold text-teal-700 transition-all text-sm md:text-base ease-in duration-200 opacity-0 group-hover:opacity-60 group-hover:top-26 special-top-38-md">
+          {title}
         </p>
       </button>
       {showPopup && (
@@ -57,7 +58,20 @@ const ProjectTile: React.FC<Props> = ({ entry }) => {
           <DarkOverlay />
         </div>
       )}
-      {showPopup && <ProjectMainPopup entry={entry} onClose={closePopUp} />}
+      {showPopup && (
+        <ProjectMainPopup
+          title={title}
+          description={description}
+          links={links}
+          date={date}
+          images={images}
+          authors={authors}
+          slug={slug}
+          faviconFormat={faviconFormat}
+          content={content}
+          onClose={closePopUp}
+        />
+      )}
     </>
   );
 };

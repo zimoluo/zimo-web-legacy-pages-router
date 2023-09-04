@@ -10,7 +10,13 @@ import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
 import { imagesArrowMap } from "@/interfaces/themeMaps";
 
-function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull = false }: ImagesData & { theme?: string; useHFull?: boolean}) {
+function ImageViewer({
+  url,
+  aspectRatio,
+  text = [],
+  theme = "photos",
+  useHFull = false,
+}: ImagesData & { theme?: string; useHFull?: boolean }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [descriptionVisible, setDescriptionVisible] = useState(true);
   const [leftButtonVisible, setLeftButtonVisible] = useState(false);
@@ -21,19 +27,6 @@ function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull =
   const arrowSrc = imagesArrowMap[theme];
 
   const [isGridView, setGridView] = useState(false);
-
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closePopup();
-      }
-    };
-    window.addEventListener("keydown", handleEscape);
-
-    return () => {
-      window.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
 
   const computeGridDimensions = (numImages: number) => {
     let dimension = Math.ceil(Math.sqrt(numImages));
@@ -207,40 +200,79 @@ function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull =
     }
   };
 
-  // Add this useEffect hook somewhere in your ImageViewer component
   useEffect(() => {
     if (isGridView) return;
 
+    let initialX: number | null = null;
+
     function handleScroll(e: WheelEvent): void {
-      // Check if the scroll is horizontal (e.deltaX)
       if (e.deltaX !== 0) {
         e.preventDefault();
         if (e.deltaX > 30) {
-          goToNextPage(); // Scroll right
+          goToNextPage();
         } else if (e.deltaX < -30) {
-          goToPreviousPage(); // Scroll left
+          goToPreviousPage();
         }
       }
     }
 
-    // Attach the event listener
-    if (imageContainerRef.current) {
-      imageContainerRef.current.addEventListener("wheel", handleScroll);
+    function handleTouchStart(e: TouchEvent): void {
+      initialX = e.touches[0].clientX;
     }
 
-    // Cleanup
+    function handleTouchMove(e: TouchEvent): void {
+      if (!initialX) return;
+
+      const deltaX = e.touches[0].clientX - initialX;
+
+      if (Math.abs(deltaX) > 30) {
+        if (deltaX > 30) {
+          goToPreviousPage();
+        } else if (deltaX < -30) {
+          goToNextPage();
+        }
+        initialX = null;
+      }
+    }
+
+    function handleDoubleClick(): void {
+      openPopup();
+    }
+
+    if (imageContainerRef.current) {
+      imageContainerRef.current.addEventListener("wheel", handleScroll);
+      imageContainerRef.current.addEventListener(
+        "touchstart",
+        handleTouchStart
+      );
+      imageContainerRef.current.addEventListener("touchmove", handleTouchMove);
+      imageContainerRef.current.addEventListener("dblclick", handleDoubleClick);
+    }
+
     return () => {
       if (imageContainerRef.current) {
         imageContainerRef.current.removeEventListener("wheel", handleScroll);
+        imageContainerRef.current.removeEventListener(
+          "touchstart",
+          handleTouchStart
+        );
+        imageContainerRef.current.removeEventListener(
+          "touchmove",
+          handleTouchMove
+        );
+        imageContainerRef.current.removeEventListener(
+          "dblclick",
+          handleDoubleClick
+        );
       }
     };
-  }, [imageContainerRef, goToNextPage, goToPreviousPage]);
+  }, [imageContainerRef, goToNextPage, goToPreviousPage, isGridView]);
 
   const currentDescription = actualDescriptions[currentPage];
 
   return (
     <div
-      className={`${useHFull ? 'h-full' : 'w-full'} relative`}
+      className={`${useHFull ? "h-full" : "w-full"} relative`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
     >
       <div
@@ -271,7 +303,7 @@ function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull =
 
       {currentDescription && !isGridView && (
         <div
-          className={`absolute bottom-12 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
+          className={`absolute pointer-events-none bottom-12 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
             descriptionVisible ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -295,7 +327,7 @@ function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull =
         {!isGridView && (
           <button className={`mr-2`} onClick={openPopup}>
             <Image
-              src="/magnifying-glass.svg" 
+              src="/magnifying-glass.svg"
               alt="Zoom In"
               width={24}
               height={24}
@@ -346,18 +378,18 @@ function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull =
       )}
 
       {showPopup && (
-        <div
-          className={`pointer-events-none `}
-        >
+        <div className={`pointer-events-none `}>
           <DarkOverlay />
         </div>
       )}
 
       {showPopup && (
-        <div
-          className={``}
-        >
-          <ImagePopUp src={url[currentPage]} onClose={closePopup} />
+        <div className={``}>
+          <ImagePopUp
+            src={url[currentPage]}
+            onClose={closePopup}
+            altText={currentDescription}
+          />
         </div>
       )}
     </div>

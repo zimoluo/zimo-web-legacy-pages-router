@@ -1,45 +1,69 @@
 import ProjectData from "@/interfaces/projects/projectData";
 import ProjectTextSide from "./ProjectTextSide";
 import ImageViewer from "../ImageViewer";
-import { imagesParser } from "@/lib/util";
-import { useEffect, useState } from "react";
+import {
+  addActivePopup,
+  imagesParser,
+  isActivePopup,
+  removeActivePopup,
+} from "@/lib/util";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-type Props = {
-  entry: ProjectData;
-  onClose: () => void;
-};
-
-export default function ProjectMainPopup({ entry, onClose }: Props) {
+export default function ProjectMainPopup({
+  title,
+  description,
+  links,
+  date,
+  images,
+  authors,
+  slug,
+  faviconFormat,
+  content,
+  onClose,
+}: ProjectData & { onClose: () => void }) {
   const [style, setStyle] = useState<React.CSSProperties>({});
 
   const [gridWidth, setGridWidth] = useState<number | null>(null);
   const [gridHeight, setGridHeight] = useState<number | null>(null);
 
+  const textPartWidth = 800;
+  const minimumWidth = 1000;
+
   const handleResize = () => {
     const vh = window.innerHeight * 0.8; // 80vh
-    const vw = window.innerWidth * 0.8; // 80vw
+    const vw = window.innerWidth * 0.6; // 60vw
     const calculatedHeight = Math.min(vh, vw);
     const aspectRatio = 3 / 4;
-    
+
     const fixedWidth = calculatedHeight * aspectRatio;
-    const totalWidth = fixedWidth + window.innerWidth * 0.5; // Adding minWidth for the right column (20vw)
+    const totalWidth = Math.max(fixedWidth + textPartWidth, minimumWidth);
 
     setGridWidth(totalWidth);
     setGridHeight(calculatedHeight);
   };
 
   useEffect(() => {
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    const handlePopState = (event: PopStateEvent) => {
+      onClose();
+    };
+
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      // Cleanup
+      window.removeEventListener("popstate", handlePopState);
     };
   }, []);
 
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-  
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     // Initial styles when mounted becomes true
@@ -58,14 +82,74 @@ export default function ProjectMainPopup({ entry, onClose }: Props) {
     }, 100);
   }, []);
 
-  const parsedImage = imagesParser(entry.images);
+  const instanceRef = useRef({}); // Create a unique object reference
+
+  useEffect(() => {
+    // Mark this popup as active
+    addActivePopup(instanceRef.current);
+
+    const handleEscape = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") {
+        // Check if this popup is the active one
+        if (isActivePopup(instanceRef.current)) {
+          // Remove the active popup
+
+          window.history.replaceState({}, '', '#');
+          // Add a 100ms delay to removeActivePopup
+          removeActivePopup(instanceRef.current);
+
+          // Close the popup
+          onClose();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      // Cleanup
+      window.removeEventListener("keydown", handleEscape);
+
+      // Add a 100ms delay to removeActivePopup
+      setTimeout(() => {
+        removeActivePopup(instanceRef.current);
+      }, 100);
+    };
+  }, [onClose]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        onClose();
+      }
+    };
+
+    // Initial check
+    handleResize();
+
+    // Attach the event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [onClose]);
+
+  const parsedImage = imagesParser(images);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 px-12 py-12">
-      <div className="grid grid-cols-2 rounded-xl bg-projects-bg-light overflow-hidden opacity-0" style={{...style, width: `${gridWidth}px`, height: `${gridHeight}px` }}>
-        <div className="" style={{
-          height: `${gridHeight}px`,
-        }}>
+    <div className="fixed inset-0 flex items-center justify-center z-40 px-12 py-12">
+      <div
+        className="flex rounded-xl projects-popup-bg overflow-hidden opacity-0"
+        style={{ ...style, width: `${gridWidth}px`, height: `${gridHeight}px` }}
+      >
+        <div
+          className=""
+          style={{
+            height: `${gridHeight}px`,
+          }}
+        >
           <ImageViewer
             url={parsedImage.url}
             text={parsedImage.text}
@@ -74,24 +158,33 @@ export default function ProjectMainPopup({ entry, onClose }: Props) {
             useHFull={true}
           />
         </div>
-        <div className="mx-0 md:ml-2 md:mr-4 max-h-full h-full overflow-auto" style={{
-          minWidth: '40vw',
-
-          height: `${gridHeight}px`,
-        }}>
+        <div
+          className="mx-0 md:ml-2 md:mr-4 overflow-auto"
+          style={{
+            width: `${textPartWidth}px`,
+            height: `${gridHeight}px`,
+            maxWidth: `${textPartWidth}px`,
+          }}
+        >
           <ProjectTextSide
-            title={entry.title}
-            description={entry.description}
-            links={entry.links}
-            date={entry.date}
-            authors={entry.authors}
-            slug={entry.slug}
-            faviconFormat={entry.faviconFormat}
-            content={entry.content}
+            title={title}
+            description={description}
+            links={links}
+            date={date}
+            authors={authors}
+            slug={slug}
+            faviconFormat={faviconFormat}
+            content={content}
           />
         </div>
       </div>
-      <button className="absolute top-4 right-4 z-50" onClick={onClose}>
+      <button
+        className="absolute top-4 right-4 z-50"
+        onClick={() => {
+          onClose();
+          window.history.replaceState({}, '', '#');
+        }}
+      >
         <Image
           src="/image-view-cross.svg"
           alt="Close Image Window"

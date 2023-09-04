@@ -1,13 +1,42 @@
+import { addActivePopup, isActivePopup, removeActivePopup } from "@/lib/util";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Props {
   src: string;
   onClose: () => void;
+  altText?: string;
 }
 
-const ImagePopUp: React.FC<Props> = ({ src, onClose }) => {
+const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
   const [style, setStyle] = useState<React.CSSProperties>({});
+
+  const instanceRef = useRef({}); // Create a unique object reference
+
+  useEffect(() => {
+    // Mark this popup as active
+    addActivePopup(instanceRef.current);
+
+    const handleEscape = (e: KeyboardEvent): void => {
+      if (e.key === "Escape") {
+        // Check if this popup is the active one
+        if (isActivePopup(instanceRef.current)) {
+          // Remove the active popup
+          removeActivePopup(instanceRef.current);
+          // Close the popup
+          onClose();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      // Cleanup
+      window.removeEventListener("keydown", handleEscape);
+      removeActivePopup(instanceRef.current);
+    };
+  }, [onClose]);
 
   useEffect(() => {
     // Initial styles when mounted becomes true
@@ -30,7 +59,7 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose }) => {
     <div className="fixed inset-0 flex items-center justify-center z-50 px-12 py-12">
       <Image
         src={src}
-        alt="Uncropped Image"
+        alt={`${altText ? altText : "Zoomed-In Image"}`}
         className="image-popup-size object-contain opacity-0"
         style={style}
         height={800}

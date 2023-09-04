@@ -24,7 +24,7 @@ export default function Entry({ entry }: ProjectType) {
                 <meta property="og:image" content={favicon ? favicon : '/projects-zimo.svg'} />
             </Head>
             <ReadingBlur />
-            <ProjectMain entry={entry} />
+            <ProjectMain {...entry} />
       </MainPageLayout>
     )
 }

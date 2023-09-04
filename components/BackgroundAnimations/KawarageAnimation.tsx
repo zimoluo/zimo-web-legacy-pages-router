@@ -5,6 +5,8 @@ const KawarageAnimation: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
+    if (router.pathname !== "/projects") return;
+
     let currentFontSize = getRootFontSize();
     const phrases = [
       "kawarage?.()",
@@ -33,13 +35,12 @@ const KawarageAnimation: React.FC = () => {
       clearInterval(intervalId);
       clearExistingTexts();
 
-      const windowWidth = window.innerWidth;
-      const newInterval = 950000 / windowWidth;
+      const newInterval = 1800;
 
       intervalId = setInterval(addText, newInterval);
     };
 
-    if (router.pathname.startsWith("/projects")) {
+    if (router.pathname === "/projects") {
       setDynamicInterval();
       window.addEventListener("resize", setDynamicInterval);
     }

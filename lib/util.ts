@@ -179,3 +179,29 @@ export const calculateGridViewTransformStyle = (
     (Math.floor(index / gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
   }%) scale(${1 / gridLength - 0.008})`;
 };
+
+// Global state to keep track of active popups
+let activePopups: any[] = [];
+
+// Function to add a popup to the active popups list
+export const addActivePopup = (popupInstance: any): void => {
+  activePopups.push(popupInstance);
+};
+
+// Function to remove a popup from the active popups list
+export const removeActivePopup = (popupInstance: any): void => {
+  const index = activePopups.indexOf(popupInstance);
+  if (index !== -1) {
+    activePopups.splice(index, 1);
+  }
+};
+
+// Function to check if the popup is the current active one
+export const isActivePopup = (popupInstance: any): boolean => {
+  return activePopups.length > 0 && activePopups[activePopups.length - 1] === popupInstance;
+};
+
+// Function to clear all active popups (use with caution)
+export const clearActivePopups = (): void => {
+  activePopups = [];
+};
