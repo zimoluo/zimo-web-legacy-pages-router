@@ -23,8 +23,8 @@ const ProjectTextSide = ({
   content,
 }: Props) => {
   return (
-    <div className="w-full h-full">
-      <div className="mt-20 md:mb-20 px-8 md:px-14 py-0">
+    <div className="w-full">
+      <div className="px-8 md:px-10 pt-2 md:pt-4 pb-6 md:pb-8">
         <ProjectsTitleCard
             title={title}
             description={description}

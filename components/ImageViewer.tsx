@@ -7,15 +7,18 @@ import {
   calculateGridViewTransformStyle,
 } from "@/lib/util";
 import ImagePopUp from "./ImagePopUp";
-import ImagePopUpBg from "./ImagePopUpBg";
+import DarkOverlay from "./DarkOverlay";
+import { imagesArrowMap } from "@/interfaces/themeMaps";
 
-function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
+function ImageViewer({ url, aspectRatio, text = [], theme = 'photos', useHFull = false }: ImagesData & { theme?: string; useHFull?: boolean}) {
   const [currentPage, setCurrentPage] = useState(0);
   const [descriptionVisible, setDescriptionVisible] = useState(true);
   const [leftButtonVisible, setLeftButtonVisible] = useState(false);
   const [rightButtonVisible, setRightButtonVisible] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
+
+  const arrowSrc = imagesArrowMap[theme];
 
   const [isGridView, setGridView] = useState(false);
 
@@ -105,7 +108,6 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
         if (node instanceof HTMLElement) {
           if (index === currentPage) {
             node.style.zIndex = "50";
-            console.log(node.style.zIndex);
             container.style.transform = "translateX(0%)";
             node.style.transform = "translateX(0%)";
           }
@@ -181,7 +183,6 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
                   if (node instanceof HTMLElement) {
                     if (index === chosenIndex) {
                       node.style.zIndex = "1";
-                      console.log(node.style.zIndex);
                       container.style.transition = "none 0s";
                       container.style.transform = `translate(${
                         -index * 100
@@ -206,11 +207,40 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
     }
   };
 
+  // Add this useEffect hook somewhere in your ImageViewer component
+  useEffect(() => {
+    if (isGridView) return;
+
+    function handleScroll(e: WheelEvent): void {
+      // Check if the scroll is horizontal (e.deltaX)
+      if (e.deltaX !== 0) {
+        e.preventDefault();
+        if (e.deltaX > 30) {
+          goToNextPage(); // Scroll right
+        } else if (e.deltaX < -30) {
+          goToPreviousPage(); // Scroll left
+        }
+      }
+    }
+
+    // Attach the event listener
+    if (imageContainerRef.current) {
+      imageContainerRef.current.addEventListener("wheel", handleScroll);
+    }
+
+    // Cleanup
+    return () => {
+      if (imageContainerRef.current) {
+        imageContainerRef.current.removeEventListener("wheel", handleScroll);
+      }
+    };
+  }, [imageContainerRef, goToNextPage, goToPreviousPage]);
+
   const currentDescription = actualDescriptions[currentPage];
 
   return (
     <div
-      className="w-full relative"
+      className={`${useHFull ? 'h-full' : 'w-full'} relative`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
     >
       <div
@@ -229,8 +259,7 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
               }`}
               height={heightRatio * 1000}
               width={widthRatio * 1000}
-              unoptimized={false}
-              priority={false}
+              priority={true}
               style={{
                 transform: `translateX(${index * 100}%)`,
               }}
@@ -250,27 +279,27 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
         </div>
       )}
 
-      <div className="absolute top-2 right-2 z-50 flex">
-        {!isGridView && (
-          <button className={`mr-2 `} onClick={enableGridView}>
+      <div className="absolute top-2 right-2 z-10 flex">
+        {!isGridView && url.length > 1 && (
+          <button className={`mr-3`} onClick={enableGridView}>
             <Image
-              src="/blog-zimo.svg" // Replace with your right arrow sprite path
+              src="/grid-view.svg"
               alt="Grid View"
-              width={48}
-              height={48}
-              className="h-8 w-auto"
+              width={24}
+              height={24}
+              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
             />
           </button>
         )}
 
         {!isGridView && (
-          <button className={``} onClick={openPopup}>
+          <button className={`mr-2`} onClick={openPopup}>
             <Image
-              src="/zimo-favicon.svg" // Replace with your zoom icon sprite path
+              src="/magnifying-glass.svg" 
               alt="Zoom In"
-              width={48}
-              height={48}
-              className="h-8 w-auto"
+              width={24}
+              height={24}
+              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
             />
           </button>
         )}
@@ -282,11 +311,11 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
           onClick={goToPreviousPage}
         >
           <Image
-            src="/favicon.svg" // Replace with your left arrow sprite path
+            src={arrowSrc}
             alt="Previous Image"
-            width={48}
-            height={48}
-            className="h-8 w-auto"
+            width={24}
+            height={24}
+            className="h-6 w-auto opacity-80 transform transition-transform duration-300 hover:scale-125"
           />
         </button>
       )}
@@ -297,17 +326,16 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
           onClick={goToNextPage}
         >
           <Image
-            src="/photos-zimo.svg" // Replace with your right arrow sprite path
+            src={arrowSrc}
             alt="Next Image"
-            width={48}
-            height={48}
-            className="h-8 w-auto"
+            width={24}
+            height={24}
+            className="h-6 w-auto rotate-180 opacity-80 transform transition-transform duration-300 hover:scale-125"
           />
         </button>
       )}
 
-      {/* Pagination Circles */}
-      {!isGridView && (
+      {!isGridView && url.length > 1 && (
         <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
           <ImagePageIndicator
             totalPages={url.length}
@@ -319,21 +347,19 @@ function ImageViewer({ url, aspectRatio, text = [] }: ImagesData) {
 
       {showPopup && (
         <div
-          className={`transition-opacity ease-in-out duration-0 pointer-events-none `}
+          className={`pointer-events-none `}
         >
-          <ImagePopUpBg onClose={closePopup} />
+          <DarkOverlay />
         </div>
       )}
 
-      {
+      {showPopup && (
         <div
-          className={`transition-opacity ease-out duration-100 ${
-            showPopup ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+          className={``}
         >
           <ImagePopUp src={url[currentPage]} onClose={closePopup} />
         </div>
-      }
+      )}
     </div>
   );
 }

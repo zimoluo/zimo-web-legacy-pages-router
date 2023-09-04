@@ -14,7 +14,7 @@ type ProjectType = {
 const filePath = 'projects/entries';
 
 export default function Entry({ entry }: ProjectType) {
-    const title = `${entry.title} | Blog - Zimo`
+    const title = `${entry.title} | Projects - Zimo`
     const favicon = getProjectFavicon(entry.slug, entry.faviconFormat);
 
     return (

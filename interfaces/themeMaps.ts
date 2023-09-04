@@ -97,3 +97,8 @@ export const simpleTitleMap: { [key: string]: string } = {
   'about': 'About - Zimo',
 };
 
+export const imagesArrowMap: { [key: string]: string } = {
+  'projects': '/projects-arrow.svg',
+  'photos': '/photos-arrow.svg',
+};
+

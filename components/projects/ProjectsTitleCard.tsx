@@ -36,8 +36,8 @@ const ProjectsTitleCard = ({
           <div className="flex items-center justify-center h-14 w-auto mr-5">
             <Image
               className="h-full w-auto"
-              height={24}
-              width={24}
+              height={56}
+              width={56}
               alt="Project Favicon"
               src={getProjectFavicon(slug, faviconFormat)}
               onError={imageFallback("/projects-zimo.svg")}
