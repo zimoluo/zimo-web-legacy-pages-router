@@ -204,8 +204,11 @@ function ImageViewer({
     if (isGridView) return;
 
     let initialX: number | null = null;
+    let initialDeltaY: number | null = null;
+    let initialDistance: number | null = null;
 
     function handleScroll(e: WheelEvent): void {
+      // Normal scrolling
       if (e.deltaX !== 0) {
         e.preventDefault();
         if (e.deltaX > 30) {
@@ -213,25 +216,57 @@ function ImageViewer({
         } else if (e.deltaX < -30) {
           goToPreviousPage();
         }
+        return;
+      }
+
+      // Pinch-to-zoom using trackpad
+      if (e.ctrlKey) {
+        if (initialDeltaY === null) {
+          initialDeltaY = e.deltaY;
+        } else {
+          if (initialDeltaY - e.deltaY < 0 && initialDeltaY + e.deltaY > 0) {
+            enableGridView();
+            initialDeltaY = null; // Reset to stop continuous triggering
+          }
+        }
       }
     }
 
     function handleTouchStart(e: TouchEvent): void {
-      initialX = e.touches[0].clientX;
+      if (e.touches.length === 2) {
+        initialDistance = Math.sqrt(
+          Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
+            Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
+        );
+      } else if (e.touches.length === 1) {
+        initialX = e.touches[0].clientX;
+      }
     }
 
     function handleTouchMove(e: TouchEvent): void {
-      if (!initialX) return;
+      if (e.touches.length === 2 && initialDistance !== null) {
+        e.preventDefault();
+        const currentDistance = Math.sqrt(
+          Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2) +
+            Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)
+        );
 
-      const deltaX = e.touches[0].clientX - initialX;
-
-      if (Math.abs(deltaX) > 30) {
-        if (deltaX > 30) {
-          goToPreviousPage();
-        } else if (deltaX < -30) {
-          goToNextPage();
+        // If the distance between two fingers decreased by 30 or more
+        if (initialDistance - currentDistance > 30) {
+          enableGridView();
+          initialDistance = null; // Reset to stop continuous triggering
         }
-        initialX = null;
+      } else if (e.touches.length === 1 && initialX !== null) {
+        const deltaX = e.touches[0].clientX - initialX;
+
+        if (Math.abs(deltaX) > 30) {
+          if (deltaX > 30) {
+            goToPreviousPage();
+          } else if (deltaX < -30) {
+            goToNextPage();
+          }
+          initialX = null;
+        }
       }
     }
 
@@ -276,7 +311,7 @@ function ImageViewer({
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
     >
       <div
-        className={`absolute inset-0 flex items-center justify-center overflow-hidden ${
+        className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           isGridView ? "" : "rounded-xl"
         }`}
       >
@@ -303,7 +338,7 @@ function ImageViewer({
 
       {currentDescription && !isGridView && (
         <div
-          className={`absolute pointer-events-none bottom-12 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
+          className={`absolute pointer-events-none bottom-12 z-10 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
             descriptionVisible ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -325,7 +360,7 @@ function ImageViewer({
         )}
 
         {!isGridView && (
-          <button className={`mr-2`} onClick={openPopup}>
+          <button className="mr-2 z-10" onClick={openPopup}>
             <Image
               src="/magnifying-glass.svg"
               alt="Zoom In"
@@ -368,7 +403,7 @@ function ImageViewer({
       )}
 
       {!isGridView && url.length > 1 && (
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10">
           <ImagePageIndicator
             totalPages={url.length}
             currentPage={currentPage}

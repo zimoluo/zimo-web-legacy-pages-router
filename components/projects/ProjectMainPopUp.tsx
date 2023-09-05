@@ -122,6 +122,7 @@ export default function ProjectMainPopup({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
+        window.history.replaceState({}, '', '#');
         onClose();
       }
     };
@@ -181,7 +182,7 @@ export default function ProjectMainPopup({
         </div>
       </div>
       <button
-        className="absolute top-4 right-4 z-50"
+        className="absolute top-3 right-3 z-50"
         onClick={() => {
           onClose();
           window.history.replaceState({}, '', '#');
@@ -189,10 +190,10 @@ export default function ProjectMainPopup({
       >
         <Image
           src="/image-view-cross.svg"
-          alt="Close Image Window"
-          width={32}
-          height={32}
-          className="h-8 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+          alt="Close Project Window"
+          width={16}
+          height={16}
+          className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
         />
       </button>
     </div>
