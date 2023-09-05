@@ -23,7 +23,7 @@ const ProjectTile: React.FC<ProjectData> = ({
   const router = useRouter();
 
   const projectClick = () => {
-    if (window.innerWidth > 768) {
+    if (window.innerWidth >= 768) {
       setShowPopup(true);
       window.history.pushState({ popupOpen: true }, "", `#${slug}`);
     } else {

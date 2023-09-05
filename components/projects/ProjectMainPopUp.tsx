@@ -34,7 +34,9 @@ export default function ProjectMainPopup({
     const vh = window.innerHeight * 0.8; // 80vh
     const vw = window.innerWidth * 0.6; // 60vw
     const calculatedHeight = Math.min(vh, vw);
-    const aspectRatio = 3 / 4;
+
+    const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
+    const aspectRatio = widthRatio / heightRatio;
 
     const fixedWidth = calculatedHeight * aspectRatio;
     const totalWidth = Math.max(fixedWidth + textPartWidth, minimumWidth);

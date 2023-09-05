@@ -383,3 +383,11 @@
         top: 9.5rem;
     }
 }
+
+.rounded-glass-pane {
+    border-radius: 21px;
+}
+
+.color-glass-pane-base {
+    background-color: rgba(255, 247, 237, 1);
+}
