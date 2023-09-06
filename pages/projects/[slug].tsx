@@ -1,53 +1,85 @@
-import MainPageLayout from "@/components/MainPageLayout"
+import MainPageLayout from "@/components/MainPageLayout";
 import ProjectData from "@/interfaces/projects/projectData";
 import { getProjectFavicon } from "@/lib/projects/util";
 import { markdownToHtml, updateImageAttributes } from "@/lib/util";
-import Head from 'next/head';
+import Head from "next/head";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllEntries, getEntryBySlug } from "@/lib/api";
 import ProjectMain from "@/components/projects/ProjectMain";
 
 type ProjectType = {
-    entry: ProjectData
-}
+  entry: ProjectData;
+};
 
-const filePath = 'projects/entries';
+const filePath = "projects/entries";
 
 export default function Entry({ entry }: ProjectType) {
-    const title = `${entry.title} | Projects - Zimo`
-    const favicon = getProjectFavicon(entry.slug, entry.faviconFormat);
+  const title = `${entry.title} | Projects - Zimo`;
+  const favicon = getProjectFavicon(entry.slug, entry.faviconFormat);
 
-    return (
-      <MainPageLayout theme='projects' >
-            <Head>
-                <title>{title}</title>
-                <meta property="og:image" content={favicon ? favicon : '/projects-zimo.svg'} />
-            </Head>
-            <ReadingBlur />
-            <ProjectMain {...entry} />
-      </MainPageLayout>
-    )
+  const urlShare =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/projects/${entry.slug}`
+      : "";
+
+  return (
+    <MainPageLayout theme="projects">
+      <Head>
+        <title>{title}</title>
+        <meta
+          property="og:image"
+          content={favicon ? favicon : "/projects-zimo.svg"}
+        />
+        <meta property="og:type" content="article" />
+        <meta property="og:image:alt" content={`Cover of ${entry.title}`} />
+        <meta property="og:title" content={entry.title} />
+        <meta property="og:description" content={entry.description} />
+        <meta property="og:url" content={urlShare} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@WhiteGkings" />
+        <meta
+          name="twitter:image"
+          content={favicon ? favicon : "/blog-zimo.svg"}
+        />
+        <meta name="twitter:image:alt" content={`Cover of ${entry.title}`} />
+        <meta name="twitter:title" content={entry.title} />
+        <meta name="twitter:description" content={entry.description} />
+
+        <meta name="description" content={entry.description} />
+        <meta name="author" content={entry.authors.join(", ")} />
+        <meta
+          name="keywords"
+          content="Zimo,Project,Coding,Programming,Personal Website"
+        />
+        <link rel="canonical" href={urlShare} />
+      </Head>
+      <ReadingBlur />
+      <ProjectMain {...entry} />
+    </MainPageLayout>
+  );
 }
 
 type Params = {
   params: {
-    slug: string
-  }
-}
+    slug: string;
+  };
+};
 
 export async function getStaticProps({ params }: Params) {
   const entry = await getEntryBySlug(params.slug, filePath, [
-    'title', 
-    'slug', 
-    'description', 
-    'links', 
-    'date', 
-    'authors' , 
-    'faviconFormat', 
-    'content',
-    'images',
-  ])
-  const content = updateImageAttributes(await markdownToHtml(entry.content.join('\n') || ''));
+    "title",
+    "slug",
+    "description",
+    "links",
+    "date",
+    "authors",
+    "faviconFormat",
+    "content",
+    "images",
+  ]);
+  const content = updateImageAttributes(
+    await markdownToHtml(entry.content.join("\n") || "")
+  );
 
   return {
     props: {
@@ -56,11 +88,11 @@ export async function getStaticProps({ params }: Params) {
         content,
       },
     },
-  }
+  };
 }
 
 export async function getStaticPaths() {
-  const entries = await getAllEntries(filePath, ['slug'])
+  const entries = await getAllEntries(filePath, ["slug"]);
 
   return {
     paths: entries.map((entry) => {
@@ -68,8 +100,8 @@ export async function getStaticPaths() {
         params: {
           slug: entry.slug,
         },
-      }
+      };
     }),
     fallback: false,
-  }
+  };
 }

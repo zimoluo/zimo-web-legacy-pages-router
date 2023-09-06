@@ -221,6 +221,7 @@ function ImageViewer({
 
       // Pinch-to-zoom using trackpad
       if (e.ctrlKey) {
+        e.preventDefault();
         if (initialDeltaY === null) {
           initialDeltaY = e.deltaY;
         } else {

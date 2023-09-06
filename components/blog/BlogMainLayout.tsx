@@ -2,6 +2,8 @@ import { imageFallback } from "@/lib/util";
 import BlogContent from "./BlogContent";
 import BlogHeader from "./BlogHeader";
 import Image from "next/image";
+import ShareButtonBar from "../ShareButtonBar";
+import { useRouter } from "next/router";
 
 interface BlogProps {
   title: string;
@@ -24,9 +26,15 @@ const BlogMainLayout = ({
   coverSrc,
   displayCover,
 }: BlogProps) => {
+  const router = useRouter();
+  const urlShare = typeof window !== 'undefined' ? `${window.location.origin}${router.asPath}` : '';
+
   return (
     <div className="flex justify-center items-center">
-      <div className="mt-20 md:mb-20 md:mx-8 px-8 w-full blog-view md:blog-view-middle md:px-14 py-12 md:rounded-3xl md:shadow-xl">
+      <div className="relative mt-20 md:mb-20 md:mx-8 px-8 w-full blog-view md:blog-view-middle md:px-14 py-12 md:rounded-3xl md:shadow-xl">
+        <div className="absolute top-4 right-4 transform z-10">
+          <ShareButtonBar title={title} description={description} url={urlShare}/>
+        </div>
         <BlogHeader
           title={title}
           description={description}

@@ -8,11 +8,11 @@ export default function ProjectMain({ title, description, links, date, images, a
     const parsedImage = imagesParser(images);
   
     return (
-      <div className="md:grid md:grid-cols-[1fr,1fr] md:mb-20 mt-14">
+      <div className="md:grid md:grid-cols-[1fr,1fr] md:mb-20 pt-14 md:mt-14 projects-page-bg">
         <div className="mb-0 mx-6 md:ml-4 md:mr-2">
           <ImageViewer url={parsedImage.url} text={parsedImage.text} aspectRatio={parsedImage.aspectRatio} theme="projects" />
         </div>
-        <div className="mx-0 mt-4 md:mt-0 projects-popup-bg bg-opacity-60 md:ml-2 md:mr-4 md:bg-opacity-0 md:backdrop-filter-none">
+        <div className="mx-0 mt-4 md:mt-0 md:ml-2 md:mr-4 ">
           <ProjectTextSide
             title={title}
             description={description}

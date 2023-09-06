@@ -367,7 +367,11 @@
 }
 
 .projects-popup-bg {
-    background-color: rgba(240, 253, 250, 1);
+    background-color: rgb(240, 253, 250);
+}
+
+.projects-page-bg {
+    background-color: rgba(240, 253, 250, 0.85);
 }
 
 @media (min-width: 768px) {
@@ -389,5 +393,5 @@
 }
 
 .color-glass-pane-base {
-    background-color: rgba(255, 247, 237, 1);
+    background-color: rgb(255, 242, 229);
 }

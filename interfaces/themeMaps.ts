@@ -29,6 +29,14 @@ export const blurColorMap: { [key: string]: string } = {
     "about": rgbDataURL(255, 251, 228),
 };
 
+export const siteThemeColorMap: { [key: string]: string } = {
+  "zimo": '#e5e5e5',
+  "photos": '#ffedd5',
+  "blog": '#f5d0fe',
+  "projects": '#ccfbf1',
+  "about": '#e0f2fe',
+}
+
 // Map for svg filter
 export const svgFilterMap: { [key: string]: string } = {
     "zimo": "zimo-svg-filter",
