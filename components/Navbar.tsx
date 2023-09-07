@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     <div id="navbar" className={navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`}>
       <div className="flex-none">
         <Link href={`/`} passHref>
-        <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Home Icon" width={24} height={24} />
+        <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Home Icon" width={24} height={24} priority={true} />
         </Link>
       </div>
       <div className="flex flex-grow"></div>
@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     </div>
       <div className="flex flex-grow"></div>
       <div className="flex-none">
-        <Image src="/mode-light.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="Light Dark Mode Switch" width={24} height={24} />
+        <Image src="/mode-light.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="Light Dark Mode Switch" width={24} height={24} priority={true} />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default function ProjectMain({ title, description, links, date, images, a
     const parsedImage = imagesParser(images);
   
     return (
-      <div className="md:grid md:grid-cols-[1fr,1fr] md:mb-20 pt-14 md:mt-14 projects-page-bg">
+      <div className="md:grid md:grid-cols-[1fr,1fr] md:mb-20 pt-16 md:pt-10 md:mt-14 md:pb-10 projects-page-bg">
         <div className="mb-0 mx-6 md:ml-4 md:mr-2">
           <ImageViewer url={parsedImage.url} text={parsedImage.text} aspectRatio={parsedImage.aspectRatio} theme="projects" />
         </div>

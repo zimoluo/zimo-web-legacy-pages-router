@@ -28,6 +28,11 @@ const MainPageLayout: React.FC<LayoutProps> = ({ theme, children, className }) =
                 <meta name="theme-color" content={siteThemeColor} />
                 <meta name="robots" content="index,follow,max-image-preview:large" />
                 <meta name="author" content="Zimo" />
+                <link rel="preload" as="image" href="/favicon.svg" />
+                <link rel="preload" as="image" href="/zimo-favicon.svg" />
+                <link rel="preload" as="image" href="/photos-zimo.svg" />
+                <link rel="preload" as="image" href="/blog-zimo.svg" />
+                <link rel="preload" as="image" href="/projects-zimo.svg" />
             </Head>
             <BackgroundImage theme={theme} />
             <BackgroundAnimation theme={theme} />

@@ -38,7 +38,7 @@ const ProjectTile: React.FC<ProjectData> = ({
   return (
     <>
       <button
-        className="group flex items-center justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bar-color-projects overflow-hidden"
+        className="group flex items-center relative justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bar-color-projects overflow-hidden"
         onClick={projectClick}
       >
         <Image

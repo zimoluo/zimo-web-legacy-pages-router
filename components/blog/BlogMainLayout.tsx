@@ -31,7 +31,7 @@ const BlogMainLayout = ({
 
   return (
     <div className="flex justify-center items-center">
-      <div className="relative mt-20 md:mb-20 md:mx-8 px-8 w-full blog-view md:blog-view-middle md:px-14 py-12 md:rounded-3xl md:shadow-xl">
+      <div className="relative mt-20 md:mb-20 md:mx-8 px-8 w-full blog-view md:blog-view-middle md:px-14 pb-12 pt-16 md:rounded-3xl md:shadow-xl">
         <div className="absolute top-4 right-4 transform z-10">
           <ShareButtonBar title={title} description={description} url={urlShare}/>
         </div>
@@ -42,7 +42,7 @@ const BlogMainLayout = ({
           author={author}
           content={content}
           date={date}
-        ></BlogHeader>
+        />
         <div className={`my-10 border-fuchsia-700 border-t opacity-50`}></div>
         {coverSrc && displayCover ? (
           <div className="flex justify-center items-center mb-12">

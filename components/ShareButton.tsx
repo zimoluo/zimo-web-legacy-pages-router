@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import Head from "next/head";
 
 type Props = {
   title: string;
@@ -135,7 +136,25 @@ function ShareButton({
         isOpaque ? "opacity-100" : "opacity-0"
       } transition-opacity duration-300 ease-in-out ${className}`}
     >
-      <Image src={iconMap[iconState]} alt={iconState} width={24} height={24} />
+      {platform === "copy" ? (
+        <Head>
+          <link
+            rel="preload"
+            as="image"
+            href="/share/copy-success-projects.svg"
+          />
+          <link rel="preload" as="image" href="/share/copy-success-blog.svg" />
+          <link
+            rel="preload"
+            as="image"
+            href="/share/copy-failed-projects.svg"
+          />
+          <link rel="preload" as="image" href="/share/copy-failed-blog.svg" />
+        </Head>
+      ) : (
+        ""
+      )}
+      <Image src={iconMap[iconState]} alt={iconState} width={24} height={24} className="h-6 w-6" />
     </button>
   );
 }

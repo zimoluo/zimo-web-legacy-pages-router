@@ -70,9 +70,9 @@ const ProjectsTitleCard = ({
                 <Image
                   src={`/projects-link/${key}.svg`}
                   alt={formatAltText(key)}
-                  className="h-8 w-auto ml-4 opacity-90"
-                  height={160}
-                  width={160}
+                  className="h-6 w-auto ml-3"
+                  height={24}
+                  width={24}
                 />
               </a>
             ))}

@@ -22,7 +22,7 @@ function ShareButtonBarProjects({ title, description, url }: Props) {
 
   return (
     <div className={`${isBarHidden ? "hidden" : "flex"}`}>
-      {isMobileShareAvailable ? (
+      {isMobileShareAvailable && (
         <ShareButton
           title={title}
           description={description}
@@ -31,7 +31,7 @@ function ShareButtonBarProjects({ title, description, url }: Props) {
           className="ml-3"
           theme="projects"
         />
-      ) : ''}
+      )}
       <ShareButton
         title={title}
         description={description}

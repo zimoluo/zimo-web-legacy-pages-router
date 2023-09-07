@@ -194,7 +194,7 @@
 
 .painting-size {
     height: min(80vw, 80vh);
-    width: auto
+    width: auto;
 }
 
 .cog-size {
@@ -204,12 +204,12 @@
 
 .zimo-profile-size {
     height: min(80vw, 80vh);
-    width: auto
+    width: auto;
 }
 
 .zimo-vertical-size {
     height: min(75vw, 75vh);
-    width: auto
+    width: auto;
 }
 
 .-translate-x-1\/6 {
