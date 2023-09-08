@@ -388,7 +388,7 @@
     }
 
     .w-menu-slide-desktop {
-        width: min(40rem, 100vw);
+        width: min(40rem, 90vw);
     }
 }
 

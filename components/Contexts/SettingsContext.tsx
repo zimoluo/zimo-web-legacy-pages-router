@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from '@/lib/CookieHandler';
+import { getCookie, setCookie } from '@/lib/cookieHandler';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 const SettingsContext = createContext<SettingsData | undefined>(undefined);

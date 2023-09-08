@@ -1,9 +1,15 @@
-import NavbarButton from './NavbarButton';
-import React, { useEffect, useState } from 'react';
-import { barColorMap, textColorMap, ThemeType, faviconMap, svgFilterMap } from '../interfaces/themeMaps';
-import Image from 'next/image';
-import Link from 'next/link';
-import MenuSlide from './MenuSlide';
+import NavbarButton from "./NavbarButton";
+import React, { useEffect, useState } from "react";
+import {
+  barColorMap,
+  textColorMap,
+  ThemeType,
+  faviconMap,
+  svgFilterMap,
+} from "../interfaces/themeMaps";
+import Image from "next/image";
+import Link from "next/link";
+import MenuSlide from "./MenuSlide";
 
 type NavbarProps = {
   theme: ThemeType;
@@ -22,20 +28,34 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const scrollThreshold = 4;
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuButtonRotation, setMenuButtonRotation] = useState(false);
+  const [menuButtonTranslation, setMenuButtonTranslation] = useState(false);
 
   const openMenu = () => {
+    setNavbarVisible(true);
     setMenuOpen(true);
-  }
+
+    setMenuButtonTranslation(true);
+    setTimeout(() => {
+      setMenuButtonRotation(true);
+    }, 80);
+  };
 
   const restoreNavbar = () => {
+    setNavbarVisible(true);
     setMenuOpen(false);
-  }
+
+    setMenuButtonRotation(false);
+    setTimeout(() => {
+      setMenuButtonTranslation(false);
+    }, 80);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
-      
+
       setScrollY(currentScrollY);
 
       if (currentScrollY < 40) {
@@ -44,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
         if (distanceScrolled >= scrollThreshold) {
           if (currentScrollY > lastScrollY) {
             // Scrolling down
-            setNavbarVisible(false);
+            if (!menuOpen) setNavbarVisible(false);
           } else {
             // Scrolling up
             setNavbarVisible(true);
@@ -55,37 +75,87 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     // Cleanup
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
 
-  const barColor = scrollY > 25 ? `${barColorClass} backdrop-blur-md` : 'bg-opacity-0';
-  const navbarClass = `${textColorClass} ${barColor} ${menuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} px-4 h-12 transition-all duration-300 ease-out fixed w-full top-0 flex items-center justify-between z-20`;
+  const barColor =
+    scrollY > 25 ? `${barColorClass} backdrop-blur-md` : "bg-opacity-0";
+  const navbarClass = `${textColorClass} ${barColor} ${
+    menuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+  } px-4 h-12 transition-all duration-300 ease-out fixed w-full top-0 flex items-center justify-between z-20`;
 
   return (
     <>
-    <nav id="navbar" className={navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`}>
-      <div className="flex-none">
-        <Link href={`/`} passHref>
-        <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Home Icon" width={24} height={24} priority={true} />
-        </Link>
-      </div>
-      <div className="flex flex-grow"></div>
-      <div className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}>
-      {['photos', 'blog', 'projects', 'about'].map((item) => (
-        <NavbarButton key={item} item={item as 'photos' | 'blog' | 'projects' | 'about'} theme={theme} />
-      ))}
-    </div>
-      <div className="flex flex-grow"></div>
-      <button className="flex-none" onClick={openMenu}>
-        <Image src="/more-icon.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="More Settings" width={24} height={24} priority={true} />
+      <nav
+        id="navbar"
+        className={
+          navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`
+        }
+      >
+        <div className="flex-none">
+          <Link href={`/`} passHref>
+            <Image
+              src={`${faviconSrc}`}
+              className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer"
+              alt="Home Icon"
+              width={24}
+              height={24}
+              priority={true}
+            />
+          </Link>
+        </div>
+        <div className="flex flex-grow"></div>
+        <div
+          className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}
+        >
+          {["photos", "blog", "projects", "about"].map((item) => (
+            <NavbarButton
+              key={item}
+              item={item as "photos" | "blog" | "projects" | "about"}
+              theme={theme}
+            />
+          ))}
+        </div>
+        <div className="flex flex-grow"></div>
+        <div className="flex-none h-6 w-auto aspect-square" />
+      </nav>
+      <MenuSlide isOpen={menuOpen} onClose={restoreNavbar} theme={theme} />
+      <button
+        className={`fixed top-3 right-4 flex-none h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-20 ease-out ${
+          navbarVisible || menuOpen ? "" : `-translate-y-14`
+        } `}
+        onClick={menuOpen ? restoreNavbar : openMenu}
+      >
+        <Image
+          src="/more-icon-animated.svg"
+          className={`absolute h-6 w-auto ${
+            menuButtonTranslation ? "-translate-y-1/2" : "-translate-y-1/3"
+          } ${
+            menuButtonRotation ? "-rotate-45" : ""
+          } pointer-events-none aspect-square transform transition-all duration-150 ${svgFilterClass}`}
+          alt="More Settings Lower"
+          width={24}
+          height={24}
+          priority={true}
+        />
+        <Image
+          src="/more-icon-animated.svg"
+          className={`absolute h-6 w-auto ${
+            menuButtonTranslation ? "-translate-y-1/2" : "-translate-y-2/3"
+          } ${
+            menuButtonRotation ? "rotate-45" : ""
+          } pointer-events-none aspect-square transform transition-all duration-150 ${svgFilterClass}`}
+          alt="More Settings Upper"
+          width={24}
+          height={24}
+          priority={true}
+        />
       </button>
-    </nav>
-    <MenuSlide isOpen={menuOpen} onClose={restoreNavbar} theme={theme} />
     </>
   );
 };
