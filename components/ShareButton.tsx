@@ -6,7 +6,7 @@ type Props = {
   title: string;
   description: string;
   url: string;
-  platform: "mobile" | "facebook" | "twitter" | "linkedin" | "copy";
+  platform: "mobile" | "facebook" | "twitter" | "linkedin" | "copy" | "reddit";
   className?: string;
   theme?: string;
 };
@@ -48,6 +48,7 @@ function ShareButton({
     copy: copyIconThemeMap[theme],
     copied: copiedIconThemeMap[theme],
     failed: failedIconThemeMap[theme],
+    reddit: "/share/reddit-icon.svg",
   };
 
   const [iconState, setIconState] = useState<string>(platform);
@@ -82,6 +83,18 @@ function ShareButton({
       return;
     }
 
+    if (platform === "copy") {
+      navigator.clipboard
+        .writeText(url)
+        .then(() => {
+          initiateAnimation("copied");
+        })
+        .catch(() => {
+          initiateAnimation("failed");
+        });
+      return;
+    }
+
     let shareUrl = "";
     switch (platform) {
       case "facebook":
@@ -101,16 +114,11 @@ function ShareButton({
           title
         )}&url=${encodeURIComponent(url)}`;
         break;
-      case "copy":
-        navigator.clipboard
-          .writeText(url)
-          .then(() => {
-            initiateAnimation("copied");
-          })
-          .catch(() => {
-            initiateAnimation("failed");
-          });
-        return;
+      case "reddit":
+        shareUrl = `https://www.reddit.com/submit?url=${encodeURIComponent(
+          url
+        )}&title=${encodeURIComponent(title)}`;
+        break;
     }
     window.open(shareUrl, "_blank");
   };
@@ -154,7 +162,13 @@ function ShareButton({
       ) : (
         ""
       )}
-      <Image src={iconMap[iconState]} alt={iconState} width={24} height={24} className="h-6 w-6" />
+      <Image
+        src={iconMap[iconState]}
+        alt={iconState}
+        width={24}
+        height={24}
+        className="h-6 w-6"
+      />
     </button>
   );
 }

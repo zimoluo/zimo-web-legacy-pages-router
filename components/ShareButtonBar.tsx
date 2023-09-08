@@ -7,7 +7,7 @@ type Props = {
   url: string;
 };
 
-const platforms: string[] = ["twitter", "facebook", "linkedin"];
+const platforms: string[] = ["twitter", "facebook", "reddit", "linkedin"];
 
 function ShareButtonBar({ title, description, url }: Props) {
   const [isMobileShareAvailable, setIsMobileShareAvailable] =

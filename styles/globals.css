@@ -386,6 +386,10 @@
     .group:hover .special-top-38-md {
         top: 9.5rem;
     }
+
+    .w-menu-slide-desktop {
+        width: min(40rem, 100vw);
+    }
 }
 
 .rounded-glass-pane {

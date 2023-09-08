@@ -2,7 +2,7 @@ import MainPageLayout from '@/components/MainPageLayout'
 import MainPageTitle from '@/components/MainPageTitle'
 import BlogCardGrid from '@/components/blog/BlogCardGrid'
 import PostData from '@/interfaces/blog/postData'
-import { getAllPosts } from '@/lib/blog/api'
+import { getAllPosts } from '@/lib/blog/aws-api'
 
 type Props = {
   allPosts: PostData[]

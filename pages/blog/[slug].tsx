@@ -2,7 +2,7 @@ import MainPageLayout from "@/components/MainPageLayout";
 import BlogMainLayout from "@/components/blog/BlogMainLayout";
 import ReadingBlur from "@/components/ReadingBlur";
 import PostData from "@/interfaces/blog/postData";
-import { getAllPosts, getPostBySlug } from "@/lib/blog/api";
+import { getAllPosts, getPostBySlug } from "@/lib/blog/aws-api";
 import { getCoverSrc } from "@/lib/blog/util";
 import { markdownToHtml, updateImageAttributes } from "@/lib/util";
 import Head from "next/head";

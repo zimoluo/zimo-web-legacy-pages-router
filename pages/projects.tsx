@@ -2,7 +2,7 @@ import MainPageLayout from '@/components/MainPageLayout'
 import MainPageTitle from '@/components/MainPageTitle'
 import ProjectTileGrid from '@/components/projects/ProjectTileGrid';
 import ProjectData from '@/interfaces/projects/projectData';
-import { getAllEntries } from '@/lib/api'
+import { getAllEntries } from '@/lib/aws-api'
 import { markdownToHtml, updateImageAttributes } from '@/lib/util';
 
 const filePath = 'projects/entries';

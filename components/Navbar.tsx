@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { barColorMap, textColorMap, ThemeType, faviconMap, svgFilterMap } from '../interfaces/themeMaps';
 import Image from 'next/image';
 import Link from 'next/link';
+import MenuSlide from './MenuSlide';
 
 type NavbarProps = {
   theme: ThemeType;
@@ -19,6 +20,16 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const [navbarVisible, setNavbarVisible] = useState(true);
 
   const scrollThreshold = 4;
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const openMenu = () => {
+    setMenuOpen(true);
+  }
+
+  const restoreNavbar = () => {
+    setMenuOpen(false);
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,10 +64,11 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   }, [lastScrollY]);
 
   const barColor = scrollY > 25 ? `${barColorClass} backdrop-blur-md` : 'bg-opacity-0';
-  const navbarClass = `${textColorClass} ${barColor} px-4 h-12 transition-all duration-300 ease-out fixed w-full top-0 opacity-100 flex items-center justify-between z-20`;
+  const navbarClass = `${textColorClass} ${barColor} ${menuOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} px-4 h-12 transition-all duration-300 ease-out fixed w-full top-0 flex items-center justify-between z-20`;
 
   return (
-    <div id="navbar" className={navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`}>
+    <>
+    <nav id="navbar" className={navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`}>
       <div className="flex-none">
         <Link href={`/`} passHref>
         <Image src={`${faviconSrc}`} className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer" alt="Home Icon" width={24} height={24} priority={true} />
@@ -69,10 +81,12 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       ))}
     </div>
       <div className="flex flex-grow"></div>
-      <div className="flex-none">
-        <Image src="/mode-light.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="Light Dark Mode Switch" width={24} height={24} priority={true} />
-      </div>
-    </div>
+      <button className="flex-none" onClick={openMenu}>
+        <Image src="/more-icon.svg" className={`h-6 w-auto transform transition-all duration-300 hover:scale-125 ${svgFilterClass}`} alt="More Settings" width={24} height={24} priority={true} />
+      </button>
+    </nav>
+    <MenuSlide isOpen={menuOpen} onClose={restoreNavbar} theme={theme} />
+    </>
   );
 };
 

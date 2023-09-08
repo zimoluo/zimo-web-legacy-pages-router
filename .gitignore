@@ -36,3 +36,5 @@ next-env.d.ts
 
 # apikey
 awskey.ts
+googlekey.ts
+encryptionkey.ts

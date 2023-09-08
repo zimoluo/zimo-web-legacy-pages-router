@@ -4,7 +4,7 @@ import { getProjectFavicon } from "@/lib/projects/util";
 import { markdownToHtml, updateImageAttributes } from "@/lib/util";
 import Head from "next/head";
 import ReadingBlur from "@/components/ReadingBlur";
-import { getAllEntries, getEntryBySlug } from "@/lib/api";
+import { getAllEntries, getEntryBySlug } from "@/lib/aws-api";
 import ProjectMain from "@/components/projects/ProjectMain";
 
 type ProjectType = {
