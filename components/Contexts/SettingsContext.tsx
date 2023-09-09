@@ -21,18 +21,17 @@ export const SettingsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-
   const { user, setUser } = useUser();
-  
+
   // Initialize the settings state with default settings
   const [settings, setSettings] = useState<SettingsState>({
-      backgroundRichness: "rich",
-      syncSettings: true,
-      navigationBar: "flexible",
-      disableCenterPainting: false,
-      disableComments: false,
-      disableGestures: false,
-      disableSerifFont: false,
+    backgroundRichness: "rich",
+    syncSettings: true,
+    navigationBar: "flexible",
+    disableCenterPainting: false,
+    disableComments: false,
+    disableGestures: false,
+    disableSerifFont: false,
   });
 
   useEffect(() => {
@@ -55,6 +54,7 @@ export const SettingsProvider = ({
       localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
 
       const doSyncSettings = updatedSettings.syncSettings;
+
       if (user !== null) {
         const preparedSettings = doSyncSettings ? updatedSettings : null;
         if (user.websiteSettings === null && preparedSettings === null) {
@@ -63,7 +63,9 @@ export const SettingsProvider = ({
         const newUser = { ...user, websiteSettings: preparedSettings };
         setUser(newUser);
         modifySessionToken(newUser);
-        fetchUploadUserToServerWithOnlyUser(newUser);
+        if (doSyncSettings) {
+          fetchUploadUserToServerWithOnlyUser(newUser);
+        }
       }
 
       return updatedSettings;
@@ -84,7 +86,9 @@ export const SettingsProvider = ({
   };
 
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings, updateSettingsLocally }}>
+    <SettingsContext.Provider
+      value={{ settings, updateSettings, updateSettingsLocally }}
+    >
       {children}
     </SettingsContext.Provider>
   );

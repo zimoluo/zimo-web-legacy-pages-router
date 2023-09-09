@@ -83,7 +83,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
           }
         }
 
-        const newUser = { ...downloadedUser, websiteSettings: localSettings };
+        const newUser = { ...downloadedUser, websiteSettings: localSettings, secureSub: token.secureSub };
         setUser(newUser);
         modifySessionToken(newUser);
       } catch (error) {
