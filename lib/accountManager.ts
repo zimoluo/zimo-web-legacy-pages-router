@@ -176,7 +176,7 @@ export async function getUserByPayload(payload: AccountPayloadData) {
     name: userName,
     profilePic: profilePic,
     secureSub: secureSub,
-    status: userState,
+    state: userState,
     websiteSettings: localSettings,
   } as UserData;
 

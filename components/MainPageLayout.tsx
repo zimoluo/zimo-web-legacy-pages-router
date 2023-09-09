@@ -11,8 +11,15 @@ import {
   siteThemeColorMap,
 } from "../interfaces/themeMaps";
 import { useUser } from "./contexts/UserContext";
-import { getSessionToken } from "@/lib/accountManager";
+import {
+  fetchCheckIfUserExistsBySecureSub,
+  fetchUploadUserToServer,
+  fetchUserDataBySecureSub,
+  getSessionToken,
+  modifySessionToken,
+} from "@/lib/accountManager";
 import { useEffect } from "react";
+import { useSettings } from "./contexts/SettingsContext";
 
 interface LayoutProps {
   theme: ThemeType;
@@ -26,6 +33,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
   className,
 }) => {
   const { user, setUser } = useUser();
+  const { updateSettingsLocally } = useSettings();
 
   useEffect(() => {
     async function restoreUserInfo() {
@@ -36,8 +44,50 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         if (token === null) return;
 
         setUser(token);
+        if (!fetchCheckIfUserExistsBySecureSub) return;
+        const downloadedUser = await fetchUserDataBySecureSub(token.secureSub, [
+          "name",
+          "profilePic",
+          "state",
+          "websiteSettings",
+        ]);
+
+        const savedRawSettings = localStorage.getItem("websiteSettings");
+        const loadedSettings = savedRawSettings
+          ? JSON.parse(savedRawSettings)
+          : {
+              backgroundRichness: "rich",
+              syncSettings: true,
+              navigationBar: "flexible",
+              disableCenterPainting: false,
+              disableComments: false,
+              disableGestures: false,
+              disableSerifFont: false,
+            };
+        const doSyncSettings: boolean = loadedSettings.syncSettings;
+
+        let localSettings = doSyncSettings
+          ? downloadedUser.websiteSettings
+          : null;
+
+        if (doSyncSettings) {
+          if (downloadedUser.websiteSettings === null) {
+            localSettings = loadedSettings;
+            fetchUploadUserToServer(
+              { ...downloadedUser, websiteSettings: localSettings },
+              token.secureSub
+            );
+          } else {
+            localSettings = downloadedUser.websiteSettings;
+            updateSettingsLocally(localSettings);
+          }
+        }
+
+        const newUser = { ...downloadedUser, websiteSettings: localSettings };
+        setUser(newUser);
+        modifySessionToken(newUser);
       } catch (error) {
-        console.error("Error in restoreUserInfo:", error);
+        console.error("Error in restoring user session:", error);
       }
     }
 

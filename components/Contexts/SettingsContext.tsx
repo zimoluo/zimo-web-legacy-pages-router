@@ -10,6 +10,7 @@ const SettingsContext = createContext<
   | {
       settings: SettingsState;
       updateSettings: (newSettings: Partial<SettingsState>) => void;
+      updateSettingsLocally: (newSettings: Partial<SettingsState>) => void;
     }
   | undefined
 >(undefined);
@@ -69,8 +70,21 @@ export const SettingsProvider = ({
     });
   };
 
+  const updateSettingsLocally = (newSettings: Partial<SettingsState>) => {
+    setSettings((prevSettings) => {
+      const updatedSettings = {
+        ...prevSettings,
+        ...newSettings,
+      };
+
+      // Update the local storage
+      localStorage.setItem("websiteSettings", JSON.stringify(updatedSettings));
+      return updatedSettings;
+    });
+  };
+
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings }}>
+    <SettingsContext.Provider value={{ settings, updateSettings, updateSettingsLocally }}>
       {children}
     </SettingsContext.Provider>
   );

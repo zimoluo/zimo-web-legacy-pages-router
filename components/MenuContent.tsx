@@ -1,6 +1,7 @@
 import { useUser } from "./contexts/UserContext";
 import GoogleSignInButton from "./GoogleSignInButton";
 import Image from "next/image";
+import { useEffect } from "react";
 
 const MenuContent = () => {
   const { user } = useUser();
@@ -25,10 +26,11 @@ const MenuContent = () => {
         <br />
         ur mom
         <br />
-        {user?.status}
+        {user?.state}
         <br />
-        ur settings
+        ur things
         <br />
+        {JSON.stringify(user)}
       </div>
     </div>
   );
