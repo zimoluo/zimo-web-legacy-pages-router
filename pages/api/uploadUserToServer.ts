@@ -50,26 +50,3 @@ async function uploadUserToServer(
     };
   }
 }
-
-export async function fetchUploadUserToServer(user: any, secureSub: string) {
-  try {
-    const response = await fetch('/api/uploadUserToServer', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user, secureSub }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || 'Something went wrong');
-    }
-
-    return data;
-  } catch (error) {
-    console.error('Error uploading user data:', error);
-    return null;
-  }
-}

@@ -126,10 +126,11 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       </nav>
       <MenuSlide isOpen={menuOpen} onClose={restoreNavbar} theme={theme} />
       <button
-        className={`fixed top-3 right-4 flex-none h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-20 ease-out ${
+        className={`fixed top-3 right-4 flex-none h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-40 ease-out ${
           navbarVisible || menuOpen ? "" : `-translate-y-14`
         } `}
         onClick={menuOpen ? restoreNavbar : openMenu}
+        id="menu-button"
       >
         <Image
           src="/more-icon-animated.svg"

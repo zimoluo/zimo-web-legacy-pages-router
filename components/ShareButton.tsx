@@ -128,7 +128,7 @@ function ShareButton({
 
     setShareInProgress(true); // Mark mobile share operation as in-progress
     try {
-      await navigator.share({ title, text: description, url });
+      await navigator.share({ text: title, url });
       // You can handle a successful share here if needed
     } catch (e) {
       // Handle failure or cancelation

@@ -1,1 +1,5 @@
-type UserData = AccountPayloadData & { status: UserState };
+type UserData = AccountPayloadData & {
+    status: UserState;
+    websiteSettings: SettingsState | null;
+  };
+  

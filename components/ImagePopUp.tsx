@@ -56,7 +56,7 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 px-12 py-12">
+    <div className="fixed inset-0 flex items-center justify-center z-80 px-12 py-12">
       <Image
         src={src}
         alt={`${altText ? altText : "Zoomed-In Image"}`}

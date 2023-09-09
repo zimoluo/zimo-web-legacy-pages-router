@@ -142,7 +142,7 @@ export default function ProjectMainPopup({
   const parsedImage = imagesParser(images);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-40 px-12 py-12">
+    <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
       <div
         className="flex rounded-xl projects-popup-bg overflow-hidden opacity-0"
         style={{ ...style, width: `${gridWidth}px`, height: `${gridHeight}px` }}
@@ -182,7 +182,7 @@ export default function ProjectMainPopup({
         </div>
       </div>
       <button
-        className="absolute top-3 right-3 z-50"
+        className="absolute top-3 right-3 z-70"
         onClick={() => {
           onClose();
           window.history.replaceState({}, '', '#');

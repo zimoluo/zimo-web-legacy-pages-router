@@ -1,20 +1,18 @@
-import { SettingsProvider } from "@/components/Contexts/SettingsContext";
+import { SettingsProvider } from "@/components/contexts/SettingsContext";
 import { clientId } from "@/lib/googlekey";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { useEffect } from "react";
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { UserProvider } from "@/components/Contexts/UserContext";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { UserProvider } from "@/components/contexts/UserContext";
 
 export default function App({ Component, pageProps }: AppProps) {
-
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <SettingsProvider>
-        <UserProvider>
+      <UserProvider>
+        <SettingsProvider>
           <Component {...pageProps} />
-        </UserProvider>
-      </SettingsProvider>
+        </SettingsProvider>
+      </UserProvider>
     </GoogleOAuthProvider>
   );
 }

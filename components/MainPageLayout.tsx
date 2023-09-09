@@ -10,12 +10,8 @@ import {
   simpleTitleMap,
   siteThemeColorMap,
 } from "../interfaces/themeMaps";
-import { useUser } from "./Contexts/UserContext";
-import {
-  fetchCheckIfUserExistsBySecureSub,
-  fetchUserDataBySecureSub,
-  getSessionToken,
-} from "@/lib/accountManager";
+import { useUser } from "./contexts/UserContext";
+import { getSessionToken } from "@/lib/accountManager";
 import { useEffect } from "react";
 
 interface LayoutProps {
@@ -63,11 +59,6 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         <meta name="theme-color" content={siteThemeColor} />
         <meta name="robots" content="index,follow,max-image-preview:large" />
         <meta name="author" content="Zimo" />
-        <link rel="preload" as="image" href="/favicon.svg" />
-        <link rel="preload" as="image" href="/zimo-favicon.svg" />
-        <link rel="preload" as="image" href="/photos-zimo.svg" />
-        <link rel="preload" as="image" href="/blog-zimo.svg" />
-        <link rel="preload" as="image" href="/projects-zimo.svg" />
       </Head>
       <BackgroundImage theme={theme} />
       <BackgroundAnimation theme={theme} />

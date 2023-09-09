@@ -1,4 +1,4 @@
-import { useUser } from "./Contexts/UserContext";
+import { useUser } from "./contexts/UserContext";
 import GoogleSignInButton from "./GoogleSignInButton";
 import Image from "next/image";
 
@@ -26,6 +26,9 @@ const MenuContent = () => {
         ur mom
         <br />
         {user?.status}
+        <br />
+        ur settings
+        <br />
       </div>
     </div>
   );
