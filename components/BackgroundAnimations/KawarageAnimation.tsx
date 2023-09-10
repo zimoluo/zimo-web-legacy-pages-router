@@ -114,12 +114,14 @@ const KawarageAnimation: React.FC = () => {
         "fixed",
         "transform",
         "-rotate-90",
-        "z-[-20]",
+        "-z-20",
         "font-arial-black",
         "text-teal-900",
         "font-bold",
         "flying-kawarage",
-        "whitespace-nowrap"
+        "whitespace-nowrap",
+        "pointer-events-none",
+        "select-none",
       );
       textDiv.style.cssText = `
             left: ${leftPosition}%;

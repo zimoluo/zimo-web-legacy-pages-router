@@ -42,6 +42,23 @@ export const SettingsProvider = ({
     }
   }, []);
 
+  useEffect(() => {
+    const doSyncSettings = settings.syncSettings;
+
+    if (user !== null) {
+      const preparedSettings = doSyncSettings ? settings : null;
+
+      if (user.websiteSettings === null && preparedSettings === null) {
+        return; // Exit if both are null
+      }
+
+      const newUser = { ...user, websiteSettings: preparedSettings };
+
+      // Update user state
+      setUser(newUser);
+    }
+  }, [settings]); 
+
   // Update settings function
   const updateSettings = (newSettings: Partial<SettingsState>) => {
     setSettings((prevSettings) => {
@@ -61,7 +78,7 @@ export const SettingsProvider = ({
           return updatedSettings;
         }
         const newUser = { ...user, websiteSettings: preparedSettings };
-        setUser(newUser);
+
         modifySessionToken(newUser);
         if (doSyncSettings) {
           fetchUploadUserToServerWithOnlyUser(newUser);

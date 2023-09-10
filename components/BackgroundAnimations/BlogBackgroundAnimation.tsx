@@ -4,7 +4,7 @@ import BlogBackgroundAnimationPainting from './BlogBackgroundAnimationPainting';
 const BlogBackgroundAnimation = () => {
   return (
     <>
-      <div className="fixed inset-0 -z-20 flex items-center justify-center h-screen pointer-events-none opacity-40">
+      <div className="fixed inset-0 -z-20 flex items-center justify-center h-screen pointer-events-none opacity-40 select-none">
         <Image
           src="/blog-pane-eunoe.svg" 
           alt="Eunoe Text"
@@ -16,7 +16,7 @@ const BlogBackgroundAnimation = () => {
         />
       </div>
 
-      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10">
+      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 select-none">
         <Image
           src="/blog-painting-base-glow.svg"
           alt="Blog Painting"

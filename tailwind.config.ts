@@ -72,6 +72,11 @@ const config: Config = {
         'border-fuchsia-900',
         'border-teal-900',
         'border-sky-900',
+        'border-neutral-700',
+        'border-orange-700',
+        'border-fuchsia-700',
+        'border-teal-700',
+        'border-sky-700',
       ],
     },
   }

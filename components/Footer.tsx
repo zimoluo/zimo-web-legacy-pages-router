@@ -17,7 +17,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
   const displayYear = currentYear > 2023 ? `2023-${currentYear}` : '2023';
 
   return (
-    <div className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial backdrop-blur-md`}>
+    <footer className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial backdrop-blur-md`}>
       <div className="flex items-center mb-4 text-xl font-bold">
         <Image src={faviconSrc} alt="Dynamic logo" className="h-8 mr-3" height={32} width={32} />
         <div>Zimo</div>
@@ -33,7 +33,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
       <div className="text-center text-sm">
         &copy; {displayYear} Zimo Luo. All Rights Reserved.
       </div>
-    </div>
+    </footer>
   );
 };
 

@@ -33,7 +33,7 @@ export async function fetchUploadUserToServerWithOnlyUser(user: UserData) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userWithoutSub, secureSub }),
+      body: JSON.stringify({ user: userWithoutSub, secureSub }),
     });
 
     const data = await response.json();
@@ -51,7 +51,7 @@ export async function fetchUploadUserToServerWithOnlyUser(user: UserData) {
 
 export async function fetchDecodedToken(
   token: string,
-  unsafe: boolean = false
+  unsafe: boolean = true,
 ) {
   const apiLocation = unsafe ? "/api/unsafeDecodeToken" : "/api/decodeToken";
 

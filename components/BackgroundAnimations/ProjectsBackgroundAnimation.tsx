@@ -3,7 +3,7 @@ import KawarageAnimation from "./KawarageAnimation";
 
 const ProjectsBackgroundAnimation = () => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 rotate-0 animate-spin-revolution">
+    <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 rotate-0 animate-spin-revolution select-none">
       <div className="absolute pointer-events-none cog-size translate-cog-yang">
         <Image
           src="/projects-cog-yang.svg"

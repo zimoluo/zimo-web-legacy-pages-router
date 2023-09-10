@@ -29,7 +29,7 @@ const ProjectTextSide = ({
       : "";
 
   return (
-    <div className="w-full relative">
+    <article className="w-full relative">
       <div className="absolute top-4 right-4 transform z-10">
         <ShareButtonBarProjects
           title={title}
@@ -49,7 +49,7 @@ const ProjectTextSide = ({
         />
         <ProjectContent content={content} />
       </div>
-    </div>
+    </article>
   );
 };
 

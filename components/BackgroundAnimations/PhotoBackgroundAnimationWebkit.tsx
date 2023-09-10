@@ -18,7 +18,7 @@ const PhotosBackgroundAnimationWebkit: React.FC = () => {
 
   return (
     <>
-      <div className="fixed inset-0 -z-30 flex items-center justify-center h-screen pointer-events-none opacity-20">
+      <div className="fixed inset-0 -z-30 flex items-center justify-center h-screen pointer-events-none opacity-20 select-none">
         <Image
           src="/photos-new-bg-zimo.svg"
           alt="Zimo Text"
@@ -29,7 +29,7 @@ const PhotosBackgroundAnimationWebkit: React.FC = () => {
           priority={true}
         />
       </div>
-      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 animate-move-glass-group-1">
+      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 animate-move-glass-group-1 select-none">
         <div
           className={`-z-20 rounded-glass-pane color-glass-pane-base shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/3 translate-y-1/3 ${
             enableAnimation ? "animate-move-glass-individual-3" : ""
@@ -112,7 +112,7 @@ const PhotosBackgroundAnimationWebkit: React.FC = () => {
         />
       </div>
 
-      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 right-1/2 bottom-1/3 animate-move-glass-group-2">
+      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 right-1/2 bottom-1/3 animate-move-glass-group-2 select-none">
         <div
           className={`-z-20 rounded-glass-pane color-glass-pane-base shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/3 translate-y-1/3 ${
             enableAnimation ? "animate-move-glass-individual-8" : ""
@@ -195,7 +195,7 @@ const PhotosBackgroundAnimationWebkit: React.FC = () => {
         />
       </div>
 
-      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 left-1/2 top-1/3 animate-move-glass-group-3">
+      <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 left-1/2 top-1/3 animate-move-glass-group-3 select-none">
         <div
           className={`-z-20 rounded-glass-pane color-glass-pane-base shadow-lg absolute pointer-events-none h-44 w-44 -translate-x-1/3 translate-y-1/3 ${
             enableAnimation ? "animate-move-glass-individual-3" : ""

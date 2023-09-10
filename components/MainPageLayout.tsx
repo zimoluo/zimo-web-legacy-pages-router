@@ -73,7 +73,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         if (doSyncSettings) {
           if (downloadedUser.websiteSettings === null) {
             localSettings = loadedSettings;
-            fetchUploadUserToServer(
+            await fetchUploadUserToServer(
               { ...downloadedUser, websiteSettings: localSettings },
               token.secureSub
             );

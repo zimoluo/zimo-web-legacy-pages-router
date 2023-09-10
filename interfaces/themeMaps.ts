@@ -67,13 +67,13 @@ export const borderColorMap: { [key: string]: string } = Object.fromEntries(
 
 // Map for the icon text
 export const iconTextMap: { [key: string]: string } = {
+  'home': 'Home',
   'photos': 'Album',
   'blog': 'Blog',
   'projects': 'Projects',
   'about': 'About',
 };
 
-// Map for light icons
 export const topIconMap: { [key: string]: string } = {
   'photos': '/photos-light.svg',
   'blog': '/blog-light.svg',
@@ -110,3 +110,18 @@ export const imagesArrowMap: { [key: string]: string } = {
   'photos': '/photos-arrow.svg',
 };
 
+export const menuEntryBorderMap: { [key: string]: string } = {
+  'zimo': 'border-neutral-700',
+  'photos': 'border-orange-700',
+  'blog': 'border-fuchsia-700',
+  'projects': 'border-teal-700',
+  'about': 'border-sky-700',
+};
+
+export const flipFilterMap: { [key: string]: string } = {
+  "zimo": "zimo-flip-filter",
+  "photos": "photos-flip-filter",
+  "blog": "blog-flip-filter",
+  "projects": "projects-flip-filter",
+  "about": "about-flip-filter",
+};
