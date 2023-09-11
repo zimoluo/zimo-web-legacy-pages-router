@@ -57,7 +57,7 @@ export const SettingsProvider = ({
       // Update user state
       setUser(newUser);
     }
-  }, [settings]); 
+  }, [settings]);
 
   // Update settings function
   const updateSettings = (newSettings: Partial<SettingsState>) => {

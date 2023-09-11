@@ -42,14 +42,14 @@ const MenuNavigationEntry: React.FC<Props> = ({ item, theme }) => {
             height={40}
           />
           <div className="flex-grow" />
-          <div className={`ml-3 text-lg font-bold md:text-xl ${textColorClass}`}>
+          <div className={`ml-3 ${textColorClass}`}>
             {iconTextMap[item]}
           </div>
         </div>
       </Link>
       {item !== "about" && (
         <div
-          className={`my-0 ${borderColorClass} border-menu-entry border-opacity-20`}
+          className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
         ></div>
       )}
     </>

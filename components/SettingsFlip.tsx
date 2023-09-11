@@ -12,7 +12,6 @@ interface Props {
 }
 
 const SettingsFlip: React.FC<Props> = ({ theme, onClick, state = false }) => {
-
   function flip() {
     onClick(!state);
   }
@@ -48,7 +47,7 @@ const SettingsFlip: React.FC<Props> = ({ theme, onClick, state = false }) => {
         } border-flip rounded-full border-opacity-0`}
         height={40}
         width={71}
-        alt="Flip base"
+        alt="Flip button"
       />
     </button>
   );
