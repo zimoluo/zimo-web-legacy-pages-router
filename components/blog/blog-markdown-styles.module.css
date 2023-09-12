@@ -13,6 +13,12 @@
 .markdown p,
 .markdown ul,
 .markdown ol {
+  @apply font-arial;
+}
+
+.markdown-serif p,
+.markdown-serif ul,
+.markdown-serif ol {
   @apply font-tnr;
 }
 

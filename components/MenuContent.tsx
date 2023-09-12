@@ -10,6 +10,7 @@ import MenuNavigationEntry from "./MenuNavigationEntry";
 import SettingsFlip from "./SettingsFlip";
 import { useSettings } from "./contexts/SettingsContext";
 import SettingsNotchBar from "./SettingsSlider";
+import React from "react";
 
 type Props = {
   theme: ThemeType;
@@ -32,7 +33,7 @@ const MenuContent = ({ theme }: Props) => {
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto overflow-x-hidden px-6 md:px-8 py-8">
+    <div className="h-full w-full overflow-y-auto px-6 md:px-8 py-8">
       <div
         className={`rounded-full w-full ${barColorClass} shadow-lg px-4 py-4 mt-6 mb-14 ${borderColorClass} border-menu-entry border-opacity-20 flex items-center`}
       >
@@ -58,14 +59,77 @@ const MenuContent = ({ theme }: Props) => {
       <div
         className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 my-6 ${borderColorClass} border-menu-entry border-opacity-20`}
       >
+        {["syncSettings"].map((item, index, array) => (
+          <React.Fragment key={item}>
+            <div className="flex items-center my-4 ">
+              <div className="flex-grow text-lg md:text-xl">
+                {settingsNameMap[item]}
+              </div>
+              <SettingsFlip
+                key={item}
+                onClick={(status: boolean) => {
+                  updateSettings({ [item]: status } as Partial<SettingsState>);
+                }}
+                theme={theme}
+                state={
+                  (settings as unknown as Record<string, unknown>)[
+                    item
+                  ] as boolean
+                }
+              />
+            </div>
+            {
+              <div
+                className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+              ></div>
+            }
+          </React.Fragment>
+        ))}
+        <div className="md:flex md:items-center my-4 ">
+          <div className="md:flex-grow text-lg md:text-xl min-w-background-richness">
+            Background Richness
+          </div>
+          <SettingsNotchBar
+            setValue={(newValue: string) => {
+              updateSettings({
+                backgroundRichness: newValue as "minimal" | "reduced" | "rich",
+              });
+            }}
+            values={["minimal", "reduced", "rich"]}
+            text={["Minimal", "Reduced", "Rich"]}
+            theme={theme}
+            entry={settings.backgroundRichness}
+          />
+        </div>
+        <div
+          className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+        />
+        <div className="md:flex md:items-center my-4 ">
+          <div className="md:flex-grow text-lg md:text-xl min-w-background-richness">
+            Navigation Bar
+          </div>
+          <SettingsNotchBar
+            setValue={(newValue: string) => {
+              updateSettings({
+                navigationBar: newValue as "disabled" | "always" | "flexible",
+              });
+            }}
+            values={["disabled", "always", "flexible"]}
+            text={["Disabled", "Always-On", "Flexible"]}
+            theme={theme}
+            entry={settings.navigationBar}
+          />
+        </div>
+        <div
+          className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+        />
         {[
-          "syncSettings",
           "disableCenterPainting",
           "disableComments",
           "disableGestures",
           "disableSerifFont",
         ].map((item, index, array) => (
-          <>
+          <React.Fragment key={item}>
             <div className="flex items-center my-4 ">
               <div className="flex-grow text-lg md:text-xl">
                 {settingsNameMap[item]}
@@ -88,18 +152,9 @@ const MenuContent = ({ theme }: Props) => {
                 className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
               ></div>
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
-
-      <SettingsNotchBar
-        onClick={(data) => {
-          console.log("Setting changed:", data);
-          // Here you can use data.key and data.value for other tasks.
-        }}
-        values={["Slow", "Medium", "Fast"]}
-        theme={theme}
-      />
 
       <div className="overflow-auto">{JSON.stringify(user)}</div>
     </div>

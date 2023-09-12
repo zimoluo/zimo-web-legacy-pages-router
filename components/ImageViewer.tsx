@@ -9,6 +9,7 @@ import {
 import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
 import { imagesArrowMap } from "@/interfaces/themeMaps";
+import { useSettings } from "./contexts/SettingsContext";
 
 function ImageViewer({
   url,
@@ -23,6 +24,7 @@ function ImageViewer({
   const [rightButtonVisible, setRightButtonVisible] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const imageContainerRef = useRef<HTMLDivElement>(null);
+  const { settings } = useSettings();
 
   const arrowSrc = imagesArrowMap[theme];
 
@@ -202,6 +204,8 @@ function ImageViewer({
 
   useEffect(() => {
     if (isGridView) return;
+    
+    if (settings.disableGestures) return;
 
     let initialX: number | null = null;
     let initialDeltaY: number | null = null;

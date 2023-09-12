@@ -1,7 +1,10 @@
 import Image from "next/image";
 import KawarageAnimation from "./KawarageAnimation";
+import { useSettings } from "../contexts/SettingsContext";
 
 const ProjectsBackgroundAnimation = () => {
+  const { settings } = useSettings();
+
   return (
     <div className="fixed inset-0 flex justify-center items-center pointer-events-none -z-10 rotate-0 animate-spin-revolution select-none">
       <div className="absolute pointer-events-none cog-size translate-cog-yang">
@@ -10,7 +13,7 @@ const ProjectsBackgroundAnimation = () => {
           alt="Cog Yang"
           height="0"
           width="0"
-          placeholder='empty'
+          placeholder="empty"
           priority={true}
           className="pointer-events-none opacity-90 cog-size rotate-cog-yang animate-spin-cog -z-10"
         />
@@ -21,12 +24,12 @@ const ProjectsBackgroundAnimation = () => {
           alt="Cog Yin"
           height="0"
           width="0"
-          placeholder='empty'
+          placeholder="empty"
           priority={true}
           className="pointer-events-none opacity-90 cog-size rotate-cog-yin animate-spin-cog-reverse -z-10"
         />
       </div>
-      <KawarageAnimation/>
+      {settings.backgroundRichness === "rich" && <KawarageAnimation />}
     </div>
   );
 };

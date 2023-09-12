@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import MenuSlide from "./MenuSlide";
+import { useSettings } from "./contexts/SettingsContext";
 
 type NavbarProps = {
   theme: ThemeType;
@@ -20,6 +21,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const barColorClass = barColorMap[theme] || barColorMap["zimo"];
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const faviconSrc = faviconMap[theme] || faviconMap["zimo"];
+
+  const { settings } = useSettings();
 
   const [scrollY, setScrollY] = useState(0);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -64,7 +67,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
         if (distanceScrolled >= scrollThreshold) {
           if (currentScrollY > lastScrollY) {
             // Scrolling down
-            if (!menuOpen) setNavbarVisible(false);
+            if (!menuOpen && settings.navigationBar === "flexible")
+              setNavbarVisible(false);
           } else {
             // Scrolling up
             setNavbarVisible(true);
@@ -91,39 +95,42 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
 
   return (
     <>
-      <nav
-        id="navbar"
-        className={
-          navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`
-        }
-      >
-        <div className="flex-none">
-          <Link href={`/`} passHref>
-            <Image
-              src={`${faviconSrc}`}
-              className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer"
-              alt="Home Icon"
-              width={24}
-              height={24}
-              priority={true}
-            />
-          </Link>
-        </div>
-        <div className="flex flex-grow"></div>
-        <div
-          className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}
+      {settings.navigationBar !== "disabled" && (
+        <nav
+          id="navbar"
+          className={
+            navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`
+          }
         >
-          {["photos", "blog", "projects", "about"].map((item) => (
-            <NavbarButton
-              key={item}
-              item={item as "photos" | "blog" | "projects" | "about"}
-              theme={theme}
-            />
-          ))}
-        </div>
-        <div className="flex flex-grow"></div>
-        <div className="flex-none h-6 w-auto aspect-square" />
-      </nav>
+          <div className="flex-none">
+            <Link href={`/`} passHref>
+              <Image
+                src={`${faviconSrc}`}
+                className="h-6 w-auto transform transition-all duration-300 hover:scale-125 cursor-pointer"
+                alt="Home Icon"
+                width={24}
+                height={24}
+                priority={true}
+              />
+            </Link>
+          </div>
+          <div className="flex flex-grow"></div>
+          <div
+            className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}
+          >
+            {["photos", "blog", "projects", "about"].map((item) => (
+              <NavbarButton
+                key={item}
+                item={item as "photos" | "blog" | "projects" | "about"}
+                theme={theme}
+              />
+            ))}
+          </div>
+          <div className="flex flex-grow"></div>
+          <div className="flex-none h-6 w-auto aspect-square" />
+        </nav>
+      )}
+
       <MenuSlide isOpen={menuOpen} onClose={restoreNavbar} theme={theme} />
       <button
         className={`fixed top-3 right-4 flex-none h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-40 ease-out ${
