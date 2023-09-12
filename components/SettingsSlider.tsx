@@ -158,7 +158,9 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
           return (
             <div
               key={key}
-              className={`absolute translate-y-5 ${translateXClass} text-xs select-auto`}
+              className={`absolute translate-y-5 ${translateXClass} ${
+                sliderPos === positionPercent ? "font-bold" : "font-normal"
+              } text-xs select-auto`}
               style={{ left: `${positionPercent}%` }}
               onClick={() => handleSetPosition(positionPercent)}
             >
@@ -172,7 +174,9 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
         >
           <div
             className={`${sliderBorderColorClass} border-slider shadow-lg w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-2.25 ${
-              isDragging ? "cursor-grabbing scale-150 bg-slider-highlight" : `cursor-grab scale-135 ${sliderButtonClass}`
+              isDragging
+                ? "cursor-grabbing scale-150 bg-slider-highlight"
+                : `cursor-grab scale-135 ${sliderButtonClass}`
             }`}
             draggable={true}
             onDragStart={dragStartHandler}
