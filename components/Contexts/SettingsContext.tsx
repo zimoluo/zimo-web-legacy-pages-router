@@ -4,6 +4,7 @@ import {
   fetchUploadUserToServerWithOnlyUser,
   modifySessionToken,
 } from "@/lib/accountManager";
+import { defaultSettings } from "@/interfaces/defaultSettings";
 
 // Create the context with optional initial values
 const SettingsContext = createContext<
@@ -24,15 +25,7 @@ export const SettingsProvider = ({
   const { user, setUser } = useUser();
 
   // Initialize the settings state with default settings
-  const [settings, setSettings] = useState<SettingsState>({
-    backgroundRichness: "rich",
-    syncSettings: true,
-    navigationBar: "flexible",
-    disableCenterPainting: false,
-    disableComments: false,
-    disableGestures: false,
-    disableSerifFont: false,
-  });
+  const [settings, setSettings] = useState<SettingsState>(defaultSettings);
 
   useEffect(() => {
     // This will only run on the client side

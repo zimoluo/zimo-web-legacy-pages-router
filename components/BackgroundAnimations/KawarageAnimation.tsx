@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useSettings } from "../contexts/SettingsContext";
 
 const KawarageAnimation: React.FC = () => {
   const router = useRouter();
+  const { settings } = useSettings();
 
   useEffect(() => {
     if (router.pathname !== "/projects") return;
@@ -35,7 +37,7 @@ const KawarageAnimation: React.FC = () => {
       clearInterval(intervalId);
       clearExistingTexts();
 
-      const newInterval = 1800;
+      const newInterval = settings.floatingCodeSpeed;
 
       intervalId = setInterval(addText, newInterval);
     };
@@ -153,7 +155,7 @@ const KawarageAnimation: React.FC = () => {
       clearExistingTexts();
       window.removeEventListener("resize", setDynamicInterval);
     };
-  }, [router.pathname]);
+  }, [router.pathname, settings.floatingCodeSpeed]);
 
   return null;
 };

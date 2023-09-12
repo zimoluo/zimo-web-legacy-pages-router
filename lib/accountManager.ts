@@ -1,3 +1,5 @@
+import { defaultSettings } from "@/interfaces/defaultSettings";
+
 export async function fetchUploadUserToServer(
   user: Omit<UserData, "secureSub">,
   secureSub: string
@@ -49,10 +51,7 @@ export async function fetchUploadUserToServerWithOnlyUser(user: UserData) {
   }
 }
 
-export async function fetchDecodedToken(
-  token: string,
-  unsafe: boolean = true,
-) {
+export async function fetchDecodedToken(token: string, unsafe: boolean = true) {
   const apiLocation = unsafe ? "/api/unsafeDecodeToken" : "/api/decodeToken";
 
   try {
@@ -133,15 +132,7 @@ export async function getUserByPayload(payload: AccountPayloadData) {
   const savedRawSettings = localStorage.getItem("websiteSettings");
   const loadedSettings = savedRawSettings
     ? JSON.parse(savedRawSettings)
-    : {
-        backgroundRichness: "rich",
-        syncSettings: true,
-        navigationBar: "flexible",
-        disableCenterPainting: false,
-        disableComments: false,
-        disableGestures: false,
-        disableSerifFont: false,
-      };
+    : defaultSettings;
 
   const doSyncSettings = loadedSettings.syncSettings;
 
@@ -269,5 +260,31 @@ export async function modifySessionToken(user: UserData): Promise<void> {
     }
   } catch (error) {
     console.error("An error occurred:", error);
+  }
+}
+
+export async function deleteUserAccount(
+  secureSub: string
+): Promise<{ success: boolean; message: string }> {
+  try {
+    const response = await fetch("/api/deleteUserAccount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        secureSub,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return { success: true, message: "Successfully deleted the user file." };
+    } else {
+      return { success: false, message: data.error };
+    }
+  } catch (error: any) {
+    return { success: false, message: `Client-side error: ${error.message}` };
   }
 }

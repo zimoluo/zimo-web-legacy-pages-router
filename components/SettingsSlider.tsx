@@ -9,13 +9,13 @@ import React, { useState, useRef, useEffect } from "react";
 
 interface SettingsNotchBarProps<T> {
   values: T[];
-  text: T[];
+  text: string[];
   entry: T;
   setValue: (newValue: T) => void;
   theme: ThemeType;
 }
 
-const SettingsNotchBar: React.FC<SettingsNotchBarProps<string>> = ({
+const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
   values,
   setValue,
   entry,
@@ -171,8 +171,8 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string>> = ({
           style={{ transform: `translateX(${sliderPos}%)` }}
         >
           <div
-            className={`${sliderBorderColorClass} ${sliderButtonClass} scale-150 border-slider shadow-lg w-2.5 h-6 rounded-full -translate-x-1 -translate-y-2.25 ${
-              isDragging ? "cursor-grabbing" : "cursor-grab"
+            className={`${sliderBorderColorClass} border-slider shadow-lg w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-2.25 ${
+              isDragging ? "cursor-grabbing scale-150 bg-slider-highlight" : `cursor-grab scale-135 ${sliderButtonClass}`
             }`}
             draggable={true}
             onDragStart={dragStartHandler}

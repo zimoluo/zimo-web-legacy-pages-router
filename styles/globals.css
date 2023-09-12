@@ -482,3 +482,14 @@
 .min-w-background-richness {
     min-width: 210px;
 }
+
+.scale-135 {
+    --tw-scale-x: 1.35;
+    --tw-scale-y: 1.35;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.bg-slider-highlight {
+    --tw-bg-opacity: 1;
+    background-color: rgb(248 248 248 / var(--tw-bg-opacity));
+}

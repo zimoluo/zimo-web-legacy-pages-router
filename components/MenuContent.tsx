@@ -11,6 +11,8 @@ import SettingsFlip from "./SettingsFlip";
 import { useSettings } from "./contexts/SettingsContext";
 import SettingsNotchBar from "./SettingsSlider";
 import React from "react";
+import { useRouter } from "next/router";
+import SettingsUtilityButton from "./SettingsUtilityButton";
 
 type Props = {
   theme: ThemeType;
@@ -21,6 +23,17 @@ const MenuContent = ({ theme }: Props) => {
   const { settings, updateSettings } = useSettings();
   const borderColorClass = menuEntryBorderMap[theme];
   const barColorClass = barColorMap[theme];
+  const router = useRouter();
+
+  const settingsArray = [
+    "disableComments",
+    "disableGestures",
+    "disableSerifFont",
+  ];
+
+  if (router.pathname.startsWith("/blog")) {
+    settingsArray.unshift("disableCenterPainting");
+  }
 
   const settingsNameMap: { [key: string]: string } = {
     syncSettings: "Sync Settings",
@@ -90,7 +103,7 @@ const MenuContent = ({ theme }: Props) => {
             Background Richness
           </div>
           <SettingsNotchBar
-            setValue={(newValue: string) => {
+            setValue={(newValue: string | number) => {
               updateSettings({
                 backgroundRichness: newValue as "minimal" | "reduced" | "rich",
               });
@@ -109,7 +122,7 @@ const MenuContent = ({ theme }: Props) => {
             Navigation Bar
           </div>
           <SettingsNotchBar
-            setValue={(newValue: string) => {
+            setValue={(newValue: string | number) => {
               updateSettings({
                 navigationBar: newValue as "disabled" | "always" | "flexible",
               });
@@ -123,12 +136,41 @@ const MenuContent = ({ theme }: Props) => {
         <div
           className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
         />
-        {[
-          "disableCenterPainting",
-          "disableComments",
-          "disableGestures",
-          "disableSerifFont",
-        ].map((item, index, array) => (
+        {router.pathname.startsWith("/projects") && (
+          <>
+            <div className="md:flex md:items-center my-4 ">
+              <div
+                className={`md:flex-grow text-lg md:text-xl min-w-background-richness ${
+                  settings.floatingCodeSpeed < 1000
+                    ? "flex md:block items-center"
+                    : ""
+                }`}
+              >
+                Floating Code Rate
+                {settings.floatingCodeSpeed < 1000 && (
+                  <div className="text-xs ml-1 md:ml-0">
+                    (Performance warning)
+                  </div>
+                )}
+              </div>
+              <SettingsNotchBar
+                setValue={(newValue: number | string) => {
+                  updateSettings({
+                    floatingCodeSpeed: newValue as number,
+                  });
+                }}
+                values={[6000, 2800, 1800, 800, 40]}
+                text={["*yawn*", "Slack", "Normal", "Hustle", "*yeet*"]}
+                theme={theme}
+                entry={settings.floatingCodeSpeed}
+              />
+            </div>
+            <div
+              className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+            />
+          </>
+        )}
+        {settingsArray.map((item, index, array) => (
           <React.Fragment key={item}>
             <div className="flex items-center my-4 ">
               <div className="flex-grow text-lg md:text-xl">
@@ -156,7 +198,24 @@ const MenuContent = ({ theme }: Props) => {
         ))}
       </div>
 
-      <div className="overflow-auto">{JSON.stringify(user)}</div>
+      <div
+        className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 mt-14 mb-4 text-lg font-bold md:text-xl ${borderColorClass} border-menu-entry border-opacity-20`}
+      >
+        <SettingsUtilityButton utility={"resetSettings"} />
+        {user !== null &&
+          ["logOut", "deleteAccount"].map((item) => (
+            <React.Fragment key={item}>
+              <div
+                className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+              />
+              <SettingsUtilityButton
+                key={item}
+                utility={item as "logOut" | "resetSettings" | "deleteAccount"}
+              />
+            </React.Fragment>
+          ))}
+      </div>
+
     </div>
   );
 };
