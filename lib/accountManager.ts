@@ -288,3 +288,26 @@ export async function deleteUserAccount(
     return { success: false, message: `Client-side error: ${error.message}` };
   }
 }
+
+export async function fetchComments(filePath: string) {
+  try {
+    const response = await fetch("/api/getComments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Fetch failed: ${error}`);
+    }
+
+    const { comments } = await response.json();
+    return comments;
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    throw error;
+  }
+}

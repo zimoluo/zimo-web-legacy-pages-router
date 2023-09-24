@@ -3,6 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { SyntheticEvent } from "react";
 import { marked } from "marked";
+import katex from "katex";
 
 let JSDOM: typeof import("jsdom").JSDOM | null = null;
 
@@ -70,6 +71,20 @@ export const formatDate = (dateStr: string) => {
 };
 
 export async function markdownToHtml(markdown: string): Promise<string> {
+  const renderer = new marked.Renderer();
+  renderer.code = (code, language) => {
+    if (language === "math") {
+      return katex.renderToString(code, {
+        throwOnError: false,
+      });
+    }
+    return `<pre><code>${code}</code></pre>`;
+  };
+
+  marked.setOptions({
+    renderer: renderer,
+  });
+
   const htmlContent: string = marked(markdown);
   return htmlContent;
 }
@@ -198,7 +213,10 @@ export const removeActivePopup = (popupInstance: any): void => {
 
 // Function to check if the popup is the current active one
 export const isActivePopup = (popupInstance: any): boolean => {
-  return activePopups.length > 0 && activePopups[activePopups.length - 1] === popupInstance;
+  return (
+    activePopups.length > 0 &&
+    activePopups[activePopups.length - 1] === popupInstance
+  );
 };
 
 // Function to clear all active popups (use with caution)

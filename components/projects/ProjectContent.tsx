@@ -1,16 +1,17 @@
-import markdownStyles from './projects-markdown-styles.module.css'
+import markdownStyles from "./projects-markdown-styles.module.css";
+import generalMarkdownStyles from "../general-text-markdown.module.css";
 
 type Props = {
-  content: string
-}
+  content: string;
+};
 
 const ProjectContent = ({ content }: Props) => {
   return (
     <div
-        className={markdownStyles['markdown']}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
-  )
-}
+      className={`${generalMarkdownStyles["markdown"]} ${markdownStyles["markdown"]}`}
+      dangerouslySetInnerHTML={{ __html: content }}
+    />
+  );
+};
 
-export default ProjectContent
+export default ProjectContent;

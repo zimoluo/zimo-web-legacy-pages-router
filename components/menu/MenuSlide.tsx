@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { ThemeType, barColorMap, textColorMap } from "../interfaces/themeMaps";
+import { ThemeType, barColorMap, textColorMap } from "@/interfaces/themeMaps";
 import MenuContent from "./MenuContent";
 
 type Props = {

@@ -17,7 +17,6 @@ const BlogBackgroundAnimationPainting = () => {
       alt="Blog Painting"
       height="0"
       width="0"
-      layout="fixed"
       className={`absolute pointer-events-none painting-size`}
       placeholder='empty'
       priority={true}

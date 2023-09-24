@@ -153,6 +153,14 @@ export const menuEntryBorderMap: { [key: string]: string } = {
   about: "border-sky-700",
 };
 
+export const lightTextColorMap: { [key: string]: string } = {
+  zimo: "text-neutral-800",
+  photos: "text-orange-800",
+  blog: "text-fuchsia-800",
+  projects: "text-teal-800",
+  about: "text-sky-800",
+};
+
 export const flipFilterMap: { [key: string]: string } = {
   zimo: "zimo-flip-filter",
   photos: "photos-flip-filter",

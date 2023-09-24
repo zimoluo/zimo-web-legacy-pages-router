@@ -123,18 +123,18 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
 
   return (
     <div
-      className="relative w-full h-16 overflow-hidden select-none"
+      className="relative w-full h-16 overflow-hidden select-none cursor-pointer"
       ref={containerRef}
+      onMouseUp={(e) => {
+        const positionPercent =
+          ((e.clientX - e.currentTarget.getBoundingClientRect().left) /
+            e.currentTarget.clientWidth) *
+          100;
+        handleSetPosition(positionPercent);
+      }}
     >
       <div
-        className={`absolute w-slider-bar h-2 ${sliderBorderColorClass} ${sliderColorClass} border-menu-entry border-opacity-80 bg-opacity-30 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 cursor-pointer`}
-        onMouseUp={(e) => {
-          const positionPercent =
-            ((e.clientX - e.currentTarget.getBoundingClientRect().left) /
-              e.currentTarget.clientWidth) *
-            100;
-          handleSetPosition(positionPercent);
-        }}
+        className={`absolute w-slider-bar h-2 ${sliderBorderColorClass} ${sliderColorClass} border-menu-entry border-opacity-80 bg-opacity-30 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2`}
       >
         {values.map((value, key) => {
           const positionPercent = (100 / (values.length - 1)) * key;

@@ -7,7 +7,7 @@ import {
   textColorMap,
   faviconMap,
   menuEntryBorderMap,
-} from "../interfaces/themeMaps";
+} from "../../interfaces/themeMaps";
 import Image from "next/image";
 
 type Props = {

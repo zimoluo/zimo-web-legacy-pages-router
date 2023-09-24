@@ -1,13 +1,9 @@
 import { imageFallback } from "@/lib/util";
 import Image from "next/image";
-import { useUser } from "./contexts/UserContext";
+import { useUser } from "../contexts/UserContext";
 import { ThemeType, svgFilterMap } from "@/interfaces/themeMaps";
 import { clearSessionToken } from "@/lib/accountManager";
-
-const userIconMap: { [key: string]: string } = {
-  admin: "/admin.svg",
-  banned: "/banned.svg",
-};
+import { userIconMap } from "@/interfaces/userIconMap";
 
 interface Props {
   theme: ThemeType;

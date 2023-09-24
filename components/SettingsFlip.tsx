@@ -1,7 +1,5 @@
 import {
-  ThemeType,
-  flipFilterMap,
-  menuEntryBorderMap,
+  ThemeType, notchColorMap,
 } from "@/interfaces/themeMaps";
 import Image from "next/image";
 
@@ -16,7 +14,7 @@ const SettingsFlip: React.FC<Props> = ({ theme, onClick, state = false }) => {
     onClick(!state);
   }
 
-  const flipFilterClass = flipFilterMap[theme] || flipFilterMap["zimo"];
+  const flipFillClass = notchColorMap[theme] || notchColorMap["zimo"];
 
   return (
     <button
@@ -30,14 +28,10 @@ const SettingsFlip: React.FC<Props> = ({ theme, onClick, state = false }) => {
         width={71}
         alt="Flip base"
       />
-      <Image
-        src="/settings-flip-on.svg"
-        className={`h-8 md:h-10 w-auto object-fill rounded-full absolute top-0 left-0 pointer-events-none select-none ${flipFilterClass} backdrop-blur-sm transition-opacity duration-200 ease-out ${
-          state ? "opacity-50" : "opacity-0"
+      <div
+        className={`h-8 md:h-10 w-auto aspect-video object-fill rounded-full absolute top-0 left-0 pointer-events-none select-none ${flipFillClass} bg-opacity-90 backdrop-blur-sm transition-opacity duration-200 ease-out ${
+          state ? "opacity-60" : "opacity-0"
         } `}
-        height={40}
-        width={71}
-        alt="Flip base"
       />
       <Image
         src="/settings-flip-button.svg"

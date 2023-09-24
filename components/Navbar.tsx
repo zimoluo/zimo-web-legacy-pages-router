@@ -9,7 +9,7 @@ import {
 } from "../interfaces/themeMaps";
 import Image from "next/image";
 import Link from "next/link";
-import MenuSlide from "./MenuSlide";
+import MenuSlide from "./menu/MenuSlide";
 import { useSettings } from "./contexts/SettingsContext";
 
 type NavbarProps = {

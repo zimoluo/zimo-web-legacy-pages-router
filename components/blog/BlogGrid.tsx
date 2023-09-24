@@ -20,8 +20,8 @@ const BlogGrid = ({ authorId, author, content, date }: BlogGridProps) => {
             src={`${getAuthorImageSrc(authorId)}`}
             alt={`${author}'s Profile`}
             className="h-full w-fit"
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             onError={imageFallback("/blog-zimo.svg")}
           />
         </div>

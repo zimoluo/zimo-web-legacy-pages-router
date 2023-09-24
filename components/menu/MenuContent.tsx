@@ -3,16 +3,16 @@ import {
   barColorMap,
   menuEntryBorderMap,
 } from "@/interfaces/themeMaps";
-import { useUser } from "./contexts/UserContext";
-import GoogleSignInButton from "./GoogleSignInButton";
+import { useUser } from "../contexts/UserContext";
+import GoogleSignInButton from "../GoogleSignInButton";
 import MenuUserCard from "./MenuUserCard";
 import MenuNavigationEntry from "./MenuNavigationEntry";
-import SettingsFlip from "./SettingsFlip";
-import { useSettings } from "./contexts/SettingsContext";
-import SettingsNotchBar from "./SettingsSlider";
+import SettingsFlip from "../SettingsFlip";
+import { useSettings } from "../contexts/SettingsContext";
+import SettingsNotchBar from "../SettingsSlider";
 import React from "react";
 import { useRouter } from "next/router";
-import SettingsUtilityButton from "./SettingsUtilityButton";
+import SettingsUtilityButton from "../SettingsUtilityButton";
 
 type Props = {
   theme: ThemeType;

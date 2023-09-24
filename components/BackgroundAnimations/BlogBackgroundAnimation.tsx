@@ -26,7 +26,6 @@ const BlogBackgroundAnimation = () => {
             alt="Blog Painting"
             height="0"
             width="0"
-            layout="fixed"
             className="absolute pointer-events-none painting-size animate-move-painting-glow"
             placeholder="empty"
             priority={true}
@@ -36,7 +35,6 @@ const BlogBackgroundAnimation = () => {
             alt="Blog Painting"
             height="0"
             width="0"
-            layout="fixed"
             className="absolute pointer-events-none painting-size"
             placeholder="empty"
             priority={true}
