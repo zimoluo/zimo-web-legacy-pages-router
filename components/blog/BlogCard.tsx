@@ -18,48 +18,48 @@ const BlogCard = ({
   const postDate = formatDate(date);
 
   return (
-    <div className="flex flex-row px-4 py-4 rounded-xl backdrop-blur-md shadow-lg blog-card-color">
-      <div className="flex flex-col flex-grow">
-        <div className="flex flex-row items-center">
-          <div className="rounded-full overflow-hidden h-6 w-fit flex justify-center items-center">
-            <Image
-              src={`${getAuthorImageSrc(authorId)}`}
-              alt={`${author}'s Profile`}
-              className="h-full w-fit"
-              width={25}
-              height={25}
-              onError={imageFallback('/blog-zimo.svg')}
-            />
+    <Link href={`/blog/${slug}`}>
+      <div className="flex flex-row px-4 py-4 rounded-xl backdrop-blur-md shadow-lg blog-card-color">
+        <div className="flex flex-col flex-grow">
+          <div className="flex flex-row items-center">
+            <div className="rounded-full overflow-hidden h-6 w-fit flex justify-center items-center">
+              <Image
+                src={`${getAuthorImageSrc(authorId)}`}
+                alt={`${author}'s Profile`}
+                className="h-full w-fit"
+                width={25}
+                height={25}
+                onError={imageFallback("/blog-zimo.svg")}
+              />
+            </div>
+            <p className="ml-2 text-sm font-bold">{author}</p>
           </div>
-          <p className="ml-2 text-sm font-bold">{author}</p>
-        </div>
 
-        <Link href={`/blog/${slug}`}>
           <p className="mt-3 text-md md:text-2xl font-bold">{title}</p>
 
           <p className="hidden md:block text-lg text-fuchsia-800 opacity-70">
             {description}
           </p>
-        </Link>
 
-        <div className="flex-grow"></div>
+          <div className="flex-grow"></div>
 
-        <p className="mt-2 text-sm text-fuchsia-800 opacity-70">{`${postDate}  ·  ${readTime}`}</p>
-      </div>
+          <p className="mt-2 text-sm text-fuchsia-800 opacity-70">{`${postDate}  ·  ${readTime}`}</p>
+        </div>
 
-      <div className="flex items-center">
-        <div className="w-auto h-28 md:h-36 ml-2 rounded-xl overflow-hidden max-w-60 md:max-w-80">
-          <Image
-            className="h-full w-auto object-cover"
-            src={coverImage}
-            alt={`Cover of ${title}`}
-            width={320}
-            height={144}
-            onError={imageFallback('/blog-fallback.svg')}
-          />
+        <div className="flex items-center">
+          <div className="w-auto h-28 md:h-36 ml-2 rounded-xl overflow-hidden max-w-60 md:max-w-80">
+            <Image
+              className="h-full w-auto object-cover"
+              src={coverImage}
+              alt={`Cover of ${title}`}
+              width={320}
+              height={144}
+              onError={imageFallback("/blog-fallback.svg")}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -2,7 +2,7 @@ import ProjectData from "@/interfaces/projects/projectData";
 import { getProjectFavicon } from "@/lib/projects/util";
 import { imageFallback } from "@/lib/util";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DarkOverlay from "../DarkOverlay";
 import ProjectMainPopup from "./ProjectMainPopUp";
 import { useRouter } from "next/router";
