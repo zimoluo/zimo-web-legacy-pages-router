@@ -1,6 +1,4 @@
-import {
-  ThemeType, notchColorMap,
-} from "@/interfaces/themeMaps";
+import { ThemeType, notchColorMap } from "@/interfaces/themeMaps";
 import Image from "next/image";
 
 interface Props {
