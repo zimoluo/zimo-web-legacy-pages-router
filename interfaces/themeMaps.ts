@@ -161,6 +161,14 @@ export const lightTextColorMap: { [key: string]: string } = {
   about: "text-sky-800",
 };
 
+export const placeholderTextColorMap: { [key: string]: string } = {
+  zimo: "placeholder:text-neutral-700",
+  photos: "placeholder:text-orange-700",
+  blog: "placeholder:text-fuchsia-700",
+  projects: "placeholder:text-teal-700",
+  about: "placeholder:text-sky-700",
+};
+
 export const flipFilterMap: { [key: string]: string } = {
   zimo: "zimo-flip-filter",
   photos: "photos-flip-filter",

@@ -7,12 +7,14 @@ interface Props {
   theme: ThemeType;
   isExpanded: boolean;
   commentIndex: number;
+  setExpanded: (val: boolean) => void;
 }
 
 const ReplyCardColumn: React.FC<Props> = ({
   theme,
   isExpanded,
   commentIndex,
+  setExpanded,
 }) => {
   const { comments } = useComments();
 
@@ -35,7 +37,7 @@ const ReplyCardColumn: React.FC<Props> = ({
   return (
     <div style={columnStyle} ref={columnRef} className="pl-4">
       {comments![commentIndex].replies!.map((reply, index) => (
-        <ReplyCard key={index} index={index} theme={theme} commentIndex={commentIndex} />
+        <ReplyCard key={index} index={index} theme={theme} commentIndex={commentIndex} setExpanded={setExpanded} />
       ))}
     </div>
   );

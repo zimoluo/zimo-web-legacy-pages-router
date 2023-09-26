@@ -2,26 +2,42 @@ import React, { useEffect } from "react";
 import { ThemeType } from "@/interfaces/themeMaps";
 import CommentCard from "./CommentCard";
 import { useComments } from "../contexts/CommentContext";
+import { fetchComments } from "@/lib/accountManager";
+import { ReplyProvider } from "../contexts/ReplyContext";
 
 interface Props {
   theme: ThemeType;
-  comments: CommentEntry[];
+  resourceLocation: string;
 }
 
-const CommentCardColumn: React.FC<Props> = ({ theme, comments }) => {
-  const { setComments, comments: contextComments } = useComments();
+const CommentCardColumn: React.FC<Props> = ({ theme, resourceLocation }) => {
+  const {
+    setComments,
+    comments: contextComments,
+    setResourceLocation,
+  } = useComments();
 
   useEffect(() => {
-    if (comments && comments.length > 0) {
-      setComments(comments);
-    }
-  }, [comments, setComments]);
+    setResourceLocation(resourceLocation);
+  }, [resourceLocation]);
+
+  useEffect(() => {
+    const fetchAndSetComments = async () => {
+      const comments = await fetchComments(resourceLocation);
+      if (comments && comments.length > 0) {
+        setComments(comments);
+      }
+    };
+    fetchAndSetComments();
+  }, []);
 
   return (
     <div className="border-black border-2">
       {contextComments &&
-        comments.map((comment, index) => (
-          <CommentCard key={index} index={index} theme={theme} />
+        contextComments.map((comment, index) => (
+          <ReplyProvider key={index}>
+            <CommentCard index={index} theme={theme} />
+          </ReplyProvider>
         ))}
     </div>
   );

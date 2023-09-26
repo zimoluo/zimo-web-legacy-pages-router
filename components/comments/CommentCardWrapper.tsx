@@ -3,14 +3,14 @@ import { CommentProvider, useComments } from "../contexts/CommentContext";
 import CommentCardColumn from "./CommentCardColumn";
 
 interface Props {
-  comments: CommentEntry[];
   theme: ThemeType;
+  resourceLocation: string;
 }
 
-const CommentCardWrapper: React.FC<Props> = ({ comments, theme }) => {
+const CommentCardWrapper: React.FC<Props> = ({ theme, resourceLocation }) => {
   return (
     <CommentProvider>
-      <CommentCardColumn theme={theme} comments={comments} />
+      <CommentCardColumn theme={theme} resourceLocation={resourceLocation} />
     </CommentProvider>
   );
 };

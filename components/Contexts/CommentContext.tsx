@@ -8,15 +8,18 @@ const CommentContext = createContext<
   | {
       comments: CommentEntry[] | null;
       setComments: React.Dispatch<React.SetStateAction<CommentEntry[] | null>>;
+      resourceLocation: string | null;
+      setResourceLocation: React.Dispatch<React.SetStateAction<string | null>>;
     }
   | undefined
 >(undefined);
 
 export function CommentProvider({ children }: Props) {
   const [comments, setComments] = useState<CommentEntry[] | null>(null);
+  const [resourceLocation, setResourceLocation] = useState<string | null>(null);
 
   return (
-    <CommentContext.Provider value={{ comments, setComments }}>
+    <CommentContext.Provider value={{ comments, setComments, resourceLocation, setResourceLocation }}>
       {children}
     </CommentContext.Provider>
   );

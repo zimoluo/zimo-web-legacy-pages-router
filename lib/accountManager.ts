@@ -101,6 +101,29 @@ export async function fetchUserDataBySecureSub(
   }
 }
 
+export async function fetchUserNameBySecureSub(secureSub: string) {
+  try {
+    const response = await fetch("/api/getUserDataBySecureSub", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ secureSub, fields: ["name"] }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Something went wrong");
+    }
+
+    return data.name;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return "";
+  }
+}
+
 export async function fetchCheckIfUserExistsBySecureSub(secureSub: string) {
   try {
     const response = await fetch("/api/checkIfUserExistsBySecureSub", {
@@ -289,7 +312,7 @@ export async function deleteUserAccount(
   }
 }
 
-export async function fetchComments(filePath: string) {
+export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
   try {
     const response = await fetch("/api/getComments", {
       method: "POST",
@@ -301,11 +324,38 @@ export async function fetchComments(filePath: string) {
 
     if (!response.ok) {
       const { error } = await response.json();
-      throw new Error(`Fetch failed: ${error}`);
+      console.error(`Fetch failed: ${error}`);
+      return []; // Return an empty array if the response is not OK
     }
 
     const { comments } = await response.json();
-    return comments;
+    return comments || []; // Return the comments or an empty array if comments are undefined
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    return []; // Return an empty array if any error occurs
+  }
+}
+
+export async function uploadComments(
+  filePath: string,
+  comments: CommentEntry[]
+) {
+  try {
+    const response = await fetch("/api/uploadComments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, comments }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success } = await response.json();
+    return success;
   } catch (error: any) {
     console.error(`An error occurred: ${error.message}`);
     throw error;

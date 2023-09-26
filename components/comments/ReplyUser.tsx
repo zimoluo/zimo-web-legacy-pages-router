@@ -31,7 +31,10 @@ const ReplyUser: React.FC<Props> = ({ secureSub, date, theme, toSub }) => {
       ]);
       setUserData(data);
       if (toSub) {
-        const fetchedToData = await fetchUserDataBySecureSub(toSub, ["name", "state"]);
+        const fetchedToData = await fetchUserDataBySecureSub(toSub, [
+          "name",
+          "state",
+        ]);
         setToData(fetchedToData);
       }
     };
@@ -79,7 +82,13 @@ const ReplyUser: React.FC<Props> = ({ secureSub, date, theme, toSub }) => {
           )}
           {toData && (
             <>
-              <Image className={`mx-1.5 h-2.5 w-auto aspect-square ${svgFilterClass}`} src="/reply-to.svg" alt="Replies to" height={10} width={10} />
+              <Image
+                className={`mx-1.5 h-2.5 w-auto aspect-square ${svgFilterClass}`}
+                src="/reply-to.svg"
+                alt="Replies to"
+                height={10}
+                width={10}
+              />
               <p className="text-sm">{toData.name}</p>
               {toData.state !== "normal" && (
                 <Image

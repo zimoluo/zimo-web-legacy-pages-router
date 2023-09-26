@@ -102,6 +102,11 @@ const config: Config = {
         'border-fuchsia-300',
         'border-teal-300',
         'border-sky-300',
+        'placeholder:text-neutral-700',
+        'placeholder:text-orange-700',
+        'placeholder:text-fuchsia-700',
+        'placeholder:text-teal-700',
+        'placeholder:text-sky-700',
       ],
     },
   }

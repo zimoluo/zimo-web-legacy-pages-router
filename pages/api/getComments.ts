@@ -4,6 +4,7 @@ import { keyId, secretKey } from "@/lib/awskey";
 import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import { NextApiRequest, NextApiResponse } from "next";
+import * as zlib from "zlib";
 
 const s3 = new S3Client({
   region: awsBucketRegion,
@@ -41,11 +42,20 @@ async function getComments(filePath: string): Promise<any> {
     }
 
     let fileContents = "";
-    await pipeline(s3Object.Body as Readable, async function* (source) {
-      for await (const chunk of source) {
-        fileContents += chunk.toString("utf-8");
+
+    // Check the ContentEncoding metadata
+    const isGzipped = s3Object.ContentEncoding === "gzip";
+
+    await pipeline(
+      s3Object.Body as Readable,
+      // Apply decompression only if the content is gzip-compressed
+      isGzipped ? zlib.createGunzip() : (source) => source,
+      async function* (source) {
+        for await (const chunk of source) {
+          fileContents += chunk.toString("utf-8");
+        }
       }
-    });
+    );
 
     const data = JSON.parse(fileContents);
 
@@ -55,7 +65,8 @@ async function getComments(filePath: string): Promise<any> {
 
     return data.comments;
   } catch (error: any) {
-    // If any exception occurs (including file not found), return an empty object
+    // Log the error and return an empty object
+    console.error(`An error occurred: ${error.message}`);
     return {};
   }
 }
