@@ -1,1 +1,37 @@
-<svg stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1024 1024" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient gradientUnits="userSpaceOnUse" id="b" x1="254.923" x2="799.163" y1="821.777" y2="230.397"><stop offset="0" stop-color="#60cf4d"/><stop offset="1" stop-color="#91d04b"/></linearGradient><linearGradient gradientTransform="matrix(.7909 0 0 .7909 107.06 107.06)" gradientUnits="userSpaceOnUse" id="e" x1="130.8" x2="861.694" y1="905.926" y2="96.187"><stop offset=".001" stop-color="#a9ff2f"/><stop offset="1" stop-color="#ffbf1e"/></linearGradient><linearGradient gradientTransform="matrix(.7909 0 0 .7909 107.06 107.06)" gradientUnits="userSpaceOnUse" id="f" x1="389.483" x2="671.661" y1="664.985" y2="390.102"><stop offset=".001" stop-color="#a9ff2f"/><stop offset="1" stop-color="#ffbf1e"/></linearGradient><path d="M0 512C0 229.23 229.23 0 512 0s512 229.23 512 512-229.23 512-512 512S0 794.77 0 512z" id="c"/></defs><clipPath id="a"><path d="M0 0h1024v1024H0z"/></clipPath><g clip-path="url(#a)" vectornator:layerName="Layer 1"><g vectornator:layerName="Oval 1"><use fill="url(#b)" xlink:href="#c"/><mask height="1024" id="d" maskUnits="userSpaceOnUse" width="1024" x="0" y="0"><path d="M0 0h1024v1024H0z"/><use fill="#fff" fill-rule="evenodd" xlink:href="#c"/></mask><use fill="none" mask="url(#d)" stroke="#194e10" stroke-width="72" xlink:href="#c"/></g><g vectornator:layerName="Group 1"><path d="m512 107.06-52.07 191.86c16.694-4.065 34.124-6.278 52.07-6.278 17.946 0 35.376 2.213 52.07 6.278L512 107.06zM225.659 225.659l98.856 172.429a220.483 220.483 0 0 1 73.573-73.573l-172.429-98.856zm572.682 0-172.429 98.856a220.483 220.483 0 0 1 73.573 73.573l98.856-172.429zM298.92 459.93 107.06 512l191.86 52.07c-4.065-16.694-6.278-34.124-6.278-52.07 0-17.946 2.213-35.376 6.278-52.07zm426.16 0c4.065 16.694 6.278 34.124 6.278 52.07 0 17.946-2.213 35.376-6.278 52.07L916.94 512l-191.86-52.07zM324.515 625.912l-98.856 172.429 172.429-98.856a220.483 220.483 0 0 1-73.573-73.573zm374.97 0a220.483 220.483 0 0 1-73.573 73.573l172.429 98.856-98.856-172.429zM459.93 725.08 512 916.94l52.07-191.86c-16.694 4.065-34.124 6.278-52.07 6.278-17.946 0-35.376-2.213-52.07-6.278z" fill="url(#e)" vectornator:layerName="Curve 1"/><path d="M322.552 512c0-104.629 84.819-189.448 189.448-189.448S701.448 407.371 701.448 512 616.629 701.448 512 701.448 322.552 616.629 322.552 512z" fill="url(#f)" vectornator:layerName="Oval 1"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M-8.52651e-14 512C-8.52651e-14 229.23 229.23 7.10543e-15 512 7.10543e-15C794.77 7.10543e-15 1024 229.23 1024 512C1024 794.77 794.77 1024 512 1024C229.23 1024-8.52651e-14 794.77-8.52651e-14 512Z" id="Fill"/>
+<linearGradient gradientTransform="matrix(1 0 0 1 1.57772e-30 0)" gradientUnits="userSpaceOnUse" id="LinearGradient" x1="254.923" x2="799.163" y1="821.777" y2="230.397">
+<stop offset="0" stop-color="#85ec74"/>
+<stop offset="1" stop-color="#4cce78"/>
+</linearGradient>
+<linearGradient gradientTransform="matrix(0.790898 0 0 0.790898 107.06 107.06)" gradientUnits="userSpaceOnUse" id="LinearGradient_2" x1="130.8" x2="861.694" y1="905.926" y2="96.1873">
+<stop offset="0.00263912" stop-color="#0ded09"/>
+<stop offset="1" stop-color="#1e74ff"/>
+</linearGradient>
+<linearGradient gradientTransform="matrix(0.790898 0 0 0.790898 107.06 107.06)" gradientUnits="userSpaceOnUse" id="LinearGradient_3" x1="389.483" x2="671.661" y1="664.985" y2="390.102">
+<stop offset="0.00263912" stop-color="#0ded09"/>
+<stop offset="1" stop-color="#1e74ff"/>
+</linearGradient>
+</defs>
+<clipPath id="ArtboardFrame">
+<rect height="1024" width="1024" x="0" y="0"/>
+</clipPath>
+<g clip-path="url(#ArtboardFrame)" id="Layer-1" vectornator:layerName="Layer 1">
+<g opacity="1" vectornator:layerName="Oval 1">
+<use fill="url(#LinearGradient)" fill-rule="nonzero" stroke="none" xlink:href="#Fill"/>
+<mask height="1024" id="StrokeMask" maskUnits="userSpaceOnUse" width="1024" x="-8.52651e-14" y="7.10543e-15">
+<rect fill="#000000" height="1024" stroke="none" width="1024" x="-8.52651e-14" y="7.10543e-15"/>
+<use fill="#ffffff" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
+</mask>
+<use fill="none" mask="url(#StrokeMask)" stroke="#2b7b46" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="72" xlink:href="#Fill"/>
+</g>
+<g opacity="1" vectornator:layerName="Group 1">
+<path d="M512 107.06L459.93 298.92C476.624 294.855 494.054 292.642 512 292.642C529.946 292.642 547.376 294.855 564.07 298.92L512 107.06ZM225.659 225.659L324.515 398.088C342.79 368.074 368.074 342.79 398.088 324.515L225.659 225.659ZM798.341 225.659L625.912 324.515C655.926 342.79 681.21 368.074 699.485 398.088L798.341 225.659ZM298.92 459.93L107.06 512L298.92 564.07C294.855 547.376 292.642 529.946 292.642 512C292.642 494.054 294.855 476.624 298.92 459.93ZM725.08 459.93C729.145 476.624 731.358 494.054 731.358 512C731.358 529.946 729.145 547.376 725.08 564.07L916.94 512L725.08 459.93ZM324.515 625.912L225.659 798.341L398.088 699.485C368.074 681.21 342.79 655.926 324.515 625.912ZM699.485 625.912C681.21 655.926 655.926 681.21 625.912 699.485L798.341 798.341L699.485 625.912ZM459.93 725.08L512 916.94L564.07 725.08C547.376 729.145 529.946 731.358 512 731.358C494.054 731.358 476.624 729.145 459.93 725.08Z" fill="url(#LinearGradient_2)" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Curve 1"/>
+<path d="M322.552 512C322.552 407.371 407.371 322.552 512 322.552C616.629 322.552 701.448 407.371 701.448 512C701.448 616.629 616.629 701.448 512 701.448C407.371 701.448 322.552 616.629 322.552 512Z" fill="url(#LinearGradient_3)" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Oval 1"/>
+</g>
+</g>
+</svg>

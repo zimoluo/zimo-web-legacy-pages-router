@@ -497,3 +497,7 @@
 .katex-html {
     @apply sr-only;
 }
+
+.h-placeholder {
+    height: 100rem;
+}

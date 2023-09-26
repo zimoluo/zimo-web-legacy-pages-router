@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 24 24" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<g id="Untitled" vectornator:layerName="Untitled">
+<path d="M17.5594 12.5559C17.8664 12.5559 18.1153 12.307 18.1153 12C18.1153 11.693 17.8664 11.4441 17.5594 11.4441C17.2524 11.4441 17.0034 11.693 17.0034 12C17.0034 12.307 17.2524 12.5559 17.5594 12.5559Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" vectornator:layerName="path"/>
+<path d="M12 12.5559C12.307 12.5559 12.5559 12.307 12.5559 12C12.5559 11.693 12.307 11.4441 12 11.4441C11.693 11.4441 11.4441 11.693 11.4441 12C11.4441 12.307 11.693 12.5559 12 12.5559Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" vectornator:layerName="path"/>
+<path d="M6.44062 12.5559C6.74766 12.5559 6.99656 12.307 6.99656 12C6.99656 11.693 6.74766 11.4441 6.44062 11.4441C6.13359 11.4441 5.88468 11.693 5.88468 12C5.88468 12.307 6.13359 12.5559 6.44062 12.5559Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" vectornator:layerName="path"/>
+<path d="M12 23.1188C18.1407 23.1188 23.1188 18.1407 23.1188 12C23.1188 5.85928 18.1407 0.881245 12 0.881245C5.85928 0.881245 0.881245 5.85928 0.881245 12C0.881245 14.0252 1.42269 15.9239 2.36873 17.5594L1.43718 22.5628L6.44062 21.6313C8.07605 22.5773 9.97483 23.1188 12 23.1188Z" fill="none" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" vectornator:layerName="path"/>
+</g>
+</svg>

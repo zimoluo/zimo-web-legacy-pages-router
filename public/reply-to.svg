@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M835.487 550.517L320.332 987.046C295.228 1008.32 274.878 998.888 274.878 965.983L274.878 58.0166C274.878 25.1118 295.228 15.6819 320.332 36.9544L835.487 473.483C860.591 494.755 860.591 529.245 835.487 550.517Z" id="Fill"/>
+</defs>
+<g id="Layer-1" vectornator:layerName="Layer 1">
+<g opacity="1" vectornator:layerName="Polygon 1">
+<use fill="#000000" fill-rule="nonzero" stroke="none" xlink:href="#Fill"/>
+<mask height="972.841" id="StrokeMask" maskUnits="userSpaceOnUse" width="579.437" x="274.878" y="25.5797">
+<rect fill="#000000" height="972.841" stroke="none" width="579.437" x="274.878" y="25.5797"/>
+<use fill="#ffffff" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
+</mask>
+<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="butt" stroke-linejoin="round" stroke-width="160" xlink:href="#Fill"/>
+</g>
+</g>
+</svg>

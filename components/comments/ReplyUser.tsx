@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { fetchUserDataBySecureSub } from "@/lib/accountManager";
 import { formatDate, imageFallback } from "@/lib/util";
-import { ThemeType, lightTextColorMap, textColorMap } from "@/interfaces/themeMaps";
+import {
+  ThemeType,
+  lightTextColorMap,
+  svgFilterMap,
+  textColorMap,
+} from "@/interfaces/themeMaps";
 import { userIconMap } from "@/interfaces/userIconMap";
 
 interface Props {
   secureSub: string;
   date: string;
   theme: ThemeType;
+  toSub: string;
 }
 
-const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
-  const [userData, setUserData] = useState(null);
+const ReplyUser: React.FC<Props> = ({ secureSub, date, theme, toSub }) => {
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [toData, setToData] = useState<UserData | null>(null);
+  const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +30,10 @@ const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
         "state",
       ]);
       setUserData(data);
+      if (toSub) {
+        const fetchedToData = await fetchUserDataBySecureSub(toSub, ["name", "state"]);
+        setToData(fetchedToData);
+      }
     };
 
     fetchData();
@@ -40,14 +52,14 @@ const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
 
   return (
     <div className={`flex ${textColorClass} items-center`}>
-      <div className="flex justify-center items-center w-10 h-auto mr-4">
+      <div className="flex justify-center items-center w-8 h-auto mr-3">
         <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
           <Image
             src={userProfile}
             alt={`${userName}'s Profile`}
             className="h-full w-fit"
-            width={40}
-            height={40}
+            width={32}
+            height={32}
             onError={imageFallback("/favicon.svg")}
           />
         </div>
@@ -55,20 +67,35 @@ const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
 
       <div className="grid grid-rows-2">
         <div className="flex justify-start items-center">
-          <p className="text-base">{userName}</p>
+          <p className="text-sm">{userName}</p>
           {userState !== "normal" && (
             <Image
               src={userIconMap[userState]}
-              className="ml-1.5 h-3 md:h-4 w-auto aspect-square object-contain"
+              className="ml-1 h-2 md:h-3 w-auto aspect-square object-contain"
               height={20}
               width={20}
               alt={`User is ${userState}`}
             />
           )}
+          {toData && (
+            <>
+              <Image className={`mx-1.5 h-2.5 w-auto aspect-square ${svgFilterClass}`} src="/reply-to.svg" alt="Replies to" height={10} width={10} />
+              <p className="text-sm">{toData.name}</p>
+              {toData.state !== "normal" && (
+                <Image
+                  src={userIconMap[toData.state]}
+                  className="ml-1 h-2 md:h-3 w-auto aspect-square object-contain"
+                  height={20}
+                  width={20}
+                  alt={`User is ${toData.state}`}
+                />
+              )}
+            </>
+          )}
         </div>
 
         <div className="flex justify-start items-center">
-          <p className={`${lightTextColorClass} text-sm opacity-70`}>
+          <p className={`${lightTextColorClass} text-xs opacity-70`}>
             {`${formatDate(date)}`}
           </p>
         </div>
@@ -77,4 +104,4 @@ const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
   );
 };
 
-export default CommentUser;
+export default ReplyUser;
