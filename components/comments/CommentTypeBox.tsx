@@ -8,25 +8,21 @@ import {
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import {
-  fetchComments,
-  fetchUserNameBySecureSub,
-  uploadComments,
-} from "@/lib/accountManager";
-import { encryptSub } from "@/lib/encryptSub";
-import { useReply } from "../contexts/ReplyContext";
+import { fetchComments, uploadComments } from "@/lib/accountManager";
 import { useUser } from "../contexts/UserContext";
+import { decryptSub } from "@/lib/encryptSub";
 
 interface Props {
   theme: ThemeType;
   isExpanded: boolean;
-  commentIndex: number;
 }
 
-const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
+const CommentTypeBox: React.FC<Props> = ({
+  theme,
+  isExpanded,
+}) => {
   const { comments, setComments, resourceLocation } = useComments();
   const { user } = useUser();
-  const { replyBoxContent } = useReply();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const typeBoxColorClass =
     sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
@@ -48,23 +44,8 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
       return;
     }
 
-    const fetchPlaceholderName = async () => {
-      try {
-        let name;
-        if (replyBoxContent?.to) {
-          name = await fetchUserNameBySecureSub(encryptSub(replyBoxContent.to));
-        } else if (comments && comments[commentIndex]) {
-          name = await fetchUserNameBySecureSub(
-            encryptSub(comments[commentIndex]!.author)
-          );
-        }
-        setPlaceholderName(`Reply to ${name}...` || "Reply to...");
-      } catch (error) {
-        console.error("Failed to fetch user name", error);
-      }
-    };
-    fetchPlaceholderName();
-  }, [replyBoxContent, comments, commentIndex, user]);
+    setPlaceholderName("Leave a comment...");
+  }, [user]);
 
   useEffect(() => {
     if (!user || user.state === "banned") {
@@ -94,14 +75,8 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
     setInputValue(event.target.value);
   };
 
-  async function sendReply() {
-    if (
-      !user ||
-      !comments ||
-      !replyBoxContent ||
-      !resourceLocation ||
-      user.state === "banned"
-    )
+  async function sendComment() {
+    if (!user || !comments || !resourceLocation || user.state === "banned")
       return;
 
     const downloadedComments = await fetchComments(resourceLocation);
@@ -109,50 +84,40 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
     // If inputValue has only whitespaces (various kinds of spaces, not just standard one) then return.
     if (!inputValue.trim()) return;
 
-    // Construct the new reply
-    const newReply = {
-      from: replyBoxContent.from,
+    // Construct the new comment
+    const newComment = {
+      author: decryptSub(user.secureSub), //assuming the user object has a name property representing the author's name
       date: new Date().toISOString(),
       content: inputValue,
-      ...(replyBoxContent.to && { to: replyBoxContent.to }), // if to does not exist then don’t have it.
+      likedBy: [], // initially, no one has liked the comment
+      replies: [],
     };
 
-    // Update the comments array
-    const updatedComments = downloadedComments.map((comment, i) => {
-      if (i !== commentIndex) return comment; // Skip if it's not the comment we want to modify
+    // Append it to the comments array
+    const updatedComments = [...downloadedComments, newComment];
 
-      // Initialize replies array if it does not exist
-      const replies = comment.replies || [];
-
-      // Return a new comment object with the new reply appended to the replies array
-      return {
-        ...comment,
-        replies: [...replies, newReply],
-      };
-    });
-
-    setComments(updatedComments);
-    await uploadComments(resourceLocation!, updatedComments);
-    setInputValue("");
+    setComments(updatedComments); // Update the local state
+    await uploadComments(resourceLocation, updatedComments); // Update the remote data
+    setInputValue(""); // Reset the input value
   }
 
   return (
     <div style={columnStyle} ref={columnRef} className="px-3 relative">
       <textarea
-        className={`w-full px-3 py-2 h-24 my-1.5 rounded-xl shadow-sm ${typeBoxColorClass} ${borderColorClass} border-menu-rule border-opacity-20 bg-opacity-40 backdrop-blur-md resize-none text-sm ${placeholderTextColorClass} placeholder:opacity-50`}
+        className={`w-full px-3 py-2 h-32 my-1.5 rounded-xl shadow-sm ${typeBoxColorClass} ${borderColorClass} border-menu-rule border-opacity-20 bg-opacity-40 backdrop-blur-md resize-none text-base ${placeholderTextColorClass} placeholder:opacity-50`}
         value={inputValue}
         onChange={handleInputChange}
         placeholder={placeholderName}
         disabled={!user || user.state === "banned"}
       />
       {user && user.state !== "banned" && (
-        <button onClick={sendReply}>
+        <button onClick={sendComment}>
           <Image
             src="/send-comment.svg"
             className={`h-4 absolute w-auto aspect-square bottom-4 right-5 opacity-80 cursor-pointer transform transition-transform duration-300 hover:scale-110 ${svgFilterClass}`}
             height={16}
             width={16}
-            alt="Send Reply"
+            alt="Send Comment"
           />
         </button>
       )}
@@ -160,4 +125,4 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
   );
 };
 
-export default ReplyTypeBox;
+export default CommentTypeBox;

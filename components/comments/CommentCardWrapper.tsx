@@ -1,6 +1,7 @@
 import { ThemeType } from "@/interfaces/themeMaps";
 import { CommentProvider, useComments } from "../contexts/CommentContext";
 import CommentCardColumn from "./CommentCardColumn";
+import CommentTypeBox from "./CommentTypeBox";
 
 interface Props {
   theme: ThemeType;
@@ -10,6 +11,7 @@ interface Props {
 const CommentCardWrapper: React.FC<Props> = ({ theme, resourceLocation }) => {
   return (
     <CommentProvider>
+      <CommentTypeBox theme={theme} isExpanded={true} />
       <CommentCardColumn theme={theme} resourceLocation={resourceLocation} />
     </CommentProvider>
   );

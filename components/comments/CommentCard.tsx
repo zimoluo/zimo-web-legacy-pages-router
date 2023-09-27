@@ -7,7 +7,7 @@ import CommentUser from "./CommentUser";
 import { decryptSub, encryptSub } from "@/lib/encryptSub";
 import Image from "next/image";
 import ReplyCardColumn from "./ReplyCardColumn";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
 import { fetchComments, uploadComments } from "@/lib/accountManager";
@@ -31,6 +31,17 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     lightTextColorMap[theme] || lightTextColorMap["zimo"];
   const [isExpanded, setIsExpanded] = useState(false);
   const [isReplyBoxExpanded, setIsReplyBoxExpanded] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setShowDelete(
+        (decryptSub(user.secureSub) === comments![index].author &&
+          user.state !== "banned") ||
+          user.state === "admin"
+      );
+    }
+  }, [user, comments]);
 
   const likeButtonSrc = useMemo(() => {
     if (!resourceLocation || !user || !comments || !comments[index]) {
@@ -73,6 +84,13 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       from: decryptSub(user?.secureSub),
     });
 
+    if (
+      (!comments![index].replies || comments![index].replies!.length === 0) &&
+      isReplyBoxExpanded
+    ) {
+      setIsExpanded(false);
+    }
+
     setIsReplyBoxExpanded(!isReplyBoxExpanded);
   }
 
@@ -102,7 +120,29 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
     // Now, update the state
     setComments(updatedComments);
-    uploadComments(resourceLocation!, updatedComments);
+    await uploadComments(resourceLocation!, updatedComments);
+  }
+
+  async function deleteComment() {
+    // Check if resourceLocation, user exists and user is not banned
+    if (!resourceLocation || !user || user.state === "banned") return;
+
+    const downloadedComments = await fetchComments(resourceLocation);
+
+    // Check if the comment exists at the given index
+    const targetComment = downloadedComments[index];
+    if (!targetComment) return;
+
+    // Check if the user has permission to delete this comment
+    const decryptedSub = decryptSub(user.secureSub);
+    if (targetComment.author !== decryptedSub && user.state !== "admin") return; // Ensure that the user is either the author or an admin
+
+    // Create updatedComments without the comment that needs to be deleted
+    const updatedComments = downloadedComments.filter((_, i) => i !== index);
+
+    // Update the state and upload the updated comments
+    setComments(updatedComments);
+    await uploadComments(resourceLocation, updatedComments);
   }
 
   return (
@@ -121,6 +161,17 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       <p className="text-lg mb-6 mt-2">{comments![index].content}</p>
       <div className="flex items-center h-4 opacity-95">
         <div className="flex-grow" />
+        {showDelete && (
+          <button onClick={deleteComment} className="mr-4">
+            <Image
+              alt="Delete Comment"
+              className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+              height={16}
+              width={16}
+              src="/delete-comment.svg"
+            />
+          </button>
+        )}
         <button onClick={evaluateLike}>
           <Image
             alt="Like Button"

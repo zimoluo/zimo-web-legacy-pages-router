@@ -69,6 +69,17 @@ const ReplyCard: React.FC<Props> = ({
 
     const targetReply = targetComment.replies[index];
 
+    // Decrypt user's secureSub to compare with the reply author
+    const decryptedSub = decryptSub(user.secureSub);
+
+    // Check if this is indeed the correct reply and if the user has the permission to delete it
+    if (
+      targetReply.from !== decryptedSub &&
+      user.state !== "admin" // Ensure that the user is either the author or an admin
+    ) {
+      return; // The user doesn't have the permission to delete this reply
+    }
+
     // Check if this is indeed the correct reply
     if (
       targetReply.from !== repliesData.from ||
@@ -91,7 +102,7 @@ const ReplyCard: React.FC<Props> = ({
     );
 
     setComments(updatedComments);
-    uploadComments(resourceLocation!, updatedComments);
+    await uploadComments(resourceLocation!, updatedComments);
   }
 
   return (
