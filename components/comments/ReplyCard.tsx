@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useComments } from "../contexts/CommentContext";
 import { useUser } from "../contexts/UserContext";
 import { useReply } from "../contexts/ReplyContext";
+import { useEffect, useState } from "react";
+import { fetchComments, uploadComments } from "@/lib/accountManager";
 
 interface Props {
   theme: ThemeType;
@@ -23,11 +25,23 @@ const ReplyCard: React.FC<Props> = ({
 
   const { user } = useUser();
 
-  const { comments } = useComments();
+  const { comments, resourceLocation, setComments } = useComments();
 
-  const { setReplyBoxContent, replyBoxContent } = useReply();
+  const { setReplyBoxContent } = useReply();
 
   const repliesData = comments![commentIndex]!.replies![index];
+
+  const [showDelete, setShowDelete] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setShowDelete(
+        (decryptSub(user.secureSub) === repliesData.from &&
+          user.state !== "banned") ||
+          user.state === "admin"
+      );
+    }
+  }, [user, repliesData.from]);
 
   function toggleReply() {
     if (!user) return;
@@ -35,9 +49,49 @@ const ReplyCard: React.FC<Props> = ({
     setReplyBoxContent({
       from: decryptSub(user?.secureSub),
       to: repliesData.from,
-      content: replyBoxContent?.content ? replyBoxContent.content : "",
     });
     setExpanded(true);
+  }
+
+  async function deleteReply() {
+    if (!resourceLocation || !user || user.state === "banned") return;
+
+    const downloadedComments = await fetchComments(resourceLocation);
+
+    // Check if the comment and reply exist at the given indexes
+    const targetComment = downloadedComments[commentIndex];
+    if (
+      !targetComment ||
+      !targetComment.replies ||
+      !targetComment.replies[index]
+    )
+      return;
+
+    const targetReply = targetComment.replies[index];
+
+    // Check if this is indeed the correct reply
+    if (
+      targetReply.from !== repliesData.from ||
+      targetReply.content !== repliesData.content ||
+      targetReply.date !== repliesData.date ||
+      (targetReply.to ? targetReply.to !== repliesData.to : !!repliesData.to) // Check 'to' if it exists
+    ) {
+      return;
+    }
+
+    // Remove this specific reply and create a new updatedComment object
+    const updatedComment = {
+      ...targetComment,
+      replies: targetComment.replies.filter((_, i) => i !== index),
+    };
+
+    // Replace the original comment with the updated one in downloadedComments
+    const updatedComments = downloadedComments.map((comment, i) =>
+      i === commentIndex ? updatedComment : comment
+    );
+
+    setComments(updatedComments);
+    uploadComments(resourceLocation!, updatedComments);
   }
 
   return (
@@ -51,14 +105,26 @@ const ReplyCard: React.FC<Props> = ({
       <p className="text-base mb-3 mt-1.5">{repliesData.content}</p>
       <div className="flex h-4">
         <div className="flex-grow" />
-        <Image
-          alt="Reply Button"
-          className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110 cursor-pointer`}
-          height={16}
-          width={16}
-          src="/reply-icon.svg"
-          onClick={toggleReply}
-        />
+        {showDelete && (
+          <button onClick={deleteReply} className="mr-4">
+            <Image
+              alt="Delete Comment"
+              className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+              height={16}
+              width={16}
+              src="/delete-comment.svg"
+            />
+          </button>
+        )}
+        <button onClick={toggleReply}>
+          <Image
+            alt="Reply To This Person"
+            className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+            height={16}
+            width={16}
+            src="/reply-icon.svg"
+          />
+        </button>
       </div>
     </div>
   );

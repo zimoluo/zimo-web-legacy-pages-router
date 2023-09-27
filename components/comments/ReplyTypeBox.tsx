@@ -1,13 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   ThemeType,
+  borderColorMap,
   placeholderTextColorMap,
   sliderButtonColorMap,
   svgFilterMap,
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import { fetchUserNameBySecureSub, uploadComments } from "@/lib/accountManager";
+import {
+  fetchComments,
+  fetchUserNameBySecureSub,
+  uploadComments,
+} from "@/lib/accountManager";
 import { encryptSub } from "@/lib/encryptSub";
 import { useReply } from "../contexts/ReplyContext";
 import { useUser } from "../contexts/UserContext";
@@ -27,12 +32,22 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
     sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
   const placeholderTextColorClass =
     placeholderTextColorMap[theme] || placeholderTextColorMap["zimo"];
+  const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
 
   const [inputValue, setInputValue] = useState("");
 
   const [placeholderName, setPlaceholderName] = useState("");
 
   useEffect(() => {
+    if (!user) {
+      setPlaceholderName("You are not logged in.");
+      return;
+    }
+    if (user && user.state === "banned") {
+      setPlaceholderName("You are banned. Please contact admin.");
+      return;
+    }
+
     const fetchPlaceholderName = async () => {
       try {
         let name;
@@ -43,13 +58,19 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
             encryptSub(comments[commentIndex]!.author)
           );
         }
-        setPlaceholderName(name || "");
+        setPlaceholderName(`Reply to ${name}...` || "Reply to...");
       } catch (error) {
         console.error("Failed to fetch user name", error);
       }
     };
     fetchPlaceholderName();
-  }, [replyBoxContent, comments, commentIndex]);
+  }, [replyBoxContent, comments, commentIndex, user]);
+
+  useEffect(() => {
+    if (!user || user.state === "banned") {
+      setInputValue(""); // Clear the text area content
+    }
+  }, [user]);
 
   const columnRef = useRef<HTMLDivElement>(null);
   const [maxHeight, setMaxHeight] = useState<string>("0px");
@@ -65,16 +86,25 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
     overflow: "hidden",
     maxHeight: isExpanded ? maxHeight : "0px",
     transition: "max-height 0.3s ease-in-out",
-    marginTop: "1rem",
-    marginBottom: "0.6rem",
+    marginTop: "0.75rem",
+    marginBottom: "0.3rem",
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
   };
 
-  function sendReply() {
-    if (!user || !comments || !replyBoxContent) return;
+  async function sendReply() {
+    if (
+      !user ||
+      !comments ||
+      !replyBoxContent ||
+      !resourceLocation ||
+      user.state === "banned"
+    )
+      return;
+
+    const downloadedComments = await fetchComments(resourceLocation);
 
     // If inputValue has only whitespaces (various kinds of spaces, not just standard one) then return.
     if (!inputValue.trim()) return;
@@ -88,7 +118,7 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
     };
 
     // Update the comments array
-    const updatedComments = comments.map((comment, i) => {
+    const updatedComments = downloadedComments.map((comment, i) => {
       if (i !== commentIndex) return comment; // Skip if it's not the comment we want to modify
 
       // Initialize replies array if it does not exist
@@ -109,19 +139,23 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
   return (
     <div style={columnStyle} ref={columnRef} className="px-3 relative">
       <textarea
-        className={`w-full px-3 py-2 h-24 rounded-xl ${typeBoxColorClass} bg-opacity-40 backdrop-blur-md resize-none text-sm ${placeholderTextColorClass} placeholder:opacity-50`}
+        className={`w-full px-3 py-2 h-24 my-1.5 rounded-xl shadow-sm ${typeBoxColorClass} ${borderColorClass} border-menu-rule border-opacity-20 bg-opacity-40 backdrop-blur-md resize-none text-sm ${placeholderTextColorClass} placeholder:opacity-50`}
         value={inputValue}
         onChange={handleInputChange}
-        placeholder={`Reply to ${placeholderName}...`}
+        placeholder={placeholderName}
+        disabled={!user || user.state === "banned"}
       />
-      <Image
-        src="/send-comment.svg"
-        className={`h-4 absolute w-auto aspect-square bottom-3 right-5 opacity-80 cursor-pointer transform transition-transform duration-300 hover:scale-110 ${svgFilterClass}`}
-        height={16}
-        width={16}
-        alt="Send Reply"
-        onClick={sendReply}
-      />
+      {user && user.state !== "banned" && (
+        <button onClick={sendReply}>
+          <Image
+            src="/send-comment.svg"
+            className={`h-4 absolute w-auto aspect-square bottom-4 right-5 opacity-80 cursor-pointer transform transition-transform duration-300 hover:scale-110 ${svgFilterClass}`}
+            height={16}
+            width={16}
+            alt="Send Reply"
+          />
+        </button>
+      )}
     </div>
   );
 };

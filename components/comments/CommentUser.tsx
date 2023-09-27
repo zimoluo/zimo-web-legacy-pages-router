@@ -30,7 +30,7 @@ const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
   const lightTextColorClass = lightTextColorMap[theme];
   const textColorClass = textColorMap[theme];
 
-  if (!userData) return <div className="my-2 h-10">Loading...</div>;
+  if (!userData) return <div className="my-2 h-10" />;
 
   const {
     name: userName,

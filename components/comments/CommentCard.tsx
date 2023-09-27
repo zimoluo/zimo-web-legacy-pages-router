@@ -10,7 +10,7 @@ import ReplyCardColumn from "./ReplyCardColumn";
 import { useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
-import { uploadComments } from "@/lib/accountManager";
+import { fetchComments, uploadComments } from "@/lib/accountManager";
 import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
 import { useReply } from "../contexts/ReplyContext";
@@ -24,7 +24,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   const { user } = useUser();
   const { comments, setComments, resourceLocation } = useComments();
 
-  const { setReplyBoxContent, replyBoxContent } = useReply();
+  const { setReplyBoxContent } = useReply();
 
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const lightTextColorClass =
@@ -52,8 +52,9 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   ]);
 
   function toggleExpanded() {
-    if (!comments![index].replies) {
+    if (!comments![index].replies || comments![index].replies!.length === 0) {
       setIsExpanded(false);
+      setIsReplyBoxExpanded(false);
       return;
     }
     if (isExpanded) {
@@ -70,17 +71,18 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
     setReplyBoxContent({
       from: decryptSub(user?.secureSub),
-      content: replyBoxContent?.content ? replyBoxContent.content : "",
     });
 
     setIsReplyBoxExpanded(!isReplyBoxExpanded);
   }
 
-  function evaluateLike() {
-    if (!user) return;
+  async function evaluateLike() {
+    if (!user || !resourceLocation || user.state === "banned") return;
+
+    const downloadedComments = await fetchComments(resourceLocation);
 
     const decryptedSub = decryptSub(user.secureSub);
-    const updatedComments = comments!.map((comment, i) => {
+    const updatedComments = downloadedComments!.map((comment, i) => {
       if (i !== index) return comment; // Skip if it's not the comment we want to modify
 
       if (comment.likedBy.includes(decryptedSub)) {
@@ -119,39 +121,42 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       <p className="text-lg mb-6 mt-2">{comments![index].content}</p>
       <div className="flex items-center h-4 opacity-95">
         <div className="flex-grow" />
-        <Image
-          alt="Like Button"
-          className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110 cursor-pointer`}
-          height={16}
-          width={16}
-          src={likeButtonSrc}
-          key={likeButtonSrc}
-          onClick={evaluateLike}
-        />
+        <button onClick={evaluateLike}>
+          <Image
+            alt="Like Button"
+            className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+            height={16}
+            width={16}
+            src={likeButtonSrc}
+            key={likeButtonSrc}
+          />
+        </button>
         <div className={`ml-1 ${lightTextColorClass}`}>
           {comments![index].likedBy ? comments![index].likedBy.length : ""}
         </div>
-        <Image
-          alt="Reply Button"
-          className={`h-4 w-auto aspect-square ml-4 ${svgFilterClass} transform transition-transform duration-300 hover:scale-110 cursor-pointer`}
-          height={16}
-          width={16}
-          onClick={toggleReply}
-          src="/reply-icon.svg"
-        />
+        <button onClick={toggleReply} className="ml-4">
+          <Image
+            alt="Reply Button"
+            className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+            height={16}
+            width={16}
+            src="/reply-icon.svg"
+          />
+        </button>
         <div className={`ml-1 ${lightTextColorClass}`}>
           {comments![index].replies ? comments![index].replies!.length : ""}
         </div>
-        <Image
-          alt="Expand or Collapse Replies"
-          className={`h-4 w-auto aspect-square ml-4 ${svgFilterClass} transform cursor-pointer transition-transform duration-300 hover:scale-110 ${
-            isExpanded ? "-rotate-180" : "rotate-0"
-          }`}
-          height={16}
-          width={16}
-          src="/expand-collapse.svg"
-          onClick={toggleExpanded}
-        />
+        <button onClick={toggleExpanded} className="ml-4">
+          <Image
+            alt="Expand or Collapse Replies"
+            className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110 ${
+              isExpanded ? "-rotate-180" : "rotate-0"
+            }`}
+            height={16}
+            width={16}
+            src="/expand-collapse.svg"
+          />
+        </button>
       </div>
       <ReplyTypeBox
         theme={theme}

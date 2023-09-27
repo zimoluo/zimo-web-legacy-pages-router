@@ -8,7 +8,6 @@ interface ReplyProps {
 interface ReplyBoxProps {
     from: string;
     to?: string; // 'to' property may not exist, so it's marked as optional.
-    content: string;
 }
 
 interface CommentEntry {

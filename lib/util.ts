@@ -49,7 +49,7 @@ export const formatDate = (dateStr: string) => {
     return "In the future";
   }
 
-  if (minutesDifference <= 1) {
+  if (minutesDifference <= 0) {
     return "Just now";
   }
 
