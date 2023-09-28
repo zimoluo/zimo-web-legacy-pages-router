@@ -28,18 +28,116 @@ const KawarageAnimation: React.FC = () => {
       "Option(this).foreach(_ => kawarage())",
       "kawarage() ?? print('Failed');",
       "kawarage!()",
+      "kawarage.call()",
+      "kawarage.apply(null)",
+      "new Kawarage().execute()",
+      "kawarage.invoke()",
+      "[kawarage()]",
+      "yield kawarage()",
+      "kawarage() || 'fallback';",
+      "echo kawarage();",
+      "return kawarage();",
+      "throw new KawarageException();",
+      "console.log(kawarage());",
+      "await kawarage();",
+      "kawarage => kawarage();",
+      "kawarage::create()",
+      "kawarage().then()",
+      "kawarage.run()",
+      "init(kawarage())",
+      "#define kawarage",
+      "lambda kawarage: kawarage()",
+      "kawarage.execute()",
+      "@kawarage.run",
+      "trigger.kawarage();",
+      "kawarageDelegate.invoke()",
+      "kawarage.signal()",
+      "kawarage.slot()",
+      "launch { kawarage() }",
+      "tasklet kawarage();",
+      "kawarage.connect()",
+      "kawarage.emit()",
+      "kawarage.listen()",
+      "raise kawarage()",
+      "kawarage.dispose()",
+      "kawarage.terminate()",
+      "kawarage.spawn()",
+      "kawarage->invoke()",
+      "kawarage.suspend()",
+      "kawarage.resume()",
+      "kawarage.init()",
+      "kawarage.clone()",
+      "fetchKawarage().unwrap()",
+      "yield* kawarageGenerator();",
+      "kawarage.async()",
+      "kawarage::operator()",
+      "bind(kawarage);",
+      "select * from kawarage",
+      "protocol.kawarage()",
+      "kawarage::template()",
+      "kawarage.delegate()",
+      "kawarage.observer()",
+      "stream.of(kawarage)",
+      "decorate(kawarage)",
+      "route('/kawarage')",
+      "transform.kawarage()",
+      "kawarage.adapt()",
+      "let kawarage = compose(middleware)",
+      "serialize(kawarage)",
+      "deserialize(kawarage)",
+      "kawarage.accept(visitor)",
+      "fork(kawarage);",
+      "spin(kawarage);",
+      "reflect.kawarage();",
+      "kawarage.subscribe()",
+      "kawarage.publish()",
+      "transition.to(kawarage)",
+      "inject(kawarage);",
+      "export default kawarage;",
+      "import * as kawarage from 'kawarage'",
+      "kawarage.prototype",
+      "extend(kawarage)",
+      "kawarage.mixin()",
+      "require('kawarage')",
+      "build(kawarage).toSpec()",
+      "kawarage.enumerate()",
+      "kawarage.interpret()",
+      "kawarage::sync()",
+      "kawarage.compose()",
+      "flatMap(kawarage)",
+      "reducer(kawarageState, action)",
+      "kawarage.chain()",
+      "const { kawarage } = require('lib')",
+      "kawarage.lift()",
+      "animator.add(kawarage)",
+      "execute.kawarageScript()",
+      "kawarage.resolve()",
+      "await kawarage.promise()",
+      "instanceof Kawarage",
+      "new KawarageFactory()",
+      "kawarage.produce()",
+      "getKawarageInstance().execute()",
     ];
+
     let intervalId: string | number | NodeJS.Timeout | undefined;
     const lastPositions: number[] = [];
     const minDistance = 12;
 
     const setDynamicInterval = () => {
+      // Clear the existing interval and texts
       clearInterval(intervalId);
       clearExistingTexts();
 
-      const newInterval = settings.floatingCodeSpeed;
+      // Retrieve the new interval duration from settings
+      const newIntervalDuration = settings.floatingCodeSpeed;
 
-      intervalId = setInterval(addText, newInterval);
+      // Initialize texts
+      for (let i = 0; i < 5; i++) {
+        addText();
+      }
+
+      // Set up a new interval with the updated duration
+      intervalId = setInterval(addText, newIntervalDuration);
     };
 
     if (router.pathname === "/projects") {
@@ -123,7 +221,7 @@ const KawarageAnimation: React.FC = () => {
         "flying-kawarage",
         "whitespace-nowrap",
         "pointer-events-none",
-        "select-none",
+        "select-none"
       );
       textDiv.style.cssText = `
             left: ${leftPosition}%;

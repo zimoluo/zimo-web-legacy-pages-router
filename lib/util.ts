@@ -4,6 +4,8 @@ import advancedFormat from "dayjs/plugin/advancedFormat";
 import { SyntheticEvent } from "react";
 import { marked } from "marked";
 import katex from "katex";
+import { remark } from "remark";
+import html from "remark-html";
 
 let JSDOM: typeof import("jsdom").JSDOM | null = null;
 
@@ -249,3 +251,8 @@ export const safeSetItem = (key: string, value: string): void => {
     console.error(`Error setting item ${key} to localStorage: `, e);
   }
 };
+
+export default async function safeMarkdownToHtml(markdown: string) {
+  const result = await remark().use(html).process(markdown);
+  return result.toString();
+}

@@ -16,7 +16,6 @@ import {
   fetchUploadUserToServer,
   fetchUserDataBySecureSub,
   getSessionToken,
-  modifySessionToken,
 } from "@/lib/accountManager";
 import { useEffect } from "react";
 import { useSettings } from "./contexts/SettingsContext";
@@ -43,9 +42,8 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         const token = await getSessionToken();
         if (token === null) return;
 
-        setUser(token);
-        if (!fetchCheckIfUserExistsBySecureSub) return;
-        const downloadedUser = await fetchUserDataBySecureSub(token.secureSub, [
+        if (!fetchCheckIfUserExistsBySecureSub(token)) return;
+        const downloadedUser = await fetchUserDataBySecureSub(token, [
           "name",
           "profilePic",
           "state",
@@ -75,7 +73,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
             localSettings = loadedSettings;
             await fetchUploadUserToServer(
               { ...downloadedUser, websiteSettings: localSettings },
-              token.secureSub
+              token
             );
           } else {
             localSettings = downloadedUser.websiteSettings;
@@ -83,9 +81,12 @@ const MainPageLayout: React.FC<LayoutProps> = ({
           }
         }
 
-        const newUser = { ...downloadedUser, websiteSettings: localSettings, secureSub: token.secureSub };
+        const newUser = {
+          ...downloadedUser,
+          websiteSettings: localSettings,
+          secureSub: token,
+        };
         setUser(newUser);
-        modifySessionToken(newUser);
       } catch (error) {
         console.error("Error in restoring user session:", error);
       }

@@ -41,7 +41,7 @@ const GoogleSignInButton: React.FC = () => {
     const payload = await fetchDecodedToken(id_token);
     const userData = await getUserByPayload(payload);
     setUser(userData);
-    await setSessionToken(userData);
+    await setSessionToken(userData.secureSub);
     if (userData.websiteSettings !== null) {
       updateSettings(userData.websiteSettings);
     }

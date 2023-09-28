@@ -38,7 +38,7 @@ async function getComments(filePath: string): Promise<any> {
     const s3Object = await s3.send(command);
 
     if (!s3Object.Body) {
-      return {}; // Return an empty object if the file doesn't exist
+      return []; // Return an empty object if the file doesn't exist
     }
 
     let fileContents = "";
@@ -60,13 +60,13 @@ async function getComments(filePath: string): Promise<any> {
     const data = JSON.parse(fileContents);
 
     if (typeof data.comments === "undefined") {
-      return {}; // Return an empty object if the comments field is missing
+      return []; // Return an empty object if the comments field is missing
     }
 
     return data.comments;
   } catch (error: any) {
     // Log the error and return an empty object
     console.error(`An error occurred: ${error.message}`);
-    return {};
+    return [];
   }
 }

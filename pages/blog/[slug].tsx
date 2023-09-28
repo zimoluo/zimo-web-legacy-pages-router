@@ -55,6 +55,7 @@ export default function Post({ post }: PostType) {
         date={post.date}
         coverSrc={coverSrc}
         displayCover={post.displayCover}
+        slug={post.slug}
       ></BlogMainLayout>
     </MainPageLayout>
   );

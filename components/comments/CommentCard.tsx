@@ -10,10 +10,17 @@ import ReplyCardColumn from "./ReplyCardColumn";
 import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
-import { fetchComments, uploadComments } from "@/lib/accountManager";
+import {
+  banOrUnbanUser,
+  fetchComments,
+  fetchUserDataBySecureSub,
+  uploadComments,
+} from "@/lib/accountManager";
 import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
 import { useReply } from "../contexts/ReplyContext";
+import DeleteCommentButton from "./DeleteCommentButton";
+import safeMarkdownToHtml from "@/lib/util";
 
 interface Props {
   theme: ThemeType;
@@ -32,6 +39,26 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isReplyBoxExpanded, setIsReplyBoxExpanded] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [isBanning, setIsBanning] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
+
+  const [htmlContent, setHtmlContent] = useState<string>("");
+
+  useEffect(() => {
+    const doConversion = async () => {
+      try {
+        const html = await safeMarkdownToHtml(comments![index].content); // Perform the async conversion
+        setHtmlContent(html); // Set the converted HTML
+      } catch (error) {
+        console.error("Error converting markdown to HTML", error);
+        setHtmlContent("Error loading content..."); // Set some default error message
+      }
+    };
+
+    if (comments && comments[index]) {
+      doConversion(); // Execute the conversion when component mounts/updates
+    }
+  }, [comments, index]);
 
   useEffect(() => {
     if (user) {
@@ -42,6 +69,24 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       );
     }
   }, [user, comments]);
+
+  const [authorUserState, setAuthorUserState] = useState<
+    "normal" | "banned" | "admin" | null
+  >(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = (await fetchUserDataBySecureSub(
+          encryptSub(comments![index].author),
+          ["state"]
+        )) as unknown as { state: "normal" | "banned" | "admin" };
+        setAuthorUserState(data.state);
+      } catch (error) {
+        console.error("Error fetching user data by secure sub", error);
+      }
+    })();
+  }, [comments, index, isBanning]);
 
   const likeButtonSrc = useMemo(() => {
     if (!resourceLocation || !user || !comments || !comments[index]) {
@@ -62,22 +107,14 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     resourceLocation,
   ]);
 
+  const banButtonSrc =
+    authorUserState === "banned" ? "/unban-user.svg" : "/ban-user.svg";
+
   function toggleExpanded() {
-    if (!comments![index].replies || comments![index].replies!.length === 0) {
-      setIsExpanded(false);
-      setIsReplyBoxExpanded(false);
-      return;
-    }
-    if (isExpanded) {
-      setIsReplyBoxExpanded(false);
-    }
     setIsExpanded(!isExpanded);
   }
 
   function toggleReply() {
-    if (!isReplyBoxExpanded) {
-      setIsExpanded(true);
-    }
     if (!user) return;
 
     setReplyBoxContent({
@@ -94,8 +131,18 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     setIsReplyBoxExpanded(!isReplyBoxExpanded);
   }
 
+  async function evaluateBan() {
+    if (isBanning || !user || user.state !== "admin") return;
+    setIsBanning(true);
+    await banOrUnbanUser(encryptSub(comments![index].author));
+    setIsBanning(false);
+  }
+
   async function evaluateLike() {
-    if (!user || !resourceLocation || user.state === "banned") return;
+    if (isLiking || !user || !resourceLocation || user.state === "banned")
+      return;
+
+    setIsLiking(true);
 
     const downloadedComments = await fetchComments(resourceLocation);
 
@@ -119,8 +166,10 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     });
 
     // Now, update the state
-    setComments(updatedComments);
     await uploadComments(resourceLocation!, updatedComments);
+    setComments(updatedComments);
+
+    setIsLiking(false);
   }
 
   async function deleteComment() {
@@ -158,21 +207,47 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
         secureSub={encryptSub(comments![index].author)}
         date={comments![index].date}
       />
-      <p className="text-lg mb-6 mt-2">{comments![index].content}</p>
+      <p className="text-lg mb-6 mt-2">
+        {comments![index].content.split("\n").map((line, i, arr) =>
+          i === arr.length - 1 ? (
+            line
+          ) : (
+            <>
+              {line}
+              <br />
+            </>
+          )
+        )}
+      </p>
       <div className="flex items-center h-4 opacity-95">
         <div className="flex-grow" />
-        {showDelete && (
-          <button onClick={deleteComment} className="mr-4">
-            <Image
-              alt="Delete Comment"
-              className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
-              height={16}
-              width={16}
-              src="/delete-comment.svg"
-            />
-          </button>
-        )}
-        <button onClick={evaluateLike}>
+        {user &&
+          user.state === "admin" &&
+          (authorUserState === "normal" || authorUserState === "banned") && (
+            <button
+              onClick={evaluateBan}
+              className={`${isBanning ? "cursor-wait" : ""}`}
+            >
+              <Image
+                alt="Ban or Unban User"
+                className={`h-4 mr-3.5 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+                height={16}
+                width={16}
+                src={banButtonSrc}
+                key={banButtonSrc}
+              />
+            </button>
+          )}
+        <DeleteCommentButton
+          deleteComment={deleteComment}
+          isShown={showDelete}
+          theme={theme}
+          isReply={false}
+        />
+        <button
+          onClick={evaluateLike}
+          className={`${isLiking ? "cursor-wait" : ""}`}
+        >
           <Image
             alt="Like Button"
             className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}

@@ -35,7 +35,7 @@ const ReplyCardColumn: React.FC<Props> = ({
   };
 
   return (
-    <div style={columnStyle} ref={columnRef} className="pl-4">
+    <div style={columnStyle} ref={columnRef} className="pl-6">
       {comments![commentIndex].replies!.map((reply, index) => (
         <ReplyCard key={index} index={index} theme={theme} commentIndex={commentIndex} setExpanded={setExpanded} />
       ))}

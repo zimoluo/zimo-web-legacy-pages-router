@@ -197,14 +197,14 @@ export async function getUserByPayload(payload: AccountPayloadData) {
   return fetchedUser;
 }
 
-export async function setSessionToken(userData: UserData): Promise<void> {
+export async function setSessionToken(secureSub: string): Promise<void> {
   try {
     const response = await fetch("/api/setSessionToken", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify({ secureSub: secureSub }),
     });
 
     if (response.ok) {
@@ -218,7 +218,7 @@ export async function setSessionToken(userData: UserData): Promise<void> {
   }
 }
 
-export async function getSessionToken(): Promise<UserData | null> {
+export async function getSessionToken(): Promise<string | null> {
   try {
     const res = await fetch("/api/getSessionToken", {
       method: "GET",
@@ -231,7 +231,7 @@ export async function getSessionToken(): Promise<UserData | null> {
       const data = await res.json();
       if (data.exists) {
         console.log("Session exists.");
-        return data.userData as UserData;
+        return data.sessionToken.secureSub as string;
       } else {
         console.log("No active session.");
         return null;
@@ -261,28 +261,6 @@ export async function clearSessionToken() {
   } catch (error) {
     console.error("Error clearing session token:", error);
     return null;
-  }
-}
-
-export async function modifySessionToken(user: UserData): Promise<void> {
-  try {
-    const response = await fetch("/api/modifySessionToken", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user), // Include the user data in the request body
-    });
-
-    const data = await response.json();
-
-    if (response.status === 200 && data.success) {
-      console.log("Successfully modified session token");
-    } else {
-      console.error("Failed to modify session token:", data.error);
-    }
-  } catch (error) {
-    console.error("An error occurred:", error);
   }
 }
 
@@ -359,5 +337,26 @@ export async function uploadComments(
   } catch (error: any) {
     console.error(`An error occurred: ${error.message}`);
     throw error;
+  }
+}
+
+export async function banOrUnbanUser(secureSub: string) {
+  try {
+    const userData = await fetchUserDataBySecureSub(secureSub, [
+      "name",
+      "profilePic",
+      "state",
+      "websiteSettings",
+    ]);
+    if (userData.state === "admin") return;
+
+    let updatedState = "normal";
+    if (userData.state === "normal") updatedState = "banned";
+
+    const updatedUserData = { ...userData, state: updatedState };
+
+    await fetchUploadUserToServer(updatedUserData, secureSub);
+  } catch (error) {
+    console.error("Error in banOrUnbanUser:", error);
   }
 }

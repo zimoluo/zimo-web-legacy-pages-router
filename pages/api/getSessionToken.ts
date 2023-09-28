@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import jwt from 'jsonwebtoken';
-import { jwtKey } from '@/lib/encryptionkey';
+import { NextApiRequest, NextApiResponse } from "next";
+import jwt from "jsonwebtoken";
+import { jwtKey } from "@/lib/encryptionkey";
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'GET') {
+  if (req.method !== "GET") {
     return res.status(405).end(); // Method Not Allowed
   }
 
@@ -17,10 +17,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     // Verify and decode the JWT
-    const decodedUserData = jwt.verify(sessionToken, secretKey);
+    const decodedToken = jwt.verify(sessionToken, secretKey);
 
-    return res.status(200).json({ exists: true, userData: decodedUserData });
+    return res.status(200).json({ exists: true, sessionToken: decodedToken });
   } catch (error) {
-    return res.status(401).json({ exists: false, error: 'Invalid token' });
+    return res.status(401).json({ exists: false, error: "Invalid token" });
   }
 };

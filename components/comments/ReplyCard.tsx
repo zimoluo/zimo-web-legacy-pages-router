@@ -7,6 +7,7 @@ import { useUser } from "../contexts/UserContext";
 import { useReply } from "../contexts/ReplyContext";
 import { useEffect, useState } from "react";
 import { fetchComments, uploadComments } from "@/lib/accountManager";
+import DeleteCommentButton from "./DeleteCommentButton";
 
 interface Props {
   theme: ThemeType;
@@ -113,20 +114,26 @@ const ReplyCard: React.FC<Props> = ({
         date={repliesData.date}
         toSub={repliesData.to ? encryptSub(repliesData.to) : ""}
       />
-      <p className="text-base mb-3 mt-1.5">{repliesData.content}</p>
-      <div className="flex h-4">
-        <div className="flex-grow" />
-        {showDelete && (
-          <button onClick={deleteReply} className="mr-4">
-            <Image
-              alt="Delete Comment"
-              className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
-              height={16}
-              width={16}
-              src="/delete-comment.svg"
-            />
-          </button>
+      <p className="text-base mb-3 mt-1.5">
+        {repliesData.content.split("\n").map((line, i, arr) =>
+          i === arr.length - 1 ? (
+            line
+          ) : (
+            <>
+              {line}
+              <br />
+            </>
+          )
         )}
+      </p>
+      <div className="flex h-4 items-center mb-1.5">
+        <div className="flex-grow" />
+        <DeleteCommentButton
+          deleteComment={deleteReply}
+          isShown={showDelete}
+          theme={theme}
+          isReply={true}
+        />
         <button onClick={toggleReply}>
           <Image
             alt="Reply To This Person"
