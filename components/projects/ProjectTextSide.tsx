@@ -1,6 +1,10 @@
 import ProjectsTitleCard from "./ProjectsTitleCard";
 import ProjectContent from "./ProjectContent";
 import ShareButtonBarProjects from "./ShareButtonBarProjects";
+import { useSettings } from "../contexts/SettingsContext";
+import { CommentProvider } from "../contexts/CommentContext";
+import CommentTypeBox from "../comments/CommentTypeBox";
+import CommentCardColumn from "../comments/CommentCardColumn";
 
 interface Props {
   title: string;
@@ -27,6 +31,7 @@ const ProjectTextSide = ({
     typeof window !== "undefined"
       ? `${window.location.origin}/projects/${slug}`
       : "";
+  const { settings } = useSettings();
 
   return (
     <article className="w-full relative">
@@ -48,6 +53,19 @@ const ProjectTextSide = ({
           faviconFormat={faviconFormat}
         />
         <ProjectContent content={content} />
+        {!settings.disableComments && (
+          <>
+            <div className={`my-8 border-teal-700 border-t opacity-50`} />
+            <CommentProvider>
+              <CommentTypeBox theme="projects" isExpanded={true} />
+              <div className="h-10 pointer-events-none select-none" />
+              <CommentCardColumn
+                theme="projects"
+                resourceLocation={`projects/comments/${slug}.json`}
+              />
+            </CommentProvider>
+          </>
+        )}
       </div>
     </article>
   );

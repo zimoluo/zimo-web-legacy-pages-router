@@ -42,7 +42,7 @@ const DeleteCommentButton: React.FC<Props> = ({
 
   const divStyle = {
     overflow: "hidden",
-    width: showMore ? "4.5rem" : "1.5rem", // Replace minWidth with the actual min-width
+    width: showMore ? "3.08rem" : "1.5rem", // Replace minWidth with the actual min-width
     transition: "width 0.2s ease-in-out",
   };
 
@@ -56,24 +56,6 @@ const DeleteCommentButton: React.FC<Props> = ({
         showMore ? "border-opacity-60" : "border-opacity-0"
       } justify-end`}
     >
-      <button
-        onClick={() => {
-          setShowMore(false);
-        }}
-        className="absolute right-13"
-      >
-        <Image
-          alt="Cancel Delete"
-          className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
-          height={16}
-          width={16}
-          src="/cancel-delete.svg"
-          priority={true}
-        />
-      </button>
-      <div
-        className={`h-4 w-0 ${borderColorClass} border-menu-rule border-opacity-60 absolute right-12`}
-      />
       <button onClick={evaluateDelete} className="absolute right-7">
         <Image
           alt="Confirm Delete"

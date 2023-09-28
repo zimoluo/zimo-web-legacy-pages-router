@@ -360,3 +360,15 @@ export async function banOrUnbanUser(secureSub: string) {
     console.error("Error in banOrUnbanUser:", error);
   }
 }
+
+export async function refreshUserState(
+  user: UserData,
+  setUser: React.Dispatch<React.SetStateAction<UserData | null>>
+) {
+  const downloadedUser = await fetchUserDataBySecureSub(user.secureSub, [
+    "state",
+  ]);
+  const updatedUserData = { ...user, state: downloadedUser.state };
+  setUser(updatedUserData);
+  return updatedUserData;
+}

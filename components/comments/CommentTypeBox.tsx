@@ -8,7 +8,11 @@ import {
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import { fetchComments, uploadComments } from "@/lib/accountManager";
+import {
+  fetchComments,
+  refreshUserState,
+  uploadComments,
+} from "@/lib/accountManager";
 import { useUser } from "../contexts/UserContext";
 import { decryptSub } from "@/lib/encryptSub";
 import { useSettings } from "../contexts/SettingsContext";
@@ -22,7 +26,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
   const { settings } = useSettings();
 
   const { comments, setComments, resourceLocation } = useComments();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const typeBoxColorClass =
     sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
@@ -78,13 +82,14 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
   };
 
   async function sendComment() {
-    if (isSending) return;
+    if (isSending || !user) return;
+
+    const newUser = await refreshUserState(user, setUser);
 
     if (
-      !user ||
       !comments ||
       !resourceLocation ||
-      user.state === "banned" ||
+      newUser.state === "banned" ||
       !inputValue.trim()
     )
       return;
@@ -107,8 +112,8 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
       // Append it to the comments array
       const updatedComments = [...downloadedComments, newComment];
 
-      setComments(updatedComments); // Update the local state
       await uploadComments(resourceLocation, updatedComments); // Update the remote data
+      setComments(updatedComments); // Update the local state
       setInputValue(""); // Reset the input value
     } catch (error) {
       console.error("Error sending comment:", error);

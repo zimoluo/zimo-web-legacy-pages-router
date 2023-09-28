@@ -14,6 +14,7 @@ import {
   banOrUnbanUser,
   fetchComments,
   fetchUserDataBySecureSub,
+  refreshUserState,
   uploadComments,
 } from "@/lib/accountManager";
 import Head from "next/head";
@@ -28,7 +29,7 @@ interface Props {
 }
 
 const CommentCard: React.FC<Props> = ({ theme, index }) => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { comments, setComments, resourceLocation } = useComments();
 
   const { setReplyBoxContent } = useReply();
@@ -121,26 +122,26 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       from: decryptSub(user?.secureSub),
     });
 
-    if (
-      (!comments![index].replies || comments![index].replies!.length === 0) &&
-      isReplyBoxExpanded
-    ) {
-      setIsExpanded(false);
-    }
-
     setIsReplyBoxExpanded(!isReplyBoxExpanded);
   }
 
   async function evaluateBan() {
-    if (isBanning || !user || user.state !== "admin") return;
+    if (isBanning || !user) return;
+
+    const newUser = await refreshUserState(user, setUser);
+    if (!(newUser.state === "admin")) return;
+
     setIsBanning(true);
     await banOrUnbanUser(encryptSub(comments![index].author));
     setIsBanning(false);
   }
 
   async function evaluateLike() {
-    if (isLiking || !user || !resourceLocation || user.state === "banned")
-      return;
+    if (isLiking || !user || !resourceLocation) return;
+
+    const newUser = await refreshUserState(user, setUser);
+
+    if (newUser.state === "banned") return;
 
     setIsLiking(true);
 
@@ -174,7 +175,11 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
   async function deleteComment() {
     // Check if resourceLocation, user exists and user is not banned
-    if (!resourceLocation || !user || user.state === "banned") return;
+    if (!resourceLocation || !user) return;
+
+    const newUser = await refreshUserState(user, setUser);
+
+    if (newUser.state === "banned") return;
 
     const downloadedComments = await fetchComments(resourceLocation);
 
@@ -190,8 +195,8 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     const updatedComments = downloadedComments.filter((_, i) => i !== index);
 
     // Update the state and upload the updated comments
-    setComments(updatedComments);
     await uploadComments(resourceLocation, updatedComments);
+    setComments(updatedComments);
   }
 
   return (
@@ -288,6 +293,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
         theme={theme}
         isExpanded={isReplyBoxExpanded}
         commentIndex={index}
+        setReplyExpanded={setIsExpanded}
       />
       {comments![index].replies && (
         <ReplyCardColumn

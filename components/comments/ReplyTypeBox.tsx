@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import {
   ThemeType,
   borderColorMap,
@@ -11,6 +11,7 @@ import Image from "next/image";
 import {
   fetchComments,
   fetchUserNameBySecureSub,
+  refreshUserState,
   uploadComments,
 } from "@/lib/accountManager";
 import { encryptSub } from "@/lib/encryptSub";
@@ -21,11 +22,12 @@ interface Props {
   theme: ThemeType;
   isExpanded: boolean;
   commentIndex: number;
+  setReplyExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
-const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
+const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex, setReplyExpanded }) => {
   const { comments, setComments, resourceLocation } = useComments();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const { replyBoxContent } = useReply();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const typeBoxColorClass =
@@ -97,14 +99,15 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
   };
 
   async function sendReply() {
-    if (isSending) return;
+    if (isSending || !user) return;
+
+    const newUser = await refreshUserState(user, setUser);
 
     if (
-      !user ||
       !comments ||
       !replyBoxContent ||
       !resourceLocation ||
-      user.state === "banned" ||
+      newUser.state === "banned" ||
       !inputValue.trim()
     )
       return;
@@ -136,9 +139,10 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex }) => {
         };
       });
 
-      setComments(updatedComments);
       await uploadComments(resourceLocation!, updatedComments);
+      setComments(updatedComments);
       setInputValue("");
+      setReplyExpanded(true);
     } catch (error) {
       console.error("Error sending comment", error);
     } finally {

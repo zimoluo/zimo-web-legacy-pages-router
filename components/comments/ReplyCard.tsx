@@ -6,7 +6,13 @@ import { useComments } from "../contexts/CommentContext";
 import { useUser } from "../contexts/UserContext";
 import { useReply } from "../contexts/ReplyContext";
 import { useEffect, useState } from "react";
-import { fetchComments, uploadComments } from "@/lib/accountManager";
+import {
+  banOrUnbanUser,
+  fetchComments,
+  fetchUserDataBySecureSub,
+  refreshUserState,
+  uploadComments,
+} from "@/lib/accountManager";
 import DeleteCommentButton from "./DeleteCommentButton";
 
 interface Props {
@@ -24,13 +30,15 @@ const ReplyCard: React.FC<Props> = ({
 }) => {
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
 
-  const { user } = useUser();
+  const { user, setUser } = useUser();
 
   const { comments, resourceLocation, setComments } = useComments();
 
   const { setReplyBoxContent } = useReply();
 
   const repliesData = comments![commentIndex]!.replies![index];
+
+  const [isBanning, setIsBanning] = useState(false);
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -44,6 +52,27 @@ const ReplyCard: React.FC<Props> = ({
     }
   }, [user, repliesData.from]);
 
+  const [authorUserState, setAuthorUserState] = useState<
+    "normal" | "banned" | "admin" | null
+  >(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = (await fetchUserDataBySecureSub(
+          encryptSub(repliesData.from),
+          ["state"]
+        )) as unknown as { state: "normal" | "banned" | "admin" };
+        setAuthorUserState(data.state);
+      } catch (error) {
+        console.error("Error fetching user data by secure sub", error);
+      }
+    })();
+  }, [repliesData, isBanning]);
+
+  const banButtonSrc =
+    authorUserState === "banned" ? "/unban-user.svg" : "/ban-user.svg";
+
   function toggleReply() {
     if (!user) return;
 
@@ -54,8 +83,22 @@ const ReplyCard: React.FC<Props> = ({
     setExpanded(true);
   }
 
+  async function evaluateBan() {
+    if (isBanning || !user) return;
+
+    const newUser = await refreshUserState(user, setUser);
+    if (!(newUser.state === "admin")) return;
+
+    setIsBanning(true);
+    await banOrUnbanUser(encryptSub(repliesData.from));
+    setIsBanning(false);
+  }
+
   async function deleteReply() {
-    if (!resourceLocation || !user || user.state === "banned") return;
+    if (!resourceLocation || !user) return;
+
+    const newUser = await refreshUserState(user, setUser);
+    if (newUser.state === "banned") return;
 
     const downloadedComments = await fetchComments(resourceLocation);
 
@@ -128,13 +171,30 @@ const ReplyCard: React.FC<Props> = ({
       </p>
       <div className="flex h-4 items-center mb-1.5">
         <div className="flex-grow" />
+        {user &&
+          user.state === "admin" &&
+          (authorUserState === "normal" || authorUserState === "banned") && (
+            <button
+              onClick={evaluateBan}
+              className={`${isBanning ? "cursor-wait" : ""}`}
+            >
+              <Image
+                alt="Ban or Unban User"
+                className={`h-4 mr-3 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+                height={16}
+                width={16}
+                src={banButtonSrc}
+                key={banButtonSrc}
+              />
+            </button>
+          )}
         <DeleteCommentButton
           deleteComment={deleteReply}
           isShown={showDelete}
           theme={theme}
           isReply={true}
         />
-        <button onClick={toggleReply}>
+        <button onClick={toggleReply} className="mr-0.5">
           <Image
             alt="Reply To This Person"
             className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
