@@ -181,6 +181,8 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
     if (newUser.state === "banned") return;
 
+    if (!comments || !comments[index]) return;
+
     const downloadedComments = await fetchComments(resourceLocation);
 
     // Check if the comment exists at the given index
@@ -190,6 +192,15 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     // Check if the user has permission to delete this comment
     const decryptedSub = decryptSub(user.secureSub);
     if (targetComment.author !== decryptedSub && user.state !== "admin") return; // Ensure that the user is either the author or an admin
+
+    // Check if the comment is the one we're looking for
+    if (
+      targetComment.author !== comments[index].author ||
+      targetComment.content !== comments[index].content ||
+      targetComment.date !== comments[index].date
+    ) {
+      return;
+    }
 
     // Create updatedComments without the comment that needs to be deleted
     const updatedComments = downloadedComments.filter((_, i) => i !== index);
@@ -231,11 +242,11 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
           (authorUserState === "normal" || authorUserState === "banned") && (
             <button
               onClick={evaluateBan}
-              className={`${isBanning ? "cursor-wait" : ""}`}
+              className={`mr-3.5 ${isBanning ? "cursor-wait" : ""}`}
             >
               <Image
                 alt="Ban or Unban User"
-                className={`h-4 mr-3.5 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+                className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
                 height={16}
                 width={16}
                 src={banButtonSrc}

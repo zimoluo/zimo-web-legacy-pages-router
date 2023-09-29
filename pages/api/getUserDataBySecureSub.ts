@@ -5,6 +5,7 @@ import { Readable } from "stream";
 import { pipeline } from "stream/promises";
 import { decryptSub } from "@/lib/encryptSub";
 import { NextApiRequest, NextApiResponse } from "next";
+import * as zlib from "zlib";
 
 const s3 = new S3Client({
   region: awsBucketRegion,
@@ -51,11 +52,18 @@ async function getUserDataBySecureSub(
   }
 
   let fileContents = "";
-  await pipeline(s3Object.Body as Readable, async function* (source) {
-    for await (const chunk of source) {
-      fileContents += chunk.toString("utf-8");
+  
+  const isGzipped = s3Object.ContentEncoding === "gzip";
+  
+  await pipeline(
+    s3Object.Body as Readable,
+    isGzipped ? zlib.createGunzip() : (source) => source,
+    async function* (source) {
+      for await (const chunk of source) {
+        fileContents += chunk.toString("utf-8");
+      }
     }
-  });
+  );
 
   const data = JSON.parse(fileContents);
 

@@ -176,11 +176,11 @@ const ReplyCard: React.FC<Props> = ({
           (authorUserState === "normal" || authorUserState === "banned") && (
             <button
               onClick={evaluateBan}
-              className={`${isBanning ? "cursor-wait" : ""}`}
+              className={`mr-3 ${isBanning ? "cursor-wait" : ""}`}
             >
               <Image
                 alt="Ban or Unban User"
-                className={`h-4 mr-3 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+                className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
                 height={16}
                 width={16}
                 src={banButtonSrc}
