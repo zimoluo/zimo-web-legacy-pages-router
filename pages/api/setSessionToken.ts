@@ -16,11 +16,11 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   const secretKey = jwtKey;
 
   // Create JWT token
-  const token = jwt.sign(userData, secretKey, { expiresIn: "15d" });
+  const token = jwt.sign(userData, secretKey, { expiresIn: "60d" });
 
   res.setHeader("Set-Cookie", [
     `session_token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Expires=${new Date(
-      Date.now() + 60 * 60 * 24 * 15 * 1000 // 15 days
+      Date.now() + 60 * 60 * 24 * 60 * 1000 // 60 days
     ).toUTCString()}`,
   ]);
 

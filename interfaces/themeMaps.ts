@@ -11,6 +11,14 @@ export const faviconMap: { [key: string]: string } = {
   about: "/favicon.svg",
 };
 
+export const websiteFaviconDirectory: { [key: string]: string } = {
+  zimo: "/website-favicon/generic",
+  photos: "/website-favicon/photos",
+  blog: "/website-favicon/blog",
+  projects: "/website-favicon/projects",
+  about: "/website-favicon/generic",
+};
+
 // Map for dynamic bar color
 export const barColorMap: { [key: string]: string } = {
   zimo: "bar-color-zimo",

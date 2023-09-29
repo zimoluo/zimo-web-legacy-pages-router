@@ -6,9 +6,9 @@ import BackgroundAnimation from "./BackgroundAnimation";
 import {
   ThemeType,
   textColorMap,
-  faviconMap,
   simpleTitleMap,
   siteThemeColorMap,
+  websiteFaviconDirectory,
 } from "../interfaces/themeMaps";
 import { useUser } from "./contexts/UserContext";
 import {
@@ -96,14 +96,70 @@ const MainPageLayout: React.FC<LayoutProps> = ({
   }, [user, setUser]);
 
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
-  const faviconSrc = faviconMap[theme] || faviconMap["zimo"];
+  const faviconDir =
+    websiteFaviconDirectory[theme] || websiteFaviconDirectory["zimo"];
   const simpleTitle = simpleTitleMap[theme] || simpleTitleMap["zimo"];
   const siteThemeColor = siteThemeColorMap[theme] || siteThemeColorMap["zimo"];
 
   return (
     <main>
       <Head>
-        <link rel="icon" type="image/x-icon" href={faviconSrc} />
+        <link
+          rel="icon"
+          type="image/x-icon"
+          href={`${faviconDir}/favicon.ico`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href={`${faviconDir}/favicon-16x16.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href={`${faviconDir}/favicon-32x32.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="64x64"
+          href={`${faviconDir}/favicon-64x64.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="96x96"
+          href={`${faviconDir}/favicon-96x96.png`}
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="144x144"
+          href={`${faviconDir}/mstile-144x144.png`}
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href={`${faviconDir}/apple-touch-icon.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="192x192"
+          href={`${faviconDir}/android-chrome-192x192.png`}
+        />
+        <link
+          rel="mask-icon"
+          href={`${faviconDir}/favicon.svg`}
+          color={siteThemeColor}
+        />
+        <meta name="msapplication-TileColor" content={siteThemeColor} />
+        <meta
+          name="msapplication-TileImage"
+          content={`${faviconDir}/mstile-144x144.png`}
+        />
+
         <title>{simpleTitle}</title>
         <meta property="og:site_name" content="Zimo" />
         <meta property="og:type" content="website" />
