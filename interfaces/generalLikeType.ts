@@ -1,0 +1,3 @@
+interface GeneralLikeProps {
+    likedBy: string[];
+}

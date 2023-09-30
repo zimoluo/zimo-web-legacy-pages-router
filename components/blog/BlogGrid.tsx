@@ -1,15 +1,17 @@
 import Image from "next/image";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/util";
 import { formatDate, imageFallback } from "@/lib/util";
+import GeneralLikeButton from "../comments/GeneralLikeButton";
 
 interface BlogGridProps {
   authorId: string;
   author: string;
   content: string;
   date: string;
+  slug: string;
 }
 
-const BlogGrid = ({ authorId, author, content, date }: BlogGridProps) => {
+const BlogGrid = ({ authorId, author, content, date, slug }: BlogGridProps) => {
   const readTime = readingTime(content);
 
   return (
@@ -38,6 +40,11 @@ const BlogGrid = ({ authorId, author, content, date }: BlogGridProps) => {
           )}`}</p>
         </div>
       </div>
+      <div className="flex-grow" />
+      <GeneralLikeButton
+        theme="blog"
+        resourceLocation={`blog/likedBy/${slug}.json`}
+      />
     </div>
   );
 };

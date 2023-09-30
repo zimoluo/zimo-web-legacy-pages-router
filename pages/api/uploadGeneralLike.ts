@@ -18,8 +18,8 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { filePath, comments } = req.body;
-    await uploadComments(filePath, comments);
+    const { filePath, likedBy } = req.body;
+    await uploadLikedBy(filePath, likedBy);
     res.status(200).json({ success: true });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -28,15 +28,15 @@ export default async function handler(
 
 const gzip = promisify(zlib.gzip);
 
-async function uploadComments(filePath: string, comments: any): Promise<void> {
+async function uploadLikedBy(filePath: string, likedBy: any): Promise<void> {
   try {
-    // Convert comments to JSON string and compress it using gzip
-    const compressedComments = await gzip(JSON.stringify({ comments }));
+    // Convert likedBy to JSON string and compress it using gzip
+    const compressedLikedBy = await gzip(JSON.stringify({ likedBy }));
 
     const params = {
       Bucket: awsBucket,
       Key: filePath,
-      Body: compressedComments, // Upload compressed comments
+      Body: compressedLikedBy, // Upload compressed likedBy
       ContentEncoding: "gzip", // Set ContentEncoding header to indicate that the content is gzip-compressed
     };
 

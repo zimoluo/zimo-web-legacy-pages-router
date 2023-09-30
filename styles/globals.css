@@ -421,6 +421,10 @@
     border-width: 0.8px;
 }
 
+.border-photos-comment {
+    border-top-width: 0.8px;
+}
+
 .border-slider {
     border-width: 0.6px;
 }

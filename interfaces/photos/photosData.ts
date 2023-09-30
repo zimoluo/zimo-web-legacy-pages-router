@@ -1,9 +1,15 @@
-type PhotosData = {
+interface PhotosData {
     title: string;
-    description: string;
     date: string;
     author: string;
+    authorProfile: string;
     slug: string;
-    location: string;
+    location?: LocationData;
     images: ImagesData;
 };
+
+interface LocationData {
+    latitude: number;
+    longitude: number;
+    name?: string;
+}

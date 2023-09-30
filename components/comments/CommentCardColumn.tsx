@@ -5,6 +5,7 @@ import { useComments } from "../contexts/CommentContext";
 import { fetchComments } from "@/lib/accountManager";
 import { ReplyProvider } from "../contexts/ReplyContext";
 import { useSettings } from "../contexts/SettingsContext";
+import { securityCommentShutDown } from "@/lib/constants";
 
 interface Props {
   theme: ThemeType;
@@ -44,7 +45,7 @@ const CommentCardColumn: React.FC<Props> = ({ theme, resourceLocation }) => {
     return () => clearInterval(intervalId);
   }, [resourceLocation]); // Added resourceLocation as a dependency as it’s used inside the effect
 
-  if (settings.disableComments) {
+  if (settings.disableComments || securityCommentShutDown) {
     const textColorClass = textColorMap[theme];
     return (
       <section className={`flex justify-center items-center ${textColorClass}`}>

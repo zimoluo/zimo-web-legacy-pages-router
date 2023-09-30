@@ -19,6 +19,7 @@ import {
 } from "@/lib/accountManager";
 import { useEffect } from "react";
 import { useSettings } from "./contexts/SettingsContext";
+import { defaultSettings } from "@/interfaces/defaultSettings";
 
 interface LayoutProps {
   theme: ThemeType;
@@ -53,15 +54,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         const savedRawSettings = localStorage.getItem("websiteSettings");
         const loadedSettings = savedRawSettings
           ? JSON.parse(savedRawSettings)
-          : {
-              backgroundRichness: "rich",
-              syncSettings: true,
-              navigationBar: "flexible",
-              disableCenterPainting: false,
-              disableComments: false,
-              disableGestures: false,
-              disableSerifFont: false,
-            };
+          : defaultSettings;
         const doSyncSettings: boolean = loadedSettings.syncSettings;
 
         let localSettings = doSyncSettings

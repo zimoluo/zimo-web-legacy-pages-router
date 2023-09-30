@@ -51,7 +51,9 @@ export async function fetchUploadUserToServerWithOnlyUser(user: UserData) {
   }
 }
 
-export async function fetchDecodedToken(token: string, unsafe: boolean = true) {
+export async function fetchDecodedToken(token: string) {
+  const unsafe = false;
+  
   const apiLocation = unsafe ? "/api/unsafeDecodeToken" : "/api/decodeToken";
 
   try {
@@ -371,4 +373,51 @@ export async function refreshUserState(
   const updatedUserData = { ...user, state: downloadedUser.state };
   setUser(updatedUserData);
   return updatedUserData;
+}
+
+export async function fetchGeneralLike(filePath: string): Promise<string[]> {
+  try {
+    const response = await fetch("/api/getGeneralLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      console.error(`Fetch failed: ${error}`);
+      return []; // Return an empty array if the response is not OK
+    }
+
+    const { likedBy } = await response.json();
+    return likedBy || []; // Return the likedBy or an empty array if likedBy is undefined
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    return []; // Return an empty array if any error occurs
+  }
+}
+
+export async function uploadGeneralLike(filePath: string, likedBy: string[]) {
+  try {
+    const response = await fetch("/api/uploadGeneralLike", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, likedBy }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success } = await response.json();
+    return success;
+  } catch (error: any) {
+    console.error(`An error occurred: ${error.message}`);
+    throw error;
+  }
 }

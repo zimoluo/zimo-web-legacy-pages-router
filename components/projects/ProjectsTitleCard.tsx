@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { formatAltText, formatDate, imageFallback } from "@/lib/util";
 import { getProjectFavicon } from "@/lib/projects/util";
+import GeneralLikeButton from "../comments/GeneralLikeButton";
 
 type Props = {
   title: string;
@@ -24,9 +25,15 @@ const ProjectsTitleCard = ({
   return (
     <div className="my-10">
       <div className="mb-2">
-        <h1 className="font-bold text-4xl text-teal-900 leading-relaxed">
-          {title}
-        </h1>
+        <div className="flex items-center">
+          <h1 className="font-bold text-4xl text-teal-900 leading-relaxed flex-grow">
+            {title}
+          </h1>
+          <GeneralLikeButton
+            theme="projects"
+            resourceLocation={`projects/likedBy/${slug}.json`}
+          />
+        </div>
         <p className="text-xl text-teal-800 opacity-70 mt-4 mb-10 leading-relaxed">
           {description}
         </p>

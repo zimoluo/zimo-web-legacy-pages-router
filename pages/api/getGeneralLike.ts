@@ -20,14 +20,14 @@ export default async function handler(
 ) {
   try {
     const { filePath } = req.body;
-    const comments = await getComments(filePath);
-    res.status(200).json({ comments });
+    const likedBy = await getLikedBy(filePath);
+    res.status(200).json({ likedBy });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 }
 
-async function getComments(filePath: string): Promise<any> {
+async function getLikedBy(filePath: string): Promise<any> {
   try {
     const params = {
       Bucket: awsBucket,
@@ -59,11 +59,11 @@ async function getComments(filePath: string): Promise<any> {
 
     const data = JSON.parse(fileContents);
 
-    if (typeof data.comments === "undefined") {
-      return []; // Return an empty object if the comments field is missing
+    if (typeof data.likedBy === "undefined") {
+      return []; // Return an empty object if the likedBy field is missing
     }
 
-    return data.comments;
+    return data.likedBy;
   } catch (error: any) {
     return [];
   }

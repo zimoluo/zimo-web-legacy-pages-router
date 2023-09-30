@@ -8,6 +8,7 @@ import { CommentProvider } from "../contexts/CommentContext";
 import CommentTypeBox from "../comments/CommentTypeBox";
 import CommentCardColumn from "../comments/CommentCardColumn";
 import { useSettings } from "../contexts/SettingsContext";
+import { securityCommentShutDown } from "@/lib/constants";
 
 interface BlogProps {
   title: string;
@@ -56,6 +57,7 @@ const BlogMainLayout = ({
           author={author}
           content={content}
           date={date}
+          slug={slug}
         />
         <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />
         {coverSrc && displayCover ? (
@@ -71,7 +73,7 @@ const BlogMainLayout = ({
           </div>
         ) : null}
         <BlogContent content={content}></BlogContent>
-        {!settings.disableComments && (
+        {!settings.disableComments && !securityCommentShutDown && (
           <>
             <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />
             <CommentProvider>

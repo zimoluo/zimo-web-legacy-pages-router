@@ -13,6 +13,7 @@ import SettingsNotchBar from "../SettingsSlider";
 import React from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
+import { securityCommentShutDown } from "@/lib/constants";
 
 type Props = {
   theme: ThemeType;
@@ -178,14 +179,22 @@ const MenuContent = ({ theme }: Props) => {
               </div>
               <SettingsFlip
                 key={item}
-                onClick={(status: boolean) => {
-                  updateSettings({ [item]: status } as Partial<SettingsState>);
-                }}
+                onClick={
+                  item === "disableComments" && securityCommentShutDown
+                    ? (status: boolean) => {}
+                    : (status: boolean) => {
+                        updateSettings({
+                          [item]: status,
+                        } as Partial<SettingsState>);
+                      }
+                }
                 theme={theme}
                 state={
-                  (settings as unknown as Record<string, unknown>)[
-                    item
-                  ] as boolean
+                  item === "disableComments" && securityCommentShutDown
+                    ? true
+                    : ((settings as unknown as Record<string, unknown>)[
+                        item
+                      ] as boolean)
                 }
               />
             </div>
@@ -215,7 +224,6 @@ const MenuContent = ({ theme }: Props) => {
             </React.Fragment>
           ))}
       </div>
-
     </div>
   );
 };

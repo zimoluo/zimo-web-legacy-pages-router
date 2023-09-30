@@ -1,6 +1,8 @@
 import {
   ThemeType,
   lightTextColorMap,
+  likeButtonEmptySrc,
+  likeButtonFilledSrc,
   svgFilterMap,
 } from "@/interfaces/themeMaps";
 import CommentUser from "./CommentUser";
@@ -21,7 +23,8 @@ import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
 import { useReply } from "../contexts/ReplyContext";
 import DeleteCommentButton from "./DeleteCommentButton";
-import safeMarkdownToHtml from "@/lib/util";
+import { safeMarkdownToHtml } from "@/lib/util";
+import React from "react";
 
 interface Props {
   theme: ThemeType;
@@ -35,6 +38,10 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   const { setReplyBoxContent } = useReply();
 
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
+  const likeButtonEmptyImage =
+    likeButtonEmptySrc[theme] || likeButtonEmptySrc["zimo"];
+  const likeButtonFilledImage =
+    likeButtonFilledSrc[theme] || likeButtonFilledSrc["zimo"];
   const lightTextColorClass =
     lightTextColorMap[theme] || lightTextColorMap["zimo"];
   const [isExpanded, setIsExpanded] = useState(false);
@@ -43,6 +50,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   const [isBanning, setIsBanning] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
 
+  /*
   const [htmlContent, setHtmlContent] = useState<string>("");
 
   useEffect(() => {
@@ -60,6 +68,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       doConversion(); // Execute the conversion when component mounts/updates
     }
   }, [comments, index]);
+  */
 
   useEffect(() => {
     if (user) {
@@ -89,20 +98,13 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     })();
   }, [comments, index, isBanning]);
 
-  const likeButtonSrc = useMemo(() => {
+  const shouldRevealFilled = useMemo(() => {
     if (!resourceLocation || !user || !comments || !comments[index]) {
-      return theme === "photos" ? "/heart-icon.svg" : "/thumbs-up.svg";
+      return false;
     }
 
-    return comments[index].likedBy.includes(decryptSub(user.secureSub))
-      ? theme === "photos"
-        ? "/heart-icon-filled.svg"
-        : "/thumbs-up-filled.svg"
-      : theme === "photos"
-      ? "/heart-icon.svg"
-      : "/thumbs-up.svg";
+    return comments[index].likedBy.includes(decryptSub(user.secureSub));
   }, [
-    theme,
     user,
     comments && comments[index] && comments[index].likedBy,
     resourceLocation,
@@ -145,9 +147,30 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
     setIsLiking(true);
 
+    const decryptedSub = decryptSub(user.secureSub);
+
+    // Temporarily update the client side for better user experience
+    const temporaryComments = comments!.map((comment, i) => {
+      if (i !== index) return comment; // Skip if it's not the comment we want to modify
+
+      if (comment.likedBy.includes(decryptedSub)) {
+        // Return a new comment object with the decryptedSub removed from the likedBy array
+        return {
+          ...comment,
+          likedBy: comment.likedBy.filter((sub) => sub !== decryptedSub),
+        };
+      } else {
+        // Return a new comment object with the decryptedSub added to the likedBy array
+        return {
+          ...comment,
+          likedBy: [...comment.likedBy, decryptedSub],
+        };
+      }
+    });
+    setComments(temporaryComments);
+
     const downloadedComments = await fetchComments(resourceLocation);
 
-    const decryptedSub = decryptSub(user.secureSub);
     const updatedComments = downloadedComments!.map((comment, i) => {
       if (i !== index) return comment; // Skip if it's not the comment we want to modify
 
@@ -213,10 +236,8 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   return (
     <div className={`${index === 0 ? "" : "mt-8"}`}>
       <Head>
-        <link rel="preload" as="image" href="/heart-icon.svg" />
-        <link rel="preload" as="image" href="/thumbs-up.svg" />
-        <link rel="preload" as="image" href="/heart-icon-filled.svg" />
-        <link rel="preload" as="image" href="/thumbs-up-filled.svg" />
+        <link rel="preload" as="image" href={likeButtonEmptyImage} />
+        <link rel="preload" as="image" href={likeButtonFilledImage} />
       </Head>
       <CommentUser
         theme={theme}
@@ -226,12 +247,12 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       <p className="text-lg mb-6 mt-2">
         {comments![index].content.split("\n").map((line, i, arr) =>
           i === arr.length - 1 ? (
-            line
+            <React.Fragment key={i}>{line}</React.Fragment>
           ) : (
-            <>
+            <React.Fragment key={i}>
               {line}
               <br />
-            </>
+            </React.Fragment>
           )
         )}
       </p>
@@ -262,15 +283,24 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
         />
         <button
           onClick={evaluateLike}
-          className={`${isLiking ? "cursor-wait" : ""}`}
+          className={`${isLiking ? "cursor-wait" : ""} relative group`}
         >
           <Image
             alt="Like Button"
-            className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 hover:scale-110`}
+            className={`h-4 w-auto aspect-square ${svgFilterClass} transform transition-transform duration-300 group-hover:scale-110`}
             height={16}
             width={16}
-            src={likeButtonSrc}
-            key={likeButtonSrc}
+            src={likeButtonEmptyImage}
+          />
+          <Image
+            alt="Like Button"
+            aria-hidden={true}
+            className={`h-4 w-auto aspect-square left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute ${svgFilterClass} transform transition-all duration-300 group-hover:scale-110 ${
+              shouldRevealFilled ? "opacity-100" : "opacity-0"
+            }`}
+            height={16}
+            width={16}
+            src={likeButtonFilledImage}
           />
         </button>
         <div className={`ml-1 ${lightTextColorClass}`}>

@@ -5,6 +5,7 @@ import { useSettings } from "../contexts/SettingsContext";
 import { CommentProvider } from "../contexts/CommentContext";
 import CommentTypeBox from "../comments/CommentTypeBox";
 import CommentCardColumn from "../comments/CommentCardColumn";
+import { securityCommentShutDown } from "@/lib/constants";
 
 interface Props {
   title: string;
@@ -53,7 +54,7 @@ const ProjectTextSide = ({
           faviconFormat={faviconFormat}
         />
         <ProjectContent content={content} />
-        {!settings.disableComments && (
+        {!settings.disableComments && !securityCommentShutDown && (
           <>
             <div className={`my-8 border-teal-700 border-t opacity-50`} />
             <CommentProvider>

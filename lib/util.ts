@@ -38,6 +38,7 @@ export const rgbDataURL = (r: number, g: number, b: number) =>
   `data:image/gif;base64,R0lGODlhAQABAPAA${
     triplet(0, r, g) + triplet(b, 255, 255)
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
+
 export const formatDate = (dateStr: string) => {
   const today = dayjs();
   const eventDate = dayjs(dateStr);
@@ -62,10 +63,6 @@ export const formatDate = (dateStr: string) => {
 
   if (hoursDifference < 24) {
     return `${hoursDifference} hour${hoursDifference === 1 ? "" : "s"} ago`;
-  }
-
-  if (daysDifference === 1) {
-    return "Yesterday";
   }
 
   if (daysDifference < 15) {
@@ -252,7 +249,33 @@ export const safeSetItem = (key: string, value: string): void => {
   }
 };
 
-export default async function safeMarkdownToHtml(markdown: string) {
+export async function safeMarkdownToHtml(markdown: string) {
   const result = await remark().use(html).process(markdown);
   return result.toString();
+}
+
+export function formatLocation(location: LocationData): string {
+  if (location.name) {
+    return location.name.trim();
+  }
+
+  let lat: string = location.latitude.toFixed(2);
+  let long: string = location.longitude.toFixed(2);
+
+  // To handle the case where one of them has fewer decimal points.
+  const latDecimalPoints = (location.latitude.toString().split(".")[1] || "")
+    .length;
+  const longDecimalPoints = (location.longitude.toString().split(".")[1] || "")
+    .length;
+  const decimalPoints = Math.min(latDecimalPoints, longDecimalPoints, 2);
+
+  lat = location.latitude.toFixed(decimalPoints);
+  long = location.longitude.toFixed(decimalPoints);
+
+  const latDirection = location.latitude >= 0 ? "N" : "S";
+  const longDirection = location.longitude >= 0 ? "E" : "W";
+
+  return `${Math.abs(parseFloat(lat))}°${latDirection}, ${Math.abs(
+    parseFloat(long)
+  )}°${longDirection}`;
 }

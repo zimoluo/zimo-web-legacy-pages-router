@@ -184,3 +184,35 @@ export const flipFilterMap: { [key: string]: string } = {
   projects: "projects-flip-filter",
   about: "about-flip-filter",
 };
+
+export const likeButtonEmptySrc: { [key: string]: string } = {
+  zimo: "/thumbs-up.svg",
+  photos: "/heart-icon.svg",
+  blog: "/thumbs-up.svg",
+  projects: "/star-empty.svg",
+  about: "thumbs-up.svg",
+};
+
+export const likeButtonFilledSrc: { [key: string]: string } = {
+  zimo: "/thumbs-up-filled.svg",
+  photos: "/heart-icon-filled.svg",
+  blog: "/thumbs-up-filled.svg",
+  projects: "/star-filled.svg",
+  about: "thumbs-up-filled.svg",
+};
+
+export const generalLikeEmptySrc: { [key: string]: string } = {
+  zimo: "/thumbs-up.svg",
+  photos: "/heart-icon-photos.svg",
+  blog: "/thumbs-up-blog.svg",
+  projects: "/star-empty-projects.svg",
+  about: "/thumbs-up.svg",
+};
+
+export const generalLikeFilledSrc: { [key: string]: string } = {
+  zimo: "/thumbs-up-filled.svg",
+  photos: "/heart-icon-photos-filled.svg",
+  blog: "/thumbs-up-blog-filled.svg",
+  projects: "/star-filled-projects.svg",
+  about: "/thumbs-up-filled.svg",
+};
