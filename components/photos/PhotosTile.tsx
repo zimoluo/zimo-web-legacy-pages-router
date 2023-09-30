@@ -46,9 +46,9 @@ const PhotosTile = ({
             height={(288 / widthRatio) * heightRatio}
           />
           <div
-            className={`absolute inset-0 bg-black bg-opacity-50 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-100 `}
+            className={`absolute inset-0 bg-black bg-opacity-50 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}
           />
-          <div className="flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-100">
+          <div className="flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
             <Image
               className="aspect-square w-4 md:w-7 h-auto mr-1 md:mr-2"
               src="/photos-stack.svg"
