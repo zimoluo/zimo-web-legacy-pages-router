@@ -1,17 +1,17 @@
 import GeneralLikeButton from "../comments/GeneralLikeButton";
 import CommentTypeBox from "../comments/CommentTypeBox";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { useState } from "react";
 
 type Props = {
   slug: string;
-  isExpanded: boolean;
-  setIsExpanded: Dispatch<SetStateAction<boolean>>;
 };
 
-const PhotosCommentArea = ({ slug, isExpanded, setIsExpanded }: Props) => {
+const PhotosCommentAreaMobile = ({ slug }: Props) => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
   return (
-    <div className="border-photos-comment border-orange-700 border-opacity-80 px-5 pt-4 py-1 bg-orange-50 bg-opacity-50 backdrop-blur-md">
+    <div className="mb-10 border-photos-comment-mobile border-orange-700 border-opacity-80 px-4 pt-4 bg-orange-50 bg-opacity-50 backdrop-blur-md">
       <div className="flex items-center">
         <GeneralLikeButton
           theme="photos"
@@ -26,7 +26,7 @@ const PhotosCommentArea = ({ slug, isExpanded, setIsExpanded }: Props) => {
           <Image
             alt="Expand or Collapse Comment Card"
             className={`h-6 w-auto aspect-square transform transition-transform duration-300 hover:scale-110 ${
-              isExpanded ? "rotate-0" : "-rotate-180"
+              isExpanded ? "-rotate-180" : "rotate-0"
             }`}
             height={24}
             width={24}
@@ -39,4 +39,4 @@ const PhotosCommentArea = ({ slug, isExpanded, setIsExpanded }: Props) => {
   );
 };
 
-export default PhotosCommentArea;
+export default PhotosCommentAreaMobile;

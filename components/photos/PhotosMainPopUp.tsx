@@ -1,5 +1,3 @@
-import ProjectData from "@/interfaces/projects/projectData";
-import ProjectTextSide from "./ProjectTextSide";
 import ImageViewer from "../ImageViewer";
 import {
   addActivePopup,
@@ -9,30 +7,34 @@ import {
 } from "@/lib/util";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import PhotosTextSide from "./PhotosTextSide";
+import PhotosCommentArea from "./PhotosCommentArea";
+import { CommentProvider } from "../contexts/CommentContext";
 
-export default function ProjectMainPopup({
+export default function PhotosMainPopUp({
   title,
-  description,
-  links,
+  location,
   date,
-  images,
-  authors,
+  author,
+  authorProfile,
   slug,
-  faviconFormat,
-  content,
+  images,
   onClose,
-}: ProjectData & { onClose: () => void }) {
+}: PhotosData & { onClose: () => void }) {
   const [style, setStyle] = useState<React.CSSProperties>({});
 
   const [gridWidth, setGridWidth] = useState<number | null>(null);
   const [gridHeight, setGridHeight] = useState<number | null>(null);
 
-  const textPartWidth = 800;
-  const minimumWidth = 1000;
+  const [isCommentBoxExpanded, setIsCommentBoxExpanded] =
+    useState<boolean>(false);
+
+  const textPartWidth = 400;
+  const minimumWidth = 0;
 
   const handleResize = () => {
-    const vh = window.innerHeight * 0.8; // 80vh
-    const vw = window.innerWidth * 0.6; // 60vw
+    const vh = window.innerHeight * 0.9; // 80vh
+    const vw = window.innerWidth * 0.64; // 60vw
     const calculatedHeight = Math.min(vh, vw);
 
     const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
@@ -96,7 +98,7 @@ export default function ProjectMainPopup({
         if (isActivePopup(instanceRef.current)) {
           // Remove the active popup
 
-          window.history.replaceState({}, '', '#');
+          window.history.replaceState({}, "", "#");
           // Add a 100ms delay to removeActivePopup
           removeActivePopup(instanceRef.current);
 
@@ -122,7 +124,7 @@ export default function ProjectMainPopup({
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        window.history.replaceState({}, '', '#');
+        window.history.replaceState({}, "", "#");
         onClose();
       }
     };
@@ -142,60 +144,75 @@ export default function ProjectMainPopup({
   const parsedImage = imagesParser(images);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
-      <div
-        className="flex rounded-xl projects-popup-bg overflow-hidden opacity-0"
-        style={{ ...style, width: `${gridWidth}px`, height: `${gridHeight}px` }}
-      >
+    <CommentProvider>
+      <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
         <div
-          className=""
+          className="flex rounded-xl bg-orange-50 overflow-hidden opacity-0"
           style={{
+            ...style,
+            width: `${gridWidth}px`,
             height: `${gridHeight}px`,
           }}
         >
-          <ImageViewer
-            url={parsedImage.url}
-            text={parsedImage.text}
-            aspectRatio={parsedImage.aspectRatio}
-            theme="projects"
-            useHFull={true}
-          />
+          <div
+            className=""
+            style={{
+              height: `${gridHeight}px`,
+            }}
+          >
+            <ImageViewer
+              url={parsedImage.url}
+              text={parsedImage.text}
+              aspectRatio={parsedImage.aspectRatio}
+              theme="photos"
+              useHFull={true}
+            />
+          </div>
+          <div
+            className="mx-1 overflow-auto relative"
+            style={{
+              width: `${textPartWidth}px`,
+              height: `${gridHeight}px`,
+              maxWidth: `${textPartWidth}px`,
+            }}
+          >
+            <div className="overflow-y-auto h-full">
+              <div className={`${isCommentBoxExpanded ? "mb-52" : "mb-14"}`}>
+                <PhotosTextSide
+                  title={title}
+                  date={date}
+                  slug={slug}
+                  author={author}
+                  authorProfile={authorProfile}
+                  location={location}
+                />
+              </div>
+            </div>
+            <div className="absolute bottom-0 w-full">
+              <PhotosCommentArea
+                slug={slug}
+                isExpanded={isCommentBoxExpanded}
+                setIsExpanded={setIsCommentBoxExpanded}
+              />
+            </div>
+          </div>
         </div>
-        <div
-          className="mx-0 md:ml-2 md:mr-2 overflow-auto"
-          style={{
-            width: `${textPartWidth}px`,
-            height: `${gridHeight}px`,
-            maxWidth: `${textPartWidth}px`,
+        <button
+          className="absolute top-3 right-3 z-70"
+          onClick={() => {
+            onClose();
+            window.history.replaceState({}, "", "#");
           }}
         >
-          <ProjectTextSide
-            title={title}
-            description={description}
-            links={links}
-            date={date}
-            authors={authors}
-            slug={slug}
-            faviconFormat={faviconFormat}
-            content={content}
+          <Image
+            src="/image-view-cross.svg"
+            alt="Close Album Window"
+            width={16}
+            height={16}
+            className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
           />
-        </div>
+        </button>
       </div>
-      <button
-        className="absolute top-3 right-3 z-70"
-        onClick={() => {
-          onClose();
-          window.history.replaceState({}, '', '#');
-        }}
-      >
-        <Image
-          src="/image-view-cross.svg"
-          alt="Close Project Window"
-          width={16}
-          height={16}
-          className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
-        />
-      </button>
-    </div>
+    </CommentProvider>
   );
 }

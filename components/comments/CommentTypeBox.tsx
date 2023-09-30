@@ -98,7 +98,6 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
 
     try {
       const downloadedComments = await fetchComments(resourceLocation);
-      console.log(downloadedComments);
 
       // Construct the new comment
       const newComment = {

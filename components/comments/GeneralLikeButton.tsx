@@ -34,23 +34,20 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
   useEffect(() => {
     const fetchAndSetLikedBy = async () => {
       const fetchedLikedBy = await fetchGeneralLike(resourceLocation);
-      if (fetchedLikedBy) {
-        setStoredLikedBy(fetchedLikedBy);
-      } else {
-        setStoredLikedBy([]);
+      if (!isLiking) {
+        if (fetchedLikedBy) {
+          setStoredLikedBy(fetchedLikedBy);
+        } else {
+          setStoredLikedBy([]);
+        }
       }
-    };
-
-    const smoothFetch = async () => {
-      if (isLiking) return;
-      await fetchAndSetLikedBy();
     };
 
     // Calling fetchAndSetComments immediately
     fetchAndSetLikedBy();
 
     // Setting up the interval to call fetchAndSetComments every 5 seconds
-    const intervalId = setInterval(smoothFetch, 5000);
+    const intervalId = setInterval(fetchAndSetLikedBy, 5000);
 
     // Clearing the interval when the component unmounts or the resourceLocation changes.
     return () => clearInterval(intervalId);

@@ -39,7 +39,7 @@ export default function Entry({ entry }: ProjectType) {
         <meta name="twitter:site" content="@WhiteGkings" />
         <meta
           name="twitter:image"
-          content={favicon ? favicon : "/blog-zimo.svg"}
+          content={favicon ? favicon : "/projects-zimo.svg"}
         />
         <meta name="twitter:image:alt" content={`Cover of ${entry.title}`} />
         <meta name="twitter:title" content={entry.title} />

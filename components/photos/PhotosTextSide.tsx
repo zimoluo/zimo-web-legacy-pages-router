@@ -21,26 +21,19 @@ const PhotosTextSide = ({
   slug,
 }: Props) => {
   return (
-    <CommentProvider>
-      <article className="w-full relative">
-        <div className="px-4 pt-4 pb-4 md:pb-52 overflow-y-auto" style={{height:"100rem"}}>
-          <PhotosCard
-            title={title}
-            date={date}
-            author={author}
-            authorProfile={authorProfile}
-            location={location}
-          />
-          <CommentCardColumn
-            theme="photos"
-            resourceLocation={`photos/comments/${slug}.json`}
-          />
-        </div>
-        <div className="absolute bottom-0 w-full">
-          <PhotosCommentArea slug={slug} />
-        </div>
-      </article>
-    </CommentProvider>
+    <article className="w-full px-4 pt-4 pb-4">
+      <PhotosCard
+        title={title}
+        date={date}
+        author={author}
+        authorProfile={authorProfile}
+        location={location}
+      />
+      <CommentCardColumn
+        theme="photos"
+        resourceLocation={`photos/comments/${slug}.json`}
+      />
+    </article>
   );
 };
 
