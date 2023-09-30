@@ -10,6 +10,8 @@ import Image from "next/image";
 import PhotosTextSide from "./PhotosTextSide";
 import PhotosCommentArea from "./PhotosCommentArea";
 import { CommentProvider } from "../contexts/CommentContext";
+import { useSettings } from "../contexts/SettingsContext";
+import { securityCommentShutDown } from "@/lib/constants";
 
 export default function PhotosMainPopUp({
   title,
@@ -25,6 +27,7 @@ export default function PhotosMainPopUp({
 
   const [gridWidth, setGridWidth] = useState<number | null>(null);
   const [gridHeight, setGridHeight] = useState<number | null>(null);
+  const { settings } = useSettings();
 
   const [isCommentBoxExpanded, setIsCommentBoxExpanded] =
     useState<boolean>(false);
@@ -188,13 +191,15 @@ export default function PhotosMainPopUp({
                 />
               </div>
             </div>
-            <div className="absolute bottom-0 w-full">
-              <PhotosCommentArea
-                slug={slug}
-                isExpanded={isCommentBoxExpanded}
-                setIsExpanded={setIsCommentBoxExpanded}
-              />
-            </div>
+            {!settings.disableComments && !securityCommentShutDown && (
+              <div className="absolute bottom-0 w-full">
+                <PhotosCommentArea
+                  slug={slug}
+                  isExpanded={isCommentBoxExpanded}
+                  setIsExpanded={setIsCommentBoxExpanded}
+                />
+              </div>
+            )}
           </div>
         </div>
         <button

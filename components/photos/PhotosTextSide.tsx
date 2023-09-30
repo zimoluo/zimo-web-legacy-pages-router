@@ -1,7 +1,7 @@
 import PhotosCard from "./PhotosCard";
 import CommentCardColumn from "../comments/CommentCardColumn";
-import PhotosCommentArea from "./PhotosCommentArea";
-import { CommentProvider } from "../contexts/CommentContext";
+import { useSettings } from "../contexts/SettingsContext";
+import { securityCommentShutDown } from "@/lib/constants";
 
 type Props = {
   title: string;
@@ -20,6 +20,8 @@ const PhotosTextSide = ({
   authorProfile,
   slug,
 }: Props) => {
+  const { settings } = useSettings();
+
   return (
     <article className="w-full px-4 pt-4 pb-4">
       <PhotosCard
@@ -29,10 +31,12 @@ const PhotosTextSide = ({
         authorProfile={authorProfile}
         location={location}
       />
-      <CommentCardColumn
-        theme="photos"
-        resourceLocation={`photos/comments/${slug}.json`}
-      />
+      {!settings.disableComments && !securityCommentShutDown && (
+        <CommentCardColumn
+          theme="photos"
+          resourceLocation={`photos/comments/${slug}.json`}
+        />
+      )}
     </article>
   );
 };

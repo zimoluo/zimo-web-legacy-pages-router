@@ -4,6 +4,8 @@ import { CommentProvider } from "../contexts/CommentContext";
 import PhotosCard from "./PhotosCard";
 import CommentCardColumn from "../comments/CommentCardColumn";
 import PhotosCommentAreaMobile from "./PhotosCommentAreaMobile";
+import { useSettings } from "../contexts/SettingsContext";
+import { securityCommentShutDown } from "@/lib/constants";
 
 export default function PhotosMain({
   title,
@@ -15,6 +17,7 @@ export default function PhotosMain({
   images,
 }: PhotosData) {
   const parsedImage = imagesParser(images);
+  const { settings } = useSettings();
 
   return (
     <CommentProvider>
@@ -34,13 +37,15 @@ export default function PhotosMain({
             theme="photos"
           />
         </div>
-        <div className="mt-10">
-          <PhotosCommentAreaMobile slug={slug} />
-          <CommentCardColumn
-            theme="photos"
-            resourceLocation={`photos/comments/${slug}.json`}
-          />
-        </div>
+        {!settings.disableComments && !securityCommentShutDown && (
+          <div className="mt-10">
+            <PhotosCommentAreaMobile slug={slug} />
+            <CommentCardColumn
+              theme="photos"
+              resourceLocation={`photos/comments/${slug}.json`}
+            />
+          </div>
+        )}
       </article>
     </CommentProvider>
   );

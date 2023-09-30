@@ -46,7 +46,7 @@ const PhotosTile = ({
             height={(288 / widthRatio) * heightRatio}
           />
           <div
-            className={`absolute inset-0 bg-black bg-opacity-50 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}
+            className={`absolute inset-0 bg-black bg-opacity-60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}
           />
           <div className="flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
             <Image
