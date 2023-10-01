@@ -16,6 +16,7 @@ function ImageViewer({
   aspectRatio,
   text = [],
   theme = "photos",
+  original = [],
   useHFull = false,
 }: ImagesData & { theme?: string; useHFull?: boolean }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -47,6 +48,14 @@ function ImageViewer({
   const gridLength = computeGridDimensions(url.length);
 
   const actualDescriptions = text.length ? text : Array(url.length).fill("");
+
+  const safeOriginal: string[] = original
+    ? original.length === url.length // if lengths are equal, use original
+      ? original
+      : original.length < url.length // if original is shorter, append empty strings
+      ? [...original, ...new Array(url.length - original.length).fill("")]
+      : original.slice(0, url.length) // if original is longer, clip it to match url's length
+    : new Array(url.length).fill("");
 
   const [widthRatio, heightRatio] = aspectRatio.split(":").map(Number);
 
@@ -334,8 +343,14 @@ function ImageViewer({
               className={`absolute inset-0 w-full h-full object-cover ${
                 isGridView ? "cursor-pointer rounded-xl" : ""
               }`}
-              height={heightRatio * 400}
-              width={widthRatio * 400}
+              height={Math.min(
+                1000,
+                Math.round((1000 / widthRatio) * heightRatio)
+              )}
+              width={Math.min(
+                1000,
+                Math.round((1000 / heightRatio) * widthRatio)
+              )}
               priority={true}
               style={{
                 transform: `translateX(${index * 100}%)`,
@@ -431,7 +446,11 @@ function ImageViewer({
       {showPopup && (
         <div className={``}>
           <ImagePopUp
-            src={url[currentPage]}
+            src={
+              safeOriginal[currentPage]
+                ? safeOriginal[currentPage]
+                : url[currentPage]
+            }
             onClose={closePopup}
             altText={currentDescription}
           />
