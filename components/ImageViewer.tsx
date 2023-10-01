@@ -23,6 +23,7 @@ function ImageViewer({
   const [leftButtonVisible, setLeftButtonVisible] = useState(false);
   const [rightButtonVisible, setRightButtonVisible] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+  const [gridViewAvailable, setGridViewAvailable] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const { settings } = useSettings();
 
@@ -65,6 +66,7 @@ function ImageViewer({
 
   const goToPage = (page: number) => {
     setDescriptionVisible(false);
+    setGridViewAvailable(false);
     setButtonVisibility(page);
 
     if (imageContainerRef.current) {
@@ -76,6 +78,7 @@ function ImageViewer({
         () => {
           setCurrentPage(page);
           setDescriptionVisible(true);
+          setGridViewAvailable(true);
         }
       );
     }
@@ -94,6 +97,8 @@ function ImageViewer({
   };
 
   const enableGridView = () => {
+    if (!gridViewAvailable) return;
+
     setGridView(true);
     if (imageContainerRef.current) {
       const container = imageContainerRef.current;
@@ -118,7 +123,7 @@ function ImageViewer({
             index,
             gridLength
           );
-          node.style.zIndex = "1";
+          node.style.zIndex = "-1";
         }
       });
 
@@ -134,7 +139,7 @@ function ImageViewer({
               node.style.transition = "all 0.2s ease-out";
 
               const handleTransitionEnd = () => {
-                node.style.zIndex = "1";
+                node.style.zIndex = "-1";
 
                 node.removeEventListener("transitionend", handleTransitionEnd);
               };
@@ -169,7 +174,7 @@ function ImageViewer({
                   node.style.transform = `translate(${
                     index * 100
                   }%, 0%) scale(1.0)`;
-                  node.style.zIndex = "1";
+                  node.style.zIndex = "-1";
                 }
               });
 
@@ -177,7 +182,7 @@ function ImageViewer({
                 imageNodes.forEach((node, index) => {
                   if (node instanceof HTMLElement) {
                     if (index === chosenIndex) {
-                      node.style.zIndex = "1";
+                      node.style.zIndex = "-1";
                       container.style.transition = "none 0s";
                       container.style.transform = `translate(${
                         -index * 100
@@ -204,7 +209,7 @@ function ImageViewer({
 
   useEffect(() => {
     if (isGridView) return;
-    
+
     if (settings.disableGestures) return;
 
     let initialX: number | null = null;
