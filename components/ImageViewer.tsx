@@ -334,8 +334,8 @@ function ImageViewer({
               className={`absolute inset-0 w-full h-full object-cover ${
                 isGridView ? "cursor-pointer rounded-xl" : ""
               }`}
-              height={heightRatio * 1000}
-              width={widthRatio * 1000}
+              height={heightRatio * 400}
+              width={widthRatio * 400}
               priority={true}
               style={{
                 transform: `translateX(${index * 100}%)`,
