@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import DarkOverlay from "../DarkOverlay";
 import PhotosMainPopUp from "./PhotosMainPopUp";
@@ -13,8 +13,44 @@ const PhotosTile = ({
   slug,
   location,
 }: PhotosData) => {
-  const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
+  // A simple string hashing function
+  const stringToSeed = (str: string): number => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const charCode = str.charCodeAt(i);
+      hash = (hash << 5) - hash + charCode;
+      hash |= 0; // Convert to a 32bit integer
+    }
+    return hash;
+  };
+
+  // Xorshift algorithm.
+  class Xorshift {
+    private _state: number;
+
+    constructor(seed: number = 1) {
+      this._state = seed;
+    }
+
+    next(): number {
+      this._state ^= this._state << 13;
+      this._state ^= this._state >> 17;
+      this._state ^= this._state << 5;
+      return (this._state >>> 0) / Math.pow(2, 32); // Convert to [0, 1) range.
+    }
+  }
+
+  const seed = useMemo(() => stringToSeed(images.url[0]), [images.url[0]]);
+  const rng = useMemo(() => new Xorshift(seed), [seed]);
+  const randomMultiplier = useMemo(() => 0.8 + rng.next() * 0.4, [rng]);
+
   const [showPopup, setShowPopup] = useState(false);
+  const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
+  const computedAspectRatio = useMemo(
+    () =>
+      parseFloat(((widthRatio / heightRatio) * randomMultiplier).toFixed(3)),
+    [widthRatio, heightRatio, randomMultiplier]
+  );
 
   const openPopUp = () => {
     setShowPopup(true);
@@ -29,8 +65,8 @@ const PhotosTile = ({
     <>
       <Link href={`/photos/${slug}`}>
         <button
-          className="w-32 md:w-72 h-auto rounded-xl overflow-hidden relative group"
-          style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
+          className="w-28 md:w-72 h-auto rounded-xl overflow-hidden relative group"
+          style={{ aspectRatio: `${computedAspectRatio}` }}
           onClick={(e) => {
             if (window.innerWidth >= 768) {
               e.preventDefault();
@@ -43,7 +79,7 @@ const PhotosTile = ({
             src={images.url[0]}
             alt={title}
             width={288}
-            height={(288 / widthRatio) * heightRatio}
+            height={288 / computedAspectRatio}
           />
           <div
             className={`absolute inset-0 bg-black bg-opacity-60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}

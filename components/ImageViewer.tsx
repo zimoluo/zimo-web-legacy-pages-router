@@ -24,6 +24,7 @@ function ImageViewer({
   const [leftButtonVisible, setLeftButtonVisible] = useState(false);
   const [rightButtonVisible, setRightButtonVisible] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+  const [hideDescription, setHideDescription] = useState(false);
   const [gridViewAvailable, setGridViewAvailable] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const { settings } = useSettings();
@@ -324,6 +325,20 @@ function ImageViewer({
 
   const currentDescription = actualDescriptions[currentPage];
 
+  function flipSubtitleButton() {
+    if (!currentDescription) {
+      setHideDescription(false);
+      return;
+    }
+    setHideDescription(!hideDescription);
+  }
+
+  useEffect(() => {
+    if (!currentDescription) {
+      setHideDescription(false);
+    }
+  }, [currentDescription]);
+
   return (
     <div
       className={`${useHFull ? "h-full" : "w-full"} relative`}
@@ -364,7 +379,7 @@ function ImageViewer({
       {currentDescription && !isGridView && (
         <div
           className={`absolute pointer-events-none bottom-12 z-10 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
-            descriptionVisible ? "opacity-100" : "opacity-0"
+            descriptionVisible && !hideDescription ? "opacity-100" : "opacity-0"
           }`}
         >
           {currentDescription}
@@ -372,6 +387,18 @@ function ImageViewer({
       )}
 
       <div className="absolute top-2 right-2 z-10 flex">
+        {!isGridView && currentDescription && (
+          <button className={`mr-3`} onClick={flipSubtitleButton}>
+            <Image
+              src="/show-subtitle.svg"
+              alt="Show or Hide Subtitle"
+              width={24}
+              height={24}
+              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+            />
+          </button>
+        )}
+
         {!isGridView && url.length > 1 && (
           <button className={`mr-3`} onClick={enableGridView}>
             <Image
@@ -428,7 +455,7 @@ function ImageViewer({
       )}
 
       {!isGridView && url.length > 1 && (
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10 max-w-full px-5">
           <ImagePageIndicator
             totalPages={url.length}
             currentPage={currentPage}

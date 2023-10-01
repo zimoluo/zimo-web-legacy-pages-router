@@ -12,7 +12,7 @@ function ImagePageIndicator({ totalPages, currentPage, onPageChange }: Props) {
           key={index}
           className={`w-2 rounded-full aspect-square ${
             index === currentPage
-              ? "bg-neutral-100 bg-opacity-00"
+              ? "bg-neutral-100 bg-opacity-80"
               : "bg-neutral-800 bg-opacity-40"
           }`}
           onClick={() => {
