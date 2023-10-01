@@ -9,11 +9,11 @@
 <stop offset="1" stop-color="#4cce78"/>
 </linearGradient>
 <linearGradient gradientTransform="matrix(0.790898 0 0 0.790898 107.06 107.06)" gradientUnits="userSpaceOnUse" id="LinearGradient_2" x1="130.8" x2="861.694" y1="905.926" y2="96.1873">
-<stop offset="0.00263912" stop-color="#0ded09"/>
+<stop offset="0.00263912" stop-color="#00bc60"/>
 <stop offset="1" stop-color="#1e74ff"/>
 </linearGradient>
 <linearGradient gradientTransform="matrix(0.790898 0 0 0.790898 107.06 107.06)" gradientUnits="userSpaceOnUse" id="LinearGradient_3" x1="389.483" x2="671.661" y1="664.985" y2="390.102">
-<stop offset="0.00263912" stop-color="#0ded09"/>
+<stop offset="0.00263912" stop-color="#00bc60"/>
 <stop offset="1" stop-color="#1e74ff"/>
 </linearGradient>
 </defs>

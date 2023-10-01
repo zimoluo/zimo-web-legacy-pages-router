@@ -62,9 +62,8 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
         alt={`${altText ? altText : "Zoomed-In Image"}`}
         className="image-popup-size object-contain opacity-0"
         style={style}
-        height={500}
-        width={500}
-        unoptimized={true}
+        height={4000}
+        width={4000}
       />
       <button className="absolute top-3 right-3 z-50" onClick={onClose}>
         <Image
