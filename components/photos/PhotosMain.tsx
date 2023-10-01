@@ -34,6 +34,7 @@ export default function PhotosMain({
             url={parsedImage.url}
             text={parsedImage.text}
             aspectRatio={parsedImage.aspectRatio}
+            original={parsedImage.original}
             theme="photos"
           />
         </div>

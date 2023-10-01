@@ -23,6 +23,7 @@ export default function ProjectMain({
           url={parsedImage.url}
           text={parsedImage.text}
           aspectRatio={parsedImage.aspectRatio}
+          original={parsedImage.original}
           theme="projects"
         />
       </div>

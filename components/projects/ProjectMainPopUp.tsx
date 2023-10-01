@@ -157,6 +157,7 @@ export default function ProjectMainPopup({
             url={parsedImage.url}
             text={parsedImage.text}
             aspectRatio={parsedImage.aspectRatio}
+            original={parsedImage.original}
             theme="projects"
             useHFull={true}
           />

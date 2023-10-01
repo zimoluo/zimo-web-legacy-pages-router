@@ -167,6 +167,7 @@ export default function PhotosMainPopUp({
               url={parsedImage.url}
               text={parsedImage.text}
               aspectRatio={parsedImage.aspectRatio}
+              original={parsedImage.original}
               theme="photos"
               useHFull={true}
             />

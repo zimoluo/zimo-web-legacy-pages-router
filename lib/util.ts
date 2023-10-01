@@ -165,7 +165,7 @@ export const applyImageViewerTransition = (
 };
 
 export function imagesParser(input: ImagesData): ImagesData {
-  const { url, text = [], aspectRatio } = input;
+  const { url, text = [], aspectRatio, original } = input;
   let outputText: string[] = [];
 
   const urlLength = url.length;
@@ -179,10 +179,19 @@ export function imagesParser(input: ImagesData): ImagesData {
     outputText = [...text, ...new Array(urlLength - textLength).fill("")];
   }
 
+  const safeOriginal: string[] = original
+    ? original.length === url.length // if lengths are equal, use original
+      ? original
+      : original.length < url.length // if original is shorter, append empty strings
+      ? [...original, ...new Array(url.length - original.length).fill("")]
+      : original.slice(0, url.length) // if original is longer, clip it to match url's length
+    : new Array(url.length).fill("");
+
   return {
     url,
     text: outputText,
     aspectRatio,
+    original: safeOriginal,
   };
 }
 
