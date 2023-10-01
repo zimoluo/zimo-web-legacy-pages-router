@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PhotosTile from "./PhotosTile";
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
 
 const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
   const gridRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (gridRef.current) {
@@ -19,12 +20,19 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
           gutter: 6,
           fitWidth: true,
         });
+
+        // Set the loaded state to true once Masonry is initialized.
+        setIsLoaded(true);
       });
     }
   }, [photoEntries]);
 
   return (
-    <section className="flex justify-center mb-16">
+    <section
+      className={`flex justify-center mb-16 px-1.5 transition-opacity duration-500 ease-in-out ${
+        isLoaded ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <div ref={gridRef}>
         {photoEntries.map((photoEntry, index) => (
           <div key={index} className="masonry-item">

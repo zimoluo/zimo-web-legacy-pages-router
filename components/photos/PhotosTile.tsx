@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import DarkOverlay from "../DarkOverlay";
 import PhotosMainPopUp from "./PhotosMainPopUp";
+import { CommentProvider } from "../contexts/CommentContext";
 
 const PhotosTile = ({
   images,
@@ -46,11 +47,16 @@ const PhotosTile = ({
 
   const [showPopup, setShowPopup] = useState(false);
   const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
-  const computedAspectRatio = useMemo(
-    () =>
-      parseFloat(((widthRatio / heightRatio) * randomMultiplier).toFixed(3)),
-    [widthRatio, heightRatio, randomMultiplier]
-  );
+  const computedAspectRatio = useMemo(() => {
+    // when widthRatio/heightRatio equals 1
+    if (widthRatio / heightRatio === 1) {
+      return 1;
+    }
+    // for all other cases, keep your existing logic
+    return parseFloat(
+      ((widthRatio / heightRatio) * randomMultiplier).toFixed(3)
+    );
+  }, [widthRatio, heightRatio, randomMultiplier]);
 
   const openPopUp = () => {
     setShowPopup(true);
@@ -104,16 +110,18 @@ const PhotosTile = ({
         </div>
       )}
       {showPopup && (
-        <PhotosMainPopUp
-          title={title}
-          location={location}
-          onClose={closePopUp}
-          date={date}
-          author={author}
-          authorProfile={authorProfile}
-          slug={slug}
-          images={images}
-        />
+        <CommentProvider>
+          <PhotosMainPopUp
+            title={title}
+            location={location}
+            onClose={closePopUp}
+            date={date}
+            author={author}
+            authorProfile={authorProfile}
+            slug={slug}
+            images={images}
+          />
+        </CommentProvider>
       )}
     </>
   );

@@ -108,6 +108,7 @@ function ImageViewer({
 
   const enableGridView = () => {
     if (!gridViewAvailable) return;
+    if (!(url.length > 1)) return;
 
     setGridView(true);
     if (imageContainerRef.current) {
@@ -394,7 +395,7 @@ function ImageViewer({
               alt="Show or Hide Subtitle"
               width={24}
               height={24}
-              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
             />
           </button>
         )}
@@ -406,7 +407,7 @@ function ImageViewer({
               alt="Grid View"
               width={24}
               height={24}
-              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
             />
           </button>
         )}
@@ -418,7 +419,7 @@ function ImageViewer({
               alt="Zoom In"
               width={24}
               height={24}
-              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
             />
           </button>
         )}
@@ -434,7 +435,7 @@ function ImageViewer({
             alt="Previous Image"
             width={24}
             height={24}
-            className="h-6 w-auto opacity-80 transform transition-transform duration-300 hover:scale-125"
+            className="h-6 w-auto opacity-80 transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
           />
         </button>
       )}
@@ -449,7 +450,7 @@ function ImageViewer({
             alt="Next Image"
             width={24}
             height={24}
-            className="h-6 w-auto rotate-180 opacity-80 transform transition-transform duration-300 hover:scale-125"
+            className="h-6 w-auto rotate-180 opacity-80 transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
           />
         </button>
       )}
