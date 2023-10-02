@@ -15,6 +15,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
   const secretKey = jwtKey;
 
+  if (!secretKey) {
+    throw new Error("AWS_SECRET_KEY_ZIMO_WEB is undefined!");
+  }
+
   // Create JWT token
   const token = jwt.sign(userData, secretKey, { expiresIn: "60d" });
 

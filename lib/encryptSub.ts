@@ -7,6 +7,10 @@ const ENCRYPTION_KEY = encryptionKey;
 const IV_LENGTH = 16;
 
 export function encryptSub(text: string): string {
+  if (!ENCRYPTION_KEY) {
+    throw new Error("ENCRYPTION_KEY is undefined!");
+  }
+
   const iv = crypto.randomBytes(IV_LENGTH);
   const cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(ENCRYPTION_KEY), iv);
   const encrypted = cipher.update(text);
@@ -15,6 +19,10 @@ export function encryptSub(text: string): string {
 }
 
 export function decryptSub(text: string): string {
+  if (!ENCRYPTION_KEY) {
+    throw new Error("ENCRYPTION_KEY is undefined!");
+  }
+  
   const textParts = text.split(':');
   const iv = Buffer.from(textParts.shift()!, 'hex');
   const encryptedText = Buffer.from(textParts.join(':'), 'hex');

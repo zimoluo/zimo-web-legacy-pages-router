@@ -4,6 +4,14 @@ import { keyId, secretKey } from "@/lib/awskey";
 import { decryptSub } from "@/lib/encryptSub";
 import { NextApiRequest, NextApiResponse } from "next";
 
+if (!keyId) {
+  throw new Error("AWS_KEY_ID is undefined!");
+}
+
+if (!secretKey) {
+  throw new Error("AWS_SECRET_KEY_ZIMO_WEB is undefined!");
+}
+
 const s3 = new S3Client({
   region: awsBucketRegion,
   credentials: {

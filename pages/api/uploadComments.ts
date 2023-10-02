@@ -5,6 +5,14 @@ import { keyId, secretKey } from "@/lib/awskey";
 import { promisify } from "util";
 import * as zlib from "zlib";
 
+if (!keyId) {
+  throw new Error("AWS_KEY_ID is undefined!");
+}
+
+if (!secretKey) {
+  throw new Error("AWS_SECRET_KEY_ZIMO_WEB is undefined!");
+}
+
 const s3 = new S3Client({
   region: awsBucketRegion,
   credentials: {
