@@ -6,7 +6,7 @@ import ProjectsBackgroundAnimation from "./BackgroundAnimations/ProjectsBackgrou
 import PhotosBackgroundAnimationWebkit from "./BackgroundAnimations/PhotosBackgroundAnimationWebkit";
 import { ThemeType } from "../interfaces/themeMaps";
 import { useEffect, useState } from "react";
-import { useSettings } from "./contexts/SettingsContext";
+import { useSettings } from "@/components/contexts/SettingsContext";
 
 interface BackgroundAnimationProps {
   theme: ThemeType;
