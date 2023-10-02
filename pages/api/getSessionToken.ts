@@ -14,6 +14,10 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const secretKey = jwtKey;
+  
+  if (!secretKey) {
+    throw new Error("ENCRYPTION_KEY is undefined!");
+  }
 
   try {
     // Verify and decode the JWT
