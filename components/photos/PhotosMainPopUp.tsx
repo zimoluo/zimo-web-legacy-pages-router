@@ -11,7 +11,7 @@ import PhotosTextSide from "./PhotosTextSide";
 import PhotosCommentArea from "./PhotosCommentArea";
 import { useSettings } from "../contexts/SettingsContext";
 import { securityCommentShutDown } from "@/lib/constants";
-import { useComments } from "../contexts/CommentContext";
+import { CommentProvider } from "../contexts/CommentContext";
 
 export default function PhotosMainPopUp({
   title,
@@ -147,76 +147,78 @@ export default function PhotosMainPopUp({
   const parsedImage = imagesParser(images);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
-      <div
-        className="flex rounded-xl bg-orange-50 overflow-hidden opacity-0"
-        style={{
-          ...style,
-          width: `${gridWidth}px`,
-          height: `${gridHeight}px`,
-        }}
-      >
+    <CommentProvider>
+      <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
         <div
-          className=""
+          className="flex rounded-xl bg-orange-50 overflow-hidden opacity-0"
           style={{
+            ...style,
+            width: `${gridWidth}px`,
             height: `${gridHeight}px`,
           }}
         >
-          <ImageViewer
-            url={parsedImage.url}
-            text={parsedImage.text}
-            aspectRatio={parsedImage.aspectRatio}
-            original={parsedImage.original}
-            theme="photos"
-            useHFull={true}
-          />
-        </div>
-        <div
-          className="mx-1 overflow-auto relative"
-          style={{
-            width: `${textPartWidth}px`,
-            height: `${gridHeight}px`,
-            maxWidth: `${textPartWidth}px`,
-          }}
-        >
-          <div className="overflow-y-auto h-full">
-            <div className={`${isCommentBoxExpanded ? "mb-52" : "mb-14"}`}>
-              <PhotosTextSide
-                title={title}
-                date={date}
-                slug={slug}
-                author={author}
-                authorProfile={authorProfile}
-                location={location}
-              />
-            </div>
+          <div
+            className=""
+            style={{
+              height: `${gridHeight}px`,
+            }}
+          >
+            <ImageViewer
+              url={parsedImage.url}
+              text={parsedImage.text}
+              aspectRatio={parsedImage.aspectRatio}
+              original={parsedImage.original}
+              theme="photos"
+              useHFull={true}
+            />
           </div>
-          {!settings.disableComments && !securityCommentShutDown && (
-            <div className="absolute bottom-0 w-full">
-              <PhotosCommentArea
-                slug={slug}
-                isExpanded={isCommentBoxExpanded}
-                setIsExpanded={setIsCommentBoxExpanded}
-              />
+          <div
+            className="mx-1 overflow-auto relative"
+            style={{
+              width: `${textPartWidth}px`,
+              height: `${gridHeight}px`,
+              maxWidth: `${textPartWidth}px`,
+            }}
+          >
+            <div className="overflow-y-auto h-full">
+              <div className={`${isCommentBoxExpanded ? "mb-52" : "mb-14"}`}>
+                <PhotosTextSide
+                  title={title}
+                  date={date}
+                  slug={slug}
+                  author={author}
+                  authorProfile={authorProfile}
+                  location={location}
+                />
+              </div>
             </div>
-          )}
+            {!settings.disableComments && !securityCommentShutDown && (
+              <div className="absolute bottom-0 w-full">
+                <PhotosCommentArea
+                  slug={slug}
+                  isExpanded={isCommentBoxExpanded}
+                  setIsExpanded={setIsCommentBoxExpanded}
+                />
+              </div>
+            )}
+          </div>
         </div>
+        <button
+          className="absolute top-3 right-3 z-70"
+          onClick={() => {
+            onClose();
+            window.history.replaceState({}, "", "#");
+          }}
+        >
+          <Image
+            src="/image-view-cross.svg"
+            alt="Close Album Window"
+            width={16}
+            height={16}
+            className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+          />
+        </button>
       </div>
-      <button
-        className="absolute top-3 right-3 z-70"
-        onClick={() => {
-          onClose();
-          window.history.replaceState({}, "", "#");
-        }}
-      >
-        <Image
-          src="/image-view-cross.svg"
-          alt="Close Album Window"
-          width={16}
-          height={16}
-          className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
-        />
-      </button>
-    </div>
+    </CommentProvider>
   );
 }

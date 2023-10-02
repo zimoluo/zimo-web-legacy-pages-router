@@ -3,7 +3,6 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import DarkOverlay from "../DarkOverlay";
 import PhotosMainPopUp from "./PhotosMainPopUp";
-import { CommentProvider } from "../contexts/CommentContext";
 
 const PhotosTile = ({
   images,
