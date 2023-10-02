@@ -31,6 +31,7 @@ const PhotosTextSide = ({
         authorProfile={authorProfile}
         location={location}
       />
+      <div className="border-orange-700 border-opacity-80 border-photos-comment -mt-10 mb-8 -mx-4 select-none pointer-events-none" />
       {!settings.disableComments && !securityCommentShutDown && (
         <CommentCardColumn
           theme="photos"

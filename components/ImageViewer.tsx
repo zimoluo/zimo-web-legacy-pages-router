@@ -335,10 +335,10 @@ function ImageViewer({
   }
 
   useEffect(() => {
-    if (!currentDescription) {
+    if (!currentDescription || isGridView) {
       setHideDescription(false);
     }
-  }, [currentDescription]);
+  }, [currentDescription, isGridView]);
 
   return (
     <div

@@ -12,7 +12,7 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
   useEffect(() => {
     if (gridRef.current) {
       import("masonry-layout").then((Masonry) => {
-        const columnWidth = window.innerWidth < 768 ? 112 : 288;
+        const columnWidth = window.innerWidth < 768 ? 168 : 288;
 
         new Masonry.default(gridRef.current as Element, {
           itemSelector: ".masonry-item",
