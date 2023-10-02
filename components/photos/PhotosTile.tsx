@@ -69,7 +69,7 @@ const PhotosTile = ({
 
   return (
     <>
-      <Link href={`/photos/${slug}`} >
+      <Link href={`/photos/${slug}`}>
         <button
           className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative group"
           style={{ aspectRatio: `${computedAspectRatio}` }}
@@ -110,18 +110,16 @@ const PhotosTile = ({
         </div>
       )}
       {showPopup && (
-        <CommentProvider>
-          <PhotosMainPopUp
-            title={title}
-            location={location}
-            onClose={closePopUp}
-            date={date}
-            author={author}
-            authorProfile={authorProfile}
-            slug={slug}
-            images={images}
-          />
-        </CommentProvider>
+        <PhotosMainPopUp
+          title={title}
+          location={location}
+          onClose={closePopUp}
+          date={date}
+          author={author}
+          authorProfile={authorProfile}
+          slug={slug}
+          images={images}
+        />
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import GeneralLikeButton from "../comments/GeneralLikeButton";
 import CommentTypeBox from "../comments/CommentTypeBox";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useComments } from "../contexts/CommentContext";
 
 type Props = {
@@ -10,9 +10,13 @@ type Props = {
 
 const PhotosCommentAreaMobile = ({ slug }: Props) => {
   const { comments } = useComments();
-  const [isExpanded, setIsExpanded] = useState<boolean>(
-    comments ? comments.length <= 1 : true
-  );
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (comments) {
+      setIsExpanded(comments.length <= 1);
+    }
+  }, []);
 
   return (
     <div className="mb-10 border-photos-comment-mobile border-orange-700 border-opacity-80 px-4 pt-4 bg-orange-50 bg-opacity-50 backdrop-blur-md">

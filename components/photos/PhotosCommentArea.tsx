@@ -1,7 +1,8 @@
 import GeneralLikeButton from "../comments/GeneralLikeButton";
 import CommentTypeBox from "../comments/CommentTypeBox";
 import Image from "next/image";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { useComments } from "../contexts/CommentContext";
 
 type Props = {
   slug: string;
@@ -10,6 +11,14 @@ type Props = {
 };
 
 const PhotosCommentArea = ({ slug, isExpanded, setIsExpanded }: Props) => {
+  const { comments } = useComments();
+
+  useEffect(() => {
+    if (comments) {
+      setIsExpanded(comments.length <= 1);
+    }
+  }, []);
+
   return (
     <div className="border-photos-comment border-orange-700 border-opacity-80 px-5 pt-4 py-1 bg-orange-50 bg-opacity-50 backdrop-blur-md">
       <div className="flex items-center">

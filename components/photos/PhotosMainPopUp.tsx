@@ -29,10 +29,8 @@ export default function PhotosMainPopUp({
   const [gridHeight, setGridHeight] = useState<number | null>(null);
   const { settings } = useSettings();
 
-  const { comments } = useComments();
-  const [isCommentBoxExpanded, setIsCommentBoxExpanded] = useState<boolean>(
-    comments ? comments.length <= 1 : true
-  );
+  const [isCommentBoxExpanded, setIsCommentBoxExpanded] =
+    useState<boolean>(true);
 
   const textPartWidth = 400;
   const minimumWidth = 0;
