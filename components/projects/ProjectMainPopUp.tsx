@@ -90,15 +90,17 @@ export default function ProjectMainPopup({
     // Mark this popup as active
     addActivePopup(instanceRef.current);
 
+    // Capturing the current value of instanceRef to ensure it remains stable throughout the effect and cleanup
+    const currentInstance = instanceRef.current;
+
     const handleEscape = (e: KeyboardEvent): void => {
       if (e.key === "Escape") {
         // Check if this popup is the active one
-        if (isActivePopup(instanceRef.current)) {
+        if (isActivePopup(currentInstance)) {
           // Remove the active popup
-
-          window.history.replaceState({}, '', '#');
+          window.history.replaceState({}, "", "#");
           // Add a 100ms delay to removeActivePopup
-          removeActivePopup(instanceRef.current);
+          removeActivePopup(currentInstance);
 
           // Close the popup
           onClose();
@@ -114,15 +116,15 @@ export default function ProjectMainPopup({
 
       // Add a 100ms delay to removeActivePopup
       setTimeout(() => {
-        removeActivePopup(instanceRef.current);
+        removeActivePopup(currentInstance);
       }, 100);
     };
-  }, [onClose]);
+  }, [onClose]); // Remember to consider all dependencies here
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        window.history.replaceState({}, '', '#');
+        window.history.replaceState({}, "", "#");
         onClose();
       }
     };
@@ -186,7 +188,7 @@ export default function ProjectMainPopup({
         className="absolute top-3 right-3 z-70"
         onClick={() => {
           onClose();
-          window.history.replaceState({}, '', '#');
+          window.history.replaceState({}, "", "#");
         }}
       >
         <Image

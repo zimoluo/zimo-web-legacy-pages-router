@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import { jwtKey } from "@/lib/encryptionkey";
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+const handleRequest = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
     return res.status(405).end(); // Method Not Allowed
   }
@@ -30,3 +30,5 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 
   res.status(200).json({ success: true });
 };
+
+export default handleRequest;

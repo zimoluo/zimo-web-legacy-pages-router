@@ -1,4 +1,9 @@
-import { addActivePopup, isActivePopup, removeActivePopup } from "@/lib/util";
+import {
+  addActivePopup,
+  isActivePopup,
+  removeActivePopup,
+  shimmerDataURL,
+} from "@/lib/util";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 
@@ -17,12 +22,15 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
     // Mark this popup as active
     addActivePopup(instanceRef.current);
 
+    // Storing current ref to ensure stable reference in cleanup
+    const currentRef = instanceRef.current;
+
     const handleEscape = (e: KeyboardEvent): void => {
       if (e.key === "Escape") {
         // Check if this popup is the active one
-        if (isActivePopup(instanceRef.current)) {
+        if (isActivePopup(currentRef)) {
           // Remove the active popup
-          removeActivePopup(instanceRef.current);
+          removeActivePopup(currentRef);
           // Close the popup
           onClose();
         }
@@ -34,7 +42,7 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
     return () => {
       // Cleanup
       window.removeEventListener("keydown", handleEscape);
-      removeActivePopup(instanceRef.current);
+      removeActivePopup(currentRef);
     };
   }, [onClose]);
 
@@ -64,6 +72,8 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
         style={style}
         height={4000}
         width={4000}
+        quality={90}
+        placeholder={`data:image/svg+xml;base64,${shimmerDataURL(100, 100)}`}
       />
       <button className="absolute top-3 right-3 z-50" onClick={onClose}>
         <Image

@@ -39,6 +39,32 @@ export const rgbDataURL = (r: number, g: number, b: number) =>
     triplet(0, r, g) + triplet(b, 255, 255)
   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
 
+export const rgbaDataURL = (r: number, g: number, b: number, a: number) => {
+  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"><rect width="100%" height="100%" fill="rgba(${r},${g},${b},${a})"/></svg>`;
+  const base64 = btoa(svgString);
+  return `data:image/svg+xml;base64,${base64}`;
+};
+
+export const shimmerDataURL = (w: number, h: number) =>
+  toBase64(`
+<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="g">
+      <stop stop-color="#888" offset="20%" />
+      <stop stop-color="#777" offset="50%" />
+      <stop stop-color="#888" offset="70%" />
+    </linearGradient>
+  </defs>
+  <rect width="${w}" height="${h}" fill="#888" opacity="0.75" />
+  <rect id="r" width="${w}" height="${h}" fill="url(#g)" opacity="0.75" />
+  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
+</svg>`);
+
+const toBase64 = (str: string) =>
+  typeof window === "undefined"
+    ? Buffer.from(str).toString("base64")
+    : window.btoa(str);
+
 export const formatDate = (dateStr: string) => {
   const today = dayjs();
   const eventDate = dayjs(dateStr);

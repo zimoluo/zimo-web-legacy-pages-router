@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import { jwtKey } from "@/lib/encryptionkey";
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
+const handleRequest = (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "GET") {
     return res.status(405).end(); // Method Not Allowed
   }
@@ -14,7 +14,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const secretKey = jwtKey;
-  
+
   if (!secretKey) {
     throw new Error("ENCRYPTION_KEY is undefined!");
   }
@@ -28,3 +28,5 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ exists: false, error: "Invalid token" });
   }
 };
+
+export default handleRequest;

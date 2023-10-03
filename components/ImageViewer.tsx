@@ -8,8 +8,9 @@ import {
 } from "@/lib/util";
 import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
-import { imagesArrowMap } from "@/interfaces/themeMaps";
+import { imageViewerPlaceholder, imagesArrowMap } from "@/interfaces/themeMaps";
 import { useSettings } from "./contexts/SettingsContext";
+import Head from "next/head";
 
 function ImageViewer({
   url,
@@ -345,6 +346,12 @@ function ImageViewer({
       className={`${useHFull ? "h-full" : "w-full"} relative`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
     >
+      <Head>
+        <link rel="preload" as="image" href={arrowSrc} />
+        <link rel="preload" as="image" href="/show-subtitle.svg" />
+        <link rel="preload" as="image" href="/grid-view.svg" />
+        <link rel="preload" as="image" href="/magnifying-glass.svg" />
+      </Head>
       <div
         className={`absolute inset-0 flex items-center justify-center overflow-hidden z-0 ${
           isGridView ? "" : "rounded-xl"
@@ -372,6 +379,8 @@ function ImageViewer({
                 transform: `translateX(${index * 100}%)`,
               }}
               onClick={() => isGridView && turnOffGridView(index)}
+              placeholder="blur"
+              blurDataURL={imageViewerPlaceholder[theme]}
             />
           ))}
         </div>
@@ -472,17 +481,15 @@ function ImageViewer({
       )}
 
       {showPopup && (
-        <div className={``}>
-          <ImagePopUp
-            src={
-              safeOriginal[currentPage]
-                ? safeOriginal[currentPage]
-                : url[currentPage]
-            }
-            onClose={closePopup}
-            altText={currentDescription}
-          />
-        </div>
+        <ImagePopUp
+          src={
+            safeOriginal[currentPage]
+              ? safeOriginal[currentPage]
+              : url[currentPage]
+          }
+          onClose={closePopup}
+          altText={currentDescription}
+        />
       )}
     </div>
   );

@@ -1,4 +1,4 @@
-import { rgbDataURL } from "@/lib/util";
+import { rgbDataURL, rgbaDataURL } from "@/lib/util";
 
 export type ThemeType = "zimo" | "photos" | "blog" | "projects" | "about";
 
@@ -59,6 +59,14 @@ export const blurColorMap: { [key: string]: string } = {
   blog: rgbDataURL(253, 244, 255),
   projects: rgbDataURL(240, 253, 250),
   about: rgbDataURL(255, 251, 228),
+};
+
+export const imageViewerPlaceholder: { [key: string]: string } = {
+  zimo: rgbaDataURL(245, 245, 245, 0.95),
+  photos: rgbaDataURL(255, 237, 213, 0.95),
+  blog: rgbaDataURL(250, 232, 255, 0.95),
+  projects: rgbaDataURL(204, 251, 241, 0.95),
+  about: rgbaDataURL(224, 242, 254, 0.95),
 };
 
 export const siteThemeColorMap: { [key: string]: string } = {

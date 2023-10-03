@@ -3,6 +3,7 @@ import {
   menuEntryBorderMap,
   svgFilterMap,
 } from "@/interfaces/themeMaps";
+import Head from "next/head";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
@@ -56,6 +57,10 @@ const DeleteCommentButton: React.FC<Props> = ({
         showMore ? "border-opacity-60" : "border-opacity-0"
       } justify-end`}
     >
+      <Head>
+        <link rel="preload" as="image" href="/confirm-delete.svg" />
+        <link rel="preload" as="image" href="/delete-comment.svg" />
+      </Head>
       <button onClick={evaluateDelete} className="absolute right-7">
         <Image
           alt="Confirm Delete"
@@ -63,7 +68,6 @@ const DeleteCommentButton: React.FC<Props> = ({
           height={16}
           width={16}
           src="/confirm-delete.svg"
-          priority={true}
         />
       </button>
       <div
@@ -79,7 +83,6 @@ const DeleteCommentButton: React.FC<Props> = ({
           height={16}
           width={16}
           src="/delete-comment.svg"
-          priority={true}
         />
       </button>
     </div>

@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import DarkOverlay from "../DarkOverlay";
 import PhotosMainPopUp from "./PhotosMainPopUp";
+import { rgbaDataURL } from "@/lib/util";
 
 const PhotosTile = ({
   images,
@@ -85,19 +86,21 @@ const PhotosTile = ({
             alt={title}
             width={288}
             height={288 / computedAspectRatio}
+            placeholder="blur"
+            blurDataURL={rgbaDataURL(255, 237, 213, 0.6)}
           />
           <div
             className={`absolute inset-0 bg-black bg-opacity-60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}
           />
           <div className="flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
             <Image
-              className="aspect-square w-4 md:w-7 h-auto mr-1 md:mr-2"
+              className="aspect-square w-5 md:w-7 h-auto mr-1.2 md:mr-2"
               src="/photos-stack.svg"
               alt={"Number of photos"}
-              width={16}
-              height={16}
+              width={28}
+              height={28}
             />
-            <div className="text-sm md:text-xl text-neutral-100">
+            <div className="text-base md:text-xl text-neutral-100">
               {images.url.length}
             </div>
           </div>
