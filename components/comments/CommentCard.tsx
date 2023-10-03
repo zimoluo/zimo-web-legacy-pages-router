@@ -23,7 +23,7 @@ import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
 import { useReply } from "../contexts/ReplyContext";
 import DeleteCommentButton from "./DeleteCommentButton";
-import { safeMarkdownToHtml } from "@/lib/util";
+import { enrichCommentContent } from "@/lib/util";
 import React from "react";
 
 interface Props {
@@ -49,26 +49,6 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   const [showDelete, setShowDelete] = useState(false);
   const [isBanning, setIsBanning] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
-
-  /*
-  const [htmlContent, setHtmlContent] = useState<string>("");
-
-  useEffect(() => {
-    const doConversion = async () => {
-      try {
-        const html = await safeMarkdownToHtml(comments![index].content); // Perform the async conversion
-        setHtmlContent(html); // Set the converted HTML
-      } catch (error) {
-        console.error("Error converting markdown to HTML", error);
-        setHtmlContent("Error loading content..."); // Set some default error message
-      }
-    };
-
-    if (comments && comments[index]) {
-      doConversion(); // Execute the conversion when component mounts/updates
-    }
-  }, [comments, index]);
-  */
 
   useEffect(() => {
     if (user) {
@@ -245,16 +225,12 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
         date={comments![index].date}
       />
       <p className="text-lg mb-6 mt-2">
-        {comments![index].content.split("\n").map((line, i, arr) =>
-          i === arr.length - 1 ? (
-            <React.Fragment key={i}>{line}</React.Fragment>
-          ) : (
-            <React.Fragment key={i}>
-              {line}
-              <br />
-            </React.Fragment>
-          )
-        )}
+        {comments![index].content.split("\n").map((line, i, arr) => (
+          <React.Fragment key={i}>
+            {enrichCommentContent(line)}
+            {i === arr.length - 1 ? null : <br />}
+          </React.Fragment>
+        ))}
       </p>
       <div className="flex items-center h-4 opacity-95">
         <div className="flex-grow" />

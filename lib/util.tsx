@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
-import { SyntheticEvent } from "react";
+import { ReactNode, SyntheticEvent } from "react";
 import { marked } from "marked";
 import katex from "katex";
 import { remark } from "remark";
 import html from "remark-html";
+import React from "react";
 
 let JSDOM: typeof import("jsdom").JSDOM | null = null;
 
@@ -314,3 +315,19 @@ export function formatLocation(location: LocationData): string {
     parseFloat(long)
   )}°${longDirection}`;
 }
+
+export const enrichCommentContent = (content: string): ReactNode[] => {
+  const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
+  const splitContent = escapedContent.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+
+  return splitContent.map((chunk, index) => {
+    const restoredChunk = chunk.replace(/%%ESCAPED_ASTERISK%%/g, "*");
+    if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
+      return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
+    }
+    if (/^\*(.*?)\*$/.test(restoredChunk)) {
+      return <em key={index}>{restoredChunk.slice(1, -1)}</em>;
+    }
+    return <React.Fragment key={index}>{restoredChunk}</React.Fragment>;
+  });
+};

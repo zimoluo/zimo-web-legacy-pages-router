@@ -14,6 +14,8 @@ import {
   uploadComments,
 } from "@/lib/accountManager";
 import DeleteCommentButton from "./DeleteCommentButton";
+import React from "react";
+import { enrichCommentContent } from "@/lib/util";
 
 interface Props {
   theme: ThemeType;
@@ -158,16 +160,12 @@ const ReplyCard: React.FC<Props> = ({
         toSub={repliesData.to ? encryptSub(repliesData.to) : ""}
       />
       <p className="text-base mb-3 mt-1.5">
-        {repliesData.content.split("\n").map((line, i, arr) =>
-          i === arr.length - 1 ? (
-            line
-          ) : (
-            <>
-              {line}
-              <br />
-            </>
-          )
-        )}
+        {repliesData.content.split("\n").map((line, i, arr) => (
+          <React.Fragment key={i}>
+            {enrichCommentContent(line)}
+            {i === arr.length - 1 ? null : <br />}
+          </React.Fragment>
+        ))}
       </p>
       <div className="flex h-4 items-center mb-1.5">
         <div className="flex-grow" />
