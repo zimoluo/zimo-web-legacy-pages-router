@@ -396,33 +396,32 @@ function ImageViewer({
         </div>
       )}
 
-      <div className="absolute top-2 right-2 z-10 flex">
-        {!isGridView && currentDescription && (
-          <button className={`mr-3`} onClick={flipSubtitleButton}>
-            <Image
-              src="/show-subtitle.svg"
-              alt="Show or Hide Subtitle"
-              width={24}
-              height={24}
-              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
-            />
-          </button>
-        )}
+      {!isGridView && (
+        <div className="absolute top-2 right-2 z-10 flex bg-neutral-600 bg-opacity-40 rounded-full py-1.5 px-3">
+          {currentDescription && (
+            <button className="mr-3" onClick={flipSubtitleButton}>
+              <Image
+                src="/show-subtitle.svg"
+                alt="Show or Hide Subtitle"
+                width={24}
+                height={24}
+                className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
+              />
+            </button>
+          )}
 
-        {!isGridView && url.length > 1 && (
-          <button className={`mr-3`} onClick={enableGridView}>
-            <Image
-              src="/grid-view.svg"
-              alt="Grid View"
-              width={24}
-              height={24}
-              className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
-            />
-          </button>
-        )}
-
-        {!isGridView && (
-          <button className="mr-2 z-10" onClick={openPopup}>
+          {url.length > 1 && (
+            <button className="mr-3" onClick={enableGridView}>
+              <Image
+                src="/grid-view.svg"
+                alt="Grid View"
+                width={24}
+                height={24}
+                className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
+              />
+            </button>
+          )}
+          <button className="" onClick={openPopup}>
             <Image
               src="/magnifying-glass.svg"
               alt="Zoom In"
@@ -431,8 +430,8 @@ function ImageViewer({
               className="h-6 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-110 md:hover:scale-125"
             />
           </button>
-        )}
-      </div>
+        </div>
+      )}
 
       {currentPage > 0 && leftButtonVisible && !isGridView && (
         <button
