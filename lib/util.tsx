@@ -316,7 +316,7 @@ export function formatLocation(location: LocationData): string {
   )}°${longDirection}`;
 }
 
-export const enrichCommentContent = (content: string): ReactNode[] => {
+export const enrichTextContent = (content: string): ReactNode[] => {
   const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
   const splitContent = escapedContent.split(/(\*\*.*?\*\*|\*.*?\*)/g);
 

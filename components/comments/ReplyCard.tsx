@@ -15,7 +15,7 @@ import {
 } from "@/lib/accountManager";
 import DeleteCommentButton from "./DeleteCommentButton";
 import React from "react";
-import { enrichCommentContent } from "@/lib/util";
+import { enrichTextContent } from "@/lib/util";
 
 interface Props {
   theme: ThemeType;
@@ -162,7 +162,7 @@ const ReplyCard: React.FC<Props> = ({
       <p className="text-base mb-3 mt-1.5">
         {repliesData.content.split("\n").map((line, i, arr) => (
           <React.Fragment key={i}>
-            {enrichCommentContent(line)}
+            {enrichTextContent(line)}
             {i === arr.length - 1 ? null : <br />}
           </React.Fragment>
         ))}

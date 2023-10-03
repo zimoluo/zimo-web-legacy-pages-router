@@ -23,7 +23,7 @@ import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
 import { useReply } from "../contexts/ReplyContext";
 import DeleteCommentButton from "./DeleteCommentButton";
-import { enrichCommentContent } from "@/lib/util";
+import { enrichTextContent } from "@/lib/util";
 import React from "react";
 
 interface Props {
@@ -227,7 +227,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       <p className="text-lg mb-6 mt-2">
         {comments![index].content.split("\n").map((line, i, arr) => (
           <React.Fragment key={i}>
-            {enrichCommentContent(line)}
+            {enrichTextContent(line)}
             {i === arr.length - 1 ? null : <br />}
           </React.Fragment>
         ))}
