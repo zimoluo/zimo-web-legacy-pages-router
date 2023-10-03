@@ -94,7 +94,7 @@ const PhotosTile = ({
           />
           <div className="flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
             <Image
-              className="aspect-square w-5 md:w-7 h-auto mr-1.4 md:mr-2"
+              className="aspect-square w-5 md:w-7 h-auto mr-1.3 md:mr-1.5"
               src="/photos-stack.svg"
               alt={"Number of photos"}
               width={28}
