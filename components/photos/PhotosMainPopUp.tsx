@@ -36,8 +36,8 @@ export default function PhotosMainPopUp({
   const minimumWidth = 0;
 
   const handleResize = () => {
-    const vh = window.innerHeight * 0.9; // 80vh
-    const vw = window.innerWidth * 0.64; // 60vw
+    const vh = window.innerHeight * 0.9; 
+    const vw = window.innerWidth * 0.64; 
     const calculatedHeight = Math.min(vh, vw);
 
     const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
@@ -151,7 +151,7 @@ export default function PhotosMainPopUp({
   return (
     <CommentProvider>
       <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
-        <div
+        <article
           className="flex rounded-xl bg-orange-50 overflow-hidden opacity-0"
           style={{
             ...style,
@@ -204,7 +204,7 @@ export default function PhotosMainPopUp({
               </div>
             )}
           </div>
-        </div>
+        </article>
         <button
           className="absolute top-3 right-3 z-70"
           onClick={() => {

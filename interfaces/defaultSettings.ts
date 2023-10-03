@@ -7,5 +7,6 @@ export const defaultSettings = {
     disableComments: false,
     disableGestures: false,
     disableSerifFont: false,
+    disableEntryPopUp: false,
   } as SettingsState;
   

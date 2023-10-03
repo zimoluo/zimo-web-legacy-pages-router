@@ -10,7 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-export default function ProjectMainPopup({
+export default function ProjectMainPopUp({
   title,
   description,
   links,
@@ -145,7 +145,7 @@ export default function ProjectMainPopup({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-60 px-12 py-12 ">
-      <div
+      <article
         className="flex rounded-xl projects-popup-bg overflow-hidden opacity-0"
         style={{ ...style, width: `${gridWidth}px`, height: `${gridHeight}px` }}
       >
@@ -183,7 +183,7 @@ export default function ProjectMainPopup({
             content={content}
           />
         </div>
-      </div>
+      </article>
       <button
         className="absolute top-3 right-3 z-70"
         onClick={() => {

@@ -7,4 +7,5 @@ interface SettingsState {
   disableComments: boolean;
   disableGestures: boolean;
   disableSerifFont: boolean;
+  disableEntryPopUp: boolean;
 }

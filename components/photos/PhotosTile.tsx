@@ -4,6 +4,7 @@ import Link from "next/link";
 import DarkOverlay from "../DarkOverlay";
 import PhotosMainPopUp from "./PhotosMainPopUp";
 import { rgbaDataURL } from "@/lib/util";
+import { useSettings } from "../contexts/SettingsContext";
 
 const PhotosTile = ({
   images,
@@ -45,6 +46,8 @@ const PhotosTile = ({
   const rng = useMemo(() => new Xorshift(seed), [seed]);
   const randomMultiplier = useMemo(() => 0.8 + rng.next() * 0.4, [rng]);
 
+  const { settings } = useSettings();
+
   const [showPopup, setShowPopup] = useState(false);
   const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
   const computedAspectRatio = useMemo(() => {
@@ -74,7 +77,7 @@ const PhotosTile = ({
           className="w-42 md:w-72 h-auto rounded-xl overflow-hidden relative group"
           style={{ aspectRatio: `${computedAspectRatio}` }}
           onClick={(e) => {
-            if (window.innerWidth >= 768) {
+            if (window.innerWidth >= 768 && !settings.disableEntryPopUp) {
               e.preventDefault();
               openPopUp();
             }

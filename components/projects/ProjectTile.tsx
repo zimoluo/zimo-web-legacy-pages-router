@@ -4,8 +4,9 @@ import { imageFallback } from "@/lib/util";
 import Image from "next/image";
 import { useState } from "react";
 import DarkOverlay from "../DarkOverlay";
-import ProjectMainPopup from "./ProjectMainPopUp";
+import ProjectMainPopUp from "./ProjectMainPopUp";
 import Link from "next/link";
+import { useSettings } from "../contexts/SettingsContext";
 
 const ProjectTile: React.FC<ProjectData> = ({
   title,
@@ -19,6 +20,8 @@ const ProjectTile: React.FC<ProjectData> = ({
   content,
 }) => {
   const [showPopup, setShowPopup] = useState(false);
+
+  const { settings } = useSettings();
 
   const openPopUp = () => {
     setShowPopup(true);
@@ -35,7 +38,7 @@ const ProjectTile: React.FC<ProjectData> = ({
         <button
           className="group flex items-center relative justify-center h-36 md:h-48 aspect-square w-auto rounded-xl backdrop-blur-lg shadow-lg px-6 py-6 bar-color-projects overflow-hidden"
           onClick={(e) => {
-            if (window.innerWidth >= 768) {
+            if (window.innerWidth >= 768 && !settings.disableEntryPopUp) {
               e.preventDefault();
               openPopUp();
             }
@@ -60,7 +63,7 @@ const ProjectTile: React.FC<ProjectData> = ({
         </div>
       )}
       {showPopup && (
-        <ProjectMainPopup
+        <ProjectMainPopUp
           title={title}
           description={description}
           links={links}

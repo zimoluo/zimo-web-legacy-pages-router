@@ -36,6 +36,15 @@ const MenuContent = ({ theme }: Props) => {
     settingsArray.unshift("disableCenterPainting");
   }
 
+  if (
+    (router.pathname.startsWith("/photos") ||
+      router.pathname.startsWith("/projects")) &&
+    typeof window !== "undefined" &&
+    window.innerWidth >= 768
+  ) {
+    settingsArray.unshift("disableEntryPopUp");
+  }
+
   const settingsNameMap: { [key: string]: string } = {
     syncSettings: "Sync Settings",
     backgroundRichness: "Background Richness",
@@ -44,6 +53,7 @@ const MenuContent = ({ theme }: Props) => {
     disableComments: "Disable Comments",
     disableGestures: "Disable Gestures",
     disableSerifFont: "Disable Serif Font",
+    disableEntryPopUp: "Disable Entry Pop-Up",
   };
 
   return (
