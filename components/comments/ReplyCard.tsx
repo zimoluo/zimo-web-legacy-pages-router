@@ -13,6 +13,7 @@ import {
 import DeleteCommentButton from "./DeleteCommentButton";
 import React from "react";
 import { enrichTextContent } from "@/lib/util";
+import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   theme: ThemeType;
@@ -29,9 +30,11 @@ const ReplyCard: React.FC<Props> = ({
 }) => {
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
 
-  const { user, setUser } = useUser();
+  const { user } = useUser();
 
   const { comments, resourceLocation, setComments } = useComments();
+
+  const { cache, removeCache } = useUserDataCache();
 
   const { setReplyBoxContent } = useReply();
 
@@ -57,15 +60,22 @@ const ReplyCard: React.FC<Props> = ({
   useEffect(() => {
     (async () => {
       try {
-        const data = (await fetchUserDataBySub(repliesData.from, [
-          "state",
-        ])) as unknown as { state: UserState };
-        setAuthorUserState(data.state);
+        let userData;
+
+        // Check cache first
+        if (cache[repliesData.from]) {
+          userData = cache[repliesData.from];
+        } else {
+          // Fetch and cache if not present in cache
+          userData = await fetchUserDataBySub(repliesData.from, ["state"]);
+        }
+
+        setAuthorUserState(userData.state);
       } catch (error) {
         console.error("Error fetching user data by sub", error);
       }
     })();
-  }, [repliesData, isBanning]);
+  }, [repliesData, isBanning, cache]);
 
   const banButtonSrc =
     authorUserState === "banned" ? "/unban-user.svg" : "/ban-user.svg";
@@ -84,7 +94,7 @@ const ReplyCard: React.FC<Props> = ({
     if (isBanning || !user || user.state !== "admin") return;
 
     setIsBanning(true);
-    await banOrUnbanUser(repliesData.from);
+    await banOrUnbanUser(repliesData.from, removeCache);
     setIsBanning(false);
   }
 

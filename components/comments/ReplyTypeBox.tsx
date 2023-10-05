@@ -14,9 +14,10 @@ import {
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import { addReply, fetchUserNameBySub } from "@/lib/accountClientManager";
+import { addReply, fetchUserDataBySub } from "@/lib/accountClientManager";
 import { useReply } from "../contexts/ReplyContext";
 import { useUser } from "../contexts/UserContext";
+import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   theme: ThemeType;
@@ -45,6 +46,8 @@ const ReplyTypeBox: React.FC<Props> = ({
 
   const [placeholderName, setPlaceholderName] = useState("");
 
+  const { cache } = useUserDataCache();
+
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
@@ -59,13 +62,36 @@ const ReplyTypeBox: React.FC<Props> = ({
 
     const fetchPlaceholderName = async () => {
       try {
-        let name;
+        let targetSub: string | null = null;
+
         if (replyBoxContent?.to) {
-          name = await fetchUserNameBySub(replyBoxContent.to);
-        } else if (comments && comments[commentIndex]) {
-          name = await fetchUserNameBySub(comments[commentIndex]!.author);
+          targetSub = replyBoxContent.to;
+        } else if (
+          comments &&
+          typeof commentIndex === "number" &&
+          comments[commentIndex]
+        ) {
+          targetSub = comments[commentIndex].author;
         }
-        setPlaceholderName(`Reply to ${name}...` || "Reply to...");
+
+        if (targetSub) {
+          let name;
+
+          // Check for cached data first
+          if (cache[targetSub]) {
+            name = cache[targetSub].name;
+          } else {
+            // Fetch and cache if not present in cache
+            const fetchedUserData = await fetchUserDataBySub(targetSub, [
+              "name",
+            ]);
+            name = fetchedUserData.name;
+          }
+
+          setPlaceholderName(`Reply to ${name}...`);
+        } else {
+          setPlaceholderName("Reply to...");
+        }
       } catch (error) {
         console.error("Failed to fetch user name", error);
       }

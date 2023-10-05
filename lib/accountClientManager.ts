@@ -29,6 +29,10 @@ export async function evaluateGoogleIdToken(
 }
 
 export async function fetchUserDataBySub(sub: string, fields: string[]) {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   try {
     const response = await fetch("/api/getUserDataBySub", {
       method: "POST",
@@ -48,29 +52,6 @@ export async function fetchUserDataBySub(sub: string, fields: string[]) {
   } catch (error) {
     console.error("Error fetching user data:", error);
     return null;
-  }
-}
-
-export async function fetchUserNameBySub(sub: string) {
-  try {
-    const response = await fetch("/api/getUserDataBySub", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sub, fields: ["name"] }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "Something went wrong");
-    }
-
-    return data.name;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return "";
   }
 }
 
@@ -284,7 +265,10 @@ export async function deleteReply(
   }
 }
 
-export async function banOrUnbanUser(sub: string) {
+export async function banOrUnbanUser(
+  sub: string,
+  removeCache?: (sub: string) => void
+) {
   try {
     const response = await fetch("/api/banOrUnbanUser", {
       method: "POST",
@@ -300,6 +284,9 @@ export async function banOrUnbanUser(sub: string) {
     }
 
     const { success } = await response.json();
+    if (removeCache) {
+      removeCache(sub);
+    }
     return success;
   } catch (error: any) {
     console.error(`An error occurred: ${error.message}`);

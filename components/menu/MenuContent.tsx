@@ -42,6 +42,14 @@ const MenuContent = ({ theme }: Props) => {
     }
 
     if (
+      routerPathname.startsWith("/blog") ||
+      routerPathname.startsWith("/photos") ||
+      routerPathname.startsWith("/projects")
+    ) {
+      initialSettings = ["disableBackgroundBlur", ...initialSettings];
+    }
+
+    if (
       (routerPathname.startsWith("/photos") ||
         routerPathname.startsWith("/projects")) &&
       windowWidth >= 768
@@ -72,6 +80,7 @@ const MenuContent = ({ theme }: Props) => {
     disableGestures: "Disable Gestures",
     disableSerifFont: "Disable Serif Font",
     disableEntryPopUp: "Disable Entry Pop-Up",
+    disableBackgroundBlur: "Disable Background Blur",
   };
 
   return (

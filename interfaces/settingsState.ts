@@ -8,4 +8,5 @@ interface SettingsState {
   disableGestures: boolean;
   disableSerifFont: boolean;
   disableEntryPopUp: boolean;
+  disableBackgroundBlur: boolean;
 }

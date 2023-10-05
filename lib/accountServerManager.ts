@@ -20,6 +20,10 @@ import { jwtKey } from "@/lib/encryptionkey";
 
 const isClient = typeof window !== "undefined";
 
+const userDataCache: {
+  [key: string]: { data: { [key: string]: any }; timestamp: number };
+} = {};
+
 const ensureSecureDecode =
   process.env.ZIMO_WEB_ENSURE_SECURE_DECODING === "true";
 
@@ -127,19 +131,26 @@ export async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
 
 export async function getUserDataBySub(
   sub: string,
-  fields: string[] = []
+  fields: string[] = [],
+  cacheTTL: number = 60000 // Cache Time-To-Live in milliseconds (e.g., 60000 ms = 1 minute)
 ): Promise<{ [key: string]: any }> {
   if (isClient) {
     throw new Error("This function is not running on server side.");
   }
 
-  const directory = "account/users";
+  const cacheKey = `${sub}:${fields.join(",")}`;
+  const cachedResult = userDataCache[cacheKey];
 
+  // Check if data exists in cache and is not expired
+  if (cachedResult && Date.now() - cachedResult.timestamp < cacheTTL) {
+    return cachedResult.data;
+  }
+
+  const directory = "account/users";
   const params = {
     Bucket: awsBucket,
     Key: `${directory}/${sub}.json`,
   };
-
   const command = new GetObjectCommand(params);
   const s3Object = await s3.send(command);
 
@@ -148,7 +159,6 @@ export async function getUserDataBySub(
   }
 
   let fileContents = "";
-
   const isGzipped = s3Object.ContentEncoding === "gzip";
 
   await pipeline(
@@ -162,7 +172,6 @@ export async function getUserDataBySub(
   );
 
   const data = JSON.parse(fileContents);
-
   const items: { [key: string]: any } = {};
 
   fields.forEach((field) => {
@@ -170,6 +179,9 @@ export async function getUserDataBySub(
       items[field] = data[field];
     }
   });
+
+  // Store data in cache with the current timestamp
+  userDataCache[cacheKey] = { data: items, timestamp: Date.now() };
 
   return items;
 }

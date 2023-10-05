@@ -1,5 +1,4 @@
 type UserData = AccountPayloadData & {
-    state: UserState;
-    websiteSettings: SettingsState | null;
-  };
-  
+  state: UserState;
+  websiteSettings: SettingsState | null;
+};

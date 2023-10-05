@@ -1,5 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUserDataBySub, uploadUserToServer } from "@/lib/accountServerManager";
+import {
+  getUserDataBySub,
+  uploadUserToServer,
+} from "@/lib/accountServerManager";
 import { getSubFromSessionToken } from "@/lib/accountServerManager";
 
 export default async function handler(
@@ -16,10 +19,9 @@ export default async function handler(
     if (!tokenUser) {
       throw new Error("No user is performing banning action.");
     }
-    const { state: tokenUserState } = (await getUserDataBySub(
-      tokenUser,
-      ["state"]
-    )) as unknown as { state: UserState };
+    const { state: tokenUserState } = (await getUserDataBySub(tokenUser, [
+      "state",
+    ])) as unknown as { state: UserState };
     if (tokenUserState !== "admin") {
       throw new Error("User is not authorized to ban users.");
     }
