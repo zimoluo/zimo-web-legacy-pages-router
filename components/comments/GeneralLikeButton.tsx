@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import {
   fetchGeneralLike,
-  uploadGeneralLike,
+  updateLikedBy,
 } from "@/lib/accountClientManager";
 import Head from "next/head";
 
@@ -86,7 +86,7 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
     setStoredLikedBy(temporaryLikedBy);
 
     // Now, update the state
-    const updatedLikedBy = await uploadGeneralLike(resourceLocation!);
+    const updatedLikedBy = await updateLikedBy(resourceLocation!);
     setStoredLikedBy(updatedLikedBy);
 
     setIsLiking(false);

@@ -13,9 +13,9 @@ import { useUser } from "../contexts/UserContext";
 import { useComments } from "../contexts/CommentContext";
 import {
   banOrUnbanUser,
-  fetchComments,
+  deleteComment,
   fetchUserDataBySub,
-  uploadComments,
+  likeComment,
 } from "@/lib/accountClientManager";
 import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
@@ -30,7 +30,7 @@ interface Props {
 }
 
 const CommentCard: React.FC<Props> = ({ theme, index }) => {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const { comments, setComments, resourceLocation } = useComments();
 
   const { setReplyBoxContent } = useReply();
@@ -116,85 +116,47 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
     setIsLiking(true);
 
-    const decryptedSub = user.sub;
+    const userSub = user.sub;
 
     // Temporarily update the client side for better user experience
     const temporaryComments = comments!.map((comment, i) => {
       if (i !== index) return comment; // Skip if it's not the comment we want to modify
 
-      if (comment.likedBy.includes(decryptedSub)) {
-        // Return a new comment object with the decryptedSub removed from the likedBy array
+      if (comment.likedBy.includes(userSub)) {
+        // Return a new comment object with the userSub removed from the likedBy array
         return {
           ...comment,
-          likedBy: comment.likedBy.filter((sub) => sub !== decryptedSub),
+          likedBy: comment.likedBy.filter((sub) => sub !== userSub),
         };
       } else {
-        // Return a new comment object with the decryptedSub added to the likedBy array
+        // Return a new comment object with the userSub added to the likedBy array
         return {
           ...comment,
-          likedBy: [...comment.likedBy, decryptedSub],
+          likedBy: [...comment.likedBy, userSub],
         };
       }
     });
     setComments(temporaryComments);
 
-    const downloadedComments = await fetchComments(resourceLocation);
-
-    const updatedComments = downloadedComments!.map((comment, i) => {
-      if (i !== index) return comment; // Skip if it's not the comment we want to modify
-
-      if (comment.likedBy.includes(decryptedSub)) {
-        // Return a new comment object with the decryptedSub removed from the likedBy array
-        return {
-          ...comment,
-          likedBy: comment.likedBy.filter((sub) => sub !== decryptedSub),
-        };
-      } else {
-        // Return a new comment object with the decryptedSub added to the likedBy array
-        return {
-          ...comment,
-          likedBy: [...comment.likedBy, decryptedSub],
-        };
-      }
-    });
-
     // Now, update the state
-    await uploadComments(resourceLocation!, updatedComments);
+    const updatedComments = await likeComment(resourceLocation!, index);
     setComments(updatedComments);
 
     setIsLiking(false);
   }
 
-  async function deleteComment() {
+  async function evaluateDeleteComment() {
     // Check if resourceLocation, user exists and user is not banned
     if (!resourceLocation || !user || user.state === "banned") return;
 
     if (!comments || !comments[index]) return;
 
-    const downloadedComments = await fetchComments(resourceLocation);
-
-    // Check if the comment exists at the given index
-    const targetComment = downloadedComments[index];
-    if (!targetComment) return;
-
-    // Check if the user has permission to delete this comment
-    const decryptedSub = user.sub;
-    if (targetComment.author !== decryptedSub && user.state !== "admin") return; // Ensure that the user is either the author or an admin
-
-    // Check if the comment is the one we're looking for
-    if (
-      targetComment.author !== comments[index].author ||
-      targetComment.content !== comments[index].content ||
-      targetComment.date !== comments[index].date
-    ) {
-      return;
-    }
-
-    // Create updatedComments without the comment that needs to be deleted
-    const updatedComments = downloadedComments.filter((_, i) => i !== index);
-
     // Update the state and upload the updated comments
-    await uploadComments(resourceLocation, updatedComments);
+    const updatedComments = await deleteComment(
+      resourceLocation,
+      index,
+      comments[index]
+    );
     setComments(updatedComments);
   }
 
@@ -237,7 +199,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
             </button>
           )}
         <DeleteCommentButton
-          deleteComment={deleteComment}
+          deleteComment={evaluateDeleteComment}
           isShown={showDelete}
           theme={theme}
           isReply={false}

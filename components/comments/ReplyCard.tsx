@@ -7,9 +7,8 @@ import { useReply } from "../contexts/ReplyContext";
 import { useEffect, useState } from "react";
 import {
   banOrUnbanUser,
-  fetchComments,
+  deleteReply,
   fetchUserDataBySub,
-  uploadComments,
 } from "@/lib/accountClientManager";
 import DeleteCommentButton from "./DeleteCommentButton";
 import React from "react";
@@ -89,55 +88,17 @@ const ReplyCard: React.FC<Props> = ({
     setIsBanning(false);
   }
 
-  async function deleteReply() {
+  async function evaluateDeleteReply() {
     if (!resourceLocation || !user || user.state === "banned") return;
 
-    const downloadedComments = await fetchComments(resourceLocation);
-
-    // Check if the comment and reply exist at the given indexes
-    const targetComment = downloadedComments[commentIndex];
-    if (
-      !targetComment ||
-      !targetComment.replies ||
-      !targetComment.replies[index]
-    )
-      return;
-
-    const targetReply = targetComment.replies[index];
-
-    const userSub = user.sub;
-
-    // Check if this is indeed the correct reply and if the user has the permission to delete it
-    if (
-      targetReply.from !== userSub &&
-      user.state !== "admin" // Ensure that the user is either the author or an admin
-    ) {
-      return; // The user doesn't have the permission to delete this reply
-    }
-
-    // Check if this is indeed the correct reply
-    if (
-      targetReply.from !== repliesData.from ||
-      targetReply.content !== repliesData.content ||
-      targetReply.date !== repliesData.date ||
-      (targetReply.to ? targetReply.to !== repliesData.to : !!repliesData.to) // Check 'to' if it exists
-    ) {
-      return;
-    }
-
-    // Remove this specific reply and create a new updatedComment object
-    const updatedComment = {
-      ...targetComment,
-      replies: targetComment.replies.filter((_, i) => i !== index),
-    };
-
-    // Replace the original comment with the updated one in downloadedComments
-    const updatedComments = downloadedComments.map((comment, i) =>
-      i === commentIndex ? updatedComment : comment
+    const updatedComments = await deleteReply(
+      resourceLocation,
+      commentIndex,
+      index,
+      repliesData
     );
 
     setComments(updatedComments);
-    await uploadComments(resourceLocation!, updatedComments);
   }
 
   return (
@@ -176,7 +137,7 @@ const ReplyCard: React.FC<Props> = ({
             </button>
           )}
         <DeleteCommentButton
-          deleteComment={deleteReply}
+          deleteComment={evaluateDeleteReply}
           isShown={showDelete}
           theme={theme}
           isReply={true}

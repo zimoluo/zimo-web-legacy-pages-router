@@ -35,6 +35,9 @@ const GoogleSignInButton: React.FC = () => {
   const onSuccess = async (tokenResponse: any) => {
     const id_token = tokenResponse.credential;
     const userData = await evaluateGoogleIdToken(id_token, settings);
+    if (userData === null) {
+      return;
+    }
     setUser(userData);
     if (userData.websiteSettings !== null) {
       updateSettingsLocally(userData.websiteSettings);

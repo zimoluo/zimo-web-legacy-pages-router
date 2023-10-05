@@ -10,7 +10,7 @@ import MenuNavigationEntry from "./MenuNavigationEntry";
 import SettingsFlip from "../SettingsFlip";
 import { useSettings } from "../contexts/SettingsContext";
 import SettingsNotchBar from "../SettingsSlider";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
@@ -24,26 +24,44 @@ const MenuContent = ({ theme }: Props) => {
   const { settings, updateSettings } = useSettings();
   const borderColorClass = menuEntryBorderMap[theme];
   const barColorClass = barColorMap[theme];
-  const router = useRouter();
+  const routerPathname = useRouter().pathname;
 
-  const settingsArray = [
-    "disableComments",
-    "disableGestures",
-    "disableSerifFont",
-  ];
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 768 // Default value as fallback
+  );
 
-  if (router.pathname.startsWith("/blog")) {
-    settingsArray.unshift("disableCenterPainting");
-  }
+  const settingsArray = useMemo(() => {
+    let initialSettings = [
+      "disableComments",
+      "disableGestures",
+      "disableSerifFont",
+    ];
 
-  if (
-    (router.pathname.startsWith("/photos") ||
-      router.pathname.startsWith("/projects")) &&
-    typeof window !== "undefined" &&
-    window.innerWidth >= 768
-  ) {
-    settingsArray.unshift("disableEntryPopUp");
-  }
+    if (routerPathname.startsWith("/blog")) {
+      initialSettings = ["disableCenterPainting", ...initialSettings];
+    }
+
+    if (
+      (routerPathname.startsWith("/photos") ||
+        routerPathname.startsWith("/projects")) &&
+      windowWidth >= 768
+    ) {
+      initialSettings = ["disableEntryPopUp", ...initialSettings];
+    }
+
+    return initialSettings;
+  }, [routerPathname, windowWidth]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const settingsNameMap: { [key: string]: string } = {
     syncSettings: "Sync Settings",
@@ -147,7 +165,7 @@ const MenuContent = ({ theme }: Props) => {
         <div
           className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
         />
-        {router.pathname.startsWith("/projects") && (
+        {routerPathname.startsWith("/projects") && (
           <>
             <div className="md:flex md:items-center my-4 ">
               <div

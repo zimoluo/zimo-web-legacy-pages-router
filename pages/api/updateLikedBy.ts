@@ -5,8 +5,8 @@ import { keyId, secretKey } from "@/lib/awskey";
 import { promisify } from "util";
 import * as zlib from "zlib";
 import {
-  fetchGeneralLikeServerSide,
-  fetchUserDataBySubServerSide,
+  getLikedBy,
+  getUserDataBySub,
   getSubFromSessionToken,
 } from "@/lib/accountServerManager";
 
@@ -41,16 +41,19 @@ export default async function handler(
 
 const gzip = promisify(zlib.gzip);
 
-async function uploadLikedBy(filePath: string, req: NextApiRequest): Promise<string[]> {
+async function uploadLikedBy(
+  filePath: string,
+  req: NextApiRequest
+): Promise<string[]> {
   try {
-    const downloadedLikedBy = await fetchGeneralLikeServerSide(filePath);
+    const downloadedLikedBy = await getLikedBy(filePath);
     const tokenUserSub = getSubFromSessionToken(req);
 
     if (tokenUserSub === null) {
       throw new Error("No user is making the like.");
     }
 
-    const { state: tokenUserState } = (await fetchUserDataBySubServerSide(
+    const { state: tokenUserState } = (await getUserDataBySub(
       tokenUserSub,
       ["state"]
     )) as unknown as { state: UserState };
@@ -74,7 +77,9 @@ async function uploadLikedBy(filePath: string, req: NextApiRequest): Promise<str
     }
 
     // Convert likedBy to JSON string and compress it using gzip
-    const compressedLikedBy = await gzip(JSON.stringify({ updatedLikedBy }));
+    const compressedLikedBy = await gzip(
+      JSON.stringify({ likedBy: updatedLikedBy })
+    );
 
     const params = {
       Bucket: awsBucket,

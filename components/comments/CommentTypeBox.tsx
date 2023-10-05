@@ -8,7 +8,7 @@ import {
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import { fetchComments, uploadComments } from "@/lib/accountClientManager";
+import { addComment } from "@/lib/accountClientManager";
 import { useUser } from "../contexts/UserContext";
 import { useSettings } from "../contexts/SettingsContext";
 
@@ -21,7 +21,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
   const { settings } = useSettings();
 
   const { comments, setComments, resourceLocation } = useComments();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const typeBoxColorClass =
     sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
@@ -90,8 +90,6 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
     setIsSending(true);
 
     try {
-      const downloadedComments = await fetchComments(resourceLocation);
-
       // Construct the new comment
       const newComment = {
         author: user.sub, //assuming the user object has a name property representing the author's name
@@ -101,10 +99,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
         replies: [],
       };
 
-      // Append it to the comments array
-      const updatedComments = [...downloadedComments, newComment];
-
-      await uploadComments(resourceLocation, updatedComments); // Update the remote data
+      const updatedComments = await addComment(resourceLocation, newComment); // Update the remote data
       setComments(updatedComments); // Update the local state
       setInputValue(""); // Reset the input value
     } catch (error) {

@@ -1,7 +1,7 @@
 export async function evaluateGoogleIdToken(
   idToken: string,
   localSettingsData: SettingsState
-): Promise<UserData> {
+): Promise<UserData | null> {
   try {
     // Send POST request to the API endpoint with idToken in the request body
     const response = await fetch("/api/loginUserOAuth", {
@@ -24,7 +24,7 @@ export async function evaluateGoogleIdToken(
   } catch (error) {
     // Handle error: display it or log it
     console.error(error);
-    throw error;
+    return null;
   }
 }
 
@@ -141,17 +141,14 @@ export async function fetchComments(filePath: string): Promise<CommentEntry[]> {
   }
 }
 
-export async function uploadComments(
-  filePath: string,
-  comments: CommentEntry[]
-) {
+export async function addComment(filePath: string, newComment: CommentEntry) {
   try {
-    const response = await fetch("/api/uploadComments", {
+    const response = await fetch("/api/addComment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ filePath, comments }),
+      body: JSON.stringify({ filePath, newComment }),
     });
 
     if (!response.ok) {
@@ -159,13 +156,131 @@ export async function uploadComments(
       throw new Error(`Upload failed: ${error}`);
     }
 
-    const { success } = await response.json();
-    return success;
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
   } catch (error: any) {
     console.error(
-      `An error occurred while trying to upload comments: ${error.message}`
+      `An error occurred while trying to add comment: ${error.message}`
     );
-    throw error;
+    return null;
+  }
+}
+
+export async function addReply(
+  filePath: string,
+  newReply: ReplyProps,
+  commentIndex: number
+) {
+  try {
+    const response = await fetch("/api/addReply", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, newReply, commentIndex }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to add reply: ${error.message}`
+    );
+    return null;
+  }
+}
+
+export async function likeComment(filePath: string, index: number) {
+  try {
+    const response = await fetch("/api/likeComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, index }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to like comment: ${error.message}`
+    );
+    return null;
+  }
+}
+
+export async function deleteComment(
+  filePath: string,
+  index: number,
+  existingComment: CommentEntry
+) {
+  try {
+    const response = await fetch("/api/deleteComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filePath, index, existingComment }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to delete comment: ${error.message}`
+    );
+    return null;
+  }
+}
+
+export async function deleteReply(
+  filePath: string,
+  commentIndex: number,
+  replyIndex: number,
+  existingReply: ReplyProps
+) {
+  try {
+    const response = await fetch("/api/deleteReply", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        filePath,
+        commentIndex,
+        replyIndex,
+        existingReply,
+      }),
+    });
+
+    if (!response.ok) {
+      const { error } = await response.json();
+      throw new Error(`Upload failed: ${error}`);
+    }
+
+    const { success, updatedComments } = await response.json();
+    return updatedComments;
+  } catch (error: any) {
+    console.error(
+      `An error occurred while trying to delete reply: ${error.message}`
+    );
+    return null;
   }
 }
 
@@ -188,7 +303,7 @@ export async function banOrUnbanUser(sub: string) {
     return success;
   } catch (error: any) {
     console.error(`An error occurred: ${error.message}`);
-    throw error;
+    return null;
   }
 }
 
@@ -216,9 +331,9 @@ export async function fetchGeneralLike(filePath: string): Promise<string[]> {
   }
 }
 
-export async function uploadGeneralLike(filePath: string) {
+export async function updateLikedBy(filePath: string) {
   try {
-    const response = await fetch("/api/uploadGeneralLike", {
+    const response = await fetch("/api/updateLikedBy", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -235,7 +350,7 @@ export async function uploadGeneralLike(filePath: string) {
     return updatedLikedBy;
   } catch (error: any) {
     console.error(`An error occurred: ${error.message}`);
-    throw error;
+    return null;
   }
 }
 
@@ -268,7 +383,8 @@ export async function fetchUploadSettingsToServer(
 export async function restoreClientUser(localSettings: SettingsState): Promise<{
   integratedUser: UserData;
   downloadedSettings: SettingsState | null;
-}> {
+  exists: boolean;
+} | null> {
   try {
     // Send POST request to the API endpoint with idToken in the request body
     const response = await fetch("/api/restoreClientUser", {
@@ -287,10 +403,17 @@ export async function restoreClientUser(localSettings: SettingsState): Promise<{
 
     // Parse and return the JSON response
     const data = await response.json();
+
+    if (!data.exists) {
+      console.log("No user session found.");
+      return { exists: false } as any;
+    }
+
+    console.log("Successfully restored user session.");
     return data;
   } catch (error) {
     // Handle error: display it or log it
     console.error(error);
-    throw error;
+    return null;
   }
 }

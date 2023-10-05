@@ -6,6 +6,7 @@ import {
   HeadObjectCommand,
   PutObjectCommand,
   GetObjectCommand,
+  DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 import { awsBucket, awsBucketRegion } from "@/lib/constants";
 import { keyId, secretKey } from "@/lib/awskey";
@@ -17,11 +18,7 @@ import jwt from "jsonwebtoken";
 import { NextApiRequest } from "next";
 import { jwtKey } from "@/lib/encryptionkey";
 
-export type AccountPayloadData = {
-  name: string;
-  profilePic: string;
-  sub: string;
-};
+const isClient = typeof window !== "undefined";
 
 const ensureSecureDecode =
   process.env.ZIMO_WEB_ENSURE_SECURE_DECODING === "true";
@@ -44,12 +41,12 @@ const s3 = new S3Client({
 
 const gzip = promisify(zlib.gzip);
 
-async function uploadUserToServer(
-  user: any,
+export async function uploadUserToServer(
+  user: Omit<UserData, "sub">,
   sub: string
 ): Promise<{ success: boolean; message: string }> {
   try {
-    if (typeof window !== "undefined") {
+    if (isClient) {
       throw new Error("This function is not running on server side.");
     }
 
@@ -77,7 +74,35 @@ async function uploadUserToServer(
   }
 }
 
-async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
+export async function uploadCommentsToServer(
+  filePath: string,
+  comments: CommentEntry[]
+): Promise<void> {
+  try {
+    if (isClient) {
+      throw new Error("This function is not running on server side.");
+    }
+
+    // Convert comments to JSON string and compress it using gzip
+    const compressedComments = await gzip(JSON.stringify({ comments }));
+
+    const params = {
+      Bucket: awsBucket,
+      Key: filePath,
+      Body: compressedComments, // Upload compressed comments
+      ContentEncoding: "gzip", // Set ContentEncoding header to indicate that the content is gzip-compressed
+    };
+
+    const command = new PutObjectCommand(params);
+    await s3.send(command);
+  } catch (error: any) {
+    // Log the error and rethrow
+    console.error(`Could not upload likedBy: ${error.message}`);
+    throw error;
+  }
+}
+
+export async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
   const directory = "account/users";
   const params = {
     Bucket: awsBucket,
@@ -85,7 +110,7 @@ async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
   };
 
   try {
-    if (typeof window !== "undefined") {
+    if (isClient) {
       throw new Error("This function is not running on server side.");
     }
 
@@ -104,7 +129,7 @@ export async function getUserDataBySub(
   sub: string,
   fields: string[] = []
 ): Promise<{ [key: string]: any }> {
-  if (typeof window !== "undefined") {
+  if (isClient) {
     throw new Error("This function is not running on server side.");
   }
 
@@ -151,7 +176,7 @@ export async function getUserDataBySub(
 
 export async function getComments(filePath: string): Promise<CommentEntry[]> {
   try {
-    if (typeof window !== "undefined") {
+    if (isClient) {
       throw new Error("This function is not running on server side.");
     }
 
@@ -197,7 +222,7 @@ export async function getComments(filePath: string): Promise<CommentEntry[]> {
 
 export async function getLikedBy(filePath: string): Promise<string[]> {
   try {
-    if (typeof window !== "undefined") {
+    if (isClient) {
       throw new Error("This function is not running on server side.");
     }
 
@@ -242,7 +267,7 @@ export async function getLikedBy(filePath: string): Promise<string[]> {
 }
 
 export const getSubFromSessionToken = (req: NextApiRequest) => {
-  if (typeof window !== "undefined") {
+  if (isClient) {
     console.error("This function can only be used by server-side functions.");
     return null;
   }
@@ -268,10 +293,40 @@ export const getSubFromSessionToken = (req: NextApiRequest) => {
   }
 };
 
+export async function deleteUserFile(
+  sub: string
+): Promise<{ success: boolean; message: string }> {
+  if (isClient) {
+    console.error("This function can only be used by server-side functions.");
+    return {
+      success: false,
+      message: "This function cannot be executed by client.",
+    };
+  }
+
+  const directory = "account/users";
+
+  const params = {
+    Bucket: awsBucket,
+    Key: `${directory}/${sub}.json`,
+  };
+
+  const command = new DeleteObjectCommand(params);
+  try {
+    await s3.send(command);
+    return { success: true, message: "User data successfully deleted." };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: `Failed to delete user data. Error: ${err}`,
+    };
+  }
+}
+
 export async function fetchDecodedToken(
   token: string
 ): Promise<AccountPayloadData | null> {
-  if (typeof window !== "undefined") {
+  if (isClient) {
     console.error("This function can only be used by server-side functions.");
     return null;
   }
@@ -318,7 +373,7 @@ export async function getUserByPayload(
   payload: AccountPayloadData,
   localSettingsData: SettingsState
 ) {
-  if (typeof window !== "undefined") {
+  if (isClient) {
     console.error("This function can only be used by server-side functions.");
     return null;
   }
@@ -329,7 +384,7 @@ export async function getUserByPayload(
   const userSub = payload.sub;
   let userSettings = localSettingsData.syncSettings ? localSettingsData : null;
 
-  if (!(await fetchCheckIfUserExistsBySub(userSub))) {
+  if (!(await checkIfUserExistsBySub(userSub))) {
     // Creating account data on server. Respects syncSettings option.
     const user = {
       profilePic: profilePic,
@@ -337,10 +392,10 @@ export async function getUserByPayload(
       state: userState,
       websiteSettings: userSettings,
     } as unknown as UserData;
-    await fetchUploadUserToServer(user, userSub);
+    await uploadUserToServer(user, userSub);
   } else {
     // Downloading data from the server. Respects syncSettings option.
-    const downloadedUser = await fetchUserDataBySubServerSide(userSub, [
+    const downloadedUser = await getUserDataBySub(userSub, [
       "name",
       "profilePic",
       "state",
@@ -369,92 +424,4 @@ export async function getUserByPayload(
   } as UserData;
 
   return fetchedUser;
-}
-
-export async function fetchCheckIfUserExistsBySub(sub: string) {
-  if (typeof window !== "undefined") {
-    console.error("This function can only be used by server-side functions.");
-    return null;
-  }
-
-  try {
-    return await checkIfUserExistsBySub(sub);
-  } catch (error: any) {
-    console.error("Error checking if user exists:", error);
-    return null;
-  }
-}
-
-export async function fetchUploadUserToServer(
-  user: Omit<UserData, "sub">,
-  sub: string
-) {
-  if (typeof window !== "undefined") {
-    console.error("This function can only be used by server-side functions.");
-    return null;
-  }
-
-  try {
-    // Call the logic to upload data to S3 directly instead of through the API
-    const result = await uploadUserToServer(user, sub);
-    if (!result.success) {
-      throw new Error(result.message);
-    }
-    return result;
-  } catch (error) {
-    console.error("Error uploading user data:", error);
-    return null;
-  }
-}
-
-export async function fetchUserDataBySubServerSide(
-  sub: string,
-  fields: string[]
-) {
-  if (typeof window !== "undefined") {
-    console.error("This function can only be used by server-side functions.");
-    return null;
-  }
-
-  try {
-    const data = await getUserDataBySub(sub, fields);
-    return data;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return null;
-  }
-}
-
-export async function fetchCommentsServerSide(
-  filePath: string
-): Promise<CommentEntry[] | null> {
-  if (typeof window !== "undefined") {
-    console.error("This function can only be used by server-side functions.");
-    return null;
-  }
-
-  try {
-    const comments = await getComments(filePath);
-    return comments || []; // Return the comments or an empty array if comments are undefined
-  } catch (error: any) {
-    console.error(`An error occurred: ${error.message}`);
-    return []; // Return an empty array if any error occurs
-  }
-}
-
-export async function fetchGeneralLikeServerSide(
-  filePath: string
-): Promise<string[] | null> {
-  if (typeof window !== "undefined") {
-    console.error("This function can only be used by server-side functions.");
-    return null;
-  }
-
-  try {
-    const likedBy = await getLikedBy(filePath);
-    return likedBy || []; // Return the likedBy or an empty array if likedBy is undefined
-  } catch (error: any) {
-    console.error(`An error occurred: ${error.message}`);
-    return []; // Return an empty array if any error occurs
-  }
 }

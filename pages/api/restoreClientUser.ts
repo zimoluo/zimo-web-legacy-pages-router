@@ -1,7 +1,7 @@
 import { fetchUploadSettingsToServer } from "@/lib/accountClientManager";
 import {
-  fetchCheckIfUserExistsBySub,
-  fetchUserDataBySubServerSide,
+  checkIfUserExistsBySub,
+  getUserDataBySub,
   getSubFromSessionToken,
 } from "@/lib/accountServerManager";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -11,8 +11,9 @@ type ApiError = {
 };
 
 type ApiSuccessResponse = {
-  integratedUser: UserData;
-  downloadedSettings: SettingsState | null;
+  integratedUser?: UserData;
+  downloadedSettings?: SettingsState | null;
+  exists: boolean;
 };
 
 export default async function handler(
@@ -28,14 +29,14 @@ export default async function handler(
   try {
     const sub = getSubFromSessionToken(req);
     if (sub === null) {
-      return res.status(400).json({ error: "Invalid session token" });
+      return res.status(200).json({ exists: false });
     }
 
-    if (!fetchCheckIfUserExistsBySub(sub)) {
+    if (!checkIfUserExistsBySub(sub)) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    let downloadedUser = (await fetchUserDataBySubServerSide(sub, [
+    let downloadedUser = (await getUserDataBySub(sub, [
       "name",
       "profilePic",
       "state",
@@ -59,7 +60,7 @@ export default async function handler(
 
     const integratedUser = { ...downloadedUser, sub };
 
-    res.status(200).json({ integratedUser, downloadedSettings });
+    res.status(200).json({ integratedUser, downloadedSettings, exists: true });
   } catch (error) {
     console.error("Error in API:", error);
     res.status(500).json({ error: "Internal Server Error" });

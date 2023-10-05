@@ -40,9 +40,21 @@ const MainPageLayout: React.FC<LayoutProps> = ({
           ? JSON.parse(savedRawSettings)
           : defaultSettings;
 
-        const { integratedUser, downloadedSettings } = await restoreClientUser(
-          loadedSettings
-        );
+        const restoredUserInfo = await restoreClientUser(loadedSettings);
+
+        if (!restoredUserInfo) {
+          console.log(
+            "Encountered an unexpected error while trying to restore user session."
+          );
+          return;
+        }
+
+        if (!restoredUserInfo.exists) {
+          console.log("No user session found.");
+          return;
+        }
+
+        const { integratedUser, downloadedSettings } = restoredUserInfo;
 
         setUser(integratedUser);
         if (downloadedSettings !== null) {
@@ -54,7 +66,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
     }
 
     restoreUserInfo();
-  }, [user]);
+  }, []);
 
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const faviconDir =

@@ -14,11 +14,7 @@ import {
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import {
-  fetchComments,
-  fetchUserNameBySub,
-  uploadComments,
-} from "@/lib/accountClientManager";
+import { addReply, fetchUserNameBySub } from "@/lib/accountClientManager";
 import { useReply } from "../contexts/ReplyContext";
 import { useUser } from "../contexts/UserContext";
 
@@ -36,7 +32,7 @@ const ReplyTypeBox: React.FC<Props> = ({
   setReplyExpanded,
 }) => {
   const { comments, setComments, resourceLocation } = useComments();
-  const { user, setUser } = useUser();
+  const { user } = useUser();
   const { replyBoxContent } = useReply();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const typeBoxColorClass =
@@ -119,8 +115,6 @@ const ReplyTypeBox: React.FC<Props> = ({
     setIsSending(true);
 
     try {
-      const downloadedComments = await fetchComments(resourceLocation);
-
       // Construct the new reply
       const newReply = {
         from: replyBoxContent.from,
@@ -129,21 +123,11 @@ const ReplyTypeBox: React.FC<Props> = ({
         ...(replyBoxContent.to && { to: replyBoxContent.to }), // if to does not exist then don’t have it.
       };
 
-      // Update the comments array
-      const updatedComments = downloadedComments.map((comment, i) => {
-        if (i !== commentIndex) return comment; // Skip if it's not the comment we want to modify
-
-        // Initialize replies array if it does not exist
-        const replies = comment.replies || [];
-
-        // Return a new comment object with the new reply appended to the replies array
-        return {
-          ...comment,
-          replies: [...replies, newReply],
-        };
-      });
-
-      await uploadComments(resourceLocation!, updatedComments);
+      const updatedComments = await addReply(
+        resourceLocation!,
+        newReply,
+        commentIndex
+      );
       setComments(updatedComments);
       setInputValue("");
       setReplyExpanded(true);
