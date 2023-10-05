@@ -522,8 +522,3 @@
 .mr-1\.3 {
     margin-right: 0.325rem;
 }
-
-.translate-x-sign-in {
-    --tw-translate-x: 12%;
-    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
