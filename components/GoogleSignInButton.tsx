@@ -18,8 +18,10 @@ const GoogleSignInButton: React.FC = () => {
       if (mediaWidth < 768) {
         calculatedWidth = mediaWidth - 100;
       } else {
-        calculatedWidth = Math.min(mediaWidth * 0.9, 640) - 100; // 40rem is 640px
+        calculatedWidth = Math.min(mediaWidth * 0.95, 640) - 100; // 40rem is 640px
       }
+
+      calculatedWidth = calculatedWidth / 1.25;
 
       setButtonWidth(calculatedWidth);
     };
@@ -49,16 +51,18 @@ const GoogleSignInButton: React.FC = () => {
   };
 
   return (
-    <GoogleLogin
-      onSuccess={onSuccess}
-      onError={onFailure}
-      theme="outline"
-      shape="pill"
-      logo_alignment="left"
-      size="large"
-      text="signin_with"
-      width={buttonWidth}
-    />
+    <div className="scale-125 translate-x-sign-in">
+      <GoogleLogin
+        onSuccess={onSuccess}
+        onError={onFailure}
+        theme="outline"
+        shape="pill"
+        logo_alignment="left"
+        size="large"
+        text="signin_with"
+        width={buttonWidth}
+      />
+    </div>
   );
 };
 
