@@ -62,11 +62,11 @@ export const blurColorMap: { [key: string]: string } = {
 };
 
 export const imageViewerPlaceholder: { [key: string]: string } = {
-  zimo: rgbaDataURL(245, 245, 245, 0.95),
-  photos: rgbaDataURL(255, 237, 213, 0.95),
-  blog: rgbaDataURL(250, 232, 255, 0.95),
-  projects: rgbaDataURL(204, 251, 241, 0.95),
-  about: rgbaDataURL(224, 242, 254, 0.95),
+  zimo: rgbDataURL(245, 245, 245),
+  photos: rgbDataURL(255, 237, 213),
+  blog: rgbDataURL(250, 232, 255),
+  projects: rgbDataURL(204, 251, 241),
+  about: rgbDataURL(224, 242, 254),
 };
 
 export const siteThemeColorMap: { [key: string]: string } = {

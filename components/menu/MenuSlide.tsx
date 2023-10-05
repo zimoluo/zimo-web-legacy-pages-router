@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
-import { ThemeType, barColorMap, textColorMap } from "@/interfaces/themeMaps";
+import {
+  ThemeType,
+  barColorMap,
+  sliderButtonColorMap,
+  textColorMap,
+} from "@/interfaces/themeMaps";
 import MenuContent from "./MenuContent";
+import { useSettings } from "../contexts/SettingsContext";
 
 type Props = {
   isOpen: boolean;
@@ -11,7 +17,10 @@ type Props = {
 const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
-  const barColorClass = barColorMap[theme] || barColorMap["zimo"];
+  const menuBgClass =
+    sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
+
+  const { settings } = useSettings();
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 768px)");
@@ -77,9 +86,15 @@ const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
   return (
     <aside
       ref={menuRef}
-      className={`fixed top-0 right-0 z-40 h-screen w-screen w-menu-slide-desktop ${barColorClass} ${textColorClass} rounded-l-xl md:shadow-lg md:backdrop-blur-xl transition-all duration-200 ease-out transform ${
+      className={`fixed top-0 right-0 z-40 h-screen w-screen w-menu-slide-desktop ${menuBgClass} ${
+        settings.disableBackgroundBlur ? "bg-opacity-100" : "bg-opacity-60"
+      } ${textColorClass} rounded-l-xl md:shadow-lg ${
+        !settings.disableBackgroundBlur ? "md:backdrop-blur-xl" : ""
+      } transition-all duration-200 ease-out transform ${
         isOpen
-          ? "backdrop-blur-xl translate-y-0 md:translate-x-0"
+          ? `${
+              !settings.disableBackgroundBlur ? "backdrop-blur-xl" : ""
+            } translate-y-0 md:translate-x-0`
           : "-translate-y-full md:translate-y-0 md:translate-x-full"
       } z-10`}
     >

@@ -7,8 +7,8 @@
 <rect height="1024" width="1024" x="0" y="0"/>
 </clipPath>
 <g clip-path="url(#ArtboardFrame)" id="Layer-1" vectornator:layerName="Layer 1">
-<path d="M550 120C550 53.7258 603.726 0 670 0L904 0C970.274 0 1024 53.7258 1024 120L1024 354C1024 420.274 970.274 474 904 474L670 474C603.726 474 550 420.274 550 354L550 120Z" fill="#d7d7d7" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 2"/>
-<path d="M550 670C550 603.726 603.726 550 670 550L904 550C970.274 550 1024 603.726 1024 670L1024 904C1024 970.274 970.274 1024 904 1024L670 1024C603.726 1024 550 970.274 550 904L550 670Z" fill="#d7d7d7" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 3"/>
-<path d="M0 120C0 53.7258 53.7258-1.01806e-14 120-1.01806e-14L354-1.01806e-14C420.274-1.01806e-14 474 53.7258 474 120L474 904C474 970.274 420.274 1024 354 1024L120 1024C53.7258 1024 0 970.274 0 904L0 120Z" fill="#d7d7d7" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 4"/>
+<path d="M550 120C550 53.7258 603.726 0 670 0L904 0C970.274 0 1024 53.7258 1024 120L1024 354C1024 420.274 970.274 474 904 474L670 474C603.726 474 550 420.274 550 354L550 120Z" fill="#efefef" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 2"/>
+<path d="M550 670C550 603.726 603.726 550 670 550L904 550C970.274 550 1024 603.726 1024 670L1024 904C1024 970.274 970.274 1024 904 1024L670 1024C603.726 1024 550 970.274 550 904L550 670Z" fill="#efefef" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 3"/>
+<path d="M0 120C0 53.7258 53.7258-1.01806e-14 120-1.01806e-14L354-1.01806e-14C420.274-1.01806e-14 474 53.7258 474 120L474 904C474 970.274 420.274 1024 354 1024L120 1024C53.7258 1024 0 970.274 0 904L0 120Z" fill="#efefef" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 4"/>
 </g>
 </svg>

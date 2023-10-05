@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
+import { useSettings } from "./contexts/SettingsContext";
 
 const DarkOverlay = () => {
+  const { settings } = useSettings();
+
   useEffect(() => {
     // Initially set overflow to 'hidden'
     document.body.style.overflow = "hidden";
@@ -29,7 +32,13 @@ const DarkOverlay = () => {
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-xl z-50 select-none " />
+    <div
+      className={`fixed inset-0 bg-black ${
+        !settings.disableBackgroundBlur
+          ? "bg-opacity-50 backdrop-blur-xl"
+          : "bg-opacity-75"
+      } z-50 select-none `}
+    />
   );
 };
 

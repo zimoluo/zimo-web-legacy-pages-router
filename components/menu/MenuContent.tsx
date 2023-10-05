@@ -34,19 +34,12 @@ const MenuContent = ({ theme }: Props) => {
     let initialSettings = [
       "disableComments",
       "disableGestures",
+      "disableBackgroundBlur",
       "disableSerifFont",
     ];
 
     if (routerPathname.startsWith("/blog")) {
       initialSettings = ["disableCenterPainting", ...initialSettings];
-    }
-
-    if (
-      routerPathname.startsWith("/blog") ||
-      routerPathname.startsWith("/photos") ||
-      routerPathname.startsWith("/projects")
-    ) {
-      initialSettings = ["disableBackgroundBlur", ...initialSettings];
     }
 
     if (

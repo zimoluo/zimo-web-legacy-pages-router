@@ -6,6 +6,7 @@ import {
   ThemeType,
   faviconMap,
   svgFilterMap,
+  sliderButtonColorMap,
 } from "../interfaces/themeMaps";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +22,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const barColorClass = barColorMap[theme] || barColorMap["zimo"];
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const faviconSrc = faviconMap[theme] || faviconMap["zimo"];
+  const alternativeBarColor =
+    sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
 
   const { settings } = useSettings();
 
@@ -88,7 +91,13 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   }, [lastScrollY]);
 
   const barColor =
-    scrollY > 25 ? `${barColorClass} backdrop-blur-md` : "bg-opacity-0";
+    scrollY > 25
+      ? `${
+          !settings.disableBackgroundBlur
+            ? barColorClass
+            : `${alternativeBarColor} bg-opacity-80`
+        } ${!settings.disableBackgroundBlur ? "backdrop-blur-md" : ""}`
+      : "bg-opacity-0";
   const navbarClass = `${textColorClass} ${barColor} ${
     menuOpen ? "opacity-0 pointer-events-none" : "opacity-100"
   } px-4 h-12 transition-all duration-300 ease-out fixed w-full top-0 flex items-center justify-between z-20`;

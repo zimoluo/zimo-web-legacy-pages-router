@@ -90,7 +90,7 @@ const PhotosTile = ({
             width={288}
             height={288 / computedAspectRatio}
             placeholder="blur"
-            blurDataURL={rgbaDataURL(255, 237, 213, 0.6)}
+            blurDataURL={rgbaDataURL(255, 237, 213, 0.85)}
           />
           <div
             className={`absolute inset-0 bg-black bg-opacity-60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}
