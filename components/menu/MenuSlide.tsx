@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import {
   ThemeType,
-  barColorMap,
   sliderButtonColorMap,
   textColorMap,
 } from "@/interfaces/themeMaps";
