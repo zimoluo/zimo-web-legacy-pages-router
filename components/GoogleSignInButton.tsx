@@ -18,7 +18,7 @@ const GoogleSignInButton: React.FC = () => {
       if (mediaWidth < 768) {
         calculatedWidth = mediaWidth - 100;
       } else {
-        calculatedWidth = Math.min(mediaWidth * 0.9, 640) - 100; // 40rem is 640px
+        calculatedWidth = Math.min(mediaWidth * 0.93, 640) - 100; // 40rem is 640px
       }
 
       setButtonWidth(calculatedWidth);
