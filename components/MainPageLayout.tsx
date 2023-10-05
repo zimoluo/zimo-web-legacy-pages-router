@@ -11,12 +11,7 @@ import {
   websiteFaviconDirectory,
 } from "../interfaces/themeMaps";
 import { useUser } from "./contexts/UserContext";
-import {
-  fetchCheckIfUserExistsBySecureSub,
-  fetchUploadUserToServer,
-  fetchUserDataBySecureSub,
-  getSessionToken,
-} from "@/lib/accountManager";
+import { restoreClientUser } from "@/lib/accountClientManager";
 import { useEffect } from "react";
 import { useSettings } from "./contexts/SettingsContext";
 import { defaultSettings } from "@/interfaces/defaultSettings";
@@ -40,53 +35,26 @@ const MainPageLayout: React.FC<LayoutProps> = ({
       if (user !== null) return;
 
       try {
-        const token = await getSessionToken();
-        if (token === null) return;
-
-        if (!fetchCheckIfUserExistsBySecureSub(token)) return;
-        const downloadedUser = await fetchUserDataBySecureSub(token, [
-          "name",
-          "profilePic",
-          "state",
-          "websiteSettings",
-        ]);
-
         const savedRawSettings = localStorage.getItem("websiteSettings");
         const loadedSettings = savedRawSettings
           ? JSON.parse(savedRawSettings)
           : defaultSettings;
-        const doSyncSettings: boolean = loadedSettings.syncSettings;
 
-        let localSettings = doSyncSettings
-          ? downloadedUser.websiteSettings
-          : null;
+        const { integratedUser, downloadedSettings } = await restoreClientUser(
+          loadedSettings
+        );
 
-        if (doSyncSettings) {
-          if (downloadedUser.websiteSettings === null) {
-            localSettings = loadedSettings;
-            await fetchUploadUserToServer(
-              { ...downloadedUser, websiteSettings: localSettings },
-              token
-            );
-          } else {
-            localSettings = downloadedUser.websiteSettings;
-            updateSettingsLocally(localSettings);
-          }
+        setUser(integratedUser);
+        if (downloadedSettings !== null) {
+          updateSettingsLocally(downloadedSettings);
         }
-
-        const newUser = {
-          ...downloadedUser,
-          websiteSettings: localSettings,
-          secureSub: token,
-        };
-        setUser(newUser);
       } catch (error) {
         console.error("Error in restoring user session:", error);
       }
     }
 
     restoreUserInfo();
-  }, [user, setUser]);
+  }, [user]);
 
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const faviconDir =

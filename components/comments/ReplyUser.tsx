@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchUserDataBySecureSub } from "@/lib/accountManager";
+import { fetchUserDataBySub } from "@/lib/accountClientManager";
 import { formatDate, imageFallback } from "@/lib/util";
 import {
   ThemeType,
@@ -11,27 +11,27 @@ import {
 import { userIconMap } from "@/interfaces/userIconMap";
 
 interface Props {
-  secureSub: string;
+  sub: string;
   date: string;
   theme: ThemeType;
   toSub: string;
 }
 
-const ReplyUser: React.FC<Props> = ({ secureSub, date, theme, toSub }) => {
+const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [toData, setToData] = useState<UserData | null>(null);
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchUserDataBySecureSub(secureSub, [
+      const data = await fetchUserDataBySub(sub, [
         "name",
         "profilePic",
         "state",
       ]);
       setUserData(data);
       if (toSub) {
-        const fetchedToData = await fetchUserDataBySecureSub(toSub, [
+        const fetchedToData = await fetchUserDataBySub(toSub, [
           "name",
           "state",
         ]);
@@ -40,7 +40,7 @@ const ReplyUser: React.FC<Props> = ({ secureSub, date, theme, toSub }) => {
     };
 
     fetchData();
-  }, [secureSub]);
+  }, [sub]);
 
   const lightTextColorClass = lightTextColorMap[theme];
   const textColorClass = textColorMap[theme];

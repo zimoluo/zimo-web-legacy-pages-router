@@ -2,7 +2,7 @@ import { imageFallback } from "@/lib/util";
 import Image from "next/image";
 import { useUser } from "../contexts/UserContext";
 import { ThemeType, svgFilterMap } from "@/interfaces/themeMaps";
-import { clearSessionToken } from "@/lib/accountManager";
+import { clearSessionToken } from "@/lib/accountClientManager";
 import { userIconMap } from "@/interfaces/userIconMap";
 
 interface Props {

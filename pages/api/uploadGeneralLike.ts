@@ -4,6 +4,11 @@ import { awsBucket, awsBucketRegion } from "@/lib/constants";
 import { keyId, secretKey } from "@/lib/awskey";
 import { promisify } from "util";
 import * as zlib from "zlib";
+import {
+  fetchGeneralLikeServerSide,
+  fetchUserDataBySubServerSide,
+  getSubFromSessionToken,
+} from "@/lib/accountServerManager";
 
 if (!keyId) {
   throw new Error("AWS_KEY_ID is undefined!");
@@ -26,9 +31,9 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { filePath, likedBy } = req.body;
-    await uploadLikedBy(filePath, likedBy);
-    res.status(200).json({ success: true });
+    const { filePath } = req.body;
+    const updatedLikedBy = await uploadLikedBy(filePath, req);
+    res.status(200).json(updatedLikedBy);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
@@ -36,10 +41,40 @@ export default async function handler(
 
 const gzip = promisify(zlib.gzip);
 
-async function uploadLikedBy(filePath: string, likedBy: any): Promise<void> {
+async function uploadLikedBy(filePath: string, req: NextApiRequest): Promise<string[]> {
   try {
+    const downloadedLikedBy = await fetchGeneralLikeServerSide(filePath);
+    const tokenUserSub = getSubFromSessionToken(req);
+
+    if (tokenUserSub === null) {
+      throw new Error("No user is making the like.");
+    }
+
+    const { state: tokenUserState } = (await fetchUserDataBySubServerSide(
+      tokenUserSub,
+      ["state"]
+    )) as unknown as { state: UserState };
+
+    if (tokenUserState === "banned") {
+      throw new Error("User is banned.");
+    }
+
+    if (downloadedLikedBy === null) {
+      throw new Error("Could not fetch likedBy data.");
+    }
+
+    let updatedLikedBy = downloadedLikedBy;
+
+    if (downloadedLikedBy.includes(tokenUserSub)) {
+      // Return a new comment object with the userSub removed from the likedBy array
+      updatedLikedBy = downloadedLikedBy.filter((sub) => sub != tokenUserSub);
+    } else {
+      // Return a new comment object with the userSub added to the likedBy array
+      updatedLikedBy = [...downloadedLikedBy, tokenUserSub];
+    }
+
     // Convert likedBy to JSON string and compress it using gzip
-    const compressedLikedBy = await gzip(JSON.stringify({ likedBy }));
+    const compressedLikedBy = await gzip(JSON.stringify({ updatedLikedBy }));
 
     const params = {
       Bucket: awsBucket,
@@ -50,6 +85,7 @@ async function uploadLikedBy(filePath: string, likedBy: any): Promise<void> {
 
     const command = new PutObjectCommand(params);
     await s3.send(command);
+    return updatedLikedBy;
   } catch (error: any) {
     // Log the error and rethrow
     console.error(`Could not upload likedBy: ${error.message}`);

@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchUserDataBySecureSub } from "@/lib/accountManager";
+import { fetchUserDataBySub } from "@/lib/accountClientManager";
 import { formatDate, imageFallback } from "@/lib/util";
 import { ThemeType, lightTextColorMap, textColorMap } from "@/interfaces/themeMaps";
 import { userIconMap } from "@/interfaces/userIconMap";
 
 interface Props {
-  secureSub: string;
+  sub: string;
   date: string;
   theme: ThemeType;
 }
 
-const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
+const CommentUser: React.FC<Props> = ({ sub, date, theme }) => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchUserDataBySecureSub(secureSub, [
+      const data = await fetchUserDataBySub(sub, [
         "name",
         "profilePic",
         "state",
@@ -25,7 +25,7 @@ const CommentUser: React.FC<Props> = ({ secureSub, date, theme }) => {
     };
 
     fetchData();
-  }, [secureSub]);
+  }, [sub]);
 
   const lightTextColorClass = lightTextColorMap[theme];
   const textColorClass = textColorMap[theme];

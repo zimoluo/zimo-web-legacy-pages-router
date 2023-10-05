@@ -6,7 +6,7 @@ interface PhotosData {
     slug: string;
     location?: LocationData;
     images: ImagesData;
-};
+}
 
 interface LocationData {
     latitude: number;

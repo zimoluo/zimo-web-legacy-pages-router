@@ -2,7 +2,6 @@
 import { S3Client, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { awsBucket, awsBucketRegion } from "@/lib/constants";
 import { keyId, secretKey } from "@/lib/awskey";
-import { decryptSub } from "@/lib/encryptSub";
 import { NextApiRequest, NextApiResponse } from "next";
 
 if (!keyId) {
@@ -28,21 +27,20 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { secureSub } = req.body;
-    const exists = await checkIfUserExistsBySecureSub(secureSub);
+    const { sub } = req.body;
+    const exists = await checkIfUserExistsBySub(sub);
     res.status(200).json({ exists });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 }
 
-async function checkIfUserExistsBySecureSub(
-  secureSub: string
+async function checkIfUserExistsBySub(
+  sub: string
 ): Promise<boolean> {
-  const decodedSub = decryptSub(secureSub);
   const params = {
     Bucket: awsBucket,
-    Key: `${directory}/${decodedSub}.json`,
+    Key: `${directory}/${sub}.json`,
   };
 
   try {

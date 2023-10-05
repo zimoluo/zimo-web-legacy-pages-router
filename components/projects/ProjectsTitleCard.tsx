@@ -72,7 +72,7 @@ const ProjectsTitleCard = ({
                     ? `https://github.com/${links[key]}`
                     : links[key]
                 }
-                target="_blank"
+                target="_blank" rel="noreferrer"
               >
                 <Image
                   src={`/projects-link/${key}.svg`}

@@ -1,5 +1,5 @@
 import React from "react";
-import { clearSessionToken, deleteUserAccount } from "@/lib/accountManager";
+import { clearSessionToken, deleteUserAccount } from "@/lib/accountClientManager";
 import { useUser } from "./contexts/UserContext";
 import { useSettings } from "./contexts/SettingsContext";
 import { defaultSettings } from "@/interfaces/defaultSettings";
@@ -35,10 +35,10 @@ const SettingsUtilityButton: React.FC<Props> = ({ utility }) => {
   }
 
   async function deleteAccount(): Promise<void> {
-    const secureSub = user?.secureSub;
-    if (!secureSub) return;
+    const sub = user?.sub;
+    if (!sub) return;
     await logOut();
-    await deleteUserAccount(secureSub);
+    await deleteUserAccount(sub);
   }
 
   return (

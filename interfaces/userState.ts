@@ -1,1 +1,1 @@
-type UserState = 'normal' | 'admin' | 'banned'
+type UserState = "normal" | "admin" | "banned";

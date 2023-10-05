@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   ThemeType,
   borderColorMap,
@@ -10,11 +16,9 @@ import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
 import {
   fetchComments,
-  fetchUserNameBySecureSub,
-  refreshUserState,
+  fetchUserNameBySub,
   uploadComments,
-} from "@/lib/accountManager";
-import { encryptSub } from "@/lib/encryptSub";
+} from "@/lib/accountClientManager";
 import { useReply } from "../contexts/ReplyContext";
 import { useUser } from "../contexts/UserContext";
 
@@ -25,7 +29,12 @@ interface Props {
   setReplyExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
-const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex, setReplyExpanded }) => {
+const ReplyTypeBox: React.FC<Props> = ({
+  theme,
+  isExpanded,
+  commentIndex,
+  setReplyExpanded,
+}) => {
   const { comments, setComments, resourceLocation } = useComments();
   const { user, setUser } = useUser();
   const { replyBoxContent } = useReply();
@@ -56,11 +65,9 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex, setRep
       try {
         let name;
         if (replyBoxContent?.to) {
-          name = await fetchUserNameBySecureSub(encryptSub(replyBoxContent.to));
+          name = await fetchUserNameBySub(replyBoxContent.to);
         } else if (comments && comments[commentIndex]) {
-          name = await fetchUserNameBySecureSub(
-            encryptSub(comments[commentIndex]!.author)
-          );
+          name = await fetchUserNameBySub(comments[commentIndex]!.author);
         }
         setPlaceholderName(`Reply to ${name}...` || "Reply to...");
       } catch (error) {
@@ -99,15 +106,12 @@ const ReplyTypeBox: React.FC<Props> = ({ theme, isExpanded, commentIndex, setRep
   };
 
   async function sendReply() {
-    if (isSending || !user) return;
-
-    const newUser = await refreshUserState(user, setUser);
+    if (isSending || !user || user.state === "banned") return;
 
     if (
       !comments ||
       !replyBoxContent ||
       !resourceLocation ||
-      newUser.state === "banned" ||
       !inputValue.trim()
     )
       return;

@@ -9,10 +9,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useUser } from "../contexts/UserContext";
 import {
   fetchGeneralLike,
-  refreshUserState,
   uploadGeneralLike,
-} from "@/lib/accountManager";
-import { decryptSub } from "@/lib/encryptSub";
+} from "@/lib/accountClientManager";
 import Head from "next/head";
 
 interface Props {
@@ -58,46 +56,37 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
       return false;
     }
 
-    return storedLikedBy.includes(decryptSub(user.secureSub));
+    return storedLikedBy.includes(user.sub);
   }, [user, storedLikedBy]);
 
   async function evaluateLike() {
-    if (isLiking || !user || !resourceLocation || !storedLikedBy) return;
-
-    const newUser = await refreshUserState(user, setUser);
-
-    if (newUser.state === "banned") return;
+    if (
+      isLiking ||
+      !user ||
+      !resourceLocation ||
+      !storedLikedBy ||
+      user.state === "banned"
+    )
+      return;
 
     setIsLiking(true);
 
-    const decryptedSub = decryptSub(user.secureSub);
+    const userSub = user.sub;
 
     // Temporarily update the client side for better user experience
     let temporaryLikedBy = storedLikedBy;
-    if (storedLikedBy.includes(decryptedSub)) {
-      // Return a new comment object with the decryptedSub removed from the likedBy array
-      temporaryLikedBy = storedLikedBy.filter((sub) => sub != decryptedSub);
+    if (storedLikedBy.includes(userSub)) {
+      // Return a new comment object with the userSub removed from the likedBy array
+      temporaryLikedBy = storedLikedBy.filter((sub) => sub != userSub);
     } else {
-      // Return a new comment object with the decryptedSub added to the likedBy array
-      temporaryLikedBy = [...storedLikedBy, decryptedSub];
+      // Return a new comment object with the userSub added to the likedBy array
+      temporaryLikedBy = [...storedLikedBy, userSub];
     }
 
     setStoredLikedBy(temporaryLikedBy);
 
-    const downloadedLikedBy = await fetchGeneralLike(resourceLocation);
-
-    let updatedLikedBy = downloadedLikedBy;
-
-    if (downloadedLikedBy.includes(decryptedSub)) {
-      // Return a new comment object with the decryptedSub removed from the likedBy array
-      updatedLikedBy = downloadedLikedBy.filter((sub) => sub != decryptedSub);
-    } else {
-      // Return a new comment object with the decryptedSub added to the likedBy array
-      updatedLikedBy = [...downloadedLikedBy, decryptedSub];
-    }
-
     // Now, update the state
-    await uploadGeneralLike(resourceLocation!, updatedLikedBy);
+    const updatedLikedBy = await uploadGeneralLike(resourceLocation!);
     setStoredLikedBy(updatedLikedBy);
 
     setIsLiking(false);

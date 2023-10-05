@@ -1,5 +1,5 @@
 import { ThemeType } from "@/interfaces/themeMaps";
-import { CommentProvider, useComments } from "../contexts/CommentContext";
+import { CommentProvider } from "../contexts/CommentContext";
 import CommentCardColumn from "./CommentCardColumn";
 import CommentTypeBox from "./CommentTypeBox";
 

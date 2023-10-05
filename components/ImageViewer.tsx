@@ -35,7 +35,7 @@ function ImageViewer({
   const [isGridView, setGridView] = useState(false);
 
   const computeGridDimensions = (numImages: number) => {
-    let dimension = Math.ceil(Math.sqrt(numImages));
+    const dimension = Math.ceil(Math.sqrt(numImages));
     return dimension;
   };
 

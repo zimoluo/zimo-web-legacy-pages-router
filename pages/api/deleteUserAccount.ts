@@ -1,8 +1,8 @@
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { awsBucket, awsBucketRegion } from "@/lib/constants";
 import { keyId, secretKey } from "@/lib/awskey";
-import { decryptSub } from "@/lib/encryptSub";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getSubFromSessionToken } from "@/lib/accountServerManager";
 
 if (!keyId) {
   throw new Error("AWS_KEY_ID is undefined!");
@@ -27,8 +27,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const { secureSub } = req.body;
-    const result = await deleteUserFile(secureSub);
+    const { sub } = req.body;
+    const tokenUser = getSubFromSessionToken(req);
+    if (sub !== tokenUser) {
+      throw new Error("The user to be deleted is not the current user.");
+    }
+    const result = await deleteUserFile(sub);
     res.status(200).json(result);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -36,12 +40,11 @@ export default async function handler(
 }
 
 async function deleteUserFile(
-  secureSub: string
+  sub: string
 ): Promise<{ success: boolean; message: string }> {
-  const decodedSub = decryptSub(secureSub);
   const params = {
     Bucket: awsBucket,
-    Key: `${directory}/${decodedSub}.json`,
+    Key: `${directory}/${sub}.json`,
   };
 
   const command = new DeleteObjectCommand(params);

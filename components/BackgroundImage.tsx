@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { backgroundImageMap, ThemeType, backgroundClassMap, blurColorMap } from '../interfaces/themeMaps';
+import { backgroundImageMap, ThemeType, blurColorMap } from '../interfaces/themeMaps';
 import { useSettings } from './contexts/SettingsContext';
 
 type BackgroundImageProps = {

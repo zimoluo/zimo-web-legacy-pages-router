@@ -1,6 +1,5 @@
 import { ThemeType, svgFilterMap } from "@/interfaces/themeMaps";
 import ReplyUser from "./ReplyUser";
-import { decryptSub, encryptSub } from "@/lib/encryptSub";
 import Image from "next/image";
 import { useComments } from "../contexts/CommentContext";
 import { useUser } from "../contexts/UserContext";
@@ -9,10 +8,9 @@ import { useEffect, useState } from "react";
 import {
   banOrUnbanUser,
   fetchComments,
-  fetchUserDataBySecureSub,
-  refreshUserState,
+  fetchUserDataBySub,
   uploadComments,
-} from "@/lib/accountManager";
+} from "@/lib/accountClientManager";
 import DeleteCommentButton from "./DeleteCommentButton";
 import React from "react";
 import { enrichTextContent } from "@/lib/util";
@@ -47,27 +45,25 @@ const ReplyCard: React.FC<Props> = ({
   useEffect(() => {
     if (user) {
       setShowDelete(
-        (decryptSub(user.secureSub) === repliesData.from &&
-          user.state !== "banned") ||
+        (user.sub === repliesData.from && user.state !== "banned") ||
           user.state === "admin"
       );
     }
   }, [user, repliesData.from]);
 
-  const [authorUserState, setAuthorUserState] = useState<
-    "normal" | "banned" | "admin" | null
-  >(null);
+  const [authorUserState, setAuthorUserState] = useState<UserState | null>(
+    null
+  );
 
   useEffect(() => {
     (async () => {
       try {
-        const data = (await fetchUserDataBySecureSub(
-          encryptSub(repliesData.from),
-          ["state"]
-        )) as unknown as { state: "normal" | "banned" | "admin" };
+        const data = (await fetchUserDataBySub(repliesData.from, [
+          "state",
+        ])) as unknown as { state: UserState };
         setAuthorUserState(data.state);
       } catch (error) {
-        console.error("Error fetching user data by secure sub", error);
+        console.error("Error fetching user data by sub", error);
       }
     })();
   }, [repliesData, isBanning]);
@@ -79,28 +75,22 @@ const ReplyCard: React.FC<Props> = ({
     if (!user) return;
 
     setReplyBoxContent({
-      from: decryptSub(user?.secureSub),
+      from: user?.sub,
       to: repliesData.from,
     });
     setExpanded(true);
   }
 
   async function evaluateBan() {
-    if (isBanning || !user) return;
-
-    const newUser = await refreshUserState(user, setUser);
-    if (!(newUser.state === "admin")) return;
+    if (isBanning || !user || user.state !== "admin") return;
 
     setIsBanning(true);
-    await banOrUnbanUser(encryptSub(repliesData.from));
+    await banOrUnbanUser(repliesData.from);
     setIsBanning(false);
   }
 
   async function deleteReply() {
-    if (!resourceLocation || !user) return;
-
-    const newUser = await refreshUserState(user, setUser);
-    if (newUser.state === "banned") return;
+    if (!resourceLocation || !user || user.state === "banned") return;
 
     const downloadedComments = await fetchComments(resourceLocation);
 
@@ -115,12 +105,11 @@ const ReplyCard: React.FC<Props> = ({
 
     const targetReply = targetComment.replies[index];
 
-    // Decrypt user's secureSub to compare with the reply author
-    const decryptedSub = decryptSub(user.secureSub);
+    const userSub = user.sub;
 
     // Check if this is indeed the correct reply and if the user has the permission to delete it
     if (
-      targetReply.from !== decryptedSub &&
+      targetReply.from !== userSub &&
       user.state !== "admin" // Ensure that the user is either the author or an admin
     ) {
       return; // The user doesn't have the permission to delete this reply
@@ -155,9 +144,9 @@ const ReplyCard: React.FC<Props> = ({
     <div className="mt-6">
       <ReplyUser
         theme={theme}
-        secureSub={encryptSub(repliesData.from)}
+        sub={repliesData.from}
         date={repliesData.date}
-        toSub={repliesData.to ? encryptSub(repliesData.to) : ""}
+        toSub={repliesData.to ? repliesData.to : ""}
       />
       <p className="text-base mb-3 mt-1.5">
         {repliesData.content.split("\n").map((line, i, arr) => (

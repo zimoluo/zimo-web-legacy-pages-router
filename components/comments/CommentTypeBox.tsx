@@ -8,13 +8,8 @@ import {
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
 import Image from "next/image";
-import {
-  fetchComments,
-  refreshUserState,
-  uploadComments,
-} from "@/lib/accountManager";
+import { fetchComments, uploadComments } from "@/lib/accountClientManager";
 import { useUser } from "../contexts/UserContext";
-import { decryptSub } from "@/lib/encryptSub";
 import { useSettings } from "../contexts/SettingsContext";
 
 interface Props {
@@ -84,12 +79,10 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
   async function sendComment() {
     if (isSending || !user) return;
 
-    const newUser = await refreshUserState(user, setUser);
-
     if (
       !comments ||
       !resourceLocation ||
-      newUser.state === "banned" ||
+      user.state === "banned" ||
       !inputValue.trim()
     )
       return;
@@ -101,7 +94,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
 
       // Construct the new comment
       const newComment = {
-        author: decryptSub(user.secureSub), //assuming the user object has a name property representing the author's name
+        author: user.sub, //assuming the user object has a name property representing the author's name
         date: new Date().toISOString(),
         content: inputValue,
         likedBy: [], // initially, no one has liked the comment

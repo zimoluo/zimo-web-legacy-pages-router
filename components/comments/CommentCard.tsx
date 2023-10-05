@@ -6,7 +6,6 @@ import {
   svgFilterMap,
 } from "@/interfaces/themeMaps";
 import CommentUser from "./CommentUser";
-import { decryptSub, encryptSub } from "@/lib/encryptSub";
 import Image from "next/image";
 import ReplyCardColumn from "./ReplyCardColumn";
 import { useEffect, useMemo, useState } from "react";
@@ -15,10 +14,9 @@ import { useComments } from "../contexts/CommentContext";
 import {
   banOrUnbanUser,
   fetchComments,
-  fetchUserDataBySecureSub,
-  refreshUserState,
+  fetchUserDataBySub,
   uploadComments,
-} from "@/lib/accountManager";
+} from "@/lib/accountClientManager";
 import Head from "next/head";
 import ReplyTypeBox from "./ReplyTypeBox";
 import { useReply } from "../contexts/ReplyContext";
@@ -53,27 +51,25 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   useEffect(() => {
     if (user) {
       setShowDelete(
-        (decryptSub(user.secureSub) === comments![index].author &&
-          user.state !== "banned") ||
+        (user.sub === comments![index].author && user.state !== "banned") ||
           user.state === "admin"
       );
     }
   }, [user, comments]);
 
-  const [authorUserState, setAuthorUserState] = useState<
-    "normal" | "banned" | "admin" | null
-  >(null);
+  const [authorUserState, setAuthorUserState] = useState<UserState | null>(
+    null
+  );
 
   useEffect(() => {
     (async () => {
       try {
-        const data = (await fetchUserDataBySecureSub(
-          encryptSub(comments![index].author),
-          ["state"]
-        )) as unknown as { state: "normal" | "banned" | "admin" };
+        const data = (await fetchUserDataBySub(comments![index].author, [
+          "state",
+        ])) as unknown as { state: UserState };
         setAuthorUserState(data.state);
       } catch (error) {
-        console.error("Error fetching user data by secure sub", error);
+        console.error("Error fetching user data by sub", error);
       }
     })();
   }, [comments, index, isBanning]);
@@ -83,7 +79,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       return false;
     }
 
-    return comments[index].likedBy.includes(decryptSub(user.secureSub));
+    return comments[index].likedBy.includes(user.sub);
   }, [
     user,
     comments && comments[index] && comments[index].likedBy,
@@ -101,33 +97,26 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     if (!user) return;
 
     setReplyBoxContent({
-      from: decryptSub(user?.secureSub),
+      from: user?.sub,
     });
 
     setIsReplyBoxExpanded(!isReplyBoxExpanded);
   }
 
   async function evaluateBan() {
-    if (isBanning || !user) return;
-
-    const newUser = await refreshUserState(user, setUser);
-    if (!(newUser.state === "admin")) return;
+    if (isBanning || !user || user.state !== "admin") return;
 
     setIsBanning(true);
-    await banOrUnbanUser(encryptSub(comments![index].author));
+    await banOrUnbanUser(comments![index].author);
     setIsBanning(false);
   }
 
   async function evaluateLike() {
     if (isLiking || !user || !resourceLocation) return;
 
-    const newUser = await refreshUserState(user, setUser);
-
-    if (newUser.state === "banned") return;
-
     setIsLiking(true);
 
-    const decryptedSub = decryptSub(user.secureSub);
+    const decryptedSub = user.sub;
 
     // Temporarily update the client side for better user experience
     const temporaryComments = comments!.map((comment, i) => {
@@ -178,11 +167,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
   async function deleteComment() {
     // Check if resourceLocation, user exists and user is not banned
-    if (!resourceLocation || !user) return;
-
-    const newUser = await refreshUserState(user, setUser);
-
-    if (newUser.state === "banned") return;
+    if (!resourceLocation || !user || user.state === "banned") return;
 
     if (!comments || !comments[index]) return;
 
@@ -193,7 +178,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     if (!targetComment) return;
 
     // Check if the user has permission to delete this comment
-    const decryptedSub = decryptSub(user.secureSub);
+    const decryptedSub = user.sub;
     if (targetComment.author !== decryptedSub && user.state !== "admin") return; // Ensure that the user is either the author or an admin
 
     // Check if the comment is the one we're looking for
@@ -221,7 +206,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
       </Head>
       <CommentUser
         theme={theme}
-        secureSub={encryptSub(comments![index].author)}
+        sub={comments![index].author}
         date={comments![index].date}
       />
       <p className="text-lg mb-6 mt-2">

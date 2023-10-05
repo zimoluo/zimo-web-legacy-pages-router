@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useUser } from "./UserContext";
-import { fetchUploadUserToServerWithOnlyUser } from "@/lib/accountManager";
 import { defaultSettings } from "@/interfaces/defaultSettings";
+import { fetchUploadSettingsToServer } from "@/lib/accountClientManager";
 
 // Create the context with optional initial values
 const SettingsContext = createContext<
@@ -67,10 +67,9 @@ export const SettingsProvider = ({
         if (user.websiteSettings === null && preparedSettings === null) {
           return updatedSettings;
         }
-        const newUser = { ...user, websiteSettings: preparedSettings };
 
         if (doSyncSettings) {
-          fetchUploadUserToServerWithOnlyUser(newUser);
+          fetchUploadSettingsToServer(user.sub, preparedSettings);
         }
       }
 

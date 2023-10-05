@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { ThemeType, textColorMap } from "@/interfaces/themeMaps";
 import CommentCard from "./CommentCard";
 import { useComments } from "../contexts/CommentContext";
-import { fetchComments } from "@/lib/accountManager";
+import { fetchComments } from "@/lib/accountClientManager";
 import { ReplyProvider } from "../contexts/ReplyContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { securityCommentShutDown } from "@/lib/constants";

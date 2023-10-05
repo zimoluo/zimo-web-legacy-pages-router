@@ -16,7 +16,7 @@ const handleRequest = (req: NextApiRequest, res: NextApiResponse) => {
   const secretKey = jwtKey;
 
   if (!secretKey) {
-    throw new Error("ENCRYPTION_KEY is undefined!");
+    throw new Error("JWT_KEY is undefined!");
   }
 
   try {
