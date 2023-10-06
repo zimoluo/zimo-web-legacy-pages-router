@@ -265,7 +265,10 @@ export async function deleteReply(
   }
 }
 
-export async function banOrUnbanUser(sub: string) {
+export async function banOrUnbanUser(
+  sub: string,
+  removeCache?: (sub: string) => void
+) {
   try {
     const response = await fetch("/api/banOrUnbanUser", {
       method: "POST",
@@ -281,7 +284,9 @@ export async function banOrUnbanUser(sub: string) {
     }
 
     const { success } = await response.json();
-
+    if (removeCache) {
+      removeCache(sub);
+    }
     return success;
   } catch (error: any) {
     console.error(`An error occurred: ${error.message}`);
