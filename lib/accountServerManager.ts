@@ -20,10 +20,6 @@ import { jwtKey } from "@/lib/encryptionkey";
 
 const isClient = typeof window !== "undefined";
 
-const userDataCache: {
-  [key: string]: { data: { [key: string]: any }; timestamp: number };
-} = {};
-
 const ensureSecureDecode =
   process.env.ZIMO_WEB_ENSURE_SECURE_DECODING === "true";
 
@@ -132,18 +128,9 @@ export async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
 export async function getUserDataBySub(
   sub: string,
   fields: string[] = [],
-  cacheTTL: number = 60000 // Cache Time-To-Live in milliseconds (e.g., 60000 ms = 1 minute)
 ): Promise<{ [key: string]: any }> {
   if (isClient) {
     throw new Error("This function is not running on server side.");
-  }
-
-  const cacheKey = `${sub}:${fields.join(",")}`;
-  const cachedResult = userDataCache[cacheKey];
-
-  // Check if data exists in cache and is not expired
-  if (cachedResult && Date.now() - cachedResult.timestamp < cacheTTL) {
-    return cachedResult.data;
   }
 
   const directory = "account/users";
@@ -179,9 +166,6 @@ export async function getUserDataBySub(
       items[field] = data[field];
     }
   });
-
-  // Store data in cache with the current timestamp
-  userDataCache[cacheKey] = { data: items, timestamp: Date.now() };
 
   return items;
 }
