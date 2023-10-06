@@ -19,7 +19,6 @@ async function callGetUserDataApi(sub: string, fields: string[]) {
   });
 
   const data = await response.json();
-  console.warn("Actually fetching a user for once:", data);
 
   if (!response.ok) {
     throw new Error(data.error || "Something went wrong");
@@ -373,6 +372,8 @@ export async function banOrUnbanUser(sub: string) {
       const { error } = await response.json();
       throw new Error(`Upload failed: ${error}`);
     }
+
+    removeCachedUserDataBySub(sub);
 
     const { success } = await response.json();
 
