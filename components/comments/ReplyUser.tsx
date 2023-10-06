@@ -9,7 +9,6 @@ import {
   textColorMap,
 } from "@/interfaces/themeMaps";
 import { userIconMap } from "@/interfaces/userIconMap";
-import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   sub: string;
@@ -20,23 +19,16 @@ interface Props {
 
 const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
-  const [userData, setUserData] = useState<CacheUserData | null>(null);
-  const [toData, setToData] = useState<CacheUserData | null>(null);
-  const { cache, addCache } = useUserDataCache();
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [toData, setToData] = useState<UserData | null>(null);
 
   useEffect(() => {
     const fetchData = async (targetSub: string) => {
-      const cachedData = cache[targetSub];
-      if (cachedData) {
-        return cachedData;
-      }
-
       const data = await fetchUserDataBySub(targetSub, [
         "name",
         "profilePic",
         "state",
       ]);
-      addCache(targetSub, data);
       return data;
     };
 
@@ -51,7 +43,7 @@ const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
     };
 
     fetchAndSetData();
-  }, [sub, toSub, cache, addCache]);
+  }, [sub, toSub]);
 
   const lightTextColorClass = lightTextColorMap[theme];
   const textColorClass = textColorMap[theme];

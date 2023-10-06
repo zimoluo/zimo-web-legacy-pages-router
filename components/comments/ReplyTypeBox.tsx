@@ -17,7 +17,6 @@ import Image from "next/image";
 import { addReply, fetchUserDataBySub } from "@/lib/accountClientManager";
 import { useReply } from "../contexts/ReplyContext";
 import { useUser } from "../contexts/UserContext";
-import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   theme: ThemeType;
@@ -45,8 +44,6 @@ const ReplyTypeBox: React.FC<Props> = ({
   const [inputValue, setInputValue] = useState("");
 
   const [placeholderName, setPlaceholderName] = useState("");
-
-  const { cache } = useUserDataCache();
 
   const [isSending, setIsSending] = useState(false);
 
@@ -77,16 +74,8 @@ const ReplyTypeBox: React.FC<Props> = ({
         if (targetSub) {
           let name;
 
-          // Check for cached data first
-          if (cache[targetSub]) {
-            name = cache[targetSub].name;
-          } else {
-            // Fetch and cache if not present in cache
-            const fetchedUserData = await fetchUserDataBySub(targetSub, [
-              "name",
-            ]);
-            name = fetchedUserData.name;
-          }
+          const fetchedUserData = await fetchUserDataBySub(targetSub, ["name"]);
+          name = fetchedUserData.name;
 
           setPlaceholderName(`Reply to ${name}...`);
         } else {
