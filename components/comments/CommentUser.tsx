@@ -2,13 +2,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { fetchUserDataBySub } from "@/lib/accountClientManager";
 import { formatDate, imageFallback } from "@/lib/util";
-import {
-  ThemeType,
-  lightTextColorMap,
-  textColorMap,
-} from "@/interfaces/themeMaps";
+import { ThemeType, lightTextColorMap, textColorMap } from "@/interfaces/themeMaps";
 import { userIconMap } from "@/interfaces/userIconMap";
-import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   sub: string;
@@ -17,32 +12,20 @@ interface Props {
 }
 
 const CommentUser: React.FC<Props> = ({ sub, date, theme }) => {
-  const [userData, setUserData] = useState<CacheUserData | null>(null);
-  const { cache, addCache } = useUserDataCache();
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      // Check cache first
-      const cachedData = cache[sub];
-      if (cachedData) {
-        setUserData(cachedData);
-        return; // If data is in cache, use it and exit
-      }
-
-      // If not in cache, fetch data
       const data = await fetchUserDataBySub(sub, [
         "name",
         "profilePic",
         "state",
       ]);
-
-      // Update local state and add to cache
       setUserData(data);
-      addCache(sub, data);
     };
 
     fetchData();
-  }, [sub, cache, addCache]);
+  }, [sub]);
 
   const lightTextColorClass = lightTextColorMap[theme];
   const textColorClass = textColorMap[theme];

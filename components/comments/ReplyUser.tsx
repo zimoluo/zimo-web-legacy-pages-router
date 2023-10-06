@@ -9,7 +9,6 @@ import {
   textColorMap,
 } from "@/interfaces/themeMaps";
 import { userIconMap } from "@/interfaces/userIconMap";
-import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   sub: string;
@@ -19,39 +18,29 @@ interface Props {
 }
 
 const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [toData, setToData] = useState<UserData | null>(null);
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
-  const [userData, setUserData] = useState<CacheUserData | null>(null);
-  const [toData, setToData] = useState<CacheUserData | null>(null);
-  const { cache, addCache } = useUserDataCache();
 
   useEffect(() => {
-    const fetchData = async (targetSub: string) => {
-      const cachedData = cache[targetSub];
-      if (cachedData) {
-        return cachedData;
-      }
-
-      const data = await fetchUserDataBySub(targetSub, [
+    const fetchData = async () => {
+      const data = await fetchUserDataBySub(sub, [
         "name",
         "profilePic",
         "state",
       ]);
-      addCache(targetSub, data);
-      return data;
-    };
-
-    const fetchAndSetData = async () => {
-      const data = await fetchData(sub);
       setUserData(data);
-
       if (toSub) {
-        const fetchedToData = await fetchData(toSub);
+        const fetchedToData = await fetchUserDataBySub(toSub, [
+          "name",
+          "state",
+        ]);
         setToData(fetchedToData);
       }
     };
 
-    fetchAndSetData();
-  }, [sub, toSub, cache, addCache]);
+    fetchData();
+  }, [sub]);
 
   const lightTextColorClass = lightTextColorMap[theme];
   const textColorClass = textColorMap[theme];

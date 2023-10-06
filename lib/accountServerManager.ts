@@ -134,10 +134,12 @@ export async function getUserDataBySub(
   }
 
   const directory = "account/users";
+
   const params = {
     Bucket: awsBucket,
     Key: `${directory}/${sub}.json`,
   };
+
   const command = new GetObjectCommand(params);
   const s3Object = await s3.send(command);
 
@@ -146,6 +148,7 @@ export async function getUserDataBySub(
   }
 
   let fileContents = "";
+
   const isGzipped = s3Object.ContentEncoding === "gzip";
 
   await pipeline(
@@ -159,6 +162,7 @@ export async function getUserDataBySub(
   );
 
   const data = JSON.parse(fileContents);
+
   const items: { [key: string]: any } = {};
 
   fields.forEach((field) => {
