@@ -17,7 +17,6 @@ import Image from "next/image";
 import { addReply, fetchUserDataBySub } from "@/lib/accountClientManager";
 import { useReply } from "../contexts/ReplyContext";
 import { useUser } from "../contexts/UserContext";
-import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   theme: ThemeType;
@@ -46,8 +45,6 @@ const ReplyTypeBox: React.FC<Props> = ({
 
   const [placeholderName, setPlaceholderName] = useState("");
 
-  const { cache } = useUserDataCache();
-
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
@@ -62,36 +59,15 @@ const ReplyTypeBox: React.FC<Props> = ({
 
     const fetchPlaceholderName = async () => {
       try {
-        let targetSub: string | null = null;
-
+        let name;
         if (replyBoxContent?.to) {
-          targetSub = replyBoxContent.to;
-        } else if (
-          comments &&
-          typeof commentIndex === "number" &&
-          comments[commentIndex]
-        ) {
-          targetSub = comments[commentIndex].author;
+          name = (await fetchUserDataBySub(replyBoxContent.to, ["name"])).name;
+        } else if (comments && comments[commentIndex]) {
+          name = (
+            await fetchUserDataBySub(comments[commentIndex]!.author, ["name"])
+          ).name;
         }
-
-        if (targetSub) {
-          let name;
-
-          // Check for cached data first
-          if (cache[targetSub]) {
-            name = cache[targetSub].name;
-          } else {
-            // Fetch and cache if not present in cache
-            const fetchedUserData = await fetchUserDataBySub(targetSub, [
-              "name",
-            ]);
-            name = fetchedUserData.name;
-          }
-
-          setPlaceholderName(`Reply to ${name}...`);
-        } else {
-          setPlaceholderName("Reply to...");
-        }
+        setPlaceholderName(`Reply to ${name}...` || "Reply to...");
       } catch (error) {
         console.error("Failed to fetch user name", error);
       }
