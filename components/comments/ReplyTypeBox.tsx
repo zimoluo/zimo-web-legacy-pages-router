@@ -75,6 +75,10 @@ const ReplyTypeBox: React.FC<Props> = ({
           let name;
 
           const fetchedUserData = await fetchUserDataBySub(targetSub, ["name"]);
+          if (fetchedUserData === null) {
+            throw new Error("Failed to fetch user name.");
+          }
+
           name = fetchedUserData.name;
 
           setPlaceholderName(`Reply to ${name}...`);

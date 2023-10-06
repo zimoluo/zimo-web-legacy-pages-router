@@ -61,6 +61,10 @@ const ReplyCard: React.FC<Props> = ({
 
         userData = await fetchUserDataBySub(repliesData.from, ["state"]);
 
+        if (userData === null) {
+          throw new Error("Failed to fetch user data.");
+        }
+
         setAuthorUserState(userData.state);
       } catch (error) {
         console.error("Error fetching user data by sub", error);

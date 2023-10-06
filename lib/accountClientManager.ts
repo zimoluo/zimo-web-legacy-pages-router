@@ -19,7 +19,7 @@ async function callGetUserDataApi(sub: string, fields: string[]) {
   });
 
   const data = await response.json();
-  console.warn('Actually fetching a user for once:', data);
+  console.warn("Actually fetching a user for once:", data);
 
   if (!response.ok) {
     throw new Error(data.error || "Something went wrong");

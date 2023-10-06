@@ -19,8 +19,8 @@ interface Props {
 
 const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
-  const [userData, setUserData] = useState<UserData | null>(null);
-  const [toData, setToData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<UserInfo | null>(null);
+  const [toData, setToData] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     const fetchData = async (targetSub: string) => {
@@ -34,11 +34,15 @@ const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
 
     const fetchAndSetData = async () => {
       const data = await fetchData(sub);
-      setUserData(data);
+      if (data === null) return;
+
+      setUserData(data as UserInfo);
 
       if (toSub) {
         const fetchedToData = await fetchData(toSub);
-        setToData(fetchedToData);
+        if (fetchedToData === null) return;
+
+        setToData(fetchedToData as UserInfo);
       }
     };
 

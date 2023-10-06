@@ -16,7 +16,7 @@ interface Props {
 }
 
 const CommentUser: React.FC<Props> = ({ sub, date, theme }) => {
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +26,9 @@ const CommentUser: React.FC<Props> = ({ sub, date, theme }) => {
         "state",
       ]);
 
-      setUserData(data);
+      if (data === null) return;
+
+      setUserData(data as UserInfo);
     };
 
     fetchData();

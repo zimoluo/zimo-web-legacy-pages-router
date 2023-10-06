@@ -71,6 +71,10 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
 
           userData = await fetchUserDataBySub(authorSub, ["state"]);
 
+          if (userData === null) {
+            throw new Error("Failed to fetch user data.");
+          }
+
           setAuthorUserState(userData.state);
         }
       } catch (error) {
