@@ -23,6 +23,7 @@ import { useReply } from "../contexts/ReplyContext";
 import DeleteCommentButton from "./DeleteCommentButton";
 import { enrichTextContent } from "@/lib/util";
 import React from "react";
+import { useUserDataCache } from "../contexts/UserDataCacheContext";
 
 interface Props {
   theme: ThemeType;
@@ -32,6 +33,7 @@ interface Props {
 const CommentCard: React.FC<Props> = ({ theme, index }) => {
   const { user } = useUser();
   const { comments, setComments, resourceLocation } = useComments();
+  const { cache } = useUserDataCache();
 
   const { setReplyBoxContent } = useReply();
 
@@ -64,15 +66,26 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   useEffect(() => {
     (async () => {
       try {
-        const data = (await fetchUserDataBySub(comments![index].author, [
-          "state",
-        ])) as unknown as { state: UserState };
-        setAuthorUserState(data.state);
+        // Ensure that comments and the index are valid
+        if (comments && index >= 0 && index < comments.length) {
+          let userData;
+          const authorSub = comments[index].author;
+
+          // Check cache first
+          if (cache[authorSub]) {
+            userData = cache[authorSub];
+          } else {
+            // Fetch and cache if not present in cache
+            userData = await fetchUserDataBySub(authorSub, ["state"]);
+          }
+
+          setAuthorUserState(userData.state);
+        }
       } catch (error) {
         console.error("Error fetching user data by sub", error);
       }
     })();
-  }, [comments, index, isBanning]);
+  }, [comments, index, isBanning, cache]);
 
   const shouldRevealFilled = useMemo(() => {
     if (!resourceLocation || !user || !comments || !comments[index]) {
