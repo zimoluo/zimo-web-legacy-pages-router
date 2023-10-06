@@ -262,29 +262,6 @@ export const clearActivePopups = (): void => {
   activePopups = [];
 };
 
-// Safely retrieve an item from localStorage
-export const safeGetItem = (key: string): string | null => {
-  try {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem(key);
-    }
-  } catch (e) {
-    console.error(`Error getting item ${key} from localStorage: `, e);
-  }
-  return null;
-};
-
-// Safely set an item in localStorage
-export const safeSetItem = (key: string, value: string): void => {
-  try {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(key, value);
-    }
-  } catch (e) {
-    console.error(`Error setting item ${key} to localStorage: `, e);
-  }
-};
-
 export async function safeMarkdownToHtml(markdown: string) {
   const result = await remark().use(html).process(markdown);
   return result.toString();

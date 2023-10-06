@@ -18,22 +18,31 @@ export const rateLimiterMiddleware = (
     return false;
   }
 
-  if (!requestTimestamps[clientIp]) {
-    requestTimestamps[clientIp] = [];
+  if (typeof window !== "undefined") {
+    res
+      .status(500)
+      .json({ error: "This function can only run on server side." });
+    return false;
+  }
+
+  const key = `${req.url}-${clientIp}`;
+
+  if (!requestTimestamps[key]) {
+    requestTimestamps[key] = [];
   }
 
   const now = Date.now();
-  requestTimestamps[clientIp] = requestTimestamps[clientIp].filter(
+  requestTimestamps[key] = requestTimestamps[key].filter(
     (timestamp) => now - timestamp < timeWindowMillis
   );
 
-  if (requestTimestamps[clientIp].length >= maxRequests) {
+  if (requestTimestamps[key].length >= maxRequests) {
     res
       .status(429)
       .json({ error: "Too many requests, please try again later." });
     return false;
   }
 
-  requestTimestamps[clientIp].push(now);
+  requestTimestamps[key].push(now);
   return true;
 };
