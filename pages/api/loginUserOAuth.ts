@@ -5,6 +5,7 @@ import {
 import { NextApiRequest, NextApiResponse } from "next";
 import jwt from "jsonwebtoken";
 import { jwtKey } from "@/lib/encryptionkey";
+import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
 type ApiError = {
   error: string;
@@ -29,6 +30,11 @@ export default async function handler(
 ) {
   if (req.method !== "POST") {
     return res.status(405).end();
+  }
+
+  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
+    res.status(429).json({ error: "Too many requests. You can only attempt ten login within a minute." });
+    return;
   }
 
   const { idToken, localSettingsData } = req.body;

@@ -5,6 +5,7 @@ import {
   uploadCommentsToServer,
   getComments,
 } from "@/lib/accountServerManager";
+import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,6 +13,11 @@ export default async function handler(
 ) {
   if (req.method !== "POST") {
     return res.status(405).end(); // Method Not Allowed
+  }
+
+  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
+    res.status(429).json({ error: "Too many requests. You can only delete ten replies within a minute." });
+    return;
   }
 
   try {

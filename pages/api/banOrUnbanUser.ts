@@ -4,6 +4,7 @@ import {
   uploadUserToServer,
 } from "@/lib/accountServerManager";
 import { getSubFromSessionToken } from "@/lib/accountServerManager";
+import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,6 +12,11 @@ export default async function handler(
 ) {
   if (req.method !== "POST") {
     return res.status(405).end();
+  }
+
+  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
+    res.status(429).json({ error: "Too many requests. You can only ban ten users within a minute." });
+    return;
   }
 
   try {

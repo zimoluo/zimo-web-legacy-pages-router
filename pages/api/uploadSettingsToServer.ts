@@ -5,12 +5,19 @@ import {
   getSubFromSessionToken,
   uploadUserToServer,
 } from "@/lib/accountServerManager";
+import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
+
+    if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
+      res.status(429).json({ error: "Too many requests. You can only upload settings forty times within a minute." });
+      return;
+    }
+
     const { settings, sub } = req.body;
     const tokenUser = getSubFromSessionToken(req);
 

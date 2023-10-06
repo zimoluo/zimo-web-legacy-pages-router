@@ -4,6 +4,7 @@ import {
   getUserDataBySub,
   getSubFromSessionToken,
 } from "@/lib/accountServerManager";
+import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 import { NextApiRequest, NextApiResponse } from "next";
 
 type ApiError = {
@@ -22,6 +23,11 @@ export default async function handler(
 ) {
   if (req.method !== "POST") {
     return res.status(405).end();
+  }
+
+  if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
+    res.status(429).json({ error: "Too many requests. You can only restore session forty times within a minute." });
+    return;
   }
 
   const { localSettings } = req.body;
