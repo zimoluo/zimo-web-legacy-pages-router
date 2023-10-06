@@ -5,12 +5,9 @@ import {
   lightTextColorMap,
 } from "@/interfaces/themeMaps";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useUser } from "../contexts/UserContext";
-import {
-  fetchGeneralLike,
-  updateLikedBy,
-} from "@/lib/accountClientManager";
+import { fetchGeneralLike, updateLikedBy } from "@/lib/accountClientManager";
 import Head from "next/head";
 
 interface Props {
@@ -21,7 +18,8 @@ interface Props {
 const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [storedLikedBy, setStoredLikedBy] = useState<string[] | null>(null);
-  const { user, setUser } = useUser();
+  const isLikingRef = useRef(isLiking);
+  const { user } = useUser();
   const lightTextColorClass =
     lightTextColorMap[theme] || lightTextColorMap["zimo"];
   const likeButtonEmptyImage =
@@ -30,14 +28,18 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
     generalLikeFilledSrc[theme] || generalLikeFilledSrc["zimo"];
 
   useEffect(() => {
+    isLikingRef.current = isLiking;
+  }, [isLiking]);
+
+  useEffect(() => {
     const fetchAndSetLikedBy = async () => {
+      if (isLikingRef.current) return;
       const fetchedLikedBy = await fetchGeneralLike(resourceLocation);
-      if (!isLiking) {
-        if (fetchedLikedBy) {
-          setStoredLikedBy(fetchedLikedBy);
-        } else {
-          setStoredLikedBy([]);
-        }
+      if (isLikingRef.current) return;
+      if (fetchedLikedBy) {
+        setStoredLikedBy(fetchedLikedBy);
+      } else {
+        setStoredLikedBy([]);
       }
     };
 
