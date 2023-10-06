@@ -37,8 +37,8 @@ const SettingsUtilityButton: React.FC<Props> = ({ utility }) => {
   async function deleteAccount(): Promise<void> {
     const sub = user?.sub;
     if (!sub) return;
-    await logOut();
     await deleteUserAccount(sub);
+    await logOut();
   }
 
   return (
