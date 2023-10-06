@@ -1,3 +1,124 @@
+interface UserCache {
+  name?: string;
+  profilePic?: string;
+  state?: string;
+  timestamp: number;
+  [key: string]: any;
+}
+
+const pendingUserDataFetches: { [sub: string]: Promise<UserCache> } = {};
+const USER_DATA_TTL = 60 * 60 * 1000; // 60 minutes
+
+async function callGetUserDataApi(sub: string, fields: string[]) {
+  const response = await fetch("/api/getUserDataBySub", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ sub, fields }),
+  });
+
+  const data = await response.json();
+  console.warn('Actually fetching a user for once:', data);
+
+  if (!response.ok) {
+    throw new Error(data.error || "Something went wrong");
+  }
+
+  return data;
+}
+
+async function fetchAndCacheUserData(
+  sub: string,
+  knownFields: string[]
+): Promise<UserCache> {
+  const localStorageKey = `zimoWebCachedUserData_${sub}`;
+
+  // Initiate fetch and cache results
+  const data = await callGetUserDataApi(sub, knownFields);
+  const currentTime = new Date().getTime();
+  const storedData: UserCache = {
+    ...data,
+    timestamp: currentTime,
+  };
+
+  // Save data to localStorage
+  localStorage.setItem(localStorageKey, JSON.stringify(storedData));
+
+  // Remove pending flag and return fetched data
+  delete pendingUserDataFetches[sub];
+  return storedData;
+}
+
+export async function fetchUserDataBySub(sub: string, fields: string[]) {
+  try {
+    const localStorageKey = `zimoWebCachedUserData_${sub}`;
+    const storedData: UserCache = JSON.parse(
+      localStorage.getItem(localStorageKey) || "{}"
+    );
+    const currentTime = new Date().getTime();
+    const isStoredDataFresh =
+      currentTime - storedData.timestamp < USER_DATA_TTL;
+
+    const knownFields = ["name", "profilePic", "state"];
+    const fieldsToFetchFromServer: string[] = [];
+    const returnData: { [key: string]: any } = {};
+
+    let shouldFetchKnownFields = false;
+
+    fields.forEach((field) => {
+      if (knownFields.includes(field)) {
+        if (isStoredDataFresh && storedData[field]) {
+          returnData[field] = storedData[field];
+        } else {
+          shouldFetchKnownFields = true;
+        }
+      } else {
+        fieldsToFetchFromServer.push(field);
+      }
+    });
+
+    if (shouldFetchKnownFields) {
+      if (!pendingUserDataFetches[sub]) {
+        pendingUserDataFetches[sub] = fetchAndCacheUserData(sub, knownFields);
+      }
+
+      const fetchedData = await pendingUserDataFetches[sub];
+
+      knownFields.forEach((field) => {
+        returnData[field] = fetchedData[field];
+      });
+    }
+
+    if (fieldsToFetchFromServer.length > 0) {
+      const data = await callGetUserDataApi(sub, fieldsToFetchFromServer);
+
+      fieldsToFetchFromServer.forEach((field) => {
+        returnData[field] = data[field];
+      });
+    }
+
+    return returnData;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return null;
+  }
+}
+
+export function removeCachedUserDataBySub(sub: string) {
+  const localStorageKey = `zimoWebCachedUserData_${sub}`;
+  localStorage.removeItem(localStorageKey);
+}
+
+export function removeAllCachedUserData() {
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const key = localStorage.key(i);
+    if (key !== null && key.startsWith("zimoWebCachedUserData_")) {
+      localStorage.removeItem(key);
+    }
+  }
+}
+
 export async function evaluateGoogleIdToken(
   idToken: string,
   localSettingsData: SettingsState
@@ -24,33 +145,6 @@ export async function evaluateGoogleIdToken(
   } catch (error) {
     // Handle error: display it or log it
     console.error(error);
-    return null;
-  }
-}
-
-export async function fetchUserDataBySub(sub: string, fields: string[]) {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  try {
-    const response = await fetch("/api/getUserDataBySub", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ sub, fields }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.error || "Something went wrong");
-    }
-
-    return data;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
     return null;
   }
 }

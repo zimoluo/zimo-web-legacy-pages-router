@@ -240,19 +240,28 @@ const MenuContent = ({ theme }: Props) => {
       <div
         className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 mt-14 mb-4 text-lg font-bold md:text-xl ${borderColorClass} border-menu-entry border-opacity-20`}
       >
-        <SettingsUtilityButton utility={"resetSettings"} />
-        {user !== null &&
-          ["logOut", "deleteAccount"].map((item) => (
-            <React.Fragment key={item}>
+        {[
+          "resetSettings",
+          "clearCachedUserData",
+          ...(user !== null ? ["logOut", "deleteAccount"] : []),
+        ].map((item, index) => (
+          <React.Fragment key={item}>
+            {index !== 0 && (
               <div
                 className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
               />
-              <SettingsUtilityButton
-                key={item}
-                utility={item as "logOut" | "resetSettings" | "deleteAccount"}
-              />
-            </React.Fragment>
-          ))}
+            )}
+            <SettingsUtilityButton
+              utility={
+                item as
+                  | "logOut"
+                  | "resetSettings"
+                  | "deleteAccount"
+                  | "clearCachedUserData"
+              }
+            />
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );

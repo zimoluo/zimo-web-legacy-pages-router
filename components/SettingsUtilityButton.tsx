@@ -1,11 +1,15 @@
 import React from "react";
-import { clearSessionToken, deleteUserAccount } from "@/lib/accountClientManager";
+import {
+  clearSessionToken,
+  deleteUserAccount,
+  removeAllCachedUserData,
+} from "@/lib/accountClientManager";
 import { useUser } from "./contexts/UserContext";
 import { useSettings } from "./contexts/SettingsContext";
 import { defaultSettings } from "@/interfaces/defaultSettings";
 
 type Props = {
-  utility: "logOut" | "resetSettings" | "deleteAccount";
+  utility: "logOut" | "resetSettings" | "deleteAccount" | "clearCachedUserData";
 };
 
 const SettingsUtilityButton: React.FC<Props> = ({ utility }) => {
@@ -16,16 +20,18 @@ const SettingsUtilityButton: React.FC<Props> = ({ utility }) => {
     logOut,
     resetSettings,
     deleteAccount,
+    clearCachedUserData,
   };
 
   const utilityTextMap: { [key: string]: string } = {
-    logOut: 'Log Out',
-    resetSettings: 'Reset Settings to Default',
-    deleteAccount: 'Delete My Account',
+    logOut: "Log Out",
+    resetSettings: "Reset Settings to Default",
+    deleteAccount: "Delete My Account",
+    clearCachedUserData: "Clear Cached User Data",
   };
 
   function resetSettings() {
-    const {syncSettings, ...defaultSettingsWithoutSync} = defaultSettings;
+    const { syncSettings, ...defaultSettingsWithoutSync } = defaultSettings;
     updateSettings(defaultSettingsWithoutSync);
   }
 
@@ -41,9 +47,16 @@ const SettingsUtilityButton: React.FC<Props> = ({ utility }) => {
     await logOut();
   }
 
+  async function clearCachedUserData(): Promise<void> {
+    removeAllCachedUserData();
+  }
+
   return (
-    <button onClick={utilityFunctionMap[utility]} className="w-full h-10 my-2 font-normal text-base md:text-lg">
-        {utilityTextMap[utility]}
+    <button
+      onClick={utilityFunctionMap[utility]}
+      className="w-full h-10 my-2 font-normal text-base md:text-lg"
+    >
+      {utilityTextMap[utility]}
     </button>
   );
 };
