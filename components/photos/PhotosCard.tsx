@@ -1,5 +1,10 @@
 import Image from "next/image";
-import { formatDate, formatLocation, imageFallback } from "@/lib/util";
+import {
+  enrichTextContent,
+  formatDate,
+  formatLocation,
+  imageFallback,
+} from "@/lib/util";
 
 type Props = {
   title: string;
@@ -54,7 +59,7 @@ const PhotosCard = ({
           </div>
         </div>
       </div>
-      <p className="text-lg mt-2 mb-4">{title}</p>
+      <p className="text-lg mt-2 mb-4">{enrichTextContent(title)}</p>
     </div>
   );
 };

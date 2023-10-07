@@ -32,14 +32,14 @@ const BlogCard = ({
                 onError={imageFallback("/blog-zimo.svg")}
               />
             </div>
-            <p className="ml-2 text-sm font-bold">{author}</p>
+            <div className="ml-2 text-sm font-bold">{author}</div>
           </div>
 
-          <p className="mt-3 text-md md:text-2xl font-bold">{title}</p>
+          <h2 className="mt-3 text-md md:text-2xl font-bold">{title}</h2>
 
-          <p className="hidden md:block text-lg text-fuchsia-800 opacity-70">
+          <h3 className="hidden md:block text-lg text-fuchsia-800 opacity-70">
             {enrichTextContent(description)}
-          </p>
+          </h3>
 
           <div className="flex-grow"></div>
 
