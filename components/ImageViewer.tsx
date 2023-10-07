@@ -5,6 +5,7 @@ import ImagePageIndicator from "./ImagePageIndicator";
 import {
   applyImageViewerTransition,
   calculateGridViewTransformStyle,
+  enrichTextContent,
 } from "@/lib/util";
 import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
@@ -392,7 +393,7 @@ function ImageViewer({
             descriptionVisible && !hideDescription ? "opacity-100" : "opacity-0"
           }`}
         >
-          {currentDescription}
+          {enrichTextContent(currentDescription)}
         </div>
       )}
 

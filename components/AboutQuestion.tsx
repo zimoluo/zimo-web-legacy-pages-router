@@ -1,6 +1,7 @@
 import { menuEntryBorderMap } from "@/interfaces/themeMaps";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { enrichTextContent } from "@/lib/util";
 
 type Props = {
   question: string;
@@ -41,11 +42,11 @@ const AboutQuestion: React.FC<Props> = ({
     <div
       className={`${
         index !== 0 ? "border-about-pane-t" : ""
-      } ${borderColorClass} px-4 text-2xl`}
+      } ${borderColorClass} px-4 text-xl md:text-2xl`}
     >
       <div className="w-full flex items-center mt-4 font-bold">
         <div>{question}</div>
-        <div className="flex-grow flex items-center justify-end">
+        <div className="flex-grow flex items-center justify-end ml-10 flex-shrink-0">
           <button
             onClick={() => {
               setIsExpanded(!isExpanded);
@@ -54,17 +55,21 @@ const AboutQuestion: React.FC<Props> = ({
             <Image
               alt="Expand or Collapse This Question"
               className={`h-6 w-auto aspect-square transform transition-transform duration-300 hover:scale-110 ${
-                isExpanded ? "rotate-0" : "-rotate-180"
+                isExpanded ? "-rotate-180" : "rotate-0"
               }`}
               height={24}
               width={24}
-              src="/expand-collapse-photos.svg"
+              src="/expand-collapse-about.svg"
             />
           </button>
         </div>
       </div>
-      <div style={columnStyle} ref={columnRef} className="mb-4 text-xl">
-        {description}
+      <div
+        style={columnStyle}
+        ref={columnRef}
+        className="mb-4 text-lg md:text-xl text-sky-800 text-opacity-90"
+      >
+        {enrichTextContent(description)}
       </div>
     </div>
   );

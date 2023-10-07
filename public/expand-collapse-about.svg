@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M118.375 204.469C91.1194 204.469 63.8565 214.862 43.0625 235.656L40.0313 238.656C19.2373 259.45 8.8125 286.715 8.8125 313.969C8.81248 341.223 19.2372 368.487 40.0313 389.281L439.313 788.656C441.97 791.314 445.02 793.276 447.875 795.594L449.594 797.344C449.212 796.962 448.939 796.511 448.563 796.125C490.372 829.511 551.215 827.378 589.938 788.656L591.281 787.281C595.406 784.093 599.466 780.69 603.25 776.906L979.156 401C1023.75 356.408 1026.95 286.141 988.781 237.844C987.219 236.607 985.575 235.525 983.969 234.375C983.558 234.095 982.859 233.63 982.719 233.531C982.693 233.513 982.68 233.488 982.656 233.469C934.682 200.061 868.317 204.589 825.531 247.375L515.469 557.438L193.688 235.656C172.893 214.862 145.631 204.469 118.375 204.469Z" id="Fill"/>
+</defs>
+<g id="Layer-1" vectornator:layerName="Layer 1">
+<g opacity="1" vectornator:layerName="Curve 1">
+<mask height="615.082" id="StrokeMask" maskUnits="userSpaceOnUse" width="1006.38" x="8.8125" y="204.469">
+<rect fill="#000000" height="615.082" stroke="none" width="1006.38" x="8.8125" y="204.469"/>
+<use fill="#ffffff" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
+</mask>
+<use fill="none" mask="url(#StrokeMask)" stroke="#0c4a6e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="160" xlink:href="#Fill"/>
+</g>
+</g>
+</svg>

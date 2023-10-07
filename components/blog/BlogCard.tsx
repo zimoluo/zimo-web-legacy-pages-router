@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/util";
 import Link from "next/link";
 import PostData from "@/interfaces/blog/postData";
-import { formatDate, imageFallback } from "@/lib/util";
+import { enrichTextContent, formatDate, imageFallback } from "@/lib/util";
 
 const BlogCard = ({
   title,
@@ -38,7 +38,7 @@ const BlogCard = ({
           <p className="mt-3 text-md md:text-2xl font-bold">{title}</p>
 
           <p className="hidden md:block text-lg text-fuchsia-800 opacity-70">
-            {description}
+            {enrichTextContent(description)}
           </p>
 
           <div className="flex-grow"></div>

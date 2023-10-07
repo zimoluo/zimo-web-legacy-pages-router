@@ -1,5 +1,10 @@
 import Image from "next/image";
-import { formatAltText, formatDate, imageFallback } from "@/lib/util";
+import {
+  enrichTextContent,
+  formatAltText,
+  formatDate,
+  imageFallback,
+} from "@/lib/util";
 import { getProjectFavicon } from "@/lib/projects/util";
 import GeneralLikeButton from "../comments/GeneralLikeButton";
 
@@ -35,7 +40,7 @@ const ProjectsTitleCard = ({
           />
         </div>
         <p className="text-xl text-teal-800 opacity-70 mt-4 mb-10 leading-relaxed">
-          {description}
+          {enrichTextContent(description)}
         </p>
       </div>
       <div className="flex h-16">
@@ -72,7 +77,8 @@ const ProjectsTitleCard = ({
                     ? `https://github.com/${links[key]}`
                     : links[key]
                 }
-                target="_blank" rel="noreferrer"
+                target="_blank"
+                rel="noreferrer"
               >
                 <Image
                   src={`/projects-link/${key}.svg`}
