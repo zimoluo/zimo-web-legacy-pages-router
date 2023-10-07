@@ -45,7 +45,7 @@ const AboutQuestion: React.FC<Props> = ({
       } ${borderColorClass} px-6 text-xl md:text-2xl`}
     >
       <div className="w-full flex items-center mt-4 font-bold">
-        <div>{enrichTextContent(question)}</div>
+        <h2>{enrichTextContent(question)}</h2>
         <div className="flex-grow flex items-center justify-end ml-6 md:ml-10 flex-shrink-0">
           <button
             onClick={() => {
@@ -64,13 +64,13 @@ const AboutQuestion: React.FC<Props> = ({
           </button>
         </div>
       </div>
-      <div
+      <p
         style={columnStyle}
         ref={columnRef}
         className="mb-4 text-base md:text-lg text-sky-800 text-opacity-90"
       >
         {enrichTextContent(description)}
-      </div>
+      </p>
     </div>
   );
 };
