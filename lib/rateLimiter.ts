@@ -25,6 +25,8 @@ export const rateLimiterMiddleware = (
     return false;
   }
 
+  // Use this version for api-blind tracking.
+  // const key = `${clientIp}`;
   const key = `${req.url}-${clientIp}`;
 
   if (!requestTimestamps[key]) {
