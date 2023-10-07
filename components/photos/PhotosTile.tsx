@@ -96,6 +96,7 @@ const PhotosTile = ({
             className={`absolute inset-0 bg-black bg-opacity-60 select-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90 `}
           />
           <div className="flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-90">
+            <div className="sr-only hidden opacity-0">{title}</div>
             <Image
               className="aspect-square w-5 md:w-7 h-auto mr-1.3 md:mr-1.5"
               src="/photos-stack.svg"
