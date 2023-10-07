@@ -226,7 +226,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
           />
           <Image
             alt="Like Button"
-            aria-hidden={true}
+            aria-hidden="true"
             className={`h-4 w-auto aspect-square left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute ${svgFilterClass} transform transition-all duration-300 group-hover:scale-110 ${
               shouldRevealFilled ? "opacity-100" : "opacity-0"
             }`}
