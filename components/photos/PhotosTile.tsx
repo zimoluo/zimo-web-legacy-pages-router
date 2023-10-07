@@ -100,15 +100,11 @@ const PhotosTile = ({
             <Image
               className="aspect-square w-5 md:w-7 h-auto mr-1.3 md:mr-1.5"
               src="/photos-stack.svg"
-              alt={`Number of photos in this entry is ${images.url.length}.`}
+              alt={`Number of photos in this entry.`}
               width={28}
               height={28}
             />
-            <div
-              className="text-base md:text-xl text-neutral-100"
-              aria-hidden="true"
-              role="presentation"
-            >
+            <div className="text-base md:text-xl text-neutral-100">
               {images.url.length}
             </div>
           </div>
