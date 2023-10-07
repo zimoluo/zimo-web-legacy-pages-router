@@ -86,7 +86,7 @@ const PhotosTile = ({
           <Image
             className="object-center w-full h-full object-cover"
             src={images.url[0]}
-            alt={title}
+            alt={`Cover of ${title}`}
             width={288}
             height={288 / computedAspectRatio}
             placeholder="blur"
