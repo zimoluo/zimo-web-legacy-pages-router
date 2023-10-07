@@ -143,7 +143,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
       <BackgroundImage theme={theme} />
       <BackgroundAnimation theme={theme} />
       <Navbar theme={theme} />
-      <div className={`font-arial ${textColorClass} ${className}`}>
+      <div className={`font-sans ${textColorClass} ${className}`}>
         {children}
       </div>
       <Footer theme={theme} />

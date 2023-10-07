@@ -124,7 +124,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
           </div>
           <div className="flex flex-grow"></div>
           <div
-            className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}
+            className={`flex flex-grow-navbar space-x-0 justify-between font-sans`}
           >
             {["photos", "blog", "projects", "about"].map((item) => (
               <NavbarButton
