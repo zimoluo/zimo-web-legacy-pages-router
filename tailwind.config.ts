@@ -14,7 +14,7 @@ const config: Config = {
         "blog-bg-light": "url('/blog-pane.svg')",
         "projects-bg-light": "url('/projects-pane.svg')",
         "about-bg-light": "url('/about-pane-base.svg')",
-        "color-about": "url('/about-pane-opaque.svg')",
+        "color-about": "url('/about-pane-translucent.svg')",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

@@ -27,7 +27,7 @@ const AboutQuestion: React.FC<Props> = ({
     }
   }, [columnRef]);
 
-  const paddingAmount = 1.5;
+  const paddingAmount = 1.8;
 
   const columnStyle = {
     overflow: "hidden",
@@ -42,11 +42,11 @@ const AboutQuestion: React.FC<Props> = ({
     <div
       className={`${
         index !== 0 ? "border-about-pane-t" : ""
-      } ${borderColorClass} px-4 text-xl md:text-2xl`}
+      } ${borderColorClass} px-6 text-xl md:text-2xl`}
     >
       <div className="w-full flex items-center mt-4 font-bold">
-        <div>{question}</div>
-        <div className="flex-grow flex items-center justify-end ml-10 flex-shrink-0">
+        <div>{enrichTextContent(question)}</div>
+        <div className="flex-grow flex items-center justify-end ml-6 md:ml-10 flex-shrink-0">
           <button
             onClick={() => {
               setIsExpanded(!isExpanded);
@@ -54,7 +54,7 @@ const AboutQuestion: React.FC<Props> = ({
           >
             <Image
               alt="Expand or Collapse This Question"
-              className={`h-6 w-auto aspect-square transform transition-transform duration-300 hover:scale-110 ${
+              className={`h-5 md:h-6 w-auto aspect-square transform transition-transform duration-300 hover:scale-110 ${
                 isExpanded ? "-rotate-180" : "rotate-0"
               }`}
               height={24}
@@ -67,7 +67,7 @@ const AboutQuestion: React.FC<Props> = ({
       <div
         style={columnStyle}
         ref={columnRef}
-        className="mb-4 text-lg md:text-xl text-sky-800 text-opacity-90"
+        className="mb-4 text-base md:text-lg text-sky-800 text-opacity-90"
       >
         {enrichTextContent(description)}
       </div>

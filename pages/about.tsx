@@ -11,7 +11,7 @@ export default function Home() {
         subtitle="Thank you for the gaze of my crafts."
       />
       <div className="w-full px-8 md:px-14 mb-24 flex justify-center items-center">
-        <div style={{ maxWidth: "100rem" }}>
+        <div style={{ maxWidth: "50rem" }}>
           <AboutQuestionList
             questions={aboutQuestions}
             descriptions={aboutDescriptions}
