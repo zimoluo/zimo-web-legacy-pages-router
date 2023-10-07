@@ -106,7 +106,7 @@ const PhotosTile = ({
             />
             <div
               className="text-base md:text-xl text-neutral-100"
-              aria-hidden={true}
+              aria-hidden="true"
             >
               {images.url.length}
             </div>
