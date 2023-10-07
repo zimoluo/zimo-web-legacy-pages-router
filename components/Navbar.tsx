@@ -6,7 +6,7 @@ import {
   ThemeType,
   faviconMap,
   svgFilterMap,
-  sliderButtonColorMap,
+  lightBgColorMap,
 } from "../interfaces/themeMaps";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,8 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   const barColorClass = barColorMap[theme] || barColorMap["zimo"];
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const faviconSrc = faviconMap[theme] || faviconMap["zimo"];
-  const alternativeBarColor =
-    sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
+  const alternativeBarColor = lightBgColorMap[theme] || lightBgColorMap["zimo"];
 
   const { settings } = useSettings();
 

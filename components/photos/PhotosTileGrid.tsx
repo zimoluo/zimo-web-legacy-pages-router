@@ -30,7 +30,7 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
   return (
     <section
       className={`flex justify-center mb-16 px-1.5 transition-opacity duration-500 ease-in-out ${
-        isLoaded ? "opacity-100" : "opacity-0 max-h-4 overflow-hidden"
+        isLoaded ? "opacity-100" : "opacity-0 max-h-0 overflow-hidden"
       }`}
     >
       <div ref={gridRef}>

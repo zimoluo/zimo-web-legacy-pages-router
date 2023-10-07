@@ -44,6 +44,14 @@ export const sliderButtonColorMap: { [key: string]: string } = {
   about: "bg-sky-50",
 };
 
+export const lightBgColorMap: { [key: string]: string } = {
+  zimo: "bg-neutral-50",
+  photos: "bg-orange-50",
+  blog: "bg-fuchsia-50",
+  projects: "bg-teal-50",
+  about: "bg-color-about bg-cover bg-center",
+};
+
 export const sliderBorderColorMap: { [key: string]: string } = {
   zimo: "border-neutral-300",
   photos: "border-orange-300",

@@ -259,11 +259,11 @@
 }
 
 .blog-view {
-    background-color: rgba(251, 240, 255, 0.8);
+    background-color: rgba(253, 245, 255, 0.825);
 }
 
 .blog-card-color {
-    background-color: rgba(251, 240, 255, 0.7);
+    background-color: rgba(252, 243, 255, 0.7);
 }
 
 .blog-grid {
@@ -286,7 +286,7 @@
     src: url("/fonts/Arial/Arial.ttf");
     font-style: normal;
     font-weight: 400;
-  }
+}
   
 @font-face {
     font-family: "Arial-Local";
@@ -333,6 +333,34 @@
 @font-face {
     font-family: "TNR-Local";
     src: url("/fonts/TNR/Times New Roman Bold Italic.ttf");
+    font-style: italic;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Georgia-Local";
+    src: url("/fonts/Georgia/Georgia.ttf");
+    font-style: normal;
+    font-weight: 400;
+  }
+  
+@font-face {
+    font-family: "Georgia-Local";
+    src: url("/fonts/Georgia/Georgia Bold.ttf");
+    font-style: normal;
+    font-weight: 700;
+}
+  
+@font-face {
+    font-family: "Georgia-Local";
+    src: url("/fonts/Georgia/Georgia Italic.ttf");
+    font-style: italic;
+    font-weight: 400;
+}
+  
+@font-face {
+    font-family: "Georgia-Local";
+    src: url("/fonts/Georgia/Georgia Bold Italic.ttf");
     font-style: italic;
     font-weight: 700;
 }
@@ -422,6 +450,10 @@
 }
 
 .border-photos-comment {
+    border-top-width: 0.8px;
+}
+
+.border-about-pane-t {
     border-top-width: 0.8px;
 }
 

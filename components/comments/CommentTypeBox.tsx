@@ -3,7 +3,7 @@ import {
   ThemeType,
   borderColorMap,
   placeholderTextColorMap,
-  sliderButtonColorMap,
+  lightBgColorMap,
   svgFilterMap,
 } from "@/interfaces/themeMaps";
 import { useComments } from "../contexts/CommentContext";
@@ -24,7 +24,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
   const { user } = useUser();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const typeBoxColorClass =
-    sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
+    lightBgColorMap[theme] || lightBgColorMap["zimo"];
   const placeholderTextColorClass =
     placeholderTextColorMap[theme] || placeholderTextColorMap["zimo"];
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];

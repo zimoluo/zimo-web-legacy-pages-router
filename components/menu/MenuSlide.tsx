@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import {
   ThemeType,
-  sliderButtonColorMap,
+  lightBgColorMap,
   textColorMap,
 } from "@/interfaces/themeMaps";
 import MenuContent from "./MenuContent";
@@ -17,7 +17,7 @@ const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const menuBgClass =
-    sliderButtonColorMap[theme] || sliderButtonColorMap["zimo"];
+    lightBgColorMap[theme] || lightBgColorMap["zimo"];
 
   const { settings } = useSettings();
 

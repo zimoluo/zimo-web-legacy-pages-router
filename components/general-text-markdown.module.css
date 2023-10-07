@@ -15,7 +15,7 @@
 .markdown-serif p,
 .markdown-serif ul,
 .markdown-serif ol {
-  @apply font-tnr;
+  @apply font-serif;
 }
 
 .markdown ul {
