@@ -16,7 +16,7 @@ const NavbarButton: React.FC<NavbarButtonProps> = ({ item, theme }) => {
 
   return (
     <Link href={`/${item}`} passHref>
-      <div className="group font-sans bg-transparent px-6 py-1 rounded relative min-w-fit font-bold h-6 cursor-pointer">
+      <div className="group font-arial bg-transparent px-6 py-1 rounded relative min-w-fit font-bold h-6 cursor-pointer">
         <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-100">
           <Image src={topIconMap[item]} className={`h-6 md:mr-2 transform rounded transition-all duration-300 group-hover:scale-125 ${svgFilterClass} ${shouldApplyGlow}`} alt={`${iconTextMap[item]} Icon`} width={24} height={24} priority={true} />
           <div className={`text-xl items-center hidden md:block ${textColorClass}`}>

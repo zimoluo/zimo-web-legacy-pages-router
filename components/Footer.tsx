@@ -26,7 +26,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
 
   return (
     <footer
-      className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-sans ${
+      className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial ${
         !settings.disableBackgroundBlur ? "backdrop-blur-md" : ""
       }`}
     >

@@ -31,7 +31,7 @@ const MenuNavigationEntry: React.FC<Props> = ({ item, theme }) => {
   return (
     <>
       <Link href={`/${item === "home" ? "" : item}`} passHref>
-        <div className="group font-sans cursor-pointer flex items-center my-4">
+        <div className="group font-arial cursor-pointer flex items-center my-4">
           <Image
             src={navIconMap[item]}
             className={`h-8 md:h-10 w-auto aspect-square transform transition-transform duration-300 group-hover:scale-110 md:group-hover:scale-125 ${

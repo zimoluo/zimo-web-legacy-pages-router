@@ -25,7 +25,7 @@ interface LayoutProps {
 const MainPageLayout: React.FC<LayoutProps> = ({
   theme,
   children,
-  className,
+  className = "",
 }) => {
   const { user, setUser } = useUser();
   const { updateSettingsLocally } = useSettings();
@@ -143,7 +143,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
       <BackgroundImage theme={theme} />
       <BackgroundAnimation theme={theme} />
       <Navbar theme={theme} />
-      <div className={`font-sans ${textColorClass} ${className}`}>
+      <div className={`font-arial ${textColorClass} ${className}`}>
         {children}
       </div>
       <Footer theme={theme} />
