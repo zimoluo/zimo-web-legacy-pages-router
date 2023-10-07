@@ -15,6 +15,7 @@ const config: Config = {
         "projects-bg-light": "url('/projects-pane.svg')",
         "about-bg-light": "url('/about-pane-base.svg')",
         "color-about": "url('/about-pane-translucent.svg')",
+        "color-about-opaque": "url('/about-pane-opaque.svg')",
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
@@ -103,6 +104,7 @@ const config: Config = {
         "bg-teal-50",
         "bg-sky-50",
         "bg-color-about",
+        "bg-color-about-opaque",
         "bg-cover",
         "bg-center",
         "border-neutral-700",

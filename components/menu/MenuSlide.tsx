@@ -16,8 +16,7 @@ type Props = {
 const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
   const menuRef = useRef<HTMLDivElement>(null);
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
-  const menuBgClass =
-    lightBgColorMap[theme] || lightBgColorMap["zimo"];
+  const menuBgClass = lightBgColorMap[theme] || lightBgColorMap["zimo"];
 
   const { settings } = useSettings();
 
@@ -86,6 +85,10 @@ const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
     <aside
       ref={menuRef}
       className={`fixed top-0 right-0 z-40 h-screen w-screen w-menu-slide-desktop ${menuBgClass} ${
+        theme === "about" && settings.disableBackgroundBlur
+          ? "bg-color-about-opaque"
+          : ""
+      } ${
         settings.disableBackgroundBlur ? "bg-opacity-100" : "bg-opacity-60"
       } ${textColorClass} rounded-l-xl md:shadow-lg ${
         !settings.disableBackgroundBlur ? "md:backdrop-blur-xl" : ""
