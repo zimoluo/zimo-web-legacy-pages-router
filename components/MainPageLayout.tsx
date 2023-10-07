@@ -85,31 +85,14 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         <link
           rel="icon"
           type="image/png"
-          sizes="16x16"
-          href={`${faviconDir}/favicon-16x16.png`}
-        />
-        <link
-          rel="icon"
-          type="image/png"
           sizes="32x32"
           href={`${faviconDir}/favicon-32x32.png`}
         />
         <link
           rel="icon"
           type="image/png"
-          sizes="64x64"
-          href={`${faviconDir}/favicon-64x64.png`}
-        />
-        <link
-          rel="icon"
-          type="image/png"
           sizes="96x96"
           href={`${faviconDir}/favicon-96x96.png`}
-        />
-        <link
-          rel="apple-touch-icon"
-          sizes="144x144"
-          href={`${faviconDir}/mstile-144x144.png`}
         />
         <link
           rel="apple-touch-icon"
@@ -121,11 +104,6 @@ const MainPageLayout: React.FC<LayoutProps> = ({
           type="image/png"
           sizes="192x192"
           href={`${faviconDir}/android-chrome-192x192.png`}
-        />
-        <link
-          rel="mask-icon"
-          href={`${faviconDir}/favicon.svg`}
-          color={siteThemeColor}
         />
         <meta name="msapplication-TileColor" content={siteThemeColor} />
         <meta
