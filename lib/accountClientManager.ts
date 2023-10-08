@@ -269,14 +269,18 @@ export async function addReply(
   }
 }
 
-export async function likeComment(filePath: string, index: number) {
+export async function likeComment(
+  filePath: string,
+  index: number,
+  comment: CommentEntry
+) {
   try {
     const response = await fetch("/api/likeComment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ filePath, index }),
+      body: JSON.stringify({ filePath, index, existingComment: comment }),
     });
 
     if (!response.ok) {

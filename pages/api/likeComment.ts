@@ -16,12 +16,17 @@ export default async function handler(
   }
 
   if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
-    res.status(429).json({ error: "Too many requests. You can only like forty comments within a minute." });
+    res
+      .status(429)
+      .json({
+        error:
+          "Too many requests. You can only like forty comments within a minute.",
+      });
     return;
   }
 
   try {
-    const { filePath, index } = req.body;
+    const { filePath, index, existingComment } = req.body;
     const tokenUserSub = getSubFromSessionToken(req);
     if (tokenUserSub === null) {
       throw new Error("No user is liking this comment.");
@@ -36,6 +41,22 @@ export default async function handler(
     }
 
     const downloadedComments = await getComments(filePath);
+
+    const targetComment = downloadedComments[index];
+
+    if (!targetComment) {
+      throw new Error("Comment to be liked does not exist.");
+    }
+
+    if (
+      targetComment.author !== existingComment.author ||
+      targetComment.content !== existingComment.content ||
+      targetComment.date !== existingComment.date
+    ) {
+      throw new Error(
+        "Server comment and client comment do not match. Please refresh the page and try again."
+      );
+    }
 
     const updatedComments = downloadedComments!.map((comment, i) => {
       if (i !== index) return comment; // Skip if it's not the comment we want to modify

@@ -121,7 +121,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
   }
 
   async function evaluateLike() {
-    if (isLiking || !user || !resourceLocation) return;
+    if (isLiking || !user || !resourceLocation || !comments) return;
 
     setIsLiking(true);
 
@@ -148,7 +148,11 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
     setComments(temporaryComments);
 
     // Now, update the state
-    const updatedComments = await likeComment(resourceLocation!, index);
+    const updatedComments = await likeComment(
+      resourceLocation!,
+      index,
+      comments[index]
+    );
     setComments(updatedComments);
 
     setIsLiking(false);
