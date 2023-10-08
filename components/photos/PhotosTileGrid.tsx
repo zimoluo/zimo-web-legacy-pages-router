@@ -55,9 +55,9 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
   return (
     <>
       <section
-        className={`flex justify-center mb-16 px-1.5 transition-opacity duration-500 ease-in-out ${
+        className={`flex justify-center px-1.5 transition-opacity duration-500 ease-in-out ${
           isLoaded && windowWidth >= 768
-            ? "opacity-100"
+            ? "opacity-100 mb-16"
             : "opacity-0 max-h-0 overflow-hidden"
         }`}
       >
@@ -70,9 +70,9 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
         </div>
       </section>
       <section
-        className={`flex justify-center mb-16 px-1.5 transition-opacity duration-500 ease-in-out ${
+        className={`flex justify-center px-1.5 transition-opacity duration-500 ease-in-out ${
           isLoaded && windowWidth < 768
-            ? "opacity-100"
+            ? "opacity-100 mb-16"
             : "opacity-0 max-h-0 overflow-hidden"
         }`}
       >
