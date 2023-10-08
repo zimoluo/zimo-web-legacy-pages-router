@@ -382,6 +382,7 @@ function ImageViewer({
               onClick={() => isGridView && turnOffGridView(index)}
               placeholder="blur"
               blurDataURL={imageViewerPlaceholder[theme]}
+              role={isGridView ? "button" : undefined}
             />
           ))}
         </div>
