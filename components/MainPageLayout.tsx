@@ -79,11 +79,6 @@ const MainPageLayout: React.FC<LayoutProps> = ({
       <Head>
         <link
           rel="icon"
-          type="image/x-icon"
-          href={`${faviconDir}/favicon.ico`}
-        />
-        <link
-          rel="icon"
           type="image/png"
           sizes="32x32"
           href={`${faviconDir}/favicon-32x32.png`}
@@ -93,6 +88,12 @@ const MainPageLayout: React.FC<LayoutProps> = ({
           type="image/png"
           sizes="96x96"
           href={`${faviconDir}/favicon-96x96.png`}
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="1024x1024"
+          href={`${faviconDir}/favicon-1024x1024.png`}
         />
         <link
           rel="apple-touch-icon"
