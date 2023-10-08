@@ -1,6 +1,6 @@
 export const aboutQuestions = [
-  "What is my name?",
-  "How can you contact me?",
+  "What is your name?",
+  "How can I contact you?",
   "What is this website for?",
   "Why is it *Zimo Web* and not something else?",
   "Does each page's header have meanings?",
