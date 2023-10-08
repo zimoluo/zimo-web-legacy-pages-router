@@ -27,8 +27,9 @@ export const rateLimiterMiddleware = (
 
   // Use this version for api-blind tracking.
   // const key = `${clientIp}`;
-  const key = `${req.url}-${clientIp}`;
+  // Alternatively, use a global key that will affect every ip in the world.
   // const key = 'globalKeyLockDown'
+  const key = `${req.url}-${clientIp}`;
 
   if (!requestTimestamps[key]) {
     requestTimestamps[key] = [];
@@ -47,5 +48,6 @@ export const rateLimiterMiddleware = (
   }
 
   requestTimestamps[key].push(now);
+  console.log(requestTimestamps);
   return true;
 };
