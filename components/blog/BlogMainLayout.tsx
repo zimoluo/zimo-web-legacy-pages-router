@@ -20,6 +20,7 @@ interface BlogProps {
   coverSrc: string;
   displayCover: boolean;
   slug: string;
+  originalContent: string;
 }
 
 const BlogMainLayout = ({
@@ -32,6 +33,7 @@ const BlogMainLayout = ({
   coverSrc,
   displayCover,
   slug,
+  originalContent,
 }: BlogProps) => {
   const router = useRouter();
   const urlShare =
@@ -55,7 +57,7 @@ const BlogMainLayout = ({
           description={description}
           authorId={authorId}
           author={author}
-          content={content}
+          content={originalContent}
           date={date}
           slug={slug}
         />

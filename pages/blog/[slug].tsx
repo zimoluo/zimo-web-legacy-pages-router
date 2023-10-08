@@ -7,7 +7,7 @@ import { getCoverSrc } from "@/lib/blog/util";
 import { markdownToHtml, updateImageAttributes } from "@/lib/util";
 import Head from "next/head";
 type PostType = {
-  post: PostData & { displayCover: boolean };
+  post: PostData & { displayCover: boolean; originalContent: string };
 };
 
 export default function Post({ post }: PostType) {
@@ -15,7 +15,10 @@ export default function Post({ post }: PostType) {
   const coverSrc = getCoverSrc(post.coverImage, post.slug);
   const updatedContent = updateImageAttributes(post.content);
 
-  const urlShare = typeof window !== 'undefined' ? `${window.location.origin}/blog/${post.slug}` : '';
+  const urlShare =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/blog/${post.slug}`
+      : "";
 
   return (
     <MainPageLayout theme="blog">
@@ -56,6 +59,7 @@ export default function Post({ post }: PostType) {
         coverSrc={coverSrc}
         displayCover={post.displayCover}
         slug={post.slug}
+        originalContent={post.originalContent}
       ></BlogMainLayout>
     </MainPageLayout>
   );
@@ -86,6 +90,7 @@ export async function getStaticProps({ params }: Params) {
       post: {
         ...post,
         content,
+        originalContent: post.content,
       },
     },
     revalidate: 25,
