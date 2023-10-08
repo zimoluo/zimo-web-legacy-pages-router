@@ -39,7 +39,7 @@ const AboutQuestion: React.FC<Props> = ({
   };
 
   return (
-    <div
+    <section
       className={`${
         index !== 0 ? "border-about-pane-t" : ""
       } ${borderColorClass} px-6 text-xl md:text-2xl`}
@@ -71,7 +71,7 @@ const AboutQuestion: React.FC<Props> = ({
       >
         {enrichTextContent(description)}
       </p>
-    </div>
+    </section>
   );
 };
 

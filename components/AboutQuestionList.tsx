@@ -18,7 +18,7 @@ const AboutQuestionList: React.FC<Props> = ({ questions, descriptions }) => {
   processedDescriptions.length = questions.length;
 
   return (
-    <section className={`${paneBgClass} bg-opacity-40 backdrop-blur-md rounded-xl overflow-hidden shadow-lg`}>
+    <article className={`${paneBgClass} bg-opacity-40 backdrop-blur-md rounded-xl overflow-hidden shadow-lg`}>
       {questions.map((question, index) => (
         <AboutQuestion 
           key={index}
@@ -27,7 +27,7 @@ const AboutQuestionList: React.FC<Props> = ({ questions, descriptions }) => {
           index={index}
         />
       ))}
-    </section>
+    </article>
   );
 };
 
