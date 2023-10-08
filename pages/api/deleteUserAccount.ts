@@ -1,14 +1,21 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { deleteUserFile, getSubFromSessionToken } from "@/lib/accountServerManager";
+import {
+  deleteUserFile,
+  getSubFromSessionToken,
+} from "@/lib/accountServerManager";
 import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  
-  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
-    res.status(429).json({ error: "Too many requests. You can only have ten user delete requests within a minute." });
+  if (!(await rateLimiterMiddleware(req, res, 10, 60 * 1000))) {
+    res
+      .status(429)
+      .json({
+        error:
+          "Too many requests. You can only have ten user delete requests within a minute.",
+      });
     return;
   }
 

@@ -6,9 +6,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
-  if (!rateLimiterMiddleware(req, res, 30, 20 * 1000)) {
-    res.status(429).json({ error: "Too many requests. Please load again later." });
+  if (!(await rateLimiterMiddleware(req, res, 30, 20 * 1000))) {
+    res
+      .status(429)
+      .json({ error: "Too many requests. Please load again later." });
     return;
   }
 

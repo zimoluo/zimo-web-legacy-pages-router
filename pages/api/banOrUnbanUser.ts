@@ -14,8 +14,12 @@ export default async function handler(
     return res.status(405).end();
   }
 
-  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
-    res.status(429).json({ error: "Too many requests. You can only ban ten users within a minute." });
+  if (!(await rateLimiterMiddleware(req, res, 10, 60 * 1000))) {
+    res
+      .status(429)
+      .json({
+        error: "Too many requests. You can only ban ten users within a minute.",
+      });
     return;
   }
 

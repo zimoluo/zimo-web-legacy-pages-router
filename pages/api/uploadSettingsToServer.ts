@@ -12,9 +12,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-
-    if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
-      res.status(429).json({ error: "Too many requests. You can only upload settings forty times within a minute." });
+    if (!(await rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
+      res
+        .status(429)
+        .json({
+          error:
+            "Too many requests. You can only upload settings forty times within a minute.",
+        });
       return;
     }
 

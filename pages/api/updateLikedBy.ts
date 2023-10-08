@@ -31,12 +31,16 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
-  if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
-    res.status(429).json({ error: "Too many requests. You can only like forty articles within a minute." });
+  if (!(await rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
+    res
+      .status(429)
+      .json({
+        error:
+          "Too many requests. You can only like forty articles within a minute.",
+      });
     return;
   }
-  
+
   try {
     const { filePath } = req.body;
     const updatedLikedBy = await uploadLikedBy(filePath, req);
@@ -60,10 +64,9 @@ async function uploadLikedBy(
       throw new Error("No user is making the like.");
     }
 
-    const { state: tokenUserState } = (await getUserDataBySub(
-      tokenUserSub,
-      ["state"]
-    )) as unknown as { state: UserState };
+    const { state: tokenUserState } = (await getUserDataBySub(tokenUserSub, [
+      "state",
+    ])) as unknown as { state: UserState };
 
     if (tokenUserState === "banned") {
       throw new Error("User is banned.");

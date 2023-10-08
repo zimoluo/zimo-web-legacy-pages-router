@@ -15,13 +15,11 @@ export default async function handler(
     return res.status(405).end(); // Method Not Allowed
   }
 
-  if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
-    res
-      .status(429)
-      .json({
-        error:
-          "Too many requests. You can only like forty comments within a minute.",
-      });
+  if (!(await rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
+    res.status(429).json({
+      error:
+        "Too many requests. You can only like forty comments within a minute.",
+    });
     return;
   }
 
