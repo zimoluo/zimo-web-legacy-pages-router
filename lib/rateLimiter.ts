@@ -27,8 +27,8 @@ export const rateLimiterMiddleware = (
 
   // Use this version for api-blind tracking.
   // const key = `${clientIp}`;
-  // const key = `${req.url}-${clientIp}`;
-  const key = 'globalKeyLockDown'
+  const key = `${req.url}-${clientIp}`;
+  // const key = 'globalKeyLockDown'
 
   if (!requestTimestamps[key]) {
     requestTimestamps[key] = [];
