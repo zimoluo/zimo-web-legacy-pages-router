@@ -1,8 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import Redis from "ioredis";
 
-const requestTimestamps: { [key: string]: number[] } = {};
+const redisPort = process.env.ZIMO_WEB_REDIS_PORT;
+const redisHost = process.env.ZIMO_WEB_REDIS_HOST;
+const redisPassword = process.env.ZIMO_WEB_REDIS_PASSWORD;
 
-export const rateLimiterMiddleware = (
+if (!redisPort) {
+  throw new Error("Redis port does not exist.");
+}
+
+const numberPort = parseInt(redisPort);
+
+const redis = new Redis({
+  port: numberPort,
+  host: redisHost,
+  username: "default",
+  password: redisPassword,
+  db: 0,
+});
+
+export const rateLimiterMiddleware = async (
   req: NextApiRequest,
   res: NextApiResponse,
   maxRequests: number,
@@ -25,29 +42,35 @@ export const rateLimiterMiddleware = (
     return false;
   }
 
-  // Use this version for api-blind tracking.
-  // const key = `${clientIp}`;
-  // Alternatively, use a global key that will affect every ip in the world.
-  // const key = 'globalKeyLockDown'
   const key = `${req.url}-${clientIp}`;
-
-  if (!requestTimestamps[key]) {
-    requestTimestamps[key] = [];
-  }
-
   const now = Date.now();
-  requestTimestamps[key] = requestTimestamps[key].filter(
+
+  // Retrieve request timestamps from Redis and parse them.
+  const timestampsJson = await redis.get(key);
+  console.log(key, timestampsJson);
+  let requestTimestamps: number[] = timestampsJson
+    ? JSON.parse(timestampsJson)
+    : [];
+
+  // Filter out outdated timestamps.
+  requestTimestamps = requestTimestamps.filter(
     (timestamp) => now - timestamp < timeWindowMillis
   );
 
-  if (requestTimestamps[key].length >= maxRequests) {
+  if (requestTimestamps.length >= maxRequests) {
     res
       .status(429)
       .json({ error: "Too many requests, please try again later." });
     return false;
   }
 
-  requestTimestamps[key].push(now);
-  console.log(requestTimestamps);
+  // Push the new timestamp and save back to Redis with an expiration time.
+  requestTimestamps.push(now);
+  await redis.set(
+    key,
+    JSON.stringify(requestTimestamps),
+    "PX",
+    timeWindowMillis
+  );
   return true;
 };
