@@ -13,11 +13,10 @@ export default async function handler(
     return;
   }
 
-  const { method, url, headers } = req;
+  const { method, url } = req;
   const returnPayload = {
     method,
     url,
-    headers,
   };
 
   try {
