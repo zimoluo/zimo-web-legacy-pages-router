@@ -65,6 +65,10 @@ const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
         return;
       }
 
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        return;
+      }
+
       if (menuRef.current && !menuRef.current.contains(target) && isOpen) {
         onClose();
       }
