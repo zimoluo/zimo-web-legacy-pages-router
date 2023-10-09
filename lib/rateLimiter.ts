@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 const requestTimestamps: { [key: string]: number[] } = {};
 
-export const rateLimiterMiddleware = async (
+export const rateLimiterMiddleware = (
   req: NextApiRequest,
   res: NextApiResponse,
   maxRequests: number,
