@@ -33,7 +33,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
       <div className="flex items-center mb-4 text-xl font-bold">
         <Image
           src={faviconSrc}
-          alt="Dynamic logo"
+          alt="Website favicon"
           className="h-8 mr-3"
           height={32}
           width={32}
