@@ -18,9 +18,9 @@ if (!LOCAL_MODE) {
   if (!redisPort) {
     throw new Error("Redis port does not exist.");
   }
-  
+
   const numberPort = parseInt(redisPort);
-  
+
   redis = new Redis({
     port: numberPort,
     host: redisHost,
@@ -37,9 +37,13 @@ export const rateLimiterMiddleware = async (
   timeWindowMillis: number
 ) => {
   const clientIp =
+    (Array.isArray(req.headers["cf-connecting-ip"])
+      ? req.headers["cf-connecting-ip"][0]
+      : req.headers["cf-connecting-ip"]) ||
     (Array.isArray(req.headers["x-forwarded-for"])
       ? req.headers["x-forwarded-for"][0]
-      : req.headers["x-forwarded-for"]) || req.socket.remoteAddress?.toString();
+      : req.headers["x-forwarded-for"]) ||
+    req.socket.remoteAddress?.toString();
 
   if (!clientIp) {
     res.status(500).json({ error: "Unable to determine IP address" });
@@ -81,9 +85,7 @@ export const rateLimiterMiddleware = async (
     if (!redis) throw new Error("Redis client is not initialized");
 
     const timestampsJson = await redis.get(key);
-    requestTimestampsLocal = timestampsJson
-      ? JSON.parse(timestampsJson)
-      : [];
+    requestTimestampsLocal = timestampsJson ? JSON.parse(timestampsJson) : [];
 
     requestTimestampsLocal = requestTimestampsLocal.filter(
       (timestamp) => now - timestamp < timeWindowMillis
