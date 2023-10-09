@@ -9,4 +9,5 @@ export const defaultSettings: SettingsState = {
   disableSerifFont: false,
   disableEntryPopUp: false,
   disableBackgroundBlur: false,
+  enableGallery: false,
 };

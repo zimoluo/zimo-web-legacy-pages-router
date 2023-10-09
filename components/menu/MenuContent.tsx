@@ -53,6 +53,10 @@ const MenuContent = ({ theme }: Props) => {
       initialSettings = ["disableEntryPopUp", ...initialSettings];
     }
 
+    if (routerPathname.startsWith("/photos")) {
+      initialSettings = ["enableGallery", ...initialSettings];
+    }
+
     return initialSettings;
   }, [routerPathname, windowWidth]);
 
@@ -77,6 +81,7 @@ const MenuContent = ({ theme }: Props) => {
     disableSerifFont: "Disable Serif Font",
     disableEntryPopUp: "Disable Entry Pop-Up",
     disableBackgroundBlur: "Disable Background Blur",
+    enableGallery: "Gallery Mode",
   };
 
   return (

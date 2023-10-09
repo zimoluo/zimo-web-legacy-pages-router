@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import PhotosTile from "./PhotosTile";
+import { useSettings } from "../contexts/SettingsContext";
+import PhotosGallery from "./PhotosGallery";
 
 interface Props {
   photoEntries: PhotosData[];
@@ -9,6 +11,7 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
   const gridRefDesktop = useRef<HTMLDivElement>(null);
   const gridRefMobile = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const { settings } = useSettings();
   const [windowWidth, setWindowWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 768
   );
@@ -50,7 +53,7 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
       masonryDesktop && masonryDesktop.destroy();
       masonryMobile && masonryMobile.destroy();
     };
-  }, [photoEntries, windowWidth]);
+  }, [photoEntries, windowWidth, settings.enableGallery]);
 
   return (
     <>
@@ -62,11 +65,23 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
         }`}
       >
         <div ref={gridRefDesktop}>
-          {photoEntries.map((photoEntry, index) => (
-            <div key={index} className="masonry-item">
-              <PhotosTile {...photoEntry} />
-            </div>
-          ))}
+          {photoEntries.map((photoEntry, index) =>
+            !settings.enableGallery ? (
+              <div key={index} className="masonry-item">
+                <PhotosTile {...photoEntry} />
+              </div>
+            ) : (
+              photoEntry.images.url.map((url, imageUrlIndex) => (
+                <div key={imageUrlIndex} className="masonry-item">
+                  <PhotosGallery
+                    url={url}
+                    aspectRatio={photoEntry.images.aspectRatio}
+                    title={photoEntry.title}
+                  />
+                </div>
+              ))
+            )
+          )}
         </div>
       </section>
       <section
@@ -77,11 +92,23 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
         }`}
       >
         <div ref={gridRefMobile}>
-          {photoEntries.map((photoEntry, index) => (
-            <div key={index} className="masonry-item">
-              <PhotosTile {...photoEntry} />
-            </div>
-          ))}
+          {photoEntries.map((photoEntry, index) =>
+            !settings.enableGallery ? (
+              <div key={index} className="masonry-item">
+                <PhotosTile {...photoEntry} />
+              </div>
+            ) : (
+              photoEntry.images.url.map((url, imageUrlIndex) => (
+                <div key={imageUrlIndex} className="masonry-item">
+                  <PhotosGallery
+                    url={url}
+                    aspectRatio={photoEntry.images.aspectRatio}
+                    title={photoEntry.title}
+                  />
+                </div>
+              ))
+            )
+          )}
         </div>
       </section>
     </>

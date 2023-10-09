@@ -9,4 +9,5 @@ interface SettingsState {
   disableSerifFont: boolean;
   disableEntryPopUp: boolean;
   disableBackgroundBlur: boolean;
+  enableGallery: boolean;
 }
