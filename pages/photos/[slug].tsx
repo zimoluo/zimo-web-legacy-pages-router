@@ -22,13 +22,13 @@ export default function Entry({ entry }: Props) {
     <MainPageLayout theme="photos">
       <Head>
         <title>{title}</title>
-        <meta property="og:image" content="/photos-zimo.svg" />
+        <meta property="og:image" content={entry.images.url[0]} />
         <meta property="og:type" content="article" />
         <meta property="og:title" content={entry.title} />
         <meta property="og:url" content={urlShare} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@WhiteGkings" />
-        <meta name="twitter:image" content="/photos-zimo.svg" />
+        <meta name="twitter:image" content={entry.images.url[0]} />
         <meta name="twitter:image:alt" content={`${entry.title}`} />
         <meta name="twitter:title" content={entry.title} />
         <meta name="author" content={entry.author} />
