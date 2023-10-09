@@ -23,8 +23,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
   const { comments, setComments, resourceLocation } = useComments();
   const { user } = useUser();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
-  const typeBoxColorClass =
-    lightBgColorMap[theme] || lightBgColorMap["zimo"];
+  const typeBoxColorClass = lightBgColorMap[theme] || lightBgColorMap["zimo"];
   const placeholderTextColorClass =
     placeholderTextColorMap[theme] || placeholderTextColorMap["zimo"];
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
@@ -109,6 +108,18 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
     }
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey &&
+      !event.ctrlKey &&
+      !event.metaKey
+    ) {
+      event.preventDefault();
+      sendComment();
+    }
+  };
+
   if (settings.disableComments) return;
 
   return (
@@ -121,6 +132,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
         onChange={handleInputChange}
         placeholder={placeholderName}
         disabled={!user || user.state === "banned" || isSending}
+        onKeyDown={handleKeyDown}
       />
       {user && user.state !== "banned" && (
         <button onClick={sendComment} className="z-10">

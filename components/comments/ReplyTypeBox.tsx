@@ -35,8 +35,7 @@ const ReplyTypeBox: React.FC<Props> = ({
   const { user } = useUser();
   const { replyBoxContent } = useReply();
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
-  const typeBoxColorClass =
-    lightBgColorMap[theme] || lightBgColorMap["zimo"];
+  const typeBoxColorClass = lightBgColorMap[theme] || lightBgColorMap["zimo"];
   const placeholderTextColorClass =
     placeholderTextColorMap[theme] || placeholderTextColorMap["zimo"];
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
@@ -157,6 +156,18 @@ const ReplyTypeBox: React.FC<Props> = ({
     }
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey &&
+      !event.ctrlKey &&
+      !event.metaKey
+    ) {
+      event.preventDefault();
+      sendReply();
+    }
+  };
+
   return (
     <div style={columnStyle} ref={columnRef} className="pl-6 pr-3 relative">
       <textarea
@@ -167,6 +178,7 @@ const ReplyTypeBox: React.FC<Props> = ({
         onChange={handleInputChange}
         placeholder={placeholderName}
         disabled={!user || user.state === "banned" || isSending}
+        onKeyDown={handleKeyDown}
       />
       {user && user.state !== "banned" && (
         <button onClick={sendReply} className="z-10">
