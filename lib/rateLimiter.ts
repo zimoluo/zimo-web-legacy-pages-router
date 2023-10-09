@@ -7,7 +7,7 @@ const redisHost = process.env.ZIMO_WEB_REDIS_HOST;
 const redisPassword = process.env.ZIMO_WEB_REDIS_PASSWORD;
 
 // LOCAL_MODE: true to use local in-memory storage, false to use Redis
-const LOCAL_MODE = true;
+const LOCAL_MODE = false;
 
 // Local storage for timestamps when LOCAL_MODE is true
 const requestTimestamps: { [key: string]: number[] } = {};
