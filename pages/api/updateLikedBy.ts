@@ -32,17 +32,25 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (!(await rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
-    res
-      .status(429)
-      .json({
-        error:
-          "Too many requests. You can only like forty articles within a minute.",
-      });
+    res.status(429).json({
+      error:
+        "Too many requests. You can only like forty articles within a minute.",
+    });
     return;
   }
 
   try {
     const { filePath } = req.body;
+
+    const regex = /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|]+$/;
+    if (!regex.test(filePath)) {
+      res.status(400).json({
+        error:
+          "Invalid filePath. It should match 'blog/likedBy/{valid-name}', 'photos/likedBy/{valid-name}', or 'projects/likedBy/{valid-name}'.",
+      });
+      throw new Error("Illegal file path to be uploaded.");
+    }
+
     const updatedLikedBy = await uploadLikedBy(filePath, req);
     res.status(200).json(updatedLikedBy);
   } catch (error: any) {
