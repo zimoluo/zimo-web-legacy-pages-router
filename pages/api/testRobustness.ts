@@ -13,10 +13,15 @@ export default async function handler(
     return;
   }
 
+  const { method, url, headers } = req;
+  const returnPayload = {
+    method,
+    url,
+    headers,
+  };
+
   try {
-    res
-      .status(200)
-      .json({ ip: req.headers["x-forwarded-for"], raw: JSON.stringify(req) });
+    res.status(200).json({ returnPayload });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
