@@ -44,10 +44,6 @@ export default async function handler(
 
     const regex = /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|]+$/;
     if (!regex.test(filePath)) {
-      res.status(400).json({
-        error:
-          "Invalid filePath. It should match 'blog/likedBy/{valid-name}', 'photos/likedBy/{valid-name}', or 'projects/likedBy/{valid-name}'.",
-      });
       throw new Error("Illegal file path to be uploaded.");
     }
 
