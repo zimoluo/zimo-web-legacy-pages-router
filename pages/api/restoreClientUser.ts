@@ -25,7 +25,7 @@ export default async function handler(
     return res.status(405).end();
   }
 
-  if (!(await rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
+  if (!(rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
     res
       .status(429)
       .json({

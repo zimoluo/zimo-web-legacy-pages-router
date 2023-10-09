@@ -12,7 +12,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    if (!(await rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
+    if (!(rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
       res
         .status(429)
         .json({

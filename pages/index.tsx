@@ -6,8 +6,8 @@ export default function Home() {
 
   const events = {
     "2023-9-12": "Event 1",
-    "2023-10-3": "Event 2",
-    "2022-9-12": "Event 3",
+    "2025-10-3": "Event 2",
+    "2024-11-12": "Event Event Event Event Event Event Event Event Event Event Event Event Event Event Event Event Event Event 3",
   };
 
   return (

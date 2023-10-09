@@ -5,7 +5,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!(await rateLimiterMiddleware(req, res, 100, 60 * 1000))) {
+  if (!(rateLimiterMiddleware(req, res, 100, 60 * 1000))) {
     res.status(429).json({
       error:
         "Too many requests. Rate limit is supposed to allow 100 requests per minute.",

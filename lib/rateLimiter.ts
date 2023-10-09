@@ -1,34 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import Redis from "ioredis";
 
-// Configurations for Redis
-const redisPort = process.env.ZIMO_WEB_REDIS_PORT;
-const redisHost = process.env.ZIMO_WEB_REDIS_HOST;
-const redisPassword = process.env.ZIMO_WEB_REDIS_PASSWORD;
-
-// LOCAL_MODE: true to use local in-memory storage, false to use Redis
-const LOCAL_MODE = process.env.ZIMO_WEB_USE_LOCAL_RATE_LIMIT === "true";
-
-// Local storage for timestamps when LOCAL_MODE is true
 const requestTimestamps: { [key: string]: number[] } = {};
-
-// Initialize Redis when LOCAL_MODE is false
-let redis: Redis | null = null;
-if (!LOCAL_MODE) {
-  if (!redisPort) {
-    throw new Error("Redis port does not exist.");
-  }
-
-  const numberPort = parseInt(redisPort);
-
-  redis = new Redis({
-    port: numberPort,
-    host: redisHost,
-    username: "default",
-    password: redisPassword,
-    db: 0,
-  });
-}
 
 export const rateLimiterMiddleware = async (
   req: NextApiRequest,
@@ -60,52 +32,23 @@ export const rateLimiterMiddleware = async (
   const key = `${req.url}-${clientIp}`;
   const now = Date.now();
 
-  let requestTimestampsLocal: number[] = [];
-
-  if (LOCAL_MODE) {
-    // Use local in-memory storage
-    if (!requestTimestamps[key]) {
-      requestTimestamps[key] = [];
-    }
-
-    requestTimestamps[key] = requestTimestamps[key].filter(
-      (timestamp) => now - timestamp < timeWindowMillis
-    );
-
-    if (requestTimestamps[key].length >= maxRequests) {
-      res
-        .status(429)
-        .json({ error: "Too many requests, please try again later." });
-      return false;
-    }
-
-    requestTimestamps[key].push(now);
-  } else {
-    // Use Redis
-    if (!redis) throw new Error("Redis client is not initialized");
-
-    const timestampsJson = await redis.get(key);
-    requestTimestampsLocal = timestampsJson ? JSON.parse(timestampsJson) : [];
-
-    requestTimestampsLocal = requestTimestampsLocal.filter(
-      (timestamp) => now - timestamp < timeWindowMillis
-    );
-
-    if (requestTimestampsLocal.length >= maxRequests) {
-      res
-        .status(429)
-        .json({ error: "Too many requests, please try again later." });
-      return false;
-    }
-
-    requestTimestampsLocal.push(now);
-    await redis.set(
-      key,
-      JSON.stringify(requestTimestampsLocal),
-      "PX",
-      timeWindowMillis
-    );
+  // Use local in-memory storage
+  if (!requestTimestamps[key]) {
+    requestTimestamps[key] = [];
   }
+
+  requestTimestamps[key] = requestTimestamps[key].filter(
+    (timestamp) => now - timestamp < timeWindowMillis
+  );
+
+  if (requestTimestamps[key].length >= maxRequests) {
+    res
+      .status(429)
+      .json({ error: "Too many requests, please try again later." });
+    return false;
+  }
+
+  requestTimestamps[key].push(now);
 
   return true;
 };
