@@ -1,23 +1,27 @@
 import React from "react";
+import { parse, format, compareAsc } from "date-fns";
 
 interface TimelineProps {
   events: Record<string, string>;
 }
 
 const Timeline: React.FC<TimelineProps> = ({ events }) => {
-  const sortedEvents = Object.entries(events).sort(
-    (a, b) => new Date(b[0]).getTime() - new Date(a[0]).getTime()
-  );
-
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return new Intl.DateTimeFormat("en-US", options).format(date);
+    // Parsing the date string into a Date object.
+    const date = parse(dateStr, "yyyy-M-d", new Date());
+
+    // Formatting the Date object into the desired output string.
+    return format(date, "MMMM d, yyyy"); // Example output: September 12, 2023
   };
+
+  const sortedEvents = Object.entries(events).sort((a, b) => {
+    // Parsing the date strings into Date objects.
+    const dateA = parse(a[0], "yyyy-M-d", new Date());
+    const dateB = parse(b[0], "yyyy-M-d", new Date());
+
+    // Comparing the Date objects to sort the array.
+    return compareAsc(dateB, dateA);
+  });
 
   return (
     <div className="relative w-96 mx-0 overflow-hidden">
