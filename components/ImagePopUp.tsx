@@ -81,7 +81,7 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
           alt="Close Image Window"
           width={16}
           height={16}
-          className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+          className="h-4 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
         />
       </button>
     </div>

@@ -12,6 +12,7 @@ import PhotosCommentArea from "./PhotosCommentArea";
 import { useSettings } from "../contexts/SettingsContext";
 import { securityCommentShutDown } from "@/lib/constants";
 import { CommentProvider } from "../contexts/CommentContext";
+import Link from "next/link";
 
 export default function PhotosMainPopUp({
   title,
@@ -37,8 +38,8 @@ export default function PhotosMainPopUp({
   const minimumWidth = 0;
 
   const handleResize = () => {
-    const vh = window.innerHeight * 0.9; 
-    const vw = window.innerWidth * 0.64; 
+    const vh = window.innerHeight * 0.9;
+    const vw = window.innerWidth * 0.64;
     const calculatedHeight = Math.min(vh, vw);
 
     const [widthRatio, heightRatio] = images.aspectRatio.split(":").map(Number);
@@ -207,21 +208,32 @@ export default function PhotosMainPopUp({
             )}
           </div>
         </article>
-        <button
-          className="absolute top-3 right-3 z-70"
-          onClick={() => {
-            onClose();
-            window.history.replaceState({}, "", "#");
-          }}
-        >
-          <Image
-            src="/image-view-cross.svg"
-            alt="Close Album Window"
-            width={16}
-            height={16}
-            className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
-          />
-        </button>
+        <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
+          <Link href={`/photos/${slug}`}>
+            <Image
+              src="/expand-full-page.svg"
+              alt="Enter Full Page"
+              width={16}
+              height={16}
+              className="h-4 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+            />
+          </Link>
+          <button
+            className="ml-3"
+            onClick={() => {
+              onClose();
+              window.history.replaceState({}, "", "#");
+            }}
+          >
+            <Image
+              src="/image-view-cross.svg"
+              alt="Close Album Window"
+              width={16}
+              height={16}
+              className="h-4 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+            />
+          </button>
+        </div>
       </div>
     </CommentProvider>
   );

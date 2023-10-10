@@ -9,6 +9,7 @@ import {
 } from "@/lib/util";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function ProjectMainPopUp({
   title,
@@ -184,21 +185,32 @@ export default function ProjectMainPopUp({
           />
         </div>
       </article>
-      <button
-        className="absolute top-3 right-3 z-70"
-        onClick={() => {
-          onClose();
-          window.history.replaceState({}, "", "#");
-        }}
-      >
-        <Image
-          src="/image-view-cross.svg"
-          alt="Close Project Window"
-          width={16}
-          height={16}
-          className="h-4 w-auto opacity-60 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
-        />
-      </button>
+      <div className="absolute top-3 right-3 z-70 flex items-center justify-center">
+        <Link href={`/projects/${slug}`}>
+          <Image
+            src="/expand-full-page.svg"
+            alt="Enter Full Page"
+            width={16}
+            height={16}
+            className="h-4 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+          />
+        </Link>
+        <button
+          className="ml-3"
+          onClick={() => {
+            onClose();
+            window.history.replaceState({}, "", "#");
+          }}
+        >
+          <Image
+            src="/image-view-cross.svg"
+            alt="Close Album Window"
+            width={16}
+            height={16}
+            className="h-4 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+          />
+        </button>
+      </div>
     </div>
   );
 }

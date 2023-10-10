@@ -4,7 +4,7 @@
 <svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs/>
 <g id="Layer-1" vectornator:layerName="Layer 1">
-<path d="M91.9716 931.032C68.2478 907.308 68.2478 868.845 91.9716 845.121L845.121 91.9716C868.845 68.2478 907.308 68.2478 931.032 91.9716L932.028 92.9678C955.752 116.692 955.752 155.155 932.028 178.879L178.879 932.028C155.155 955.752 116.692 955.752 92.9678 932.028L91.9716 931.032Z" fill="#d7d7d7" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 1"/>
-<path d="M92.9678 91.9716C116.692 68.2478 155.155 68.2478 178.879 91.9716L932.028 845.121C955.752 868.845 955.752 907.308 932.028 931.032L931.032 932.028C907.308 955.752 868.845 955.752 845.121 932.028L91.9716 178.879C68.2478 155.155 68.2478 116.692 91.9716 92.9678L92.9678 91.9716Z" fill="#d7d7d7" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 2"/>
+<path d="M91.9716 931.032C68.2478 907.308 68.2478 868.845 91.9716 845.121L845.121 91.9716C868.845 68.2478 907.308 68.2478 931.032 91.9716L932.028 92.9678C955.752 116.692 955.752 155.155 932.028 178.879L178.879 932.028C155.155 955.752 116.692 955.752 92.9678 932.028L91.9716 931.032Z" fill="#efefef" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 1"/>
+<path d="M92.9678 91.9716C116.692 68.2478 155.155 68.2478 178.879 91.9716L932.028 845.121C955.752 868.845 955.752 907.308 932.028 931.032L931.032 932.028C907.308 955.752 868.845 955.752 845.121 932.028L91.9716 178.879C68.2478 155.155 68.2478 116.692 91.9716 92.9678L92.9678 91.9716Z" fill="#efefef" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Rectangle 2"/>
 </g>
 </svg>
