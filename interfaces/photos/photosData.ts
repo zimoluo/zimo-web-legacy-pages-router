@@ -6,6 +6,7 @@ interface PhotosData {
     slug: string;
     location?: LocationData;
     images: ImagesData;
+    instagramLink?: string;
 }
 
 interface LocationData {

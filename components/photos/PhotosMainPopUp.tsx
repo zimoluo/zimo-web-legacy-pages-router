@@ -21,6 +21,7 @@ export default function PhotosMainPopUp({
   authorProfile,
   slug,
   images,
+  instagramLink,
   onClose,
 }: PhotosData & { onClose: () => void }) {
   const [style, setStyle] = useState<React.CSSProperties>({});
@@ -191,6 +192,7 @@ export default function PhotosMainPopUp({
                   author={author}
                   authorProfile={authorProfile}
                   location={location}
+                  instagramLink={instagramLink}
                 />
               </div>
             </div>

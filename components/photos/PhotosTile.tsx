@@ -14,6 +14,7 @@ const PhotosTile = ({
   authorProfile,
   slug,
   location,
+  instagramLink,
 }: PhotosData) => {
   // A simple string hashing function
   const stringToSeed = (str: string): number => {
@@ -127,6 +128,7 @@ const PhotosTile = ({
           authorProfile={authorProfile}
           slug={slug}
           images={images}
+          instagramLink={instagramLink}
         />
       )}
     </>

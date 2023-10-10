@@ -10,6 +10,7 @@ type Props = {
   authorProfile: string;
   location?: LocationData;
   slug: string;
+  instagramLink?: string;
 };
 
 const PhotosTextSide = ({
@@ -19,6 +20,7 @@ const PhotosTextSide = ({
   author,
   authorProfile,
   slug,
+  instagramLink,
 }: Props) => {
   const { settings } = useSettings();
 
@@ -30,6 +32,7 @@ const PhotosTextSide = ({
         author={author}
         authorProfile={authorProfile}
         location={location}
+        instagramLink={instagramLink}
       />
       <div className="border-orange-700 border-opacity-80 border-photos-comment -mt-10 mb-8 -mx-4 select-none pointer-events-none" />
       {!settings.disableComments && !securityCommentShutDown && (

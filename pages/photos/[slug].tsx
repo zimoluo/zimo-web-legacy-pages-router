@@ -56,6 +56,7 @@ export async function getStaticProps({ params }: Params) {
     "slug",
     "location",
     "images",
+    "instagramLink",
   ]);
 
   return {

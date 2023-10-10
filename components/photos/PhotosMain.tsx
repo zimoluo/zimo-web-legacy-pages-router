@@ -17,6 +17,7 @@ export default function PhotosMain({
   authorProfile,
   slug,
   images,
+  instagramLink,
 }: PhotosData) {
   const parsedImage = imagesParser(images);
   const { settings } = useSettings();
@@ -50,6 +51,7 @@ export default function PhotosMain({
           authorProfile={authorProfile}
           slug={slug}
           images={images}
+          instagramLink={instagramLink}
         />
       )}
       {(shouldRender === 0 || shouldRender === 2) && (
@@ -60,6 +62,7 @@ export default function PhotosMain({
             author={author}
             authorProfile={authorProfile}
             location={location}
+            instagramLink={instagramLink}
           />
           <div className="-mt-8">
             <ImageViewer

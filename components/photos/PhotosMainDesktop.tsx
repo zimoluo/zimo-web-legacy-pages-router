@@ -14,6 +14,7 @@ export default function PhotosMainDesktop({
   authorProfile,
   slug,
   images,
+  instagramLink,
 }: PhotosData) {
   const [gridWidth, setGridWidth] = useState<number | null>(null);
   const [gridHeight, setGridHeight] = useState<number | null>(null);
@@ -92,6 +93,7 @@ export default function PhotosMainDesktop({
                 author={author}
                 authorProfile={authorProfile}
                 location={location}
+                instagramLink={instagramLink}
               />
             </div>
           </div>

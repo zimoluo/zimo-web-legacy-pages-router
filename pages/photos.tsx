@@ -31,6 +31,7 @@ export const getStaticProps = async () => {
     "slug",
     "location",
     "images",
+    "instagramLink",
   ]);
 
   return {

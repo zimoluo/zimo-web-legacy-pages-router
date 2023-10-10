@@ -12,6 +12,7 @@ type Props = {
   author: string;
   authorProfile: string;
   location?: LocationData;
+  instagramLink?: string;
 };
 
 const PhotosCard = ({
@@ -20,6 +21,7 @@ const PhotosCard = ({
   date,
   author,
   authorProfile,
+  instagramLink,
 }: Props) => {
   return (
     <div className="mb-14">
@@ -29,7 +31,7 @@ const PhotosCard = ({
             <Image
               src={authorProfile}
               alt={`${author}'s Profile`}
-              className="h-full w-fit"
+              className="h-full w-10"
               width={40}
               height={40}
               onError={imageFallback("/favicon.svg")}
@@ -58,6 +60,20 @@ const PhotosCard = ({
             </p>
           </div>
         </div>
+
+        {instagramLink && (
+          <div className="flex-grow flex justify-end items-start self-start">
+            <a target="_blank" rel="noreferrer" href={instagramLink}>
+              <Image
+                src="/instagram-logo.svg"
+                alt="Open in instagram"
+                className="w-6 h-auto aspect-square"
+                height={16}
+                width={16}
+              />
+            </a>
+          </div>
+        )}
       </div>
       <p className="text-lg mt-2 mb-4">{enrichTextContent(title)}</p>
     </div>
