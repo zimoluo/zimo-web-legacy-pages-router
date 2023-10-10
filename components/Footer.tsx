@@ -5,6 +5,7 @@ import {
   textColorMap,
   borderColorMap,
   ThemeType,
+  lightBgColorMap,
 } from "../interfaces/themeMaps";
 import Image from "next/image";
 import { useSettings } from "./contexts/SettingsContext";
@@ -16,6 +17,7 @@ type FooterProps = {
 const Footer: React.FC<FooterProps> = ({ theme }) => {
   const faviconSrc = faviconMap[theme] || faviconMap["zimo"];
   const barColorClass = barColorMap[theme] || barColorMap["zimo"];
+  const lightBgClass = lightBgColorMap[theme] || lightBgColorMap["zimo"];
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
 
@@ -26,7 +28,11 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
 
   return (
     <footer
-      className={`${textColorClass} p-6 ${barColorClass} z-20 w-full font-arial ${
+      className={`${textColorClass} p-6 ${
+        !settings.disableBackgroundBlur
+          ? barColorClass
+          : `${lightBgClass} bg-opacity-80`
+      } z-20 w-full font-arial ${
         !settings.disableBackgroundBlur ? "backdrop-blur-md" : ""
       }`}
     >
