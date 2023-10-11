@@ -309,9 +309,7 @@ const MusicPlayerCard: FC<Props> = ({
               />
               <Image
                 className={`select-none pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-auto aspect-square ${svgFilterClass} transition-all duration-300 ease-in-out group-hover:scale-110 ${
-                  isLooping
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none select-none"
+                  isLooping ? "opacity-100" : "opacity-0"
                 }`}
                 src="/loop-track.svg"
                 height={20}
@@ -324,7 +322,9 @@ const MusicPlayerCard: FC<Props> = ({
         </div>
         <div
           className={`flex items-center transition-opacity duration-300 ease-in-out ${
-            isMetadataLoaded ? "opacity-100" : "opacity-0"
+            isMetadataLoaded
+              ? "opacity-100"
+              : "opacity-0 pointer-events-none select-none"
           }`}
         >
           <span className="text-sm md:text-base">
