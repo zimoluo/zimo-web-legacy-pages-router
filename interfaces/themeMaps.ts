@@ -52,6 +52,30 @@ export const lightBgColorMap: { [key: string]: string } = {
   about: "bg-color-about bg-cover bg-center",
 };
 
+export const hundredBgColorMap: { [key: string]: string } = {
+  zimo: "bg-neutral-100",
+  photos: "bg-orange-100",
+  blog: "bg-fuchsia-100",
+  projects: "bg-teal-100",
+  about: "bg-sky-100",
+};
+
+export const slightlyDarkBgColorMap: { [key: string]: string } = {
+  zimo: "bg-neutral-200",
+  photos: "bg-orange-200",
+  blog: "bg-fuchsia-200",
+  projects: "bg-teal-200",
+  about: "bg-color-about bg-cover bg-center",
+};
+
+export const progressBarBgColorMap: { [key: string]: string } = {
+  zimo: "bg-neutral-300",
+  photos: "bg-orange-300",
+  blog: "bg-fuchsia-300",
+  projects: "bg-teal-300",
+  about: "bg-sky-300",
+};
+
 export const sliderBorderColorMap: { [key: string]: string } = {
   zimo: "border-neutral-300",
   photos: "border-orange-300",
@@ -113,6 +137,14 @@ export const borderColorMap: { [key: string]: string } = Object.fromEntries(
   Object.entries(genericColorMap).map(([key, value]) => [
     key,
     `border-${value}`,
+  ])
+);
+
+// Create a bg color map by prefixing 'bg-' to generic colors
+export const bgDarkColorMap: { [key: string]: string } = Object.fromEntries(
+  Object.entries(genericColorMap).map(([key, value]) => [
+    key,
+    `bg-${value}`,
   ])
 );
 
