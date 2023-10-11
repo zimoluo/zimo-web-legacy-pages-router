@@ -255,12 +255,12 @@ const MusicPlayerCard: FC<Props> = ({
               <div className="text-sm md:text-base">{`${playbackRate}x`}</div>
             </div>
           </div>
-          <div className="flex items-center justify-end md:justify-center flex-grow space-x-2 md:space-x-1.5">
+          <div className="flex items-center justify-end md:justify-center flex-grow space-x-2.5 md:space-x-6">
             <button className="" onClick={() => seek(0)}>
               <Image
-                className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
-                width={20}
-                height={20}
+                className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
+                width={24}
+                height={24}
                 src="/back-to-start.svg"
                 alt="Back to start"
               />
@@ -270,18 +270,18 @@ const MusicPlayerCard: FC<Props> = ({
               onClick={() => changeRate(Math.max(0.25, playbackRate - 0.25))}
             >
               <Image
-                className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
-                width={20}
-                height={20}
+                className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
+                width={24}
+                height={24}
                 src="/speed-up-down.svg"
                 alt="Slow down"
               />
             </button>
             <button className="" onClick={handlePlayPause}>
               <Image
-                className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
-                width={20}
-                height={20}
+                className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
+                width={24}
+                height={24}
                 src={isPlaying ? "/pause-track.svg" : "play-track.svg"}
                 key={isPlaying ? "/pause-track.svg" : "play-track.svg"}
                 alt={isPlaying ? "Pause" : "Play"}
@@ -292,28 +292,28 @@ const MusicPlayerCard: FC<Props> = ({
               onClick={() => changeRate(Math.min(2, playbackRate + 0.25))}
             >
               <Image
-                className={`w-5 h-auto aspect-square ${svgFilterClass} rotate-180 transition-transform duration-300 ease-in-out hover:scale-110`}
-                width={20}
-                height={20}
+                className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} rotate-180 transition-transform duration-300 ease-in-out hover:scale-110`}
+                width={24}
+                height={24}
                 src="/speed-up-down.svg"
                 alt="Speed up"
               />
             </button>
             <button className="relative group" onClick={toggleIsLooping}>
               <Image
-                className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out group-hover:scale-110`}
+                className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out group-hover:scale-110`}
                 src="/loop-track-off.svg"
-                height={20}
-                width={20}
+                height={24}
+                width={24}
                 alt="Loop or not loop track"
               />
               <Image
-                className={`select-none pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-auto aspect-square ${svgFilterClass} transition-all duration-300 ease-in-out group-hover:scale-110 ${
+                className={`select-none pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-all duration-300 ease-in-out group-hover:scale-110 ${
                   isLooping ? "opacity-100" : "opacity-0"
                 }`}
                 src="/loop-track.svg"
-                height={20}
-                width={20}
+                height={24}
+                width={24}
                 alt="Loop or not loop track"
                 aria-hidden="true"
               />
