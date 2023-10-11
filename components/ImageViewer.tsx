@@ -304,7 +304,9 @@ function ImageViewer({
         "touchstart",
         handleTouchStart
       );
-      imageContainerRef.current.addEventListener("touchmove", handleTouchMove);
+      imageContainerRef.current.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
       imageContainerRef.current.addEventListener("dblclick", handleDoubleClick);
     }
 

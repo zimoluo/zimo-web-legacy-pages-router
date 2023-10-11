@@ -66,19 +66,32 @@ const MusicPlayerCard: FC<Props> = ({
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX);
+    const handleMouseUp = () => handleEnd();
+
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault();
       handleMove(e.touches[0].clientX);
     };
+    const handleTouchEnd = () => handleEnd();
 
     if (isInteracting) {
+      // Adding listeners to the document to ensure they always register
       document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("mouseup", handleMouseUp);
+
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+      document.addEventListener("touchend", handleTouchEnd);
     }
 
     return () => {
+      // Cleaning up listeners from the document
       document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+
       document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
   }, [isInteracting]);
 
@@ -186,7 +199,7 @@ const MusicPlayerCard: FC<Props> = ({
 
   return (
     <div
-      className={`${lightBgClass} ${textColorClass} p-4 shadow-lg w-full bg-opacity-50 backdrop-blur-xl rounded-xl flex`}
+      className={`${lightBgClass} ${textColorClass} p-4 shadow-lg w-full bg-opacity-60 backdrop-blur-xl rounded-xl flex`}
     >
       <Head>
         <link rel="preload" as="image" href="/pause-track.svg" />
@@ -297,21 +310,30 @@ const MusicPlayerCard: FC<Props> = ({
             isMetadataLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          <span>{formatTime(currentTime, duration)}</span>
+          <span className="text-sm md:text-base">
+            {formatTime(currentTime, duration)}
+          </span>
           <div
             ref={seekBarRef}
-            className={`mx-2 flex-grow ${hundredBgClass} bg-opacity-90 rounded-lg h-2 cursor-pointer`}
+            className={`mx-2 flex-grow h-6 py-2 cursor-pointer`}
             onMouseDown={(e) => handleStart(e.clientX)}
             onTouchStart={(e) => handleStart(e.touches[0].clientX)}
             onMouseUp={handleEnd}
             onTouchEnd={handleEnd}
           >
             <div
-              style={{ width: `${progressBarPercentage}%` }}
-              className={`${progressBarBgColorClass} rounded-lg h-2`}
-            ></div>
+              className={`${hundredBgClass} bg-opacity-90 rounded-lg h-full`}
+            >
+              <div
+                style={{ width: `${progressBarPercentage}%` }}
+                className={`${progressBarBgColorClass} rounded-lg h-2`}
+              />
+            </div>
           </div>
-          <span>{`-${formatTime(duration - currentTime, duration)}`}</span>
+          <span className="text-sm md:text-base">{`-${formatTime(
+            duration - currentTime,
+            duration
+          )}`}</span>
         </div>
       </div>
     </div>

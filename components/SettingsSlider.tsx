@@ -102,7 +102,7 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
 
   const touchStartHandler = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(true);
-    window.addEventListener("touchmove", touchMoveHandler);
+    window.addEventListener("touchmove", touchMoveHandler, { passive: false });
     window.addEventListener("touchend", touchEndHandler);
   };
 
