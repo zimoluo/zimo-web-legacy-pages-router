@@ -38,6 +38,7 @@ const MusicPlayerCard: FC<Props> = ({
   const audioRef = useRef<HTMLAudioElement>(null);
   const seekBarRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [isMetadataLoaded, setIsMetadataLoaded] = useState<boolean>(false);
 
   function calculateSeekPosition(clientX: number) {
     if (seekBarRef.current) {
@@ -82,6 +83,7 @@ const MusicPlayerCard: FC<Props> = ({
   }, [isInteracting]);
 
   function getAudioMetaData(src: string): Promise<HTMLAudioElement> {
+    setIsMetadataLoaded(false);
     return new Promise(function (resolve) {
       var audio = new Audio();
 
@@ -105,6 +107,7 @@ const MusicPlayerCard: FC<Props> = ({
 
   useEffect(() => {
     getAudioMetaData(url).then((audio) => {
+      setIsMetadataLoaded(true);
       setDuration(audio.duration);
     });
   }, [url]);
@@ -143,6 +146,7 @@ const MusicPlayerCard: FC<Props> = ({
     setIsPlaying(false);
     setCurrentTime(0);
     getAudioMetaData(newUrl).then((audio) => {
+      setIsMetadataLoaded(true);
       setDuration(audio.duration);
     });
   };
@@ -206,7 +210,11 @@ const MusicPlayerCard: FC<Props> = ({
           <h3 className="text-base md:text-xl -mt-1 md:mt-0">{author}</h3>
         )}
         <div className="flex-grow select-none pointer-events-none" />
-        <div className="flex w-full mb-1">
+        <div
+          className={`flex w-full mb-1 transition-opacity duration-300 ease-in-out ${
+            isMetadataLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <div className="w-0 relative">
             <div className="whitespace-nowrap left-0 absolute flex">
               <Image
@@ -284,7 +292,11 @@ const MusicPlayerCard: FC<Props> = ({
             </button>
           </div>
         </div>
-        <div className="flex items-center">
+        <div
+          className={`flex items-center transition-opacity duration-300 ease-in-out ${
+            isMetadataLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <span>{formatTime(currentTime, duration)}</span>
           <div
             ref={seekBarRef}
