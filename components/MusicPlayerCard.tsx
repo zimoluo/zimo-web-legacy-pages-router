@@ -238,7 +238,9 @@ const MusicPlayerCard: FC<Props> = ({
         <div className="flex-grow select-none pointer-events-none" />
         <div
           className={`flex w-full mb-1 transition-opacity duration-300 ease-in-out ${
-            isMetadataLoaded ? "opacity-100" : "opacity-0"
+            isMetadataLoaded
+              ? "opacity-100"
+              : "opacity-0 pointer-events-none select-none"
           }`}
         >
           <div className="w-0 relative">
