@@ -309,7 +309,9 @@ const MusicPlayerCard: FC<Props> = ({
               />
               <Image
                 className={`select-none pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-auto aspect-square ${svgFilterClass} transition-all duration-300 ease-in-out group-hover:scale-110 ${
-                  isLooping ? "opacity-100" : "opacity-0"
+                  isLooping
+                    ? "opacity-100"
+                    : "opacity-0 pointer-events-none select-none"
                 }`}
                 src="/loop-track.svg"
                 height={20}
