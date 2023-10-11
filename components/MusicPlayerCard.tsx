@@ -212,7 +212,7 @@ const MusicPlayerCard: FC<Props> = ({
 
   return (
     <section
-      className={`${lightBgClass} ${textColorClass} p-2 md:p-4 shadow-lg w-full bg-opacity-60 backdrop-blur-xl rounded-xl flex`}
+      className={`${lightBgClass} ${textColorClass} p-2.5 md:p-4 shadow-lg w-full bg-opacity-60 backdrop-blur-xl rounded-xl flex`}
     >
       <Head>
         <link rel="preload" as="image" href="/pause-track.svg" />
