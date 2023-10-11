@@ -10,6 +10,7 @@ import {
 import React, { FC, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import $ from "jquery";
+import Head from "next/head";
 
 interface Props {
   url: string;
@@ -183,6 +184,10 @@ const MusicPlayerCard: FC<Props> = ({
     <div
       className={`${lightBgClass} ${textColorClass} p-4 shadow-lg w-full bg-opacity-50 backdrop-blur-xl rounded-xl flex`}
     >
+      <Head>
+        <link rel="preload" as="image" href="/pause-track.svg" />
+        <link rel="preload" as="image" href="/play-track.svg" />
+      </Head>
       <audio ref={audioRef} src={audioUrl} loop={isLooping} />
       <div
         className={`w-24 self-center md:w-32 h-auto aspect-square rounded-xl overflow-hidden ${slightlyDarkBgClass} bg-opacity-90 shrink-0 mr-2 md:mr-3`}
