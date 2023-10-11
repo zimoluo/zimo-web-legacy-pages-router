@@ -78,6 +78,7 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
   };
 
   const touchMoveHandler = (e: TouchEvent) => {
+    e.preventDefault();
     const touch = e.touches[0];
     const positionPercent =
       ((touch.clientX - containerRef.current!.getBoundingClientRect().left) /

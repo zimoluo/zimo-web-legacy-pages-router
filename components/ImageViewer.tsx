@@ -283,6 +283,7 @@ function ImageViewer({
         const deltaX = e.touches[0].clientX - initialX;
 
         if (Math.abs(deltaX) > 30) {
+          e.preventDefault();
           if (deltaX > 30) {
             goToPreviousPage();
           } else if (deltaX < -30) {

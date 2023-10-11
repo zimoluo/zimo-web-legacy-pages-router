@@ -7,9 +7,9 @@ import {
   svgFilterMap,
   textColorMap,
 } from "@/interfaces/themeMaps";
-import React, { FC, useEffect, useState } from "react";
-import { useAudioPlayer } from "react-use-audio-player";
+import React, { FC, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import $ from "jquery";
 
 interface Props {
   url: string;
@@ -26,43 +26,125 @@ const MusicPlayerCard: FC<Props> = ({
   coverUrl,
   theme,
 }) => {
-  const [trackTime, setTrackTime] = useState(0);
-  const [rate, setLocalRate] = useState(1);
-  const [isLooping, setIsLooping] = useState(false);
-
   const trackTitle = title || "Audio Track";
 
-  const {
-    play,
-    pause,
-    playing,
-    duration,
-    setRate,
-    seek,
-    getPosition,
-    load,
-    loop,
-  } = useAudioPlayer();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLooping, setIsLooping] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string>(url);
+  const [playbackRate, setPlaybackRate] = useState<number>(1);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const seekBarRef = useRef<HTMLDivElement>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+
+  function calculateSeekPosition(clientX: number) {
+    if (seekBarRef.current) {
+      const rect = seekBarRef.current.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const percentage = x / rect.width;
+      seek(percentage * duration);
+    }
+  }
+
+  const handleStart = (clientX: number) => {
+    setIsInteracting(true);
+    calculateSeekPosition(clientX);
+  };
+
+  const handleMove = (clientX: number) => {
+    if (isInteracting) {
+      calculateSeekPosition(clientX);
+    }
+  };
+
+  const handleEnd = () => {
+    setIsInteracting(false);
+  };
 
   useEffect(() => {
-    load(url);
-  }, [load, url]);
+    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX);
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      handleMove(e.touches[0].clientX);
+    };
+
+    if (isInteracting) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("touchmove", handleTouchMove);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [isInteracting]);
+
+  function getAudioMetaData(src: string): Promise<HTMLAudioElement> {
+    return new Promise(function (resolve) {
+      var audio = new Audio();
+
+      $(audio).on("loadedmetadata", function () {
+        resolve(audio);
+      });
+
+      audio.preload = "metadata";
+      audio.src = src;
+    });
+  }
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTrackTime(getPosition());
-    }, 1000);
+    const audioElement = audioRef.current;
+    const updateCurrentTime = () => setCurrentTime(audioElement!.currentTime);
 
-    return () => clearInterval(timer);
-  }, [getPosition]);
-
-  useEffect(() => {
-    setRate(rate);
-  }, [rate, setRate]);
+    audioElement?.addEventListener("timeupdate", updateCurrentTime);
+    return () =>
+      audioElement?.removeEventListener("timeupdate", updateCurrentTime);
+  }, [audioRef]);
 
   useEffect(() => {
-    loop(isLooping);
-  }, [isLooping, loop]);
+    getAudioMetaData(url).then((audio) => {
+      setDuration(audio.duration);
+    });
+  }, [url]);
+
+  const seek = (timeInSeconds: number): void => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = timeInSeconds;
+    }
+  };
+
+  const changeRate = (newRate: number): void => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = newRate;
+      setPlaybackRate(newRate);
+    }
+  };
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current?.pause();
+    } else {
+      audioRef.current?.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleIsLooping = (): void => {
+    setIsLooping(!isLooping);
+    if (audioRef.current) {
+      audioRef.current.loop = !isLooping;
+    }
+  };
+
+  const handleUrlChange = (newUrl: string): void => {
+    setAudioUrl(newUrl);
+    setIsPlaying(false);
+    setCurrentTime(0);
+    getAudioMetaData(newUrl).then((audio) => {
+      setDuration(audio.duration);
+    });
+  };
 
   function formatTime(time: number, duration: number) {
     time = Math.floor(time);
@@ -74,18 +156,21 @@ const MusicPlayerCard: FC<Props> = ({
       Math.floor((time % 3600) / 60),
       time % 60,
     ];
+
     const maxIdxDuration = [86400, 3600, 60, 1].findIndex(
       (t, i, a) => duration >= t
     );
 
+    const sliceIndex = Math.max(2, maxIdxDuration);
+
     return partsTime
-      .slice(maxIdxDuration)
+      .slice(sliceIndex)
       .map((t) => t.toString().padStart(2, "0"))
       .join(":");
   }
 
   const defaultCover = "/placeholder-audio-cover.svg";
-  const progressBarPercentage = (trackTime / duration) * 100;
+  const progressBarPercentage = (currentTime / duration) * 100;
 
   const progressBarBgColorClass = progressBarBgColorMap[theme];
   const hundredBgClass = hundredBgColorMap[theme];
@@ -98,6 +183,7 @@ const MusicPlayerCard: FC<Props> = ({
     <div
       className={`${lightBgClass} ${textColorClass} p-4 shadow-lg w-full bg-opacity-50 backdrop-blur-xl rounded-xl flex`}
     >
+      <audio ref={audioRef} src={audioUrl} loop={isLooping} />
       <div
         className={`w-24 self-center md:w-32 h-auto aspect-square rounded-xl overflow-hidden ${slightlyDarkBgClass} bg-opacity-90 shrink-0 mr-2 md:mr-3`}
       >
@@ -111,19 +197,21 @@ const MusicPlayerCard: FC<Props> = ({
       </div>
       <div className="flex-grow flex flex-col justify-center">
         <h2 className="text-lg md:text-xl font-bold">{trackTitle}</h2>
-        {author && <h3 className="text-lg md:text-xl">{author}</h3>}
+        {author && (
+          <h3 className="text-base md:text-xl -mt-1 md:mt-0">{author}</h3>
+        )}
         <div className="flex-grow select-none pointer-events-none" />
         <div className="flex w-full mb-1">
           <div className="w-0 relative">
             <div className="whitespace-nowrap left-0 absolute flex">
               <Image
-                className={`w-5 mr-0.5 h-auto aspect-square ${svgFilterClass}`}
+                className={`w-4 md:w-5 mr-0.5 h-auto aspect-square ${svgFilterClass}`}
                 width={20}
                 height={20}
                 src="/playback-speed.svg"
                 alt="Playback Speed"
               />
-              <div>{`${rate}x`}</div>
+              <div className="text-sm md:text-base">{`${playbackRate}x`}</div>
             </div>
           </div>
           <div className="flex items-center justify-end md:justify-center flex-grow space-x-2 md:space-x-1.5">
@@ -138,7 +226,7 @@ const MusicPlayerCard: FC<Props> = ({
             </button>
             <button
               className=""
-              onClick={() => setLocalRate(Math.max(0.25, rate - 0.25))}
+              onClick={() => changeRate(Math.max(0.25, playbackRate - 0.25))}
             >
               <Image
                 className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
@@ -148,19 +236,19 @@ const MusicPlayerCard: FC<Props> = ({
                 alt="Slow down"
               />
             </button>
-            <button className="" onClick={playing ? pause : play}>
+            <button className="" onClick={handlePlayPause}>
               <Image
                 className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
                 width={20}
                 height={20}
-                src={playing ? "/pause-track.svg" : "play-track.svg"}
-                key={playing ? "/pause-track.svg" : "play-track.svg"}
-                alt={playing ? "Pause" : "Play"}
+                src={isPlaying ? "/pause-track.svg" : "play-track.svg"}
+                key={isPlaying ? "/pause-track.svg" : "play-track.svg"}
+                alt={isPlaying ? "Pause" : "Play"}
               />
             </button>
             <button
               className=""
-              onClick={() => setLocalRate(Math.min(2, rate + 0.25))}
+              onClick={() => changeRate(Math.min(2, playbackRate + 0.25))}
             >
               <Image
                 className={`w-5 h-auto aspect-square ${svgFilterClass} rotate-180 transition-transform duration-300 ease-in-out hover:scale-110`}
@@ -170,10 +258,7 @@ const MusicPlayerCard: FC<Props> = ({
                 alt="Speed up"
               />
             </button>
-            <button
-              className="relative group"
-              onClick={() => setIsLooping(!isLooping)}
-            >
+            <button className="relative group" onClick={toggleIsLooping}>
               <Image
                 className={`w-5 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out group-hover:scale-110`}
                 src="/loop-track-off.svg"
@@ -195,22 +280,21 @@ const MusicPlayerCard: FC<Props> = ({
           </div>
         </div>
         <div className="flex items-center">
-          <span>{formatTime(trackTime, duration)}</span>
+          <span>{formatTime(currentTime, duration)}</span>
           <div
+            ref={seekBarRef}
             className={`mx-2 flex-grow ${hundredBgClass} bg-opacity-90 rounded-lg h-2 cursor-pointer`}
-            onClick={(e) => {
-              const rect = (e.target as HTMLDivElement).getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const percentage = x / rect.width;
-              seek(percentage * duration);
-            }}
+            onMouseDown={(e) => handleStart(e.clientX)}
+            onTouchStart={(e) => handleStart(e.touches[0].clientX)}
+            onMouseUp={handleEnd}
+            onTouchEnd={handleEnd}
           >
             <div
               style={{ width: `${progressBarPercentage}%` }}
               className={`${progressBarBgColorClass} rounded-lg h-2`}
             ></div>
           </div>
-          <span>{formatTime(duration - trackTime, duration)}</span>
+          <span>{`-${formatTime(duration - currentTime, duration)}`}</span>
         </div>
       </div>
     </div>
