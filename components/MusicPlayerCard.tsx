@@ -211,7 +211,7 @@ const MusicPlayerCard: FC<Props> = ({
   const svgFilterClass = svgFilterMap[theme];
 
   return (
-    <div
+    <section
       className={`${lightBgClass} ${textColorClass} p-4 shadow-lg w-full bg-opacity-60 backdrop-blur-xl rounded-xl flex`}
     >
       <Head>
@@ -244,7 +244,7 @@ const MusicPlayerCard: FC<Props> = ({
           }`}
         >
           <div className="w-0 relative">
-            <div className="whitespace-nowrap left-0 absolute flex">
+            <div className="hidden whitespace-nowrap left-0 absolute very-narrow-screen-flex items-center">
               <Image
                 className={`w-4 md:w-5 mr-0.5 h-auto aspect-square ${svgFilterClass}`}
                 width={20}
@@ -256,7 +256,13 @@ const MusicPlayerCard: FC<Props> = ({
             </div>
           </div>
           <div className="flex items-center justify-end md:justify-center flex-grow space-x-2.5 md:space-x-6">
-            <button className="" onClick={() => seek(0)}>
+            <button
+              className=""
+              onClick={() => {
+                seek(0);
+                changeRate(1);
+              }}
+            >
               <Image
                 className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
                 width={24}
@@ -328,7 +334,7 @@ const MusicPlayerCard: FC<Props> = ({
           }`}
         >
           <span className="text-sm md:text-base">
-            {formatTime(currentTime, duration)}
+            {formatTime(Math.max(currentTime, 0), duration)}
           </span>
           <div
             ref={seekBarRef}
@@ -342,18 +348,23 @@ const MusicPlayerCard: FC<Props> = ({
               className={`${hundredBgClass} bg-opacity-90 rounded-lg h-full`}
             >
               <div
-                style={{ width: `${progressBarPercentage}%` }}
+                style={{
+                  width: `${Math.min(
+                    100,
+                    Math.max(0, progressBarPercentage)
+                  )}%`,
+                }}
                 className={`${progressBarBgColorClass} rounded-lg h-2`}
               />
             </div>
           </div>
           <span className="text-sm md:text-base">{`-${formatTime(
-            duration - currentTime,
+            Math.max(0, duration - currentTime),
             duration
           )}`}</span>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

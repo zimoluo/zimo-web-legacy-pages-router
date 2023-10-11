@@ -554,3 +554,9 @@
 .mr-1\.3 {
     margin-right: 0.325rem;
 }
+
+@media (min-width: 340px) {
+    .very-narrow-screen-flex {
+        display: flex;
+    }
+}
