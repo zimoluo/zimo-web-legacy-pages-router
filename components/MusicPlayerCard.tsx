@@ -110,6 +110,21 @@ const MusicPlayerCard: FC<Props> = ({
   }
 
   useEffect(() => {
+    const audio = audioRef.current;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    audio?.addEventListener("play", handlePlay);
+    audio?.addEventListener("pause", handlePause);
+
+    return () => {
+      audio?.removeEventListener("play", handlePlay);
+      audio?.removeEventListener("pause", handlePause);
+    };
+  }, [audioRef]);
+
+  useEffect(() => {
     const audioElement = audioRef.current;
     const updateCurrentTime = () => setCurrentTime(audioElement!.currentTime);
 
@@ -144,7 +159,6 @@ const MusicPlayerCard: FC<Props> = ({
     } else {
       audioRef.current?.play();
     }
-    setIsPlaying(!isPlaying);
   };
 
   const toggleIsLooping = (): void => {
@@ -156,7 +170,6 @@ const MusicPlayerCard: FC<Props> = ({
 
   const handleUrlChange = (newUrl: string): void => {
     setAudioUrl(newUrl);
-    setIsPlaying(false);
     setCurrentTime(0);
     getAudioMetaData(newUrl).then((audio) => {
       setIsMetadataLoaded(true);
