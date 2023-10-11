@@ -245,13 +245,20 @@ const MusicPlayerCard: FC<Props> = ({
         >
           <div className="w-0 relative">
             <div className="hidden whitespace-nowrap left-0 absolute very-narrow-screen-flex items-center">
-              <Image
-                className={`w-4 md:w-5 mr-0.5 h-auto aspect-square ${svgFilterClass}`}
-                width={20}
-                height={20}
-                src="/playback-speed.svg"
-                alt="Playback Speed"
-              />
+              <button
+                className="w-4 md:w-5 mr-0.5 h-auto aspect-squar"
+                onClick={() => {
+                  changeRate(1);
+                }}
+              >
+                <Image
+                  className={`w-full h-auto aspect-square ${svgFilterClass}`}
+                  width={20}
+                  height={20}
+                  src="/playback-speed.svg"
+                  alt="Reset Playback Speed"
+                />
+              </button>
               <div className="text-sm md:text-base">{`${playbackRate}x`}</div>
             </div>
           </div>
