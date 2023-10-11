@@ -220,7 +220,7 @@ const MusicPlayerCard: FC<Props> = ({
       </Head>
       <audio ref={audioRef} src={audioUrl} loop={isLooping} />
       <div
-        className={`w-24 self-center md:w-32 h-auto aspect-square rounded-xl overflow-hidden ${slightlyDarkBgClass} bg-opacity-90 shrink-0 mr-2 md:mr-3`}
+        className={`w-24 self-center md:w-32 h-auto aspect-square rounded-xl overflow-hidden ${slightlyDarkBgClass} bg-opacity-90 shrink-0 mr-2.5 md:mr-3`}
       >
         <Image
           src={coverUrl || defaultCover}
