@@ -25,7 +25,7 @@ const BlogCard = ({
             <div className="rounded-full overflow-hidden h-6 w-fit flex justify-center items-center">
               <Image
                 src={`${getAuthorImageSrc(authorId)}`}
-                alt={`${author}'s Profile`}
+                alt={`${author}'s Profile. What follows next is the name of the author. The h2 element after the author's name is the title.`}
                 className="h-full w-fit"
                 width={25}
                 height={25}
