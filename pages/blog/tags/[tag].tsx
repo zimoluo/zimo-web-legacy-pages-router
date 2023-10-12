@@ -3,6 +3,7 @@ import BlogCardGrid from "@/components/blog/BlogCardGrid";
 import BlogSearchBox from "@/components/blog/BlogSearchBox";
 import { BlogSearchProvider } from "@/components/contexts/BlogSearchContext";
 import { getAllPosts } from "@/lib/blog/aws-api";
+import Head from "next/head";
 
 type Props = {
   allPosts: (PostData & { unlisted: boolean })[];
@@ -12,6 +13,9 @@ type Props = {
 export default function Home({ allPosts, tag }: Props) {
   return (
     <MainPageLayout theme="blog">
+      <Head>
+        <title>{`${tag}, Topic | Blog - Zimo`}</title>
+      </Head>
       <BlogSearchProvider>
         <section className="min-h-screen mt-20">
           <h1 className="px-8 md:px-36 text-3xl font-bold mb-2 text-center">
