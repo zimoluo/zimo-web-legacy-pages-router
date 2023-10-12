@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import PhotosTile from "./PhotosTile";
 import { useSettings } from "../contexts/SettingsContext";
 import PhotosGallery from "./PhotosGallery";
+import PhotosModeSwitch from "./PhotosModeSwitch";
 
 interface Props {
   photoEntries: PhotosData[];
@@ -64,7 +65,10 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
             : "opacity-0 max-h-0 overflow-hidden"
         }`}
       >
-        <div ref={gridRefDesktop}>
+        <div ref={gridRefDesktop} className="relative">
+          <div className="absolute top-0 right-0 -translate-y-16">
+            <PhotosModeSwitch />
+          </div>
           {photoEntries.map((photoEntry, index) =>
             !settings.enableGallery ? (
               <div key={index} className="masonry-item">
@@ -91,7 +95,10 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
             : "opacity-0 max-h-0 overflow-hidden"
         }`}
       >
-        <div ref={gridRefMobile}>
+        <div ref={gridRefMobile} className="relative">
+          <div className="absolute top-0 right-0 -translate-y-12">
+            <PhotosModeSwitch />
+          </div>
           {photoEntries.map((photoEntry, index) =>
             !settings.enableGallery ? (
               <div key={index} className="masonry-item">

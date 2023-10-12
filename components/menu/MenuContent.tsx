@@ -26,10 +26,6 @@ const MenuContent = ({ theme }: Props) => {
   const barColorClass = barColorMap[theme];
   const routerPathname = useRouter().pathname;
 
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== "undefined" ? window.innerWidth : 768 // Default value as fallback
-  );
-
   const settingsArray = useMemo(() => {
     let initialSettings = [
       "disableComments",
@@ -46,9 +42,8 @@ const MenuContent = ({ theme }: Props) => {
     }
 
     if (
-      (routerPathname.startsWith("/photos") ||
-        routerPathname.startsWith("/projects")) &&
-      windowWidth >= 768
+      routerPathname.startsWith("/photos") ||
+      routerPathname.startsWith("/projects")
     ) {
       initialSettings = ["disableEntryPopUp", ...initialSettings];
     }
@@ -58,18 +53,7 @@ const MenuContent = ({ theme }: Props) => {
     }
 
     return initialSettings;
-  }, [routerPathname, windowWidth]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  }, [routerPathname]);
 
   const settingsNameMap: { [key: string]: string } = {
     syncSettings: "Sync Settings",
