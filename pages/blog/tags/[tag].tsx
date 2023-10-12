@@ -14,9 +14,14 @@ export default function Home({ allPosts, tag }: Props) {
     <MainPageLayout theme="blog">
       <BlogSearchProvider>
         <section className="min-h-screen mt-20">
-          <h1 className="px-8 md:px-36 text-2xl font-bold mb-8">
-            {`#${tag}`}
+          <h1 className="px-8 md:px-36 text-3xl font-bold mb-2 text-center">
+            {tag}
           </h1>
+          <h2 className="mb-8 text-center text-xl">
+            {`Topic  ·  ${allPosts.length} article${
+              allPosts.length === 1 ? "" : "s"
+            }`}
+          </h2>
           <nav className="mb-4 flex items-center md:justify-end px-8 md:px-36">
             <div className="w-full">
               <BlogSearchBox />
