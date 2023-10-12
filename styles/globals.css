@@ -565,3 +565,9 @@
     padding-top: 1px;
     padding-bottom: 1px;
 }
+
+@media (min-width: 768px) {
+    .search-bar-width {
+        max-width: 36rem;
+    }
+}

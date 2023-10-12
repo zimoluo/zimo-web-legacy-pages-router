@@ -15,7 +15,7 @@ const BlogGrid = ({ authorId, author, content, date, slug }: BlogGridProps) => {
   const readTime = readingTime(content);
 
   return (
-    <div className="flex my-10">
+    <div className="flex mt-10 mb-7">
       <div className="row-span-2 flex justify-center items-center w-10 h-auto mr-4">
         <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
           <Image

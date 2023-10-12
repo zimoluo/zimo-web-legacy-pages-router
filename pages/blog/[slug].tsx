@@ -59,6 +59,7 @@ export default function Post({ post }: PostType) {
         displayCover={post.displayCover}
         slug={post.slug}
         originalContent={post.originalContent}
+        tags={post.tags}
       ></BlogMainLayout>
     </MainPageLayout>
   );

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/util";
 import Link from "next/link";
 import { enrichTextContent, formatDate, imageFallback } from "@/lib/util";
+import { useBlogSearch } from "../contexts/BlogSearchContext";
 
 const BlogCard = ({
   title,
@@ -16,6 +17,8 @@ const BlogCard = ({
 }: PostData) => {
   const readTime = readingTime(content);
   const postDate = formatDate(date);
+
+  const { setBlogSearchContent } = useBlogSearch();
 
   return (
     <Link href={`/blog/${slug}`}>
@@ -45,11 +48,18 @@ const BlogCard = ({
 
           <p className="text-sm text-fuchsia-800 opacity-70">
             {`${postDate}  ·  ${readTime}`}
-            <span className="mr-2 mt-1 md:mt-0 block md:inline" />
+            <span className="md:mr-3 mt-1 md:mt-0 block md:inline" />
             {tags.length > 0 && (
               <span className="">
-                {tags.map((tag, index) => (
-                  <button key={index} className="mr-1.5">
+                {tags.slice(0, 3).map((tag, index) => (
+                  <button
+                    key={index}
+                    className="mr-1.5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setBlogSearchContent(`#${tag}`);
+                    }}
+                  >
                     <span className="inline-block bg-fuchsia-700 rounded-full px-2 py-0.25 my-0.5 md:py-0.5 text-xs md:text-sm font-semibold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105">
                       {tag}
                     </span>

@@ -1,6 +1,8 @@
 import MainPageLayout from "@/components/MainPageLayout";
 import MainPageTitle from "@/components/MainPageTitle";
 import BlogCardGrid from "@/components/blog/BlogCardGrid";
+import BlogSearchBox from "@/components/blog/BlogSearchBox";
+import { BlogSearchProvider } from "@/components/contexts/BlogSearchContext";
 import { getAllPosts } from "@/lib/blog/aws-api";
 
 type Props = {
@@ -10,11 +12,18 @@ type Props = {
 export default function Home({ allPosts }: Props) {
   return (
     <MainPageLayout theme="blog">
-      <MainPageTitle
-        title="State and Flow of Mind."
-        subtitle="Welcome, my friend. I have been expecting you."
-      />
-      <BlogCardGrid posts={allPosts} />
+      <BlogSearchProvider>
+        <MainPageTitle
+          title="State and Flow of Mind."
+          subtitle="Welcome, my friend. I have been expecting you."
+        />
+        <nav className="-mt-32 mb-8 md:mb-10 flex items-center md:justify-end px-8 md:px-36">
+          <div className="w-full search-bar-width">
+            <BlogSearchBox />
+          </div>
+        </nav>
+        <BlogCardGrid posts={allPosts} />
+      </BlogSearchProvider>
     </MainPageLayout>
   );
 }

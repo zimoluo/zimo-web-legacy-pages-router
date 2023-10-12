@@ -21,6 +21,7 @@ interface BlogProps {
   displayCover: boolean;
   slug: string;
   originalContent: string;
+  tags?: string[];
 }
 
 const BlogMainLayout = ({
@@ -34,6 +35,7 @@ const BlogMainLayout = ({
   displayCover,
   slug,
   originalContent,
+  tags = [],
 }: BlogProps) => {
   const router = useRouter();
   const urlShare =
@@ -44,7 +46,7 @@ const BlogMainLayout = ({
 
   return (
     <div className="flex justify-center items-center">
-      <article className="relative mt-20 md:mb-20 md:mx-8 px-8 w-full blog-view md:blog-view-middle md:px-14 pb-12 pt-16 md:rounded-3xl md:shadow-xl">
+      <article className="relative mt-16 md:mt-20 md:mb-20 md:mx-8 px-8 w-full blog-view md:blog-view-middle md:px-14 pb-12 pt-16 md:rounded-3xl md:shadow-xl">
         <div className="absolute top-4 right-4 transform z-10">
           <ShareButtonBar
             title={title}
@@ -61,6 +63,18 @@ const BlogMainLayout = ({
           date={date}
           slug={slug}
         />
+        {tags.length > 0 && (
+          <div className="-mt-4 -mb-2">
+            {tags.map((tag, index) => (
+              <span
+                key={index}
+                className="mr-1.5 inline-block bg-fuchsia-700 opacity-80 rounded-full px-2 my-0.5 py-0.5 text-sm font-semibold text-fuchsia-50"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />
         {coverSrc && displayCover ? (
           <div className="flex justify-center items-center mb-12">
