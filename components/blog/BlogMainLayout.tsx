@@ -70,7 +70,7 @@ const BlogMainLayout = ({
               <Link className="mr-1.5" href={`/blog/tags/${tag}`} key={index}>
                 <span
                   key={index}
-                  className="inline-block bg-fuchsia-700 opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105"
+                  className="inline-block bg-fuchsia-700 opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105 text-center"
                 >
                   {tag}
                 </span>
