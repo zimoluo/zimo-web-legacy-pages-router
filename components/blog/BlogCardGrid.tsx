@@ -1,6 +1,4 @@
 import { useBlogSearch } from "../contexts/BlogSearchContext";
-import BlogCard from "./BlogCard";
-import { getCoverSrc } from "@/lib/blog/util";
 import BlogCardWrapper from "./BlogCardWrapper";
 
 type Props = {
@@ -14,8 +12,8 @@ const BlogCardGrid = ({ posts }: Props) => {
     return searchContent
       .trim()
       .split(/[,;，；]+/)
-      .map((term) => term.trim()) // Trim each term after splitting
-      .filter(Boolean); // Remove empty strings
+      .map((term) => term.trim())
+      .filter(Boolean);
   };
 
   const doesMatchTagsFilter = (tags: string[], searchTag: string) => {
