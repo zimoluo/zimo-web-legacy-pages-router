@@ -16,7 +16,9 @@ const PhotosModeSwitch = () => {
       <button
         className="mr-3 md:mr-4 relative"
         onClick={() => {
-          updateSettings({ enableGallery: false });
+          if (settings.enableGallery) {
+            updateSettings({ enableGallery: false });
+          }
         }}
       >
         <Image
@@ -40,7 +42,9 @@ const PhotosModeSwitch = () => {
       <button
         className="relative"
         onClick={() => {
-          updateSettings({ enableGallery: true });
+          if (!settings.enableGallery) {
+            updateSettings({ enableGallery: true });
+          }
         }}
       >
         <Image
