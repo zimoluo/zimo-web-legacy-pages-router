@@ -560,3 +560,8 @@
         display: flex;
     }
 }
+
+.py-0\.25 {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}

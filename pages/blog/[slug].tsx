@@ -1,7 +1,6 @@
 import MainPageLayout from "@/components/MainPageLayout";
 import BlogMainLayout from "@/components/blog/BlogMainLayout";
 import ReadingBlur from "@/components/ReadingBlur";
-import PostData from "@/interfaces/blog/postData";
 import { getAllPosts, getPostBySlug } from "@/lib/blog/aws-api";
 import { getCoverSrc } from "@/lib/blog/util";
 import { markdownToHtml, updateImageAttributes } from "@/lib/util";
@@ -82,6 +81,7 @@ export async function getStaticProps({ params }: Params) {
     "description",
     "authorId",
     "displayCover",
+    "tags",
   ]);
   const content = await markdownToHtml(post.content || "");
 

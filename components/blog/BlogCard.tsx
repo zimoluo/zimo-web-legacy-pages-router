@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getAuthorImageSrc, readingTime } from "@/lib/blog/util";
 import Link from "next/link";
-import PostData from "@/interfaces/blog/postData";
 import { enrichTextContent, formatDate, imageFallback } from "@/lib/util";
 
 const BlogCard = ({
@@ -13,6 +12,7 @@ const BlogCard = ({
   description,
   content,
   slug,
+  tags = [],
 }: PostData) => {
   const readTime = readingTime(content);
   const postDate = formatDate(date);
@@ -43,7 +43,21 @@ const BlogCard = ({
 
           <div className="flex-grow"></div>
 
-          <p className="mt-2 text-sm text-fuchsia-800 opacity-70">{`${postDate}  ·  ${readTime}`}</p>
+          <p className="text-sm text-fuchsia-800 opacity-70">
+            {`${postDate}  ·  ${readTime}`}
+            <span className="mr-2 mt-1 md:mt-0 block md:inline" />
+            {tags.length > 0 && (
+              <span className="">
+                {tags.map((tag, index) => (
+                  <button key={index} className="mr-1.5">
+                    <span className="inline-block bg-fuchsia-700 rounded-full px-2 py-0.25 my-0.5 md:py-0.5 text-xs md:text-sm font-semibold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105">
+                      {tag}
+                    </span>
+                  </button>
+                ))}
+              </span>
+            )}
+          </p>
         </div>
 
         <div className="flex items-center">
