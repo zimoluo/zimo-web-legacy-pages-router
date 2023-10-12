@@ -10,7 +10,7 @@ import MenuNavigationEntry from "./MenuNavigationEntry";
 import SettingsFlip from "../SettingsFlip";
 import { useSettings } from "../contexts/SettingsContext";
 import SettingsNotchBar from "../SettingsSlider";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
