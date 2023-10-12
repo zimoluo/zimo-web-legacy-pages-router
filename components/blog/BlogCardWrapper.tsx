@@ -13,7 +13,7 @@ const BlogCardWrapper = ({
   isVisible,
   reducedAnimation = false,
 }: Props) => {
-  const [maxHeight, setMaxHeight] = useState("0px");
+  const [maxHeight, setMaxHeight] = useState("1000px");
   const [paddingY, setPaddingY] = useState(isVisible ? "16px" : "0px");
   const [scale, setScale] = useState(isVisible ? "1" : "0.85");
   const cardRef = useRef<HTMLDivElement>(null);
