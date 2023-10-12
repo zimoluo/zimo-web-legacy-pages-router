@@ -49,25 +49,6 @@ const BlogCard = ({
 
             <p className="text-sm text-fuchsia-800 opacity-70">
               {`${postDate}  ·  ${readTime}`}
-              <span className="md:mr-3 mt-1 md:mt-0 hidden md:inline" />
-              {tags.length > 0 && (
-                <span className="hidden md:inline">
-                  {tags.slice(0, 3).map((tag, index) => (
-                    <button
-                      key={index}
-                      className="mr-1.5"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setBlogSearchContent(`#${tag}`);
-                      }}
-                    >
-                      <span className="inline-block bg-fuchsia-700 rounded-full px-2 my-1 py-0.5 text-sm font-semibold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105">
-                        {tag}
-                      </span>
-                    </button>
-                  ))}
-                </span>
-              )}
             </p>
           </div>
 
@@ -85,8 +66,8 @@ const BlogCard = ({
           </div>
         </div>
         {tags.length > 0 && (
-          <div className="opacity-70 block md:hidden mt-2.5">
-            {tags.slice(0, 3).map((tag, index) => (
+          <div className="opacity-70 mt-2.5">
+            {tags.map((tag, index) => (
               <button
                 key={index}
                 className="mr-1.5"
@@ -95,7 +76,7 @@ const BlogCard = ({
                   setBlogSearchContent(`#${tag}`);
                 }}
               >
-                <span className="inline-block bg-fuchsia-700 rounded-full px-2 py-0.25 text-xs font-semibold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105">
+                <span className="inline-block bg-fuchsia-700 rounded-full px-2 py-0.25 md:py-0.5 text-xs md:text-sm font-bold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105">
                   {tag}
                 </span>
               </button>

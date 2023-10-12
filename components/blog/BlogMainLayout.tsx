@@ -68,7 +68,7 @@ const BlogMainLayout = ({
             {tags.map((tag, index) => (
               <span
                 key={index}
-                className="mr-1.5 inline-block bg-fuchsia-700 opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-semibold text-fuchsia-50"
+                className="mr-1.5 inline-block bg-fuchsia-700 opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-fuchsia-50"
               >
                 {tag}
               </span>
