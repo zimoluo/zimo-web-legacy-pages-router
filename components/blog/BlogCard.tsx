@@ -66,7 +66,7 @@ const BlogCard = ({
           </div>
         </div>
         {tags.length > 0 && (
-          <div className="opacity-70 mt-2.5">
+          <div className="opacity-70 mt-1.5 md:mt-2.5">
             {tags.map((tag, index) => (
               <button
                 key={index}

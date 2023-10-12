@@ -10,6 +10,7 @@ type Props = {
 const BlogCardWrapper = ({ post, isVisible }: Props) => {
   const [maxHeight, setMaxHeight] = useState("0px");
   const [paddingY, setPaddingY] = useState(isVisible ? "16px" : "0px");
+  const [scale, setScale] = useState(isVisible ? "1" : "0.85");
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const BlogCardWrapper = ({ post, isVisible }: Props) => {
 
   useEffect(() => {
     setPaddingY(isVisible ? "16px" : "0px");
+    setScale(isVisible ? "1" : "0.85");
   }, [isVisible]);
 
   return (
@@ -28,9 +30,11 @@ const BlogCardWrapper = ({ post, isVisible }: Props) => {
       style={{
         maxHeight: isVisible ? maxHeight : "0px",
         overflow: "hidden",
-        transition: "max-height 0.3s ease-in-out, padding 0.3s ease-in-out",
+        transition:
+          "max-height 0.3s ease-in-out, padding 0.3s ease-in-out, transform 0.3s ease-in-out",
         paddingTop: paddingY,
         paddingBottom: paddingY,
+        transform: `scale(${scale})`,
       }}
       ref={cardRef}
     >
