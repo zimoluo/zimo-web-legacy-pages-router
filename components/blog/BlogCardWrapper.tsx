@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BlogCard from "./BlogCard";
 import { getCoverSrc } from "@/lib/blog/util";
 
@@ -8,20 +8,31 @@ type Props = {
 };
 
 const BlogCardWrapper = ({ post, isVisible }: Props) => {
-  const [maxHeight, setMaxHeight] = useState(isVisible ? "none" : "0");
+  const [maxHeight, setMaxHeight] = useState("0px");
+  const [paddingY, setPaddingY] = useState(isVisible ? "16px" : "0px");
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMaxHeight(isVisible ? "none" : "0");
+    if (cardRef.current) {
+      const height = cardRef.current.scrollHeight;
+      setMaxHeight(`${height}px`);
+    }
+  }, []);
+
+  useEffect(() => {
+    setPaddingY(isVisible ? "16px" : "0px");
   }, [isVisible]);
 
   return (
     <div
       style={{
-        maxHeight: maxHeight,
+        maxHeight: isVisible ? maxHeight : "0px",
         overflow: "hidden",
-        transition: "max-height 0.3s ease-in-out",
+        transition: "max-height 0.3s ease-in-out, padding 0.3s ease-in-out",
+        paddingTop: paddingY,
+        paddingBottom: paddingY,
       }}
-      className="py-8 md:py-10"
+      ref={cardRef}
     >
       <BlogCard
         title={post.title}

@@ -1,6 +1,7 @@
 import { useBlogSearch } from "../contexts/BlogSearchContext";
 import BlogCard from "./BlogCard";
 import { getCoverSrc } from "@/lib/blog/util";
+import BlogCardWrapper from "./BlogCardWrapper";
 
 type Props = {
   posts: (PostData & { unlisted: boolean })[];
@@ -53,24 +54,12 @@ const BlogCardGrid = ({ posts }: Props) => {
   };
 
   return (
-    <div
-      className="grid grid-cols-1 gap-y-8 md:gap-y-10 mb-24 px-8 md:px-36"
-      style={{
-        transition: "height 0.3s ease-in-out",
-      }}
-    >
-      {posts.filter(advancedFilter).map((post) => (
-        <BlogCard
+    <div className="grid grid-cols-1 mb-24 px-8 md:px-36">
+      {posts.map((post) => (
+        <BlogCardWrapper
           key={post.slug}
-          title={post.title}
-          coverImage={getCoverSrc(post.coverImage, post.slug)}
-          date={post.date}
-          author={post.author}
-          authorId={post.authorId}
-          slug={post.slug}
-          description={post.description}
-          content={post.content}
-          tags={post.tags}
+          post={post}
+          isVisible={advancedFilter(post)}
         />
       ))}
     </div>
