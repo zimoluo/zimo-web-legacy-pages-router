@@ -1,17 +1,11 @@
-import markdownStyles from "./projects-markdown-styles.module.css";
-import generalMarkdownStyles from "../general-text-markdown.module.css";
+import parseCustomMarkdown from "@/lib/markdownParser";
 
 type Props = {
   content: string;
 };
 
 const ProjectContent = ({ content }: Props) => {
-  return (
-    <div
-      className={`${generalMarkdownStyles["markdown"]} ${markdownStyles["markdown"]}`}
-      dangerouslySetInnerHTML={{ __html: content }}
-    />
-  );
+  return <section>{parseCustomMarkdown(content, "projects")}</section>;
 };
 
 export default ProjectContent;

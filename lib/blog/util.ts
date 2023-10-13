@@ -24,7 +24,14 @@ export const getCoverSrc = (coverImage: string, slug: string): string => {
 };
 
 export const readingTime = (content: string) => {
-  const wordCount = content.split(/\s/).length;
+  // Remove all blocks of text between && and && or && and a line break.
+  const cleanedContent = content.replace(/&&[^&&]*&&|&&[^&&]*\n/g, "");
+
+  // Split the cleaned content into words, filtering out any non-word characters.
+  const words = cleanedContent.split(/\b\S+\b/g).filter(Boolean);
+
+  // Calculate reading time based on word count.
+  const wordCount = words.length;
   const totalMinutes = Math.ceil(wordCount / 238);
 
   if (totalMinutes >= 1440) {

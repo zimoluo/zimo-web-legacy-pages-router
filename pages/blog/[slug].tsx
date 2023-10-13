@@ -3,7 +3,6 @@ import BlogMainLayout from "@/components/blog/BlogMainLayout";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllPosts, getPostBySlug } from "@/lib/blog/aws-api";
 import { getCoverSrc } from "@/lib/blog/util";
-import { standardMarkdownToHtml } from "@/lib/util";
 import Head from "next/head";
 type PostType = {
   post: PostData & { displayCover: boolean; originalContent: string };
@@ -58,7 +57,6 @@ export default function Post({ post }: PostType) {
         coverSrc={coverSrc}
         displayCover={post.displayCover}
         slug={post.slug}
-        originalContent={post.originalContent}
         tags={post.tags}
       ></BlogMainLayout>
     </MainPageLayout>
@@ -84,14 +82,11 @@ export async function getStaticProps({ params }: Params) {
     "displayCover",
     "tags",
   ]);
-  const content = await standardMarkdownToHtml(post.content || "");
 
   return {
     props: {
       post: {
         ...post,
-        content,
-        originalContent: post.content,
       },
     },
     revalidate: 25,

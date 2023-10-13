@@ -77,7 +77,7 @@ export async function getStaticProps({ params }: Params) {
     "content",
     "images",
   ]);
-  const content = await standardMarkdownToHtml(entry.content.join("\n") || "");
+  const content = entry.content.join("\n") || "";
   return {
     props: {
       entry: {

@@ -20,7 +20,6 @@ interface BlogProps {
   coverSrc: string;
   displayCover: boolean;
   slug: string;
-  originalContent: string;
   tags?: string[];
 }
 
@@ -34,7 +33,6 @@ const BlogMainLayout = ({
   coverSrc,
   displayCover,
   slug,
-  originalContent,
   tags = [],
 }: BlogProps) => {
   const router = useRouter();
@@ -59,7 +57,7 @@ const BlogMainLayout = ({
           description={description}
           authorId={authorId}
           author={author}
-          content={originalContent}
+          content={content}
           date={date}
           slug={slug}
           tags={tags}
@@ -77,7 +75,7 @@ const BlogMainLayout = ({
             ></Image>
           </div>
         ) : null}
-        <BlogContent content={originalContent}></BlogContent>
+        <BlogContent content={content}></BlogContent>
         {!settings.disableComments && !securityCommentShutDown && (
           <>
             <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />

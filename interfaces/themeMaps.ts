@@ -142,10 +142,7 @@ export const borderColorMap: { [key: string]: string } = Object.fromEntries(
 
 // Create a bg color map by prefixing 'bg-' to generic colors
 export const bgDarkColorMap: { [key: string]: string } = Object.fromEntries(
-  Object.entries(genericColorMap).map(([key, value]) => [
-    key,
-    `bg-${value}`,
-  ])
+  Object.entries(genericColorMap).map(([key, value]) => [key, `bg-${value}`])
 );
 
 export const notchColorMap: { [key: string]: string } = {
@@ -199,6 +196,7 @@ export const simpleTitleMap: { [key: string]: string } = {
 export const imagesArrowMap: { [key: string]: string } = {
   projects: "/projects-arrow.svg",
   photos: "/photos-arrow.svg",
+  blog: "/blog-arrow.svg",
 };
 
 export const menuEntryBorderMap: { [key: string]: string } = {

@@ -5,7 +5,7 @@ type BlogContentProps = {
 };
 
 const BlogContent = ({ content }: BlogContentProps) => {
-  return <section>{parseCustomMarkdown(content)}</section>;
+  return <section>{parseCustomMarkdown(content, "blog")}</section>;
 };
 
 export default BlogContent;

@@ -40,7 +40,7 @@ export const getStaticProps = async () => {
   // Process each entry
   const allEntries = await Promise.all(
     entries.map(async (entry) => {
-      const content = await standardMarkdownToHtml(entry.content.join("\n") || "");
+      const content = entry.content.join("\n") || "";
       return {
         ...entry,
         content,
