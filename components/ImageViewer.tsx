@@ -329,7 +329,7 @@ function ImageViewer({
     };
   }, [imageContainerRef, goToNextPage, goToPreviousPage, isGridView]);
 
-  const currentDescription = actualDescriptions[currentPage];
+  const currentDescription = actualDescriptions[currentPage].trim() as string;
 
   function flipSubtitleButton() {
     if (!currentDescription) {

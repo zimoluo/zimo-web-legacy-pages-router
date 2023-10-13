@@ -66,7 +66,7 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
         }`}
       >
         <div ref={gridRefDesktop} className="relative">
-          <div className="absolute top-0 right-0 -translate-y-16">
+          <div className="absolute top-0 right-0 -translate-y-20">
             <PhotosModeSwitch />
           </div>
           {photoEntries.map((photoEntry, index) =>
@@ -81,6 +81,12 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
                     url={url}
                     aspectRatio={photoEntry.images.aspectRatio}
                     title={photoEntry.title}
+                    text={
+                      photoEntry.images.text &&
+                      photoEntry.images.text[imageUrlIndex] !== undefined
+                        ? photoEntry.images.text[imageUrlIndex]
+                        : ""
+                    }
                   />
                 </div>
               ))
@@ -96,7 +102,7 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
         }`}
       >
         <div ref={gridRefMobile} className="relative">
-          <div className="absolute top-0 right-0 -translate-y-12">
+          <div className="absolute top-0 right-0 -translate-y-14">
             <PhotosModeSwitch />
           </div>
           {photoEntries.map((photoEntry, index) =>
@@ -111,6 +117,12 @@ const PhotosTileGrid: React.FC<Props> = ({ photoEntries }) => {
                     url={url}
                     aspectRatio={photoEntry.images.aspectRatio}
                     title={photoEntry.title}
+                    text={
+                      photoEntry.images.text &&
+                      photoEntry.images.text[imageUrlIndex] !== undefined
+                        ? photoEntry.images.text[imageUrlIndex]
+                        : ""
+                    }
                   />
                 </div>
               ))

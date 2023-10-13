@@ -1,15 +1,17 @@
 import Image from "next/image";
 import { useMemo } from "react";
-import { rgbaDataURL } from "@/lib/util";
+import { enrichTextContent, rgbaDataURL } from "@/lib/util";
 
 const PhotosGallery = ({
   url,
   aspectRatio,
   title,
+  text = "",
 }: {
   url: string;
   title: string;
   aspectRatio: string;
+  text?: string;
 }) => {
   // A simple string hashing function
   const stringToSeed = (str: string): number => {
@@ -54,9 +56,11 @@ const PhotosGallery = ({
     );
   }, [widthRatio, heightRatio, randomMultiplier]);
 
+  const displayText = text.trim();
+
   return (
     <div
-      className="w-42 md:w-72 h-auto rounded-xl overflow-hidden mb-1.5"
+      className="w-42 md:w-72 h-auto rounded-xl overflow-hidden mb-1.5 relative group"
       style={{ aspectRatio: `${computedAspectRatio}` }}
     >
       <Image
@@ -68,6 +72,11 @@ const PhotosGallery = ({
         placeholder="blur"
         blurDataURL={rgbaDataURL(255, 237, 213, 0.85)}
       />
+      {displayText && (
+        <p className="absolute left-1/2 -translate-x-1/2 bottom-4 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-xs md:text-sm px-3 py-1 rounded-3xl overflow-hidden transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+          {enrichTextContent(displayText)}
+        </p>
+      )}
     </div>
   );
 };
