@@ -32,10 +32,15 @@ export const getStaticProps = async () => {
     "location",
     "images",
     "instagramLink",
+    "unlisted",
   ]);
 
+  const filteredEntries = allEntries.filter(
+    (entry) => !(entry as any).unlisted
+  );
+
   return {
-    props: { allEntries },
+    props: { filteredEntries },
     revalidate: 25,
   };
 };

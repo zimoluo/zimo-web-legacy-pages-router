@@ -59,7 +59,9 @@ export const getStaticProps = async (context: { params: { tag: string } }) => {
   ]);
 
   // Filter posts based on tag
-  const filteredPosts = allPosts.filter((post) => post.tags?.includes(tag));
+  const filteredPosts = allPosts.filter(
+    (post) => post.tags?.includes(tag) && !post.unlisted
+  );
 
   // Return filtered posts as props
   return {

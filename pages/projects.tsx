@@ -34,6 +34,7 @@ export const getStaticProps = async () => {
     "faviconFormat",
     "content",
     "images",
+    "unlisted",
   ]);
 
   // Process each entry
@@ -47,8 +48,12 @@ export const getStaticProps = async () => {
     })
   );
 
+  const filteredEntries = allEntries.filter(
+    (entry) => !(entry as any).unlisted
+  );
+
   return {
-    props: { allEntries },
+    props: { filteredEntries },
     revalidate: 25,
   };
 };

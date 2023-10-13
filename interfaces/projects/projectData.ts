@@ -8,7 +8,6 @@ type ProjectData = {
   faviconFormat: string;
   content: string;
   images: ImagesData;
-}
-  
-export default ProjectData
-  
+};
+
+export default ProjectData;
