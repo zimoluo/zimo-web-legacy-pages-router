@@ -295,8 +295,8 @@ const MusicPlayerCard: FC<Props> = ({
                 className={`w-5 md:w-6 h-auto aspect-square ${svgFilterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
                 width={24}
                 height={24}
-                src={isPlaying ? "/pause-track.svg" : "play-track.svg"}
-                key={isPlaying ? "/pause-track.svg" : "play-track.svg"}
+                src={isPlaying ? "/pause-track.svg" : "/play-track.svg"}
+                key={isPlaying ? "/pause-track.svg" : "/play-track.svg"}
                 alt={isPlaying ? "Pause" : "Play"}
               />
             </button>

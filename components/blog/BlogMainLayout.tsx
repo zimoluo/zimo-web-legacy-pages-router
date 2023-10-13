@@ -77,7 +77,7 @@ const BlogMainLayout = ({
             ></Image>
           </div>
         ) : null}
-        <BlogContent content={content}></BlogContent>
+        <BlogContent content={originalContent}></BlogContent>
         {!settings.disableComments && !securityCommentShutDown && (
           <>
             <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />

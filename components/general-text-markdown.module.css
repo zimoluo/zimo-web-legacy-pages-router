@@ -65,16 +65,11 @@
 }
 
 .markdown pre {
-	@apply p-4 my-4 rounded-xl bg-gray-800 text-white;
+	@apply px-5 py-3 my-4 rounded-xl bg-gray-800 text-white;
 	overflow-x: auto;
 }
 
 .markdown code {
-	@apply font-mono text-sm;
+	@apply font-mono text-base px-0.5;
 }
 
-.markdown p code,
-.markdown li code,
-.markdown span code {
-	@apply px-1 rounded-sm bg-gray-300 text-gray-800;
-}
