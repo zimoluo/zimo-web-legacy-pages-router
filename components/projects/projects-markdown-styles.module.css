@@ -1,5 +1,5 @@
 .markdown p {
-	@apply my-4 leading-relaxed;
+  @apply my-4 leading-relaxed;
 }
 
 .markdown blockquote,
@@ -10,14 +10,13 @@
 }
 
 .markdown blockquote {
-  @apply rounded-2xl shadow-lg px-4 py-1 my-8 relative bg-opacity-90 md:backdrop-blur-lg md:bg-opacity-80;
-  padding-left: 1.5rem; 
+  @apply rounded-2xl shadow-lg bg-teal-50 px-4 py-1 my-8 relative bg-opacity-90 md:backdrop-blur-lg md:bg-opacity-80;
+  padding-left: 1.5rem;
   position: relative;
-  background-color: rgba(238, 255, 243, 0.8);
 }
 
 .markdown blockquote::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
