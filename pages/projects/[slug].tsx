@@ -1,7 +1,6 @@
 import MainPageLayout from "@/components/MainPageLayout";
 import ProjectData from "@/interfaces/projects/projectData";
 import { getProjectFavicon } from "@/lib/projects/util";
-import { standardMarkdownToHtml } from "@/lib/util";
 import Head from "next/head";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllEntries, getEntryBySlug } from "@/lib/aws-api";
