@@ -1,7 +1,7 @@
 import MainPageLayout from "@/components/MainPageLayout";
 import ProjectData from "@/interfaces/projects/projectData";
 import { getProjectFavicon } from "@/lib/projects/util";
-import { markdownToHtml, updateImageAttributes } from "@/lib/util";
+import { standardMarkdownToHtml } from "@/lib/util";
 import Head from "next/head";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllEntries, getEntryBySlug } from "@/lib/aws-api";
@@ -77,10 +77,7 @@ export async function getStaticProps({ params }: Params) {
     "content",
     "images",
   ]);
-  const content = updateImageAttributes(
-    await markdownToHtml(entry.content.join("\n") || "")
-  );
-
+  const content = await standardMarkdownToHtml(entry.content.join("\n") || "");
   return {
     props: {
       entry: {

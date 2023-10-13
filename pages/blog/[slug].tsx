@@ -3,7 +3,7 @@ import BlogMainLayout from "@/components/blog/BlogMainLayout";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllPosts, getPostBySlug } from "@/lib/blog/aws-api";
 import { getCoverSrc } from "@/lib/blog/util";
-import { markdownToHtml, updateImageAttributes } from "@/lib/util";
+import { standardMarkdownToHtml } from "@/lib/util";
 import Head from "next/head";
 type PostType = {
   post: PostData & { displayCover: boolean; originalContent: string };
@@ -12,7 +12,7 @@ type PostType = {
 export default function Post({ post }: PostType) {
   const title = `${post.title} | Blog - Zimo`;
   const coverSrc = getCoverSrc(post.coverImage, post.slug);
-  const updatedContent = updateImageAttributes(post.content);
+  const updatedContent = post.content;
 
   const urlShare =
     typeof window !== "undefined"
@@ -84,7 +84,7 @@ export async function getStaticProps({ params }: Params) {
     "displayCover",
     "tags",
   ]);
-  const content = await markdownToHtml(post.content || "");
+  const content = await standardMarkdownToHtml(post.content || "");
 
   return {
     props: {

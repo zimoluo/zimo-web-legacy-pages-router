@@ -2,8 +2,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import { ReactNode, SyntheticEvent } from "react";
-import { marked } from "marked";
-import katex from "katex";
 import { remark } from "remark";
 import html from "remark-html";
 import React from "react";
@@ -99,71 +97,9 @@ export const formatDate = (dateStr: string) => {
   return eventDate.format("MMM D, YYYY");
 };
 
-export async function markdownToHtml(markdown: string): Promise<string> {
-  const renderer = new marked.Renderer();
-  renderer.code = (code, language) => {
-    if (language === "math") {
-      return katex.renderToString(code, {
-        throwOnError: false,
-      });
-    }
-    return `<pre><code>${code}</code></pre>`;
-  };
-
-  marked.setOptions({
-    renderer: renderer,
-  });
-
-  const htmlContent: string = marked(markdown);
-  return htmlContent;
-}
-
-function updateImgElements(
-  doc: Document,
-  defaultHeight: string,
-  defaultWidth: string
-) {
-  const imgElements: HTMLCollectionOf<HTMLImageElement> =
-    doc.getElementsByTagName("img");
-  for (let i = 0; i < imgElements.length; i++) {
-    const img: HTMLImageElement = imgElements[i];
-
-    if (!img.hasAttribute("height")) {
-      img.setAttribute("height", defaultHeight);
-    }
-
-    if (!img.hasAttribute("width")) {
-      img.setAttribute("width", defaultWidth);
-    }
-  }
-}
-
-export function updateImageAttributes(
-  htmlContent: string,
-  defaultHeight: string = "320",
-  defaultWidth: string = "40"
-): string {
-  let updatedHtmlContent: string;
-
-  if (typeof window !== "undefined") {
-    // Client-side code
-    const parser: DOMParser = new DOMParser();
-    const doc: Document = parser.parseFromString(htmlContent, "text/html");
-    updateImgElements(doc, defaultHeight, defaultWidth);
-    updatedHtmlContent = doc.documentElement.outerHTML;
-  } else {
-    // Server-side code
-    if (JSDOM) {
-      const dom = new JSDOM(htmlContent);
-      const doc: Document = dom.window.document;
-      updateImgElements(doc, defaultHeight, defaultWidth);
-      updatedHtmlContent = dom.serialize();
-    } else {
-      updatedHtmlContent = htmlContent;
-    }
-  }
-
-  return updatedHtmlContent;
+export async function standardMarkdownToHtml(markdown: string) {
+  const result = await remark().use(html).process(markdown);
+  return result.toString();
 }
 
 export const formatAltText = (key: string) => {
@@ -261,11 +197,6 @@ export const isActivePopup = (popupInstance: any): boolean => {
 export const clearActivePopups = (): void => {
   activePopups = [];
 };
-
-export async function safeMarkdownToHtml(markdown: string) {
-  const result = await remark().use(html).process(markdown);
-  return result.toString();
-}
 
 export function formatLocation(location: LocationData): string {
   if (location.name) {
