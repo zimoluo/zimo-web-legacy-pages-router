@@ -40,7 +40,7 @@ export const getStaticProps = async () => {
   );
 
   return {
-    props: { allPosts: filteredEntries },
+    props: { allEntries: filteredEntries },
     revalidate: 25,
   };
 };
