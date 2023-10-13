@@ -9,7 +9,6 @@ import CommentTypeBox from "../comments/CommentTypeBox";
 import CommentCardColumn from "../comments/CommentCardColumn";
 import { useSettings } from "../contexts/SettingsContext";
 import { securityCommentShutDown } from "@/lib/constants";
-import Link from "next/link";
 
 interface BlogProps {
   title: string;
@@ -63,21 +62,8 @@ const BlogMainLayout = ({
           content={originalContent}
           date={date}
           slug={slug}
+          tags={tags}
         />
-        {tags.length > 0 && (
-          <div className="-mt-4 -mb-2">
-            {tags.map((tag, index) => (
-              <Link className="mr-1.5" href={`/blog/tags/${tag}`} key={index}>
-                <span
-                  key={index}
-                  className="inline-block bg-fuchsia-700 opacity-70 rounded-full px-2 my-0.5 py-0.5 text-sm font-bold text-fuchsia-50 transition-transform duration-300 ease-in-out hover:scale-105 text-center"
-                >
-                  {tag}
-                </span>
-              </Link>
-            ))}
-          </div>
-        )}
         <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />
         {coverSrc && displayCover ? (
           <div className="flex justify-center items-center mb-12">

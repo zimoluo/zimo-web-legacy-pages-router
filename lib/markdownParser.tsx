@@ -7,7 +7,6 @@ import { marked } from "marked";
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
   MusicPlayerCard,
-  // Add more custom components here as needed
 };
 
 const parseProps = (input: string): { [key: string]: any } => {
