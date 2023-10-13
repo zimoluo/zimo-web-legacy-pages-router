@@ -6,7 +6,6 @@ import { marked } from "marked";
 import blogMarkdownStyles from "@/components/blog/blog-markdown-styles.module.css";
 import projectsMarkdownStyles from "@/components/projects/projects-markdown-styles.module.css";
 import generalMarkdownStyles from "@/components/general-text-markdown.module.css";
-import { useSettings } from "@/components/contexts/SettingsContext";
 import { ThemeType } from "@/interfaces/themeMaps";
 import katex from "katex";
 
@@ -66,9 +65,13 @@ const parseMathAndMarkdown = (input: string): string => {
   return marked(output);
 };
 
-const parseCustomMarkdown = (input: string, theme?: ThemeType): ReactNode[] => {
+const parseCustomMarkdown = (
+  input: string,
+  theme?: ThemeType,
+  enableSerif?: boolean
+): ReactNode[] => {
+  enableSerif = enableSerif || false;
   const appliedTheme = theme || "blog";
-  const { settings } = useSettings();
   // Split by empty lines or lines with just whitespace
   const blocks = input.split(/\n\s*\n/);
   return blocks.map((block, idx) => {
@@ -90,11 +93,7 @@ const parseCustomMarkdown = (input: string, theme?: ThemeType): ReactNode[] => {
         dangerouslySetInnerHTML={{ __html: parseMathAndMarkdown(block) }}
         className={`${generalMarkdownStyles["markdown"]} ${
           specificStyleMap[appliedTheme]["markdown"]
-        } ${
-          !settings.disableSerifFont && appliedTheme === "blog"
-            ? generalMarkdownStyles["markdown-serif"]
-            : ""
-        }`}
+        } ${enableSerif ? generalMarkdownStyles["markdown-serif"] : ""}`}
       />
     );
   });
