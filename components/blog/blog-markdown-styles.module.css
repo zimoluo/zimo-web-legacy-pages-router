@@ -10,7 +10,7 @@
 }
 
 .markdown blockquote {
-  @apply rounded-2xl drop-shadow-lg px-4 py-1 my-8 relative backdrop-blur-lg bg-opacity-80;
+  @apply rounded-2xl drop-shadow-lg px-4 py-1 my-8 relative bg-opacity-90 md:backdrop-blur-lg;
   padding-left: 1.5rem; 
   position: relative;
   background-color: rgba(250, 232, 255, 0.8);
