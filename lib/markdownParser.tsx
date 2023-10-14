@@ -97,7 +97,7 @@ const parseCustomMarkdown = (
           specificStyleMap[appliedTheme]["markdown"]
         } ${
           appliedEnableSerif ? generalMarkdownStyles["markdown-serif"] : ""
-        } ${codeBoxExtraStyle["markdown"]}`}
+        } ${codeBoxExtraStyle["markdown"]} regular-article-module`}
       />
     );
   });

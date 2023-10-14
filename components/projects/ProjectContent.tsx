@@ -9,7 +9,12 @@ type Props = {
 
 const ProjectContent = ({ content }: Props) => {
   useEffect(() => {
-    Prism.highlightAll();
+    const elements = document.querySelectorAll(
+      ".regular-article-module pre code"
+    );
+    elements.forEach((element) => {
+      Prism.highlightElement(element);
+    });
   }, []);
 
   return <section>{parseCustomMarkdown(content, "projects")}</section>;

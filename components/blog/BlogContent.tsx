@@ -12,7 +12,12 @@ const BlogContent = ({ content }: Props) => {
   const { settings } = useSettings();
 
   useEffect(() => {
-    Prism.highlightAll();
+    const elements = document.querySelectorAll(
+      ".regular-article-module pre code"
+    );
+    elements.forEach((element) => {
+      Prism.highlightElement(element);
+    });
   }, []);
 
   return (
