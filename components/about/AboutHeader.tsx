@@ -23,7 +23,7 @@ const AboutHeader: React.FC<Props> = ({
       >
         {title}
       </h1>
-      <h3 className="text-2xl mt-1">{calendarDate(date)}</h3>
+      <h3 className="text-xl mt-1">{calendarDate(date)}</h3>
       {description && (
         <p
           className={`text-xl ${
