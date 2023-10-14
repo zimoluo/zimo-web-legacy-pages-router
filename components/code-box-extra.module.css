@@ -1,5 +1,5 @@
 .markdown pre {
-  @apply px-5 pt-9 pb-3 my-4 max-h-96 overflow-auto rounded-xl bg-gray-800 text-white text-base relative !important;
+  @apply px-5 pt-9 pb-3 my-4 max-h-96 overflow-auto rounded-xl bg-gray-800 text-neutral-50 text-base relative !important;
   background-image: url(/mac-app-buttons.svg) !important;
   background-repeat: no-repeat !important;
   background-size: 44px !important;
