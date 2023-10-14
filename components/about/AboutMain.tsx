@@ -30,7 +30,7 @@ const AboutMain = ({
             title={title}
             description={getFullMarkdown(content, title, date, description)}
             url={urlShare}
-            platform="downloadPdf"
+            platform="downloadHtml"
             theme={isIndex ? "zimo" : "about"}
           />
           <ShareButton

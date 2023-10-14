@@ -1,28 +1,22 @@
 import dayjs from "dayjs";
+import { marked } from "marked";
+import { downloadCss } from "./downloadCss";
 
-export async function downloadPdf(
+export function downloadHtml(
   markdown: string,
   title: string = "Downloaded Document"
 ) {
   try {
-    const res = await fetch("/api/generatePdf", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ markdown }),
-    });
+    const html = marked(markdown);
 
-    if (!res.ok) {
-      throw new Error("Failed to generate PDF");
-    }
+    const fullHtml = `<html><head><meta charset="UTF-8"><style>${downloadCss}</style><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title></head><body>${html}</body></html>`;
 
-    const pdfBlob = await res.blob();
-    const url = URL.createObjectURL(pdfBlob);
+    const blob = new Blob([fullHtml], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = `${title}.pdf`;
+    link.download = `${title}.html`;
     link.click();
 
     URL.revokeObjectURL(url);

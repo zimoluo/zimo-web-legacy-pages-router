@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
-import { downloadPdf } from "@/lib/about/util";
+import { downloadHtml } from "@/lib/about/util";
 
 type Props = {
   title: string;
@@ -14,7 +14,7 @@ type Props = {
     | "linkedin"
     | "copy"
     | "reddit"
-    | "downloadPdf";
+    | "downloadHtml";
   className?: string;
   theme?: string;
 };
@@ -38,9 +38,9 @@ const copiedIconThemeMap: { [key: string]: string } = {
   zimo: "/share/copy-success-zimo.svg",
 };
 
-const downloadPdfThemeMap: { [key: string]: string } = {
-  about: "/share/download-as-pdf-about.svg",
-  zimo: "/share/download-as-pdf-zimo.svg",
+const downloadHtmlThemeMap: { [key: string]: string } = {
+  about: "/share/download-as-html-about.svg",
+  zimo: "/share/download-as-html-zimo.svg",
 };
 
 const failedIconThemeMap: { [key: string]: string } = {
@@ -68,7 +68,7 @@ function ShareButton({
     copied: copiedIconThemeMap[theme],
     failed: failedIconThemeMap[theme],
     reddit: "/share/reddit-icon.svg",
-    downloadPdf: downloadPdfThemeMap[theme],
+    downloadHtml: downloadHtmlThemeMap[theme],
   };
 
   const [iconState, setIconState] = useState<string>(platform);
@@ -95,7 +95,7 @@ function ShareButton({
     }, 1900);
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     if (!isButtonAvailable) return;
 
     if (platform === "mobile") {
@@ -115,10 +115,8 @@ function ShareButton({
       return;
     }
 
-    if (platform === "downloadPdf") {
-      setButtonAvailable(false);
-      await downloadPdf(description, title);
-      setButtonAvailable(true);
+    if (platform === "downloadHtml") {
+      downloadHtml(description, title);
       return;
     }
 
