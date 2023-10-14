@@ -24,7 +24,7 @@ const AboutHeader: React.FC<Props> = ({
         <p
           className={`text-xl ${
             isIndex ? "text-neutral-700" : "text-sky-700"
-          } opacity-70 mt-4`}
+          } opacity-80 mt-4`}
         >
           {enrichTextContent(description)}
         </p>

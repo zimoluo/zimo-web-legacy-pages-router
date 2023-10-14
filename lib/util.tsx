@@ -225,16 +225,35 @@ export function formatLocation(location: LocationData): string {
 }
 
 export const enrichTextContent = (content: string): ReactNode[] => {
-  const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
-  const splitContent = escapedContent.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+  const escapedContent = content
+    .replace(/\\\*/g, "%%ESCAPED_ASTERISK%%")
+    .replace(/\\~~/g, "%%ESCAPED_TILDE~~");
+  const splitContent = escapedContent.split(
+    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~)/g
+  );
 
   return splitContent.map((chunk, index) => {
-    const restoredChunk = chunk.replace(/%%ESCAPED_ASTERISK%%/g, "*");
+    const restoredChunk = chunk
+      .replace(/%%ESCAPED_ASTERISK%%/g, "*")
+      .replace(/%%ESCAPED_TILDE~~/g, "~~");
+
     if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
       return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
     }
     if (/^\*(.*?)\*$/.test(restoredChunk)) {
       return <em key={index}>{restoredChunk.slice(1, -1)}</em>;
+    }
+    const linkMatch = restoredChunk.match(/^~~\{(.*?)\}\{(.*?)\}~~$/);
+    if (linkMatch) {
+      return (
+        <a
+          key={index}
+          href={linkMatch[2]}
+          className="underline underline-offset-2"
+        >
+          {linkMatch[1]}
+        </a>
+      );
     }
     return <React.Fragment key={index}>{restoredChunk}</React.Fragment>;
   });

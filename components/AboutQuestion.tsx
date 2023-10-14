@@ -42,7 +42,7 @@ const AboutQuestion: React.FC<Props> = ({
     <section
       className={`${
         index !== 0 ? "border-about-pane-t" : ""
-      } ${borderColorClass} px-6 text-xl md:text-2xl`}
+      } ${borderColorClass} border-opacity-10 px-6 text-xl md:text-2xl`}
     >
       <div className="w-full flex items-center mt-4 font-bold">
         <h2>{enrichTextContent(question)}</h2>

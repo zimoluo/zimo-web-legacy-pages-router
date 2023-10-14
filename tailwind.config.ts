@@ -144,6 +144,8 @@ const config: Config = {
         "placeholder:text-sky-700",
         "bg-color-about",
         "md:bg-color-about-opaque",
+        "underline",
+        "underline-offset-2",
       ],
     },
   },

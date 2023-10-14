@@ -36,6 +36,10 @@
   @apply ml-4 pl-4;
 }
 
+.markdown a {
+  @apply underline underline-offset-2;
+}
+
 .markdown li {
   @apply my-1;
 }
