@@ -1,0 +1,26 @@
+.markdown p {
+  @apply my-8 leading-relaxed;
+}
+
+.markdown blockquote,
+.markdown blockquote p,
+.markdown blockquote ul,
+.markdown blockquote ol {
+  @apply text-neutral-800 text-lg;
+}
+
+.markdown blockquote {
+  @apply rounded-2xl shadow-lg bg-neutral-100 px-4 py-1 my-8 relative bg-opacity-75 md:backdrop-blur-lg md:bg-opacity-80;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.markdown blockquote::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0.25rem;
+  @apply bg-neutral-700 rounded-xl pointer-events-none;
+}

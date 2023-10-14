@@ -142,6 +142,8 @@ const config: Config = {
         "placeholder:text-fuchsia-700",
         "placeholder:text-teal-700",
         "placeholder:text-sky-700",
+        "bg-color-about",
+        "md:bg-color-about-opaque",
       ],
     },
   },

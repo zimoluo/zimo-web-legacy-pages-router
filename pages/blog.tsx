@@ -42,8 +42,10 @@ export const getStaticProps = async () => {
     "tags",
   ]);
 
+  const filteredPosts = allPosts.filter((post) => !(post as any).unlisted);
+
   return {
-    props: { allPosts },
+    props: { allPosts: filteredPosts },
     revalidate: 25,
   };
 };

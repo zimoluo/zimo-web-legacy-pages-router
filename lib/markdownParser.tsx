@@ -4,6 +4,8 @@ import React from "react";
 import { ReactNode } from "react";
 import { marked } from "marked";
 import blogMarkdownStyles from "@/components/blog/blog-markdown-styles.module.css";
+import zimoMarkdownStyles from "@/components/about/zimo-markdown-styles.module.css";
+import aboutMarkdownStyles from "@/components/about/about-markdown-styles.module.css";
 import projectsMarkdownStyles from "@/components/projects/projects-markdown-styles.module.css";
 import generalMarkdownStyles from "@/components/general-text-markdown.module.css";
 import { ThemeType } from "@/interfaces/themeMaps";
@@ -17,9 +19,9 @@ const componentsMap: { [key: string]: React.FC<any> } = {
 
 const specificStyleMap = {
   blog: blogMarkdownStyles,
-  zimo: blogMarkdownStyles,
-  about: blogMarkdownStyles,
-  photos: blogMarkdownStyles,
+  zimo: zimoMarkdownStyles,
+  about: aboutMarkdownStyles,
+  photos: zimoMarkdownStyles,
   projects: projectsMarkdownStyles,
 };
 

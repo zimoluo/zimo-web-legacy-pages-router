@@ -1,63 +1,58 @@
 import MainPageLayout from "@/components/MainPageLayout";
-import BlogMainLayout from "@/components/blog/BlogMainLayout";
 import ReadingBlur from "@/components/ReadingBlur";
-import { getAllPosts, getPostBySlug } from "@/lib/blog/aws-api";
-import { getCoverSrc } from "@/lib/blog/util";
+import AboutMain from "@/components/about/AboutMain";
+import { getAllPosts, getPostBySlug } from "@/lib/about/aws-api";
 import Head from "next/head";
+import { useRouter } from "next/router";
 type PostType = {
   post: PostData & { displayCover: boolean; originalContent: string };
 };
 
 export default function Post({ post }: PostType) {
-  const title = `${post.title} | Blog - Zimo`;
-  const coverSrc = getCoverSrc(post.coverImage, post.slug);
+  const router = useRouter();
+  const { isIndex } = router.query;
+  const isIndexBool = isIndex === "true";
+
+  const title = `${post.title} | ${isIndex ? "Management" : "About"} - Zimo`;
 
   const urlShare =
     typeof window !== "undefined"
-      ? `${window.location.origin}/blog/${post.slug}`
+      ? `${window.location.origin}/about/${post.slug}${
+          isIndex ? "?isIndex=true" : ""
+        }`
       : "";
 
   return (
-    <MainPageLayout theme="blog">
+    <MainPageLayout theme={isIndexBool ? "zimo" : "about"}>
       <Head>
         <title>{title}</title>
         <meta property="og:type" content="article" />
-        <meta
-          property="og:image"
-          content={coverSrc ? coverSrc : "/blog-zimo.svg"}
-        />
+        <meta property="og:image" content={"/favicon.svg"} />
         <meta property="og:image:alt" content={`Cover of ${post.title}`} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.description} />
         <meta property="og:url" content={urlShare} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@WhiteGkings" />
-        <meta
-          name="twitter:image"
-          content={coverSrc ? coverSrc : "/blog-zimo.svg"}
-        />
+        <meta name="twitter:image" content={"/favicon.svg"} />
         <meta name="twitter:image:alt" content={`Cover of ${post.title}`} />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.description} />
 
         <meta name="description" content={post.description} />
         <meta name="author" content={post.author} />
-        <meta name="keywords" content="Zimo,Blog,Personal Website" />
+        <meta name="keywords" content="Zimo,Personal Website,Policy,About" />
         <link rel="canonical" href={urlShare} />
       </Head>
       <ReadingBlur />
-      <BlogMainLayout
+      <AboutMain
         title={post.title}
         description={post.description}
-        authorId={post.authorId}
-        author={post.author}
         content={post.content}
         date={post.date}
-        coverSrc={coverSrc}
-        displayCover={post.displayCover}
         slug={post.slug}
-        tags={post.tags}
-      ></BlogMainLayout>
+        isIndex={isIndexBool}
+      ></AboutMain>
     </MainPageLayout>
   );
 }
@@ -73,13 +68,8 @@ export async function getStaticProps({ params }: Params) {
     "title",
     "date",
     "slug",
-    "author",
     "content",
-    "coverImage",
     "description",
-    "authorId",
-    "displayCover",
-    "tags",
   ]);
 
   return {
