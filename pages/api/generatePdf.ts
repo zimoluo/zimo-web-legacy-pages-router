@@ -25,7 +25,7 @@ export default async function handler(
 
     // Generate PDF using Puppeteer
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: "new",
     });
 
     const page = await browser.newPage();
