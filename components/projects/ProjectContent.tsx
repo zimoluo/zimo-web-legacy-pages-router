@@ -1,7 +1,7 @@
 import parseCustomMarkdown from "@/lib/markdownParser";
-import "prismjs/themes/prism-tomorrow.css";
-import Prism from "prismjs";
 import { useEffect } from "react";
+import hljs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
 
 type Props = {
   content: string;
@@ -13,7 +13,7 @@ const ProjectContent = ({ content }: Props) => {
       ".regular-article-module pre code"
     );
     elements.forEach((element) => {
-      Prism.highlightElement(element);
+      hljs.highlightElement(element as HTMLElement);
     });
   }, []);
 

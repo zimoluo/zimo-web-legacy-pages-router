@@ -75,7 +75,7 @@ const parseCustomMarkdown = (
   const appliedTheme = theme || "blog";
 
   // Split by empty lines or lines with just whitespace
-  const blocks = input.split(/\n\s*\n/);
+  const blocks = input.split(/(&&\{\w+\}\{.+?\}&&)/g);
   return blocks.map((block, idx) => {
     const componentNameMatch = block.match(/&&\{(\w+)\}\{(.+?)\}&&/);
 
