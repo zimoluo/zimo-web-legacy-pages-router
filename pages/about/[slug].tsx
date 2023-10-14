@@ -3,27 +3,20 @@ import ReadingBlur from "@/components/ReadingBlur";
 import AboutMain from "@/components/about/AboutMain";
 import { getAllPosts, getPostBySlug } from "@/lib/about/aws-api";
 import Head from "next/head";
-import { useRouter } from "next/router";
 type PostType = {
   post: PostData & { displayCover: boolean; originalContent: string };
 };
 
 export default function Post({ post }: PostType) {
-  const router = useRouter();
-  const { isIndex } = router.query;
-  const isIndexBool = isIndex === "true";
-
-  const title = `${post.title} | ${isIndex ? "Management" : "About"} - Zimo`;
+  const title = `${post.title} | About - Zimo`;
 
   const urlShare =
     typeof window !== "undefined"
-      ? `${window.location.origin}/about/${post.slug}${
-          isIndex ? "?isIndex=true" : ""
-        }`
+      ? `${window.location.origin}/about/${post.slug}`
       : "";
 
   return (
-    <MainPageLayout theme={isIndexBool ? "zimo" : "about"}>
+    <MainPageLayout theme="about">
       <Head>
         <title>{title}</title>
         <meta property="og:type" content="article" />
@@ -51,7 +44,7 @@ export default function Post({ post }: PostType) {
         content={post.content}
         date={post.date}
         slug={post.slug}
-        isIndex={isIndexBool}
+        isIndex={false}
       ></AboutMain>
     </MainPageLayout>
   );
