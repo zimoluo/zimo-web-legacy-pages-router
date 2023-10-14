@@ -66,6 +66,11 @@ const parseMathAndMarkdown = (input: string): string => {
   return marked(output);
 };
 
+enum State {
+  NORMAL,
+  CODE_BLOCK,
+}
+
 const parseCustomMarkdown = (
   input: string,
   theme?: ThemeType,
@@ -74,8 +79,47 @@ const parseCustomMarkdown = (
   const appliedEnableSerif = enableSerif || false;
   const appliedTheme = theme || "blog";
 
-  // Split by empty lines or lines with just whitespace
-  const blocks = input.split(/\n\s*\n/);
+  let state = State.NORMAL;
+  const blocks: string[] = [];
+  let currentBlock = "";
+
+  input.split("\n").forEach((line) => {
+    switch (state) {
+      case State.NORMAL:
+        if (line.trim() === "```") {
+          // Start of a code block
+          state = State.CODE_BLOCK;
+        } else if (line.trim() === "") {
+          // Empty line
+          if (currentBlock.trim() !== "") {
+            // Avoid adding empty blocks
+            blocks.push(currentBlock);
+            currentBlock = "";
+          }
+        } else {
+          currentBlock += line + "\n";
+        }
+        break;
+      case State.CODE_BLOCK:
+        if (line.trim() === "```") {
+          // End of a code block
+          state = State.NORMAL;
+          blocks.push(currentBlock);
+          currentBlock = "";
+        } else {
+          currentBlock += line + "\n";
+        }
+        break;
+      // Handle other states as needed.
+    }
+  });
+
+  // Process remaining block if it's not empty.
+  if (currentBlock.trim() !== "") {
+    blocks.push(currentBlock);
+  }
+
+  // Further processing of blocks here.
   return blocks.map((block, idx) => {
     const componentNameMatch = block.match(/&&\{(\w+)\}\{(.+?)\}&&/);
 
