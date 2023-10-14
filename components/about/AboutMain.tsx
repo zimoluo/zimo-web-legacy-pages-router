@@ -25,7 +25,7 @@ const AboutMain = ({
           isIndex ? "bg-neutral-50" : "bg-color-about-opaque bg-center bg-cover"
         } bg-opacity-90 md:bg-opacity-80 md:blog-view-middle md:px-14 pb-12 pt-16 md:rounded-3xl md:shadow-xl`}
       >
-        <div className="absolute top-4 right-5 z-10 flex items-center space-x-2">
+        <div className="absolute top-4 right-5 z-10 flex items-center space-x-3">
           <ShareButton
             title={title}
             description={getFullMarkdown(content, title, date, description)}
