@@ -8,6 +8,7 @@ import projectsMarkdownStyles from "@/components/projects/projects-markdown-styl
 import generalMarkdownStyles from "@/components/general-text-markdown.module.css";
 import { ThemeType } from "@/interfaces/themeMaps";
 import katex from "katex";
+import codeBoxExtraStyle from "@/components/code-box-extra.module.css";
 
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
@@ -70,8 +71,9 @@ const parseCustomMarkdown = (
   theme?: ThemeType,
   enableSerif?: boolean
 ): ReactNode[] => {
-  enableSerif = enableSerif || false;
+  const appliedEnableSerif = enableSerif || false;
   const appliedTheme = theme || "blog";
+
   // Split by empty lines or lines with just whitespace
   const blocks = input.split(/\n\s*\n/);
   return blocks.map((block, idx) => {
@@ -93,7 +95,9 @@ const parseCustomMarkdown = (
         dangerouslySetInnerHTML={{ __html: parseMathAndMarkdown(block) }}
         className={`${generalMarkdownStyles["markdown"]} ${
           specificStyleMap[appliedTheme]["markdown"]
-        } ${enableSerif ? generalMarkdownStyles["markdown-serif"] : ""}`}
+        } ${
+          appliedEnableSerif ? generalMarkdownStyles["markdown-serif"] : ""
+        } ${codeBoxExtraStyle["markdown"]}`}
       />
     );
   });
