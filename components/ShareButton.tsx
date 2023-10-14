@@ -179,12 +179,16 @@ function ShareButton({
             href="/share/copy-success-projects.svg"
           />
           <link rel="preload" as="image" href="/share/copy-success-blog.svg" />
+          <link rel="preload" as="image" href="/share/copy-success-about.svg" />
+          <link rel="preload" as="image" href="/share/copy-success-zimo.svg" />
           <link
             rel="preload"
             as="image"
             href="/share/copy-failed-projects.svg"
           />
           <link rel="preload" as="image" href="/share/copy-failed-blog.svg" />
+          <link rel="preload" as="image" href="/share/copy-failed-about.svg" />
+          <link rel="preload" as="image" href="/share/copy-failed-zimo.svg" />
         </Head>
       ) : (
         ""
