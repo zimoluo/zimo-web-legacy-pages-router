@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import { downloadPdf } from "@/lib/about/util";
 
 type Props = {
   title: string;
   description: string;
   url: string;
-  platform: "mobile" | "facebook" | "twitter" | "linkedin" | "copy" | "reddit";
+  platform:
+    | "mobile"
+    | "facebook"
+    | "twitter"
+    | "linkedin"
+    | "copy"
+    | "reddit"
+    | "downloadPdf";
   className?: string;
   theme?: string;
 };
@@ -19,16 +27,27 @@ const mobileIconThemeMap: { [key: string]: string } = {
 const copyIconThemeMap: { [key: string]: string } = {
   blog: "/share/copy-icon-blog.svg",
   projects: "/share/copy-icon-projects.svg",
+  about: "/share/copy-icon-about.svg",
+  zimo: "/share/copy-icon-zimo.svg",
 };
 
 const copiedIconThemeMap: { [key: string]: string } = {
   blog: "/share/copy-success-blog.svg",
   projects: "/share/copy-success-projects.svg",
+  about: "/share/copy-success-about.svg",
+  zimo: "/share/copy-success-zimo.svg",
+};
+
+const downloadPdfThemeMap: { [key: string]: string } = {
+  about: "/share/download-as-pdf-about.svg",
+  zimo: "/share/download-as-pdf-zimo.svg",
 };
 
 const failedIconThemeMap: { [key: string]: string } = {
   blog: "/share/copy-failed-blog.svg",
   projects: "/share/copy-failed-projects.svg",
+  about: "/share/copy-failed-about.svg",
+  zimo: "/share/copy-failed-zimo.svg",
 };
 
 function ShareButton({
@@ -49,6 +68,7 @@ function ShareButton({
     copied: copiedIconThemeMap[theme],
     failed: failedIconThemeMap[theme],
     reddit: "/share/reddit-icon.svg",
+    downloadPdf: downloadPdfThemeMap[theme],
   };
 
   const [iconState, setIconState] = useState<string>(platform);
@@ -75,7 +95,7 @@ function ShareButton({
     }, 1900);
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     if (!isButtonAvailable) return;
 
     if (platform === "mobile") {
@@ -92,6 +112,13 @@ function ShareButton({
         .catch(() => {
           initiateAnimation("failed");
         });
+      return;
+    }
+
+    if (platform === "downloadPdf") {
+      setButtonAvailable(false);
+      await downloadPdf(description, title);
+      setButtonAvailable(true);
       return;
     }
 
