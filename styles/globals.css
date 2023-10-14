@@ -457,7 +457,7 @@
 
 @media (min-width: 768px) {
   .md\:blog-view-middle {
-    width: 52rem;
+    width: min(52rem, 95%);
   }
 
   .md\:max-w-80 {
