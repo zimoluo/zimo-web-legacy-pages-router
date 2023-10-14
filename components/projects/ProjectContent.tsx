@@ -1,4 +1,5 @@
 import parseCustomMarkdown from "@/lib/markdownParser";
+import "prismjs/themes/prism-tomorrow.css";
 import Prism from "prismjs";
 import { useEffect } from "react";
 
