@@ -5,6 +5,7 @@ import Head from "next/head";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllEntries, getEntryBySlug } from "@/lib/aws-api";
 import ProjectMain from "@/components/projects/ProjectMain";
+import { restoreDisplayText } from "@/lib/util";
 
 type ProjectType = {
   entry: ProjectData;
@@ -32,7 +33,10 @@ export default function Entry({ entry }: ProjectType) {
         <meta property="og:type" content="article" />
         <meta property="og:image:alt" content={`Cover of ${entry.title}`} />
         <meta property="og:title" content={entry.title} />
-        <meta property="og:description" content={entry.description} />
+        <meta
+          property="og:description"
+          content={restoreDisplayText(entry.description)}
+        />
         <meta property="og:url" content={urlShare} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@WhiteGkings" />
@@ -42,9 +46,15 @@ export default function Entry({ entry }: ProjectType) {
         />
         <meta name="twitter:image:alt" content={`Cover of ${entry.title}`} />
         <meta name="twitter:title" content={entry.title} />
-        <meta name="twitter:description" content={entry.description} />
+        <meta
+          name="twitter:description"
+          content={restoreDisplayText(entry.description)}
+        />
 
-        <meta name="description" content={entry.description} />
+        <meta
+          name="description"
+          content={restoreDisplayText(entry.description)}
+        />
         <meta name="author" content={entry.authors.join(", ")} />
         <meta
           name="keywords"

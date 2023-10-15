@@ -4,6 +4,7 @@ import ReadingBlur from "@/components/ReadingBlur";
 import { getAllPosts, getPostBySlug } from "@/lib/blog/aws-api";
 import { getCoverSrc } from "@/lib/blog/util";
 import Head from "next/head";
+import { restoreDisplayText } from "@/lib/util";
 type PostType = {
   post: PostData & { displayCover: boolean; originalContent: string };
 };
@@ -28,7 +29,10 @@ export default function Post({ post }: PostType) {
         />
         <meta property="og:image:alt" content={`Cover of ${post.title}`} />
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description} />
+        <meta
+          property="og:description"
+          content={restoreDisplayText(post.description)}
+        />
         <meta property="og:url" content={urlShare} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@WhiteGkings" />
@@ -38,9 +42,15 @@ export default function Post({ post }: PostType) {
         />
         <meta name="twitter:image:alt" content={`Cover of ${post.title}`} />
         <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.description} />
+        <meta
+          name="twitter:description"
+          content={restoreDisplayText(post.description)}
+        />
 
-        <meta name="description" content={post.description} />
+        <meta
+          name="description"
+          content={restoreDisplayText(post.description)}
+        />
         <meta name="author" content={post.author} />
         <meta name="keywords" content="Zimo,Blog,Personal Website" />
         <link rel="canonical" href={urlShare} />

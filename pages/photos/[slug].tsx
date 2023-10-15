@@ -3,6 +3,7 @@ import Head from "next/head";
 import ReadingBlur from "@/components/ReadingBlur";
 import { getAllEntries, getEntryBySlug } from "@/lib/aws-api";
 import PhotosMain from "@/components/photos/PhotosMain";
+import { restoreDisplayText } from "@/lib/util";
 
 type Props = {
   entry: PhotosData;
@@ -11,7 +12,8 @@ type Props = {
 const filePath = "photos/entries";
 
 export default function Entry({ entry }: Props) {
-  const title = `${entry.title} | Album - Zimo`;
+  const displayTitle = restoreDisplayText(entry.title);
+  const title = `${displayTitle} | Album - Zimo`;
 
   const urlShare =
     typeof window !== "undefined"
@@ -24,13 +26,13 @@ export default function Entry({ entry }: Props) {
         <title>{title}</title>
         <meta property="og:image" content={entry.images.url[0]} />
         <meta property="og:type" content="article" />
-        <meta property="og:title" content={entry.title} />
+        <meta property="og:title" content={displayTitle} />
         <meta property="og:url" content={urlShare} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@WhiteGkings" />
         <meta name="twitter:image" content={entry.images.url[0]} />
-        <meta name="twitter:image:alt" content={`${entry.title}`} />
-        <meta name="twitter:title" content={entry.title} />
+        <meta name="twitter:image:alt" content={`${displayTitle}`} />
+        <meta name="twitter:title" content={displayTitle} />
         <meta name="author" content={entry.author} />
         <meta name="keywords" content="Zimo,Photos,Album,Personal Website" />
         <link rel="canonical" href={urlShare} />

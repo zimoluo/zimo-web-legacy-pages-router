@@ -6,6 +6,7 @@ import {
   applyImageViewerTransition,
   calculateGridViewTransformStyle,
   enrichTextContent,
+  restoreDisplayText,
 } from "@/lib/util";
 import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
@@ -492,7 +493,7 @@ function ImageViewer({
               : url[currentPage]
           }
           onClose={closePopup}
-          altText={currentDescription}
+          altText={restoreDisplayText(currentDescription)}
         />
       )}
     </div>

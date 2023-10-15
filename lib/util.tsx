@@ -254,3 +254,18 @@ export const enrichTextContent = (content: string): ReactNode[] => {
     return <React.Fragment key={index}>{restoredChunk}</React.Fragment>;
   });
 };
+
+export const restoreDisplayText = (content: string): string => {
+  // Step 1: Replace escaped asterisks
+  const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
+
+  // Step 2: Remove patterns and retrieve the display text
+  const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");
+  const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
+  const withoutLinks = withoutItalic.replace(/~~\{(.*?)\}\{(.*?)\}~~/g, "$1");
+
+  // Step 3: Restore escaped asterisks
+  const restoredContent = withoutLinks.replace(/%%ESCAPED_ASTERISK%%/g, "*");
+
+  return restoredContent;
+};
