@@ -652,5 +652,5 @@
 }
 
 .main-page-title-height {
-  height: 40rem;
+  height: max(100vh, 40rem);
 }
