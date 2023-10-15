@@ -57,15 +57,13 @@ const AboutQuestion: React.FC<Props> = ({
         index !== 0 ? "border-about-pane-t" : ""
       } ${borderColorClass} border-opacity-20 text-base md:text-lg`}
     >
-      <div className="w-full flex items-center mt-4">
-        <h2
-          className="cursor-pointer"
-          onClick={() => {
-            setIsExpanded(!isExpanded);
-          }}
-        >
-          {enrichTextContent(question)}
-        </h2>
+      <div
+        className="w-full flex items-center mt-4 cursor-pointer"
+        onClick={() => {
+          setIsExpanded(!isExpanded);
+        }}
+      >
+        <h2>{enrichTextContent(question)}</h2>
         <div className="flex-grow flex items-center justify-end ml-6 md:ml-10 flex-shrink-0">
           <button
             onClick={() => {
