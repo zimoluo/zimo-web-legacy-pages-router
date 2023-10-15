@@ -1,6 +1,5 @@
 import React from "react";
 import AboutQuestion from "./AboutQuestion";
-import { lightBgColorMap } from "@/interfaces/themeMaps";
 
 type Props = {
   questions: string[];
