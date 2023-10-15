@@ -59,7 +59,7 @@ const BlogCard = ({
                 src={coverImage}
                 alt={`Cover of ${title}`}
                 width={320}
-                height={144}
+                height={320}
                 onError={imageFallback("/blog-fallback.svg")}
               />
             </div>
