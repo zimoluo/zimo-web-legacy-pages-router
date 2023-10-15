@@ -67,9 +67,10 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         </Link>
       </div>
       <div className="text-center text-sm">
-        &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
+        &copy; {displayYear} Zimo Luo. All Rights Reserved.
         {user && (
           <>
+            {" "}
             <Link
               href={`/${
                 theme === "about" ? "about" : "management"
