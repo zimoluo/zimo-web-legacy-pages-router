@@ -225,13 +225,16 @@ export function formatLocation(location: LocationData): string {
 }
 
 export const enrichTextContent = (content: string): ReactNode[] => {
-  const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
+  // Add a pattern to escape backticks
+  const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
+
   const splitContent = escapedContent.split(
-    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~)/g
+    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~|`.*?`)/g
   );
 
   return splitContent.map((chunk, index) => {
-    const restoredChunk = chunk.replace(/%%ESCAPED_ASTERISK%%/g, "*");
+    // Restore escaped characters
+    const restoredChunk = chunk.replace(/%%ESCAPED_([*`])%%/g, "$1");
 
     if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
       return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
@@ -251,21 +254,26 @@ export const enrichTextContent = (content: string): ReactNode[] => {
         </a>
       );
     }
+    const codeMatch = restoredChunk.match(/^`(.*?)`$/);
+    if (codeMatch) {
+      return <code key={index}>{codeMatch[1]}</code>;
+    }
     return <React.Fragment key={index}>{restoredChunk}</React.Fragment>;
   });
 };
 
 export const restoreDisplayText = (content: string): string => {
-  // Step 1: Replace escaped asterisks
-  const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
+  // Step 1: Replace escaped asterisks and backticks
+  const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
 
   // Step 2: Remove patterns and retrieve the display text
   const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");
   const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
   const withoutLinks = withoutItalic.replace(/~~\{(.*?)\}\{(.*?)\}~~/g, "$1");
+  const withoutCode = withoutLinks.replace(/`(.*?)`/g, "$1");
 
-  // Step 3: Restore escaped asterisks
-  const restoredContent = withoutLinks.replace(/%%ESCAPED_ASTERISK%%/g, "*");
+  // Step 3: Restore escaped asterisks and backticks
+  const restoredContent = withoutCode.replace(/%%ESCAPED_([*`])%%/g, "$1");
 
   return restoredContent;
 };

@@ -11,7 +11,7 @@ const MainPageTitle: React.FC<MainPageTitleProps> = ({
 }) => {
   return (
     <header
-      className={`min-h-screen flex items-center justify-center ml-12 mr-12 -mt-12 -mb-24 ${className}`}
+      className={`main-page-title-height flex items-center justify-center ml-12 mr-12 -mb-24 ${className}`}
     >
       <h1 className="text-left font-bold text-6xl">
         {title}

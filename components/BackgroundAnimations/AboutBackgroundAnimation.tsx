@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { useSettings } from "../contexts/SettingsContext";
 import { useRouter } from "next/router";
 
 const AboutBackgroundAnimation: React.FC = () => {
-  const { settings } = useSettings();
   const router = useRouter();
 
   return (
@@ -33,27 +31,24 @@ const AboutBackgroundAnimation: React.FC = () => {
       </div>
       {router.pathname === "/about" && (
         <>
-          {settings.backgroundRichness === "rich" && (
-            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/3 -z-20 pointer-events-none select-none">
-              <Image
-                src="/zimo-profile.svg"
-                alt="Zimo Profile"
-                height="0"
-                width="0"
-                className="object-cover zimo-profile-size"
-                placeholder="empty"
-                priority={true}
-              />
-            </div>
-          )}
-
-          <div className="absolute left-0 top-1/2 transform -translate-y-2/3 -z-20 pointer-events-none select-none">
+          <div className="absolute left-0 top-0 -z-20 pointer-events-none select-none hidden md:block">
             <Image
               src="/zimo-vertical.svg"
               alt="Zimo Vertical"
               height="0"
               width="0"
-              className="object-cover zimo-vertical-size opacity-40"
+              className="object-cover zimo-vertical-size opacity-50"
+              placeholder="empty"
+              priority={true}
+            />
+          </div>
+          <div className="absolute left-0 top-0 -z-20 pointer-events-none select-none md:hidden">
+            <Image
+              src="/zimo-vertical-mobile.svg"
+              alt="Zimo Vertical"
+              height="0"
+              width="0"
+              className="object-cover zimo-vertical-mobile-size opacity-40"
               placeholder="empty"
               priority={true}
             />

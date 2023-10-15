@@ -33,7 +33,7 @@ export function getFullMarkdown(
 ) {
   return `# ${title}\n\n### ${calendarDate(date)}\n\n${
     description ? `${description}\n\n` : ""
-  }\n\n------${content}`;
+  }\n\n------\n\n${content}`;
 }
 
 export const calendarDate = (dateStr: string) => {

@@ -245,7 +245,12 @@
 }
 
 .zimo-vertical-size {
-  height: min(75vw, 75vh);
+  height: min(70vw, 70vh);
+  width: auto;
+}
+
+.zimo-vertical-mobile-size {
+  height: min(85vw, 85vh);
   width: auto;
 }
 
@@ -644,4 +649,8 @@
   transform: translate(var(--tw-translate-x), var(--tw-translate-y))
     rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.main-page-title-height {
+  height: 40rem;
 }

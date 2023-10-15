@@ -66,7 +66,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
           <div className="hover:underline cursor-pointer">About</div>
         </Link>
       </div>
-      <div className="text-center text-xs md:text-sm">
+      <div className="text-center text-sm">
         &copy; {displayYear} Zimo Luo. All Rights Reserved.
         {user && (
           <>
@@ -76,7 +76,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
                 theme === "about" ? "about" : "management"
               }/terms-of-use`}
             >
-              Terms of Use
+              Terms&nbsp;of&nbsp;Use
             </Link>
             {" and "}
             <Link
@@ -84,9 +84,9 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
                 theme === "about" ? "about" : "management"
               }/privacy-policy`}
             >
-              Privacy Policy
+              Privacy&nbsp;Policy
             </Link>
-            {" applies."}
+            {" apply."}
           </>
         )}
       </div>
