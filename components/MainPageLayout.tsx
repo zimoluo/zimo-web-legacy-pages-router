@@ -75,7 +75,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
   const siteThemeColor = siteThemeColorMap[theme] || siteThemeColorMap["zimo"];
 
   return (
-    <main>
+    <main className="flex flex-col min-h-screen">
       <Head>
         <link
           rel="icon"
@@ -125,6 +125,10 @@ const MainPageLayout: React.FC<LayoutProps> = ({
       <div className={`font-arial ${textColorClass} ${className}`}>
         {children}
       </div>
+      <div
+        className="select-none pointer-events-none flex-grow"
+        aria-hidden="true"
+      />
       <Footer theme={theme} />
     </main>
   );
