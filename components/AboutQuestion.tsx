@@ -55,10 +55,11 @@ const AboutQuestion: React.FC<Props> = ({
     <section
       className={`${
         index !== 0 ? "border-about-pane-t" : ""
-      } ${borderColorClass} border-opacity-20 text-base md:text-lg cursor-pointer`}
+      } ${borderColorClass} border-opacity-20 text-base md:text-lg`}
     >
       <div className="w-full flex items-center mt-4">
         <h2
+          className="cursor-pointer"
           onClick={() => {
             setIsExpanded(!isExpanded);
           }}
