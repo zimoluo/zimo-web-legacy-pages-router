@@ -66,7 +66,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
           <div className="hover:underline cursor-pointer">About</div>
         </Link>
       </div>
-      <div className="text-center text-sm">
+      <div className="text-center text-xs md:text-sm">
         &copy; {displayYear} Zimo Luo. All Rights Reserved.
         {user && (
           <>
