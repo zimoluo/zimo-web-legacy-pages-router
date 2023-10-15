@@ -17,7 +17,7 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({ theme }) => {
 
   if (theme === "about") {
     backgroundImageSrc =
-      settings.backgroundRichness === "minimal"
+      settings.backgroundRichness !== "rich"
         ? "/about-pane-opaque.svg"
         : backgroundImageSrc;
   }
