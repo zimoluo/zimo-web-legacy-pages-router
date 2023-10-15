@@ -21,10 +21,23 @@ const AboutQuestion: React.FC<Props> = ({
   const [maxHeight, setMaxHeight] = useState<string>("0px");
 
   useEffect(() => {
-    if (columnRef.current) {
-      const height = columnRef.current.scrollHeight;
-      setMaxHeight(`${height}px`);
-    }
+    const handleResize = () => {
+      if (columnRef.current) {
+        const height = columnRef.current.scrollHeight;
+        setMaxHeight(`${height}px`);
+      }
+    };
+
+    // Set initial maxHeight
+    handleResize();
+
+    // Add event listener to window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [columnRef]);
 
   const paddingAmount = 1.8;

@@ -17,7 +17,7 @@ export default function Home({ allPosts }: Props) {
           title="State and Flow of Mind."
           subtitle="Welcome, my friend. I have been expecting you."
         />
-        <nav className="-mt-32 mb-4 flex items-center md:justify-end px-8 md:px-36">
+        <nav className="-mt-12 mb-4 flex items-center md:justify-end px-8 md:px-36">
           <div className="w-full search-bar-width">
             <BlogSearchBox />
           </div>

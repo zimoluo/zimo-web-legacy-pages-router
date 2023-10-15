@@ -17,7 +17,6 @@ const AboutQuestionList: React.FC<Props> = ({ questions, descriptions }) => {
 
   return (
     <>
-      <p className="py-4 font-bold text-xl">If you have questions...</p>
       {questions.map((question, index) => (
         <AboutQuestion
           key={index}
