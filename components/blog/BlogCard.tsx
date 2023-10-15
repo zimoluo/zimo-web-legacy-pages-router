@@ -39,7 +39,7 @@ const BlogCard = ({
               <div className="ml-2 text-sm font-bold">{author}</div>
             </div>
 
-            <h2 className="mt-3 text-md md:text-2xl font-bold">{title}</h2>
+            <h2 className="mt-3 text-lg md:text-2xl font-bold">{title}</h2>
 
             <h3 className="hidden md:block text-lg text-fuchsia-800 opacity-70">
               {enrichTextContent(description)}
