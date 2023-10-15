@@ -68,28 +68,26 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
       </div>
       <div className="text-center text-sm">
         &copy; {displayYear} Zimo Luo. All Rights Reserved.
-        {user && (
-          <>
-            {" "}
-            <Link
-              href={`/${
-                theme === "about" ? "about" : "management"
-              }/terms-of-use`}
-            >
-              Terms of Use
-            </Link>
-            {" and "}
-            <Link
-              href={`/${
-                theme === "about" ? "about" : "management"
-              }/privacy-policy`}
-            >
-              Privacy Policy
-            </Link>
-            {" applies."}
-          </>
-        )}
       </div>
+      {user && (
+        <div className="text-center text-sm">
+          {" "}
+          <Link
+            href={`/${theme === "about" ? "about" : "management"}/terms-of-use`}
+          >
+            Terms of Use
+          </Link>
+          {" and "}
+          <Link
+            href={`/${
+              theme === "about" ? "about" : "management"
+            }/privacy-policy`}
+          >
+            Privacy Policy
+          </Link>
+          {" applies."}
+        </div>
+      )}
     </footer>
   );
 };
