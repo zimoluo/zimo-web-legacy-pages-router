@@ -225,17 +225,13 @@ export function formatLocation(location: LocationData): string {
 }
 
 export const enrichTextContent = (content: string): ReactNode[] => {
-  const escapedContent = content
-    .replace(/\\\*/g, "%%ESCAPED_ASTERISK%%")
-    .replace(/\\~~/g, "%%ESCAPED_TILDE~~");
+  const escapedContent = content.replace(/\\\*/g, "%%ESCAPED_ASTERISK%%");
   const splitContent = escapedContent.split(
     /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~)/g
   );
 
   return splitContent.map((chunk, index) => {
-    const restoredChunk = chunk
-      .replace(/%%ESCAPED_ASTERISK%%/g, "*")
-      .replace(/%%ESCAPED_TILDE~~/g, "~~");
+    const restoredChunk = chunk.replace(/%%ESCAPED_ASTERISK%%/g, "*");
 
     if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
       return <strong key={index}>{restoredChunk.slice(2, -2)}</strong>;
