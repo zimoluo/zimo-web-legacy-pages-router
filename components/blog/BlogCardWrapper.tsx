@@ -19,11 +19,24 @@ const BlogCardWrapper = ({
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (cardRef.current) {
-      const height = cardRef.current.scrollHeight;
-      setMaxHeight(`${height}px`);
-    }
-  }, []);
+    const handleResize = () => {
+      if (cardRef.current) {
+        const height = cardRef.current.scrollHeight;
+        setMaxHeight(`${height}px`);
+      }
+    };
+
+    // Set initial maxHeight
+    handleResize();
+
+    // Add event listener to window resize
+    window.addEventListener("resize", handleResize);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [cardRef]);
 
   useEffect(() => {
     setPaddingY(isVisible ? "16px" : "0px");
