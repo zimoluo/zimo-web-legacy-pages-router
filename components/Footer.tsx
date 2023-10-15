@@ -9,6 +9,7 @@ import {
 } from "../interfaces/themeMaps";
 import Image from "next/image";
 import { useSettings } from "./contexts/SettingsContext";
+import { useUser } from "./contexts/UserContext";
 
 type FooterProps = {
   theme: ThemeType;
@@ -22,6 +23,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
 
   const { settings } = useSettings();
+  const { user } = useUser();
 
   const currentYear = new Date().getFullYear();
   const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
@@ -51,21 +53,41 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         <Link href="/" passHref>
           <div className="hover:underline cursor-pointer">Home</div>
         </Link>
-        <Link href="/photos" passHref>
+        <Link href="/photos">
           <div className="hover:underline cursor-pointer">Album</div>
         </Link>
-        <Link href="/blog" passHref>
+        <Link href="/blog">
           <div className="hover:underline cursor-pointer">Blog</div>
         </Link>
-        <Link href="/projects" passHref>
+        <Link href="/projects">
           <div className="hover:underline cursor-pointer">Projects</div>
         </Link>
-        <Link href="/about" passHref>
+        <Link href="/about">
           <div className="hover:underline cursor-pointer">About</div>
         </Link>
       </div>
       <div className="text-center text-sm">
-        &copy; {displayYear} Zimo Luo. All Rights Reserved.
+        &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
+        {user && (
+          <>
+            <Link
+              href={`/${
+                theme === "about" ? "about" : "management"
+              }/terms-of-use`}
+            >
+              Terms of Use
+            </Link>
+            {" and "}
+            <Link
+              href={`/${
+                theme === "about" ? "about" : "management"
+              }/privacy-policy`}
+            >
+              Privacy Policy
+            </Link>
+            {" applies."}
+          </>
+        )}
       </div>
     </footer>
   );
