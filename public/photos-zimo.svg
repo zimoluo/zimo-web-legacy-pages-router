@@ -1,1 +1,58 @@
-<svg stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1060.54 1060.54" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><linearGradient gradientUnits="userSpaceOnUse" id="b" x1="166.229" x2="866.993" y1="801.982" y2="149.564"><stop offset=".001" stop-color="#ffbc00"/><stop offset="1" stop-color="#ff4f00"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="e" x1="6.456" x2="1054.08" y1="692.102" y2="692.102"><stop offset=".001" stop-color="#ffbc00"/><stop offset="1" stop-color="#ff4f00"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="f" x1="6.456" x2="1054.08" y1="692.102" y2="692.102"><stop offset=".001" stop-color="#ffbc00"/><stop offset="1" stop-color="#ff4f00"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="i" x1="5.314" x2="1052.94" y1="463.128" y2="463.128"><stop offset=".001" stop-color="#ffbc00"/><stop offset="1" stop-color="#ff4f00"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="j" x1="-276.928" x2="770.698" y1="988.178" y2="988.178"><stop offset=".001" stop-color="#ffbc00"/><stop offset="1" stop-color="#ff4f00"/></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id="k" x1="261.96" x2="1309.59" y1="985.824" y2="985.824"><stop offset=".001" stop-color="#ffbc00"/><stop offset="1" stop-color="#ff4f00"/></linearGradient><path d="M18.27 530.27c0-282.77 229.23-512 512-512s512 229.23 512 512-229.23 512-512 512-512-229.23-512-512z" id="c"/><path d="M526.864-60.648c-221.687.967-410.475 139.524-486.099 334.39-19.317 73.683-31.003 150.47-33.72 229.561.473 6.147.894 12.312 1.572 18.399-.645.329-1.257.715-1.9 1.048-.091 5.718-.261 11.414-.261 17.154 0 381.386 203.984 714.856 508.623 898.076 1.047-.62 2.166-1.13 3.209-1.77 5.134 3.06 10.468 5.76 15.714 8.65 310.993-181.69 520.078-518.792 520.078-904.956 0-1.249-.06-2.484-.06-3.731-1.95-1.164-3.8-2.464-5.77-3.603 2.28-17.136 3.47-34.592 4.06-52.184-3.55-63.328-12.66-125.149-26.97-184.971C955.129 87.603 758.27-61.656 526.864-60.648z" id="g"/></defs><clipPath id="a"><path d="M0 0h1060.54v1060.54H0z"/></clipPath><g clip-path="url(#a)" vectornator:layerName="Layer 1"><g vectornator:layerName="Group 4"><use fill="url(#b)" stroke="#a24700" stroke-width="40" vectornator:layerName="Oval 1" xlink:href="#c"/><clipPath clip-rule="nonzero" id="d"><use xlink:href="#c"/></clipPath><g vectornator:layerName="Group 3" clip-path="url(#d)"><path d="M526.864-60.648c-221.687.967-410.475 139.524-486.099 334.39-19.317 73.683-31.003 150.47-33.72 229.561.473 6.147.894 12.312 1.572 18.399-.645.329-1.257.715-1.9 1.048-.091 5.718-.261 11.414-.261 17.154 0 381.386 203.984 714.856 508.623 898.076 1.047-.62 2.166-1.13 3.209-1.77 5.134 3.06 10.468 5.76 15.714 8.65 310.993-181.69 520.078-518.792 520.078-904.956 0-1.249-.06-2.484-.06-3.731-1.95-1.164-3.8-2.464-5.77-3.603 2.28-17.136 3.47-34.592 4.06-52.184-3.55-63.328-12.66-125.149-26.97-184.971C955.129 87.603 758.27-61.656 526.864-60.648z" fill="url(#e)" opacity=".332" stroke="#a24700" stroke-width="40" vectornator:layerName="path"/><g vectornator:layerName="path"><use fill="url(#f)" stroke="#a24700" stroke-width="40" vectornator:layerName="path" xlink:href="#g"/><clipPath clip-rule="nonzero" id="h"><use xlink:href="#g"/></clipPath><g clip-path="url(#h)" stroke="#a24700" stroke-width="40"><path d="M5.319 465.411C4.059 176.119 237.554-59.419 526.845-60.68c289.291-1.261 524.835 232.235 526.095 521.526 1.26 289.291-232.237 524.829-521.529 526.091-289.292 1.26-524.83-232.235-526.092-521.526z" fill="url(#i)" vectornator:layerName="Oval 1"/><path d="M-276.923 990.459c-1.261-289.291 232.234-524.83 521.525-526.091 289.292-1.26 524.831 232.235 526.091 521.526 1.262 289.296-232.235 524.836-521.526 526.096-289.291 1.26-524.83-232.24-526.09-521.531z" fill="url(#j)" vectornator:layerName="Oval 2"/><path d="M261.965 988.11c-1.26-289.291 232.235-524.829 521.526-526.091 289.289-1.26 524.839 232.235 526.099 521.526 1.26 289.295-232.24 524.825-521.532 526.085-289.293 1.27-524.831-232.23-526.093-521.52z" fill="url(#k)" vectornator:layerName="Oval 3"/></g></g></g></g><path d="M18.27 530.27c0-282.77 229.23-512 512-512s512 229.23 512 512-229.23 512-512 512-512-229.23-512-512z" fill="none" stroke="#a24700" stroke-width="40" vectornator:layerName="Oval 1"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1060.54 1060.54" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M22.2699 530.27C22.2699 249.709 249.709 22.2699 530.27 22.2699C810.831 22.2699 1038.27 249.709 1038.27 530.27C1038.27 810.831 810.831 1038.27 530.27 1038.27C249.709 1038.27 22.2699 810.831 22.2699 530.27Z" id="Fill"/>
+<linearGradient gradientTransform="matrix(0.992188 0 0 0.992188 4.14273 4.14273)" gradientUnits="userSpaceOnUse" id="LinearGradient" x1="166.229" x2="866.993" y1="801.982" y2="149.564">
+<stop offset="0.00113605" stop-color="#ffbc00"/>
+<stop offset="1" stop-color="#ff4f00"/>
+</linearGradient>
+<linearGradient gradientTransform="matrix(0.992188 0 0 0.992188 4.14273 4.14273)" gradientUnits="userSpaceOnUse" id="LinearGradient_2" x1="6.45599" x2="1054.08" y1="692.102" y2="692.102">
+<stop offset="0.00113605" stop-color="#ffbc00"/>
+<stop offset="1" stop-color="#ff4f00"/>
+</linearGradient>
+<path d="M526.89-56.0311C306.936-55.0725 119.623 82.4023 44.5892 275.746C25.4235 348.854 13.8289 425.04 11.1336 503.514C11.6018 509.613 12.02 515.729 12.6927 521.769C12.0528 522.096 11.4457 522.478 10.8074 522.809C10.7168 528.482 10.5483 534.133 10.5483 539.829C10.5483 918.235 212.938 1249.1 515.197 1430.89C516.237 1430.27 517.347 1429.76 518.381 1429.14C523.475 1432.17 528.768 1434.85 533.973 1437.71C842.536 1257.45 1049.99 922.975 1049.99 539.829C1049.99 538.589 1049.93 537.364 1049.92 536.127C1047.99 534.972 1046.16 533.682 1044.21 532.552C1046.46 515.55 1047.64 498.231 1048.24 480.775C1044.71 417.942 1035.67 356.604 1021.47 297.25C951.81 91.0612 756.488-57.0316 526.89-56.0311Z" id="Fill_2"/>
+<linearGradient gradientTransform="matrix(0.992188 0 0 0.992188 4.14273 4.14273)" gradientUnits="userSpaceOnUse" id="LinearGradient_3" x1="6.45599" x2="1054.08" y1="692.102" y2="692.102">
+<stop offset="0.00113605" stop-color="#ffbc00"/>
+<stop offset="1" stop-color="#ff4f00"/>
+</linearGradient>
+<linearGradient gradientTransform="matrix(0.992188 0 0 0.992188 4.14273 4.14273)" gradientUnits="userSpaceOnUse" id="LinearGradient_4" x1="5.31362" x2="1052.94" y1="463.128" y2="463.128">
+<stop offset="0.00113605" stop-color="#ffbc00"/>
+<stop offset="1" stop-color="#ff4f00"/>
+</linearGradient>
+<linearGradient gradientTransform="matrix(0.992188 0 0 0.992188 4.14273 4.14273)" gradientUnits="userSpaceOnUse" id="LinearGradient_5" x1="-276.928" x2="770.698" y1="988.178" y2="988.178">
+<stop offset="0.00113605" stop-color="#ffbc00"/>
+<stop offset="1" stop-color="#ff4f00"/>
+</linearGradient>
+<linearGradient gradientTransform="matrix(0.992188 0 0 0.992188 4.14273 4.14273)" gradientUnits="userSpaceOnUse" id="LinearGradient_6" x1="261.96" x2="1309.59" y1="985.824" y2="985.824">
+<stop offset="0.00113605" stop-color="#ffbc00"/>
+<stop offset="1" stop-color="#ff4f00"/>
+</linearGradient>
+</defs>
+<g id="Layer-1" vectornator:layerName="Layer 1">
+<g opacity="1" vectornator:layerName="Group 4">
+<use fill="url(#LinearGradient)" fill-rule="nonzero" opacity="1" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Oval 1" xlink:href="#Fill"/>
+<clipPath clip-rule="nonzero" id="ClipPath">
+<use xlink:href="#Fill"/>
+</clipPath>
+<g clip-path="url(#ClipPath)">
+<g opacity="1" vectornator:layerName="Group 3">
+<path d="M526.89-56.0311C306.936-55.0725 119.623 82.4023 44.5892 275.746C25.4235 348.854 13.8289 425.04 11.1336 503.514C11.6018 509.613 12.02 515.729 12.6927 521.769C12.0528 522.096 11.4457 522.478 10.8074 522.809C10.7168 528.482 10.5483 534.133 10.5483 539.829C10.5483 918.235 212.938 1249.1 515.197 1430.89C516.237 1430.27 517.347 1429.76 518.381 1429.14C523.475 1432.17 528.768 1434.85 533.973 1437.71C842.536 1257.45 1049.99 922.975 1049.99 539.829C1049.99 538.589 1049.93 537.364 1049.92 536.127C1047.99 534.972 1046.16 533.682 1044.21 532.552C1046.46 515.55 1047.64 498.231 1048.24 480.775C1044.71 417.942 1035.67 356.604 1021.47 297.25C951.81 91.0612 756.488-57.0316 526.89-56.0311Z" fill="url(#LinearGradient_2)" fill-rule="nonzero" opacity="0.332045" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="path"/>
+<g opacity="1" vectornator:layerName="path">
+<use fill="url(#LinearGradient_3)" fill-rule="nonzero" opacity="1" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="path" xlink:href="#Fill_2"/>
+<clipPath clip-rule="nonzero" id="ClipPath_2">
+<use xlink:href="#Fill_2"/>
+</clipPath>
+<g clip-path="url(#ClipPath_2)">
+<path d="M9.41988 465.917C8.16974 178.886 239.84-54.8125 526.872-56.0634C813.903-57.3144 1047.6 174.357 1048.85 461.388C1050.1 748.419 818.434 982.117 531.402 983.369C244.37 984.619 10.6716 752.949 9.41988 465.917Z" fill="url(#LinearGradient_4)" fill-rule="nonzero" opacity="1" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Oval 1"/>
+<path d="M-270.617 986.864C-271.868 699.832-40.1971 466.134 246.834 464.883C533.865 463.632 767.565 695.303 768.815 982.334C770.067 1269.37 538.394 1503.07 251.363 1504.32C-35.6679 1505.57-269.366 1273.89-270.617 986.864Z" fill="url(#LinearGradient_5)" fill-rule="nonzero" opacity="1" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Oval 2"/>
+<path d="M264.061 984.533C262.811 697.502 494.482 463.804 781.513 462.552C1068.54 461.302 1302.25 692.973 1303.5 980.004C1304.75 1267.04 1073.08 1500.73 786.044 1501.98C499.011 1503.24 265.313 1271.56 264.061 984.533Z" fill="url(#LinearGradient_6)" fill-rule="nonzero" opacity="1" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Oval 3"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<path d="M22.2699 530.27C22.2699 249.709 249.709 22.2699 530.27 22.2699C810.831 22.2699 1038.27 249.709 1038.27 530.27C1038.27 810.831 810.831 1038.27 530.27 1038.27C249.709 1038.27 22.2699 810.831 22.2699 530.27Z" fill="none" opacity="1" stroke="#a24700" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Oval 1"/>
+</g>
+</svg>
