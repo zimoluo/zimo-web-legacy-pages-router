@@ -43,7 +43,7 @@ const AboutBackgroundAnimation: React.FC = () => {
               alt="Zimo Vertical"
               height="0"
               width="0"
-              className="object-cover zimo-vertical-size opacity-50"
+              className="object-cover zimo-vertical-size opacity-80"
               placeholder="empty"
               priority={true}
             />
@@ -54,7 +54,7 @@ const AboutBackgroundAnimation: React.FC = () => {
               alt="Zimo Vertical"
               height="0"
               width="0"
-              className="object-cover zimo-vertical-mobile-size opacity-40"
+              className="object-cover zimo-vertical-mobile-size opacity-60"
               placeholder="empty"
               priority={true}
             />

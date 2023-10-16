@@ -21,7 +21,7 @@ export default function Home() {
           <section className="mb-16">
             <Image
               src="/zimo-profile.svg"
-              className="w-28 md:w-36 h-auto aspect-square float-right"
+              className="w-28 md:w-36 h-auto aspect-square float-right ml-1.5 mb-1.5"
               height={144}
               width={144}
               alt="Zimo's Profile"
