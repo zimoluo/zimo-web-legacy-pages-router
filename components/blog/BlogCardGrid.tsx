@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef } from "react";
 import { useBlogSearch } from "../contexts/BlogSearchContext";
 import BlogCardWrapper from "./BlogCardWrapper";
 
@@ -7,6 +8,14 @@ type Props = {
 
 const BlogCardGrid = ({ posts }: Props) => {
   const { blogSearchContent } = useBlogSearch();
+
+  function usePrevious<T>(value: T): T {
+    const ref = useRef<T>(value);
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
 
   const processSearchContent = (searchContent: string) => {
     return searchContent
@@ -27,9 +36,6 @@ const BlogCardGrid = ({ posts }: Props) => {
   };
 
   const advancedFilter = (post: PostData & { unlisted: boolean }) => {
-    // Always exclude unlisted posts
-    if (post.unlisted) return false;
-
     // If search content is empty, include all (non-unlisted) posts
     if (!blogSearchContent.trim()) return true;
 
@@ -51,13 +57,55 @@ const BlogCardGrid = ({ posts }: Props) => {
     });
   };
 
+  const visibilityArray = posts.map((post) => advancedFilter(post));
+
+  const prevVisibilityArray = usePrevious(visibilityArray);
+
+  const timeoutArray = useMemo(() => {
+    const arrayLength = visibilityArray.length;
+    const timeouts = new Array(arrayLength).fill(0);
+    const INITIAL_DELAY = 0;
+    const INITIAL_INCREMENT = 160;
+    const MIN_DELAY = 80;
+    const decayRate = Math.random() * 4 + 8;
+
+    const calculateDelay = (currentDelay: number, decrement: number) => {
+      const delay = currentDelay;
+      const newDecrement = Math.max(MIN_DELAY, decrement - decayRate);
+      const newDelay = currentDelay + newDecrement;
+      return [delay, newDelay, newDecrement];
+    };
+
+    let currentDelayForVisible = INITIAL_DELAY;
+    let currentDelayForNotVisible = INITIAL_DELAY;
+    let decrementForVisible = INITIAL_INCREMENT - decayRate;
+    let decrementForNotVisible = INITIAL_INCREMENT - decayRate;
+
+    visibilityArray.forEach((isVisible, index) => {
+      if (isVisible === prevVisibilityArray[index]) {
+        [timeouts[index], currentDelayForVisible, decrementForVisible] =
+          calculateDelay(currentDelayForVisible, decrementForVisible);
+        currentDelayForNotVisible = INITIAL_DELAY;
+        decrementForNotVisible = INITIAL_INCREMENT - decayRate;
+      } else {
+        [timeouts[index], currentDelayForNotVisible, decrementForNotVisible] =
+          calculateDelay(currentDelayForNotVisible, decrementForNotVisible);
+        currentDelayForVisible = INITIAL_DELAY;
+        decrementForVisible = INITIAL_INCREMENT - decayRate;
+      }
+    });
+
+    return timeouts;
+  }, [visibilityArray]);
+
   return (
     <div className="grid grid-cols-1 mb-24 px-8 md:px-36">
-      {posts.map((post) => (
+      {posts.map((post, index) => (
         <BlogCardWrapper
-          key={post.slug}
+          key={index}
           post={post}
-          isVisible={advancedFilter(post)}
+          isVisible={visibilityArray[index]}
+          timeout={timeoutArray[index]}
         />
       ))}
     </div>
