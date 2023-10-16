@@ -57,11 +57,16 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
   };
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (initial = false) => {
       const currentScrollY = window.scrollY;
       const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
 
       setScrollY(currentScrollY);
+
+      if (initial) {
+        setNavbarVisible(true);
+        return;
+      }
 
       if (currentScrollY < 40) {
         setNavbarVisible(true);
@@ -81,12 +86,16 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       setLastScrollY(currentScrollY);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    handleScroll(true);
+    window.addEventListener("scroll", () => {
+      handleScroll();
+    });
 
     // Cleanup
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", () => {
+        handleScroll();
+      });
     };
   }, [lastScrollY]);
 
