@@ -55,7 +55,7 @@ export default function PhotosMain({
         />
       )}
       {(shouldRender === 0 || shouldRender === 2) && (
-        <article className="pt-16 px-4 pb-4 bg-orange-50 bg-opacity-80 md:hidden">
+        <article className="pt-16 px-5 pb-4 bg-orange-50 bg-opacity-80 md:hidden">
           <PhotosCard
             title={title}
             date={date}
