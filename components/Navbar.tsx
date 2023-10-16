@@ -81,6 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
       setLastScrollY(currentScrollY);
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
 
     // Cleanup
