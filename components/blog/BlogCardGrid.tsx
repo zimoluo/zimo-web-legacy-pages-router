@@ -67,19 +67,19 @@ const BlogCardGrid = ({ posts }: Props) => {
     const INITIAL_DELAY = 0;
     const INITIAL_INCREMENT = 160;
     const MIN_DELAY = 80;
-    const decayRate = Math.random() * 4 + 8;
+    const decayRate = Math.random() * 0.15 + 0.8;
 
     const calculateDelay = (currentDelay: number, decrement: number) => {
       const delay = currentDelay;
-      const newDecrement = Math.max(MIN_DELAY, decrement - decayRate);
+      const newDecrement = Math.max(MIN_DELAY, decrement * decayRate);
       const newDelay = currentDelay + newDecrement;
       return [delay, newDelay, newDecrement];
     };
 
     let currentDelayForVisible = INITIAL_DELAY;
     let currentDelayForNotVisible = INITIAL_DELAY;
-    let decrementForVisible = INITIAL_INCREMENT - decayRate;
-    let decrementForNotVisible = INITIAL_INCREMENT - decayRate;
+    let decrementForVisible = INITIAL_INCREMENT * decayRate;
+    let decrementForNotVisible = INITIAL_INCREMENT * decayRate;
 
     visibilityArray.forEach((isVisible, index) => {
       if (isVisible === prevVisibilityArray[index]) {
