@@ -9,38 +9,17 @@ type Props = {
 };
 
 const BlogCardWrapper = ({ post, isVisible, timeout }: Props) => {
-  const [maxHeight, setMaxHeight] = useState("1000px");
-  const [displayMaxHeight, setDisplayMaxHeight] = useState(maxHeight);
+  const [displayMaxHeight, setDisplayMaxHeight] = useState("1000px");
   const [paddingY, setPaddingY] = useState("16px");
   const [scale, setScale] = useState("1");
   const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (cardRef.current) {
-        const height = cardRef.current.scrollHeight;
-        setMaxHeight(`${height}px`);
-      }
-    };
-
-    // Set initial maxHeight
-    handleResize();
-
-    // Add event listener to window resize
-    window.addEventListener("resize", handleResize);
-
-    // Clean up event listener on component unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [cardRef]);
 
   useEffect(() => {
     const handleAnimation = () => {
       if (isVisible) {
         setPaddingY("16px");
         setScale("1");
-        setDisplayMaxHeight(maxHeight);
+        setDisplayMaxHeight("1000px");
       } else {
         setPaddingY("0px");
         setScale("0.85");
