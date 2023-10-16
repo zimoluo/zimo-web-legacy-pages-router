@@ -9,7 +9,7 @@ type Props = {
 };
 
 const BlogCardWrapper = ({ post, isVisible, timeout }: Props) => {
-  const [displayMaxHeight, setDisplayMaxHeight] = useState("260");
+  const [displayMaxHeight, setDisplayMaxHeight] = useState("260px");
   const [paddingY, setPaddingY] = useState("16px");
   const [scale, setScale] = useState("1");
   const cardRef = useRef<HTMLDivElement>(null);
