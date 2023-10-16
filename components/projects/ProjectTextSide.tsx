@@ -43,7 +43,7 @@ const ProjectTextSide = ({
           url={urlShare}
         />
       </div>
-      <div className="px-8 md:px-10 pt-4 md:pt-4 pb-6 md:pb-8">
+      <div className="px-4 md:px-10 pt-4 md:pt-4 pb-6 md:pb-8">
         <ProjectsTitleCard
           title={title}
           description={description}
