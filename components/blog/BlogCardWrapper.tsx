@@ -9,7 +9,7 @@ type Props = {
 };
 
 const BlogCardWrapper = ({ post, isVisible, timeout }: Props) => {
-  const [displayMaxHeight, setDisplayMaxHeight] = useState("1000px");
+  const [displayMaxHeight, setDisplayMaxHeight] = useState("260");
   const [paddingY, setPaddingY] = useState("16px");
   const [scale, setScale] = useState("1");
   const cardRef = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ const BlogCardWrapper = ({ post, isVisible, timeout }: Props) => {
       if (isVisible) {
         setPaddingY("16px");
         setScale("1");
-        setDisplayMaxHeight("1000px");
+        setDisplayMaxHeight("260px");
       } else {
         setPaddingY("0px");
         setScale("0.85");
