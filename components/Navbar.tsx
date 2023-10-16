@@ -56,37 +56,35 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
     }, 80);
   };
 
-  const handleScroll = (initial = false) => {
-    const currentScrollY = window.scrollY;
-    const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
+  useEffect(() => {
+    const handleScroll = (initial = false) => {
+      const currentScrollY = window.scrollY;
+      const distanceScrolled = Math.abs(currentScrollY - lastScrollY);
 
-    setScrollY(currentScrollY);
+      setScrollY(currentScrollY);
 
-    if (initial) {
-      setNavbarVisible(true);
-      return;
-    }
+      if (initial) {
+        setNavbarVisible(true);
+        return;
+      }
 
-    if (currentScrollY < 40) {
-      setNavbarVisible(true);
-    } else {
-      if (distanceScrolled >= scrollThreshold) {
-        if (currentScrollY > lastScrollY) {
-          // Scrolling down
-          if (!menuOpen && settings.navigationBar === "flexible")
-            setNavbarVisible(false);
-        } else {
-          // Scrolling up
-          setNavbarVisible(true);
+      if (currentScrollY < 40) {
+        setNavbarVisible(true);
+      } else {
+        if (distanceScrolled >= scrollThreshold) {
+          if (currentScrollY > lastScrollY) {
+            // Scrolling down
+            if (!menuOpen && settings.navigationBar === "flexible")
+              setNavbarVisible(false);
+          } else {
+            // Scrolling up
+            setNavbarVisible(true);
+          }
         }
       }
-    }
 
-    setLastScrollY(currentScrollY);
-  };
-
-  useEffect(() => {
-    handleScroll(true);
+      setLastScrollY(currentScrollY);
+    };
 
     window.addEventListener("scroll", () => {
       handleScroll();
@@ -98,6 +96,10 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
         handleScroll();
       });
     };
+  }, [lastScrollY]);
+
+  useEffect(() => {
+    setNavbarVisible(true);
   }, []);
 
   const barColor =
