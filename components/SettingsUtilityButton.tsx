@@ -42,7 +42,9 @@ const SettingsUtilityButton: React.FC<Props> = ({ utility }) => {
 
   async function deleteAccount(): Promise<void> {
     const sub = user?.sub;
+    const state = user?.state;
     if (!sub) return;
+    if (!state || state === "banned") return;
     await deleteUserAccount(sub);
     await logOut();
   }
