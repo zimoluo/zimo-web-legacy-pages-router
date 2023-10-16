@@ -54,7 +54,7 @@ export default function ProjectMain({
       )}
       {(shouldRender === 0 || shouldRender === 2) && (
         <div className="pt-16 projects-page-bg md:hidden">
-          <div className="mb-0 mx-6">
+          <div className="mb-0 mx-4 md:mx-6">
             <ImageViewer
               url={parsedImage.url}
               text={parsedImage.text}
