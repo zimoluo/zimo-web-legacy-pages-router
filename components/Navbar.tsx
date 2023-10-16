@@ -100,6 +100,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
 
   useEffect(() => {
     setNavbarVisible(true);
+    setScrollY(window.scrollY);
   }, []);
 
   const barColor =
