@@ -6,9 +6,15 @@ type Props = {
   post: PostData & { unlisted: boolean };
   isVisible: boolean;
   timeout: number;
+  duration?: number;
 };
 
-const BlogCardWrapper = ({ post, isVisible, timeout }: Props) => {
+const BlogCardWrapper = ({
+  post,
+  isVisible,
+  timeout,
+  duration = 280,
+}: Props) => {
   const [displayMaxHeight, setDisplayMaxHeight] = useState("260px");
   const [paddingY, setPaddingY] = useState("16px");
   const [scale, setScale] = useState("1");
@@ -34,8 +40,9 @@ const BlogCardWrapper = ({ post, isVisible, timeout }: Props) => {
   const defaultStyle = {
     maxHeight: displayMaxHeight,
     overflow: "hidden",
-    transition:
-      "max-height 0.3s ease-in-out, padding 0.3s ease-in-out, transform 0.3s ease-in-out",
+    transition: `max-height ${duration / 1000}s ease-in-out, padding ${
+      duration / 1000
+    }s ease-in-out, transform ${duration / 1000}s ease-in-out`,
     paddingTop: paddingY,
     paddingBottom: paddingY,
     transform: `scale(${scale})`,

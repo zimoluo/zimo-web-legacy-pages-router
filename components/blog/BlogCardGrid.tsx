@@ -106,6 +106,12 @@ const BlogCardGrid = ({ posts }: Props) => {
           post={post}
           isVisible={visibilityArray[index]}
           timeout={timeoutArray[index]}
+          duration={Math.min(
+            280,
+            2800 /
+              visibilityArray.filter((val, i) => val !== prevVisibilityArray[i])
+                .length
+          )}
         />
       ))}
     </div>
