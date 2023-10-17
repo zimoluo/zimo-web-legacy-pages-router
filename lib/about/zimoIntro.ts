@@ -3,7 +3,7 @@ Zimo. zimo. ZIMO. Eunoe. Kawarage. Choose your call – names comprise the soul.
 
 I like building projects. Apart from algorithm-focused CS I do a lot of programming – a fancier name would be *software engineering*. Full-stack engineer, kinda chill. My primary language is Python, but I'm currently switching to JavaScript ecosystem. I guess neither of the two is a perfect solution.
 
-Avid Minecraft player. Technical survival, Datapack and MCFunction, Bedwars (sucks bad). My username is \`g2245820920\` on Java and \`WhiteGkings\` on Bedrock.
+Avid Minecraft player. Technical survival, Datapack and mcfunction, Bedwars (sucks bad). My username is \`g2245820920\` on Java and \`WhiteGkings\` on Bedrock.
 
 If you watch Star Wars then you're with me. If you're not with me then you're my enemy. Unless you're also Tolkien fan. In this case I should say, may the Star of Eärendil be with you.
 

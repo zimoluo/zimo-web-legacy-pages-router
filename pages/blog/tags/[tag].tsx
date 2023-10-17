@@ -42,8 +42,6 @@ export const getStaticProps = async (context: { params: { tag: string } }) => {
   // Extract tag from path
   const { tag } = context.params;
 
-  console.warn(tag);
-
   // Fetch all posts
   const allPosts = await getAllPosts([
     "title",

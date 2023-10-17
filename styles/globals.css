@@ -651,6 +651,7 @@
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.main-page-title-height {
-  height: max(calc(100vh - 8rem), 32rem);
+.main-page-title {
+  margin-top: max(8rem, 35vh);
+  margin-bottom: max(8rem, 25vh);
 }
