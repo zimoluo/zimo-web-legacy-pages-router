@@ -19,6 +19,11 @@ const SocialMediaButtonArray: React.FC<Props> = ({ theme = "zimo" }) => {
       icon: "/homepage-icons/reddit.svg",
     },
     {
+      name: "Discord",
+      url: "https://discord.com/users/465654991970107404",
+      icon: "/homepage-icons/discord.svg",
+    },
+    {
       name: "Instagram",
       url: "https://www.instagram.com/zeemoluo/",
       icon: "/homepage-icons/instagram.svg",
