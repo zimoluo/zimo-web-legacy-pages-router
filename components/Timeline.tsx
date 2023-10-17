@@ -31,10 +31,10 @@ const Timeline: React.FC<TimelineProps> = ({ events }) => {
           <div className="absolute h-full w-0.5 bg-neutral-600 top-0 -left-2" />
           <div className="absolute w-6 h-6 bg-white border-2 border-neutral-600 rounded-full -left-5 top-8" />
           <div
-            className={`bg-neutral-50 bg-opacity-40 backdrop-blur-xl shadow-lg p-4 rounded-xl ml-6`}
+            className={`bg-neutral-50 bg-opacity-40 backdrop-blur-xl shadow-lg p-4 rounded-xl ml-2`}
           >
-            <h3 className="font-bold mb-2">{formatDate(date)}</h3>
-            <p>{text}</p>
+            <h3 className="font-bold mb-2 text-lg">{formatDate(date)}</h3>
+            <p className="text-base">{text}</p>
           </div>
         </div>
       ))}

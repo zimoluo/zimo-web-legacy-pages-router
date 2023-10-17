@@ -32,7 +32,7 @@ export default function Home() {
       </MainPageTitle>
       <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
         <div style={{ maxWidth: "54rem" }}>
-          <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-3 text-lg">
+          <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-3 text-base">
             <h3 className="text-xl font-bold mb-2">Welcome to Zimo Web!</h3>
             This is my website: lab, personal playground, of frontend connecting
             to backend, of design meeting functionality. Explore the{" "}
@@ -72,7 +72,7 @@ export default function Home() {
                   section="blog"
                   slug="the-ivy-tower"
                   date="2023-07-31"
-                  className="mt-2"
+                  className="mt-4"
                   description="The ivy tower stands within."
                 />
               </div>
@@ -81,8 +81,8 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-2">Timeline</h3>
               <Timeline
                 events={{
-                  "2023-8-19": "The idea of Zimo Web is formed.",
-                  "2023-11-1": "Zimo Web is publicly released.",
+                  "2023-8-19": "The idea of Zimo Web was formed.",
+                  "2023-11-1": "Zimo Web was publicly released.",
                 }}
               />
             </section>
@@ -96,7 +96,7 @@ export default function Home() {
                   isExpanded={true}
                   messageWord="message"
                 />
-                <div className="px-4 mt-2">
+                <div className="px-4 mt-4">
                   <CommentCardColumn
                     theme="zimo"
                     resourceLocation="about/homepage/messages.json"
