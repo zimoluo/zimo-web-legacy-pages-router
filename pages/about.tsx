@@ -5,6 +5,7 @@ import { zimoIntro } from "@/lib/about/zimoIntro";
 import { aboutDescriptions, aboutQuestions } from "@/lib/about/aboutQuestions";
 import { enrichTextContent } from "@/lib/util";
 import Image from "next/image";
+import SocialMediaButtonArray from "@/components/SocialMediaButtonArray";
 
 export default function Home() {
   return (
@@ -12,7 +13,9 @@ export default function Home() {
       <MainPageTitle
         title="Trinitas Ingenii Humani."
         subtitle="Thank you for the gaze of my crafts."
-      />
+      >
+        <SocialMediaButtonArray theme="about" />
+      </MainPageTitle>
       <div className="w-full px-6 md:px-14 mb-24 flex justify-center items-center">
         <article
           className="bg-color-about-opaque bg-cover bg-center rounded-xl overflow-hidden shadow-lg px-6 py-4 text-base md:text-lg"
