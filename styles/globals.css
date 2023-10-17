@@ -535,31 +535,6 @@
   border-width: 2.25px;
 }
 
-.zimo-flip-filter {
-  filter: invert(24%) sepia(34%) saturate(0%) hue-rotate(240deg) brightness(95%)
-    contrast(96%);
-}
-
-.photos-flip-filter {
-  filter: invert(32%) sepia(75%) saturate(1327%) hue-rotate(350deg)
-    brightness(87%) contrast(104%);
-}
-
-.projects-flip-filter {
-  filter: invert(35%) sepia(89%) saturate(404%) hue-rotate(126deg)
-    brightness(87%) contrast(94%);
-}
-
-.blog-flip-filter {
-  filter: invert(16%) sepia(78%) saturate(4607%) hue-rotate(289deg)
-    brightness(84%) contrast(91%);
-}
-
-.about-flip-filter {
-  filter: invert(23%) sepia(98%) saturate(1268%) hue-rotate(177deg)
-    brightness(103%) contrast(98%);
-}
-
 .translate-x-flip-mobile {
   --tw-translate-x: 25px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y))

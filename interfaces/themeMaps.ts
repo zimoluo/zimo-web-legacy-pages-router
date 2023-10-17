@@ -223,14 +223,6 @@ export const placeholderTextColorMap: { [key: string]: string } = {
   about: "placeholder:text-sky-700",
 };
 
-export const flipFilterMap: { [key: string]: string } = {
-  zimo: "zimo-flip-filter",
-  photos: "photos-flip-filter",
-  blog: "blog-flip-filter",
-  projects: "projects-flip-filter",
-  about: "about-flip-filter",
-};
-
 export const likeButtonEmptySrc: { [key: string]: string } = {
   zimo: "/thumbs-up.svg",
   photos: "/heart-icon.svg",
