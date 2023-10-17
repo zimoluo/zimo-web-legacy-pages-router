@@ -95,7 +95,7 @@ export default function Home() {
           </div>
           {!settings.disableComments && !securityCommentShutDown && (
             <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-3 text-lg mt-6">
-              <h3 className="text-xl font-bold mb-2">Say something</h3>
+              <h3 className="text-xl font-bold mb-2">Say something...</h3>
               <CommentProvider>
                 <CommentTypeBox
                   theme="zimo"
