@@ -47,7 +47,7 @@ export default function Home() {
             <Link href="/projects" className="underline underline-offset-2">
               Projects
             </Link>{" "}
-            page; you'll find things I've done. Mostly. Or go to the{" "}
+            page; you&apos;ll find things I&apos;ve done. Mostly. Or go to the{" "}
             <Link href="/about" className="underline underline-offset-2">
               About
             </Link>{" "}
