@@ -72,7 +72,7 @@ export default function Home() {
                   section="blog"
                   slug="the-ivy-tower"
                   date="2023-07-31"
-                  className="mt-2"
+                  className="mt-4"
                   description="The ivy tower stands within."
                 />
               </div>
@@ -96,7 +96,7 @@ export default function Home() {
                   isExpanded={true}
                   messageWord="message"
                 />
-                <div className="px-4 mt-2">
+                <div className="px-4 mt-4">
                   <CommentCardColumn
                     theme="zimo"
                     resourceLocation="about/homepage/messages.json"
