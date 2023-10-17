@@ -49,21 +49,21 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         <div>Zimo Web</div>
       </div>
       <div className={`border-t ${borderColorClass} my-4`}></div>
-      <div className="flex justify-around mb-4">
+      <div className="flex justify-around underline-offset-2 mb-4">
         <Link href="/" passHref>
           <div className="hover:underline cursor-pointer">Home</div>
         </Link>
         <Link href="/photos">
-          <div className="hover:underline cursor-pointer">Album</div>
+          <div className="hover:underline">Album</div>
         </Link>
         <Link href="/blog">
-          <div className="hover:underline cursor-pointer">Blog</div>
+          <div className="hover:underline">Blog</div>
         </Link>
         <Link href="/projects">
-          <div className="hover:underline cursor-pointer">Projects</div>
+          <div className="hover:underline">Projects</div>
         </Link>
         <Link href="/about">
-          <div className="hover:underline cursor-pointer">About</div>
+          <div className="hover:underline">About</div>
         </Link>
       </div>
       <div className="text-center text-sm">
@@ -75,6 +75,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
               href={`/${
                 theme === "about" ? "about" : "management"
               }/terms-of-use`}
+              className="hover:underline underline-offset-2"
             >
               Terms&nbsp;of&nbsp;Use
             </Link>
@@ -83,12 +84,22 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
               href={`/${
                 theme === "about" ? "about" : "management"
               }/privacy-policy`}
+              className="hover:underline underline-offset-2"
             >
               Privacy&nbsp;Policy
             </Link>
             {" apply."}
           </>
-        )}
+        )}{" "}
+        Share feedback{" "}
+        <a
+          href="https://forms.gle/hiowUpHKcd5qpx6v8"
+          target="_blank"
+          className="hover:underline underline-offset-2"
+        >
+          here
+        </a>
+        .
       </div>
     </footer>
   );
