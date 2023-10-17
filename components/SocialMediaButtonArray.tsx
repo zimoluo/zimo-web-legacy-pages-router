@@ -45,7 +45,7 @@ const SocialMediaButtonArray: React.FC<Props> = ({ theme = "zimo" }) => {
         >
           <Image
             src={platform.icon}
-            className={`w-8 h-auto aspect-square ${filterClass}`}
+            className={`w-8 h-auto aspect-square ${filterClass} transition-transform duration-300 ease-in-out hover:scale-110`}
             width={16}
             height={16}
             alt={platform.name}

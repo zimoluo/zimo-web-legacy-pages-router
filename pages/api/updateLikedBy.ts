@@ -31,7 +31,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!(rateLimiterMiddleware(req, res, 40, 60 * 1000))) {
+  if (!rateLimiterMiddleware(req, res, 40, 60 * 1000)) {
     res.status(429).json({
       error:
         "Too many requests. You can only like forty articles within a minute.",
@@ -42,7 +42,8 @@ export default async function handler(
   try {
     const { filePath } = req.body;
 
-    const regex = /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|]+$/;
+    const regex = /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|]+\.json$/;
+
     if (!regex.test(filePath)) {
       throw new Error("Illegal file path to be uploaded.");
     }

@@ -8,7 +8,7 @@ export const aboutQuestions = [
 ];
 
 export const aboutDescriptions = [
-  "Contact me via zeemoluo@gmail.com. Should you have any feedback regarding this website, kindly utilize the Feedback Form.",
+  "Contact me via zeemoluo@gmail.com. Should you have any feedback regarding this website, kindly utilize the ~~{Feedback Form}{https://forms.gle/hiowUpHKcd5qpx6v8}~~.",
   "Anything about me. I've always wanted to create some sort of personal playground. It wasn't until I finally had this bit of resolution, the last missing piece in this puzzle.",
   "The website, written in TypeScript, is mostly built with Next.js, a React-based framework. Styling is primarily done using Tailwind CSS. Took little over two months to complete, ground up from design and front-end to back-end. Find more of the story behind this website here. A personal note: I have mixed feelings toward React and Node... It's like, there always seems to be some better solution out there that could make life just a bit easier. And yet here we are, stuck riding the coattails of their fame.",
   "Headers are created in under a minute; I sought something cool to be put there, and there it was.",

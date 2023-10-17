@@ -15,9 +15,14 @@ import { useSettings } from "../contexts/SettingsContext";
 interface Props {
   theme: ThemeType;
   isExpanded: boolean;
+  messageWord?: string;
 }
 
-const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
+const CommentTypeBox: React.FC<Props> = ({
+  theme,
+  isExpanded,
+  messageWord = "comment",
+}) => {
   const { settings } = useSettings();
 
   const { comments, setComments, resourceLocation } = useComments();
@@ -36,7 +41,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
 
   useEffect(() => {
     if (!user) {
-      setPlaceholderName("Sign in to leave a comment.");
+      setPlaceholderName(`Sign in to leave a ${messageWord}.`);
       return;
     }
     if (user && user.state === "banned") {
@@ -44,7 +49,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
       return;
     }
 
-    setPlaceholderName("Leave a comment...");
+    setPlaceholderName(`Leave a ${messageWord}...`);
   }, [user]);
 
   useEffect(() => {
@@ -143,7 +148,7 @@ const CommentTypeBox: React.FC<Props> = ({ theme, isExpanded }) => {
             }`}
             height={16}
             width={16}
-            alt="Send Comment"
+            alt={`Send ${messageWord}`}
           />
         </button>
       )}

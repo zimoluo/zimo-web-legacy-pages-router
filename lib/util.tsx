@@ -249,6 +249,7 @@ export const enrichTextContent = (content: string): ReactNode[] => {
           key={index}
           href={linkMatch[2]}
           className="underline underline-offset-2"
+          target="_blank"
         >
           {linkMatch[1]}
         </a>

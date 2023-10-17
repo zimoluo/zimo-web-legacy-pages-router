@@ -11,13 +11,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (!(rateLimiterMiddleware(req, res, 10, 60 * 1000))) {
-    res
-      .status(429)
-      .json({
-        error:
-          "Too many requests. You can only send ten replies within a minute.",
-      });
+  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
+    res.status(429).json({
+      error:
+        "Too many requests. You can only send ten replies within a minute.",
+    });
     return;
   }
 
@@ -28,7 +26,9 @@ export default async function handler(
   try {
     const { filePath, newReply, commentIndex } = req.body;
 
-    const regex = /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|]+$/;
+    const regex =
+      /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|]+\.json$|^about\/homepage\/messages\.json$/;
+
     if (!regex.test(filePath)) {
       throw new Error("Illegal file path to be uploaded.");
     }

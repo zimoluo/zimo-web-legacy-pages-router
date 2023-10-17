@@ -15,20 +15,20 @@ export default async function handler(
     return res.status(405).end(); // Method Not Allowed
   }
 
-  if (!(rateLimiterMiddleware(req, res, 10, 60 * 1000))) {
-    res
-      .status(429)
-      .json({
-        error:
-          "Too many requests. You can only delete ten replies within a minute.",
-      });
+  if (!rateLimiterMiddleware(req, res, 10, 60 * 1000)) {
+    res.status(429).json({
+      error:
+        "Too many requests. You can only delete ten replies within a minute.",
+    });
     return;
   }
 
   try {
     const { filePath, commentIndex, replyIndex, existingReply } = req.body;
 
-    const regex = /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|]+$/;
+    const regex =
+      /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|]+\.json$|^about\/homepage\/messages\.json$/;
+
     if (!regex.test(filePath)) {
       throw new Error("Illegal file path to be uploaded.");
     }
