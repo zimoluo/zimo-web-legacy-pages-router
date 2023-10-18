@@ -14,7 +14,7 @@ const PhotosModeSwitch = () => {
         }`}
       />
       <button
-        className="mr-3 md:mr-4 relative"
+        className="mr-3 md:mr-4 relative group"
         onClick={() => {
           if (settings.enableGallery) {
             updateSettings({ enableGallery: false });
@@ -23,14 +23,14 @@ const PhotosModeSwitch = () => {
       >
         <Image
           src="/entry-photos-off.svg"
-          className="w-6 md:w-8 h-auto aspect-square"
+          className="w-6 md:w-8 h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110"
           alt="Entry Mode"
           width={32}
           height={32}
         />
         <Image
           src="/entry-photos-on.svg"
-          className={`w-6 md:w-8 h-auto aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
+          className={`w-6 md:w-8 h-auto aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out group-hover:scale-110 ${
             settings.enableGallery ? "opacity-100" : "opacity-0"
           }`}
           alt="Entry Mode"
@@ -40,7 +40,7 @@ const PhotosModeSwitch = () => {
         />
       </button>
       <button
-        className="relative"
+        className="relative group"
         onClick={() => {
           if (!settings.enableGallery) {
             updateSettings({ enableGallery: true });
@@ -49,14 +49,14 @@ const PhotosModeSwitch = () => {
       >
         <Image
           src="/gallery-on.svg"
-          className="w-6 md:w-8 h-auto aspect-square"
+          className="w-6 md:w-8 h-auto aspect-square transition-transform duration-300 ease-in-out group-hover:scale-110"
           alt="Gallery Mode"
           width={32}
           height={32}
         />
         <Image
           src="/gallery-off.svg"
-          className={`w-6 md:w-8 h-auto aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 ${
+          className={`w-6 md:w-8 h-auto aspect-square absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-in-out group-hover:scale-110 ${
             settings.enableGallery ? "opacity-100" : "opacity-0"
           }`}
           alt="Gallery Mode"
