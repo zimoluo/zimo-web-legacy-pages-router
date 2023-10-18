@@ -196,7 +196,7 @@ function ShareButton({
         alt={iconState}
         width={24}
         height={24}
-        className="h-6 w-6"
+        className="h-6 w-6 transition-transform duration-300 ease-in-out hover:scale-110"
       />
     </button>
   );
