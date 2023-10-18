@@ -62,7 +62,7 @@ export default function Home() {
             just drop a hello. Relax. Chill. Enjoy.
           </article>
           <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
-            <section className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 pt-3 pb-4 text-lg">
+            <section className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-lg">
               <h3 className="text-xl font-bold mb-2">Featured</h3>
               <div className="space-y-2">
                 <ArticleCard
@@ -83,7 +83,7 @@ export default function Home() {
                 />
               </div>
             </section>
-            <section className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-3 text-lg mt-6 md:mt-0">
+            <section className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-lg mt-6 md:mt-0">
               <h3 className="text-xl font-bold mb-2">Timeline</h3>
               <Timeline
                 events={{
@@ -94,7 +94,7 @@ export default function Home() {
             </section>
           </div>
           {!settings.disableComments && !securityCommentShutDown && (
-            <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-3 text-lg mt-6">
+            <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-lg mt-6">
               <h3 className="text-xl font-bold mb-2">Say something...</h3>
               <CommentProvider>
                 <CommentTypeBox
