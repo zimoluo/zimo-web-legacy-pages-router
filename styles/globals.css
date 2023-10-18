@@ -641,3 +641,26 @@
     margin-bottom: max(8rem, 25vh);
   }
 }
+
+.project-tile-grid {
+  display: grid;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, 192px);
+}
+
+@media (max-width: 767px) {
+  .project-tile-grid {
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, 144px);
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:px-18 {
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
+  }
+}

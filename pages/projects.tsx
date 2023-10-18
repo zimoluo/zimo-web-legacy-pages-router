@@ -17,7 +17,7 @@ export default function Home({ allEntries }: Props) {
         title="Machina et Artes, Manus Dei Hominum."
         subtitle="Light emits from the power of creation."
       />
-      <ProjectTileGrid entries={allEntries} />
+      <ProjectTileGrid entries={Array(50).fill(null).flatMap(() => allEntries)} />
     </MainPageLayout>
   );
 }
