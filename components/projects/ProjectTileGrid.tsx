@@ -8,7 +8,7 @@ type Props = {
 
 const ProjectTileGrid: React.FC<Props> = ({ entries }) => {
   return (
-    <div className="flex justify-center items-center px-6 md:px-18">
+    <div className="flex justify-center items-center px-6 md:px-18 mb-20 md:mb-24">
       <section className="project-tile-grid w-full">
         {entries.map((entry, index) => (
           <ProjectTile key={index} {...entry} />
