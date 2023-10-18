@@ -37,7 +37,7 @@ export default function Home() {
               settings.disableBackgroundBlur
                 ? ""
                 : "md:backdrop-blur-lg md:bg-opacity-40"
-            } px-4 py-3 text-base`}
+            } px-4 py-4 text-base`}
           >
             <h3 className="text-xl font-bold mb-2">Welcome to Zimo Web!</h3>
             This is my website: lab, personal playground, of frontend connecting
