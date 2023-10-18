@@ -46,9 +46,7 @@ const ArticleCard = ({
         <h3 className="text-lg font-bold">{title}</h3>
         {description && <p className="text-base">{description}</p>}
         <div className="absolute bottom-1 right-2.5 text-sm font-bold">
-          {`${date ? `${formatDate(date)}  ·  ` : ""}${
-            sectionMap[section]
-          } – Zimo`}
+          {`${date ? `${formatDate(date)}  ·  ` : ""}${sectionMap[section]}`}
         </div>
       </div>
     </Link>
