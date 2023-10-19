@@ -312,10 +312,6 @@
     scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.flex-grow-navbar {
-  flex-grow: 2;
-}
-
 .blog-view {
   background-color: rgba(253, 245, 255, 0.825);
 }
@@ -666,4 +662,14 @@
 
 .timeline-bar-shift {
   left: -8.8px;
+}
+
+.navbar-size {
+  width: max(440px, 60%);
+}
+
+@media (max-width: 767px) {
+  .navbar-size {
+    width: max(120px, 80%);
+  }
 }

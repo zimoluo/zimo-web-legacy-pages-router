@@ -124,7 +124,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
             navbarVisible ? navbarClass : `${navbarClass} -translate-y-14`
           }
         >
-          <div className="flex-none">
+          <div className="shrink-0">
             <Link href={`/`} passHref>
               <Image
                 src={`${faviconSrc}`}
@@ -136,9 +136,8 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
               />
             </Link>
           </div>
-          <div className="flex flex-grow"></div>
           <div
-            className={`flex flex-grow-navbar space-x-0 justify-between font-arial`}
+            className={`grid grid-cols-4 gap-x-2 font-arial shrink-0 navbar-size`}
           >
             {["photos", "blog", "projects", "about"].map((item) => (
               <NavbarButton
@@ -148,14 +147,16 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
               />
             ))}
           </div>
-          <div className="flex flex-grow"></div>
-          <div className="flex-none h-6 w-auto aspect-square" />
+          <div
+            className="shrink-0 h-6 w-auto aspect-square select-none pointer-events-none"
+            aria-hidden="true"
+          />
         </nav>
       )}
 
       <MenuSlide isOpen={menuOpen} onClose={restoreNavbar} theme={theme} />
       <button
-        className={`fixed top-3 right-4 flex-none h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-40 ease-out ${
+        className={`fixed top-3 right-4 h-6 w-auto aspect-square hover:scale-125 transform transition-transform duration-300 z-40 ease-out ${
           navbarVisible || menuOpen ? "" : `-translate-y-14`
         } `}
         onClick={menuOpen ? restoreNavbar : openMenu}
