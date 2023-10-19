@@ -1,5 +1,6 @@
 import React from "react";
 import { parse, format, compareAsc } from "date-fns";
+import { enrichTextContent } from "@/lib/util";
 
 interface TimelineProps {
   events: Record<string, string>;
@@ -34,7 +35,7 @@ const Timeline: React.FC<TimelineProps> = ({ events }) => {
             className={`bg-neutral-50 bg-opacity-40 backdrop-blur-xl shadow-lg p-4 rounded-xl ml-2`}
           >
             <h3 className="font-bold mb-2 text-lg">{formatDate(date)}</h3>
-            <p className="text-base">{text}</p>
+            <p className="text-base">{enrichTextContent(text)}</p>
           </div>
         </div>
       ))}
