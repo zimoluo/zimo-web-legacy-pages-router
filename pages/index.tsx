@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <MainPageLayout theme="zimo">
       <MainPageTitle
-        title={`Greetings, I'm\u00A0${titleName}.`}
+        title={`Greetings, I'm\u2019${titleName}.`}
         subtitle="Hello there. I'm glad you made it here."
       >
         <SocialMediaButtonArray theme="zimo" />
