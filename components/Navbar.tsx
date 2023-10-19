@@ -137,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ theme }) => {
             </Link>
           </div>
           <div
-            className={`grid grid-cols-4 gap-x-2 font-arial shrink-0 navbar-size`}
+            className={`grid grid-cols-4 gap-x-1 md:gap-x-2 font-arial shrink-0 navbar-size`}
           >
             {["photos", "blog", "projects", "about"].map((item) => (
               <NavbarButton
