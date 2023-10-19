@@ -11,10 +11,16 @@ import generalMarkdownStyles from "@/components/general-text-markdown.module.css
 import { ThemeType } from "@/interfaces/themeMaps";
 import katex from "katex";
 import codeBoxExtraStyle from "@/components/code-box-extra.module.css";
+import ArticleCard from "@/components/ArticleCard";
+import Timeline from "@/components/Timeline";
+import BlogCard from "@/components/blog/BlogCard";
 
 const componentsMap: { [key: string]: React.FC<any> } = {
   ImageViewer,
   MusicPlayerCard,
+  ArticleCard,
+  Timeline,
+  BlogCard,
 };
 
 const specificStyleMap = {

@@ -1,12 +1,19 @@
 import React from "react";
 import { parse, format, compareAsc } from "date-fns";
 import { enrichTextContent } from "@/lib/util";
+import {
+  ThemeType,
+  lightBgColorMap,
+  menuEntryBorderMap,
+  notchColorMap,
+} from "@/interfaces/themeMaps";
 
-interface TimelineProps {
+interface Props {
   events: Record<string, string>;
+  theme?: ThemeType;
 }
 
-const Timeline: React.FC<TimelineProps> = ({ events }) => {
+const Timeline: React.FC<Props> = ({ events, theme = "zimo" }) => {
   const formatDate = (dateStr: string) => {
     // Parsing the date string into a Date object.
     const date = parse(dateStr, "yyyy-M-d", new Date());
@@ -24,15 +31,23 @@ const Timeline: React.FC<TimelineProps> = ({ events }) => {
     return compareAsc(dateB, dateA);
   });
 
+  const lightBgClass = lightBgColorMap[theme];
+  const darkBorderClass = menuEntryBorderMap[theme];
+  const darkBgClass = notchColorMap[theme];
+
   return (
     <div className="relative mx-0 overflow-hidden">
       <div className="absolute top-0 bottom-0 left-1/2" />
       {sortedEvents.map(([date, text], index) => (
         <div key={index} className={`relative p-4 left-6 mr-4`}>
-          <div className="absolute h-full w-0.5 bg-neutral-600 top-0 -left-2" />
-          <div className="absolute w-6 h-6 bg-white border-2 border-neutral-600 rounded-full -left-5 top-8" />
           <div
-            className={`bg-neutral-50 bg-opacity-40 backdrop-blur-xl shadow-lg p-4 rounded-xl ml-2`}
+            className={`absolute h-full w-0.5 ${darkBgClass} top-0 timeline-bar-shift`}
+          />
+          <div
+            className={`absolute w-6 h-6 ${lightBgClass} border-2 ${darkBorderClass} rounded-full -left-5 top-8`}
+          />
+          <div
+            className={`${lightBgClass} bg-opacity-40 backdrop-blur-xl shadow-lg p-4 rounded-xl ml-2`}
           >
             <h3 className="font-bold mb-2 text-lg">{formatDate(date)}</h3>
             <p className="text-base">{enrichTextContent(text)}</p>

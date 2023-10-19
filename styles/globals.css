@@ -663,3 +663,7 @@
     padding-right: 4.5rem;
   }
 }
+
+.timeline-bar-shift {
+  left: -8.8px;
+}

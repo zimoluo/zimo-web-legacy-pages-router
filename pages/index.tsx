@@ -90,6 +90,7 @@ export default function Home() {
                   "2023-8-19": "The idea of Zimo Web was formed.",
                   "2023-11-1": "Zimo Web was publicly released.",
                 }}
+                theme="zimo"
               />
             </section>
           </div>

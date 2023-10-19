@@ -1,4 +1,8 @@
-import { ThemeType, lightBgColorMap } from "@/interfaces/themeMaps";
+import {
+  ThemeType,
+  lightBgColorMap,
+  textColorMap,
+} from "@/interfaces/themeMaps";
 import { formatDate } from "@/lib/util";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -33,6 +37,7 @@ const ArticleCard = ({
   };
 
   const lightBgClass = lightBgColorMap[theme];
+  const textColorClass = textColorMap[theme];
 
   return (
     <Link
@@ -43,8 +48,12 @@ const ArticleCard = ({
       <div
         className={`px-4 pt-4 pb-7 rounded-xl backdrop-blur-md shadow-lg ${lightBgClass} bg-opacity-60 relative ${className}`}
       >
-        <h3 className="text-lg font-bold">{title}</h3>
-        {description && <p className="text-base">{description}</p>}
+        <h3 className={`text-lg font-bold ${textColorClass}`}>{title}</h3>
+        {description && (
+          <p className={`text-base opacity-90 ${textColorClass}`}>
+            {description}
+          </p>
+        )}
         <div className="absolute bottom-1 right-2.5 text-sm font-bold">
           {`${date ? `${formatDate(date)}  ·  ` : ""}${sectionMap[section]}`}
         </div>
