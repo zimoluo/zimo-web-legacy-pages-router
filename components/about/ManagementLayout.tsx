@@ -37,7 +37,7 @@ const ManagementLayout = ({ posts }: Props) => {
           <div className="relative mx-8 md:mx-36">
             <h1 className="text-3xl font-bold mb-2 text-center">Management</h1>
             <h2 className="mb-8 text-center text-xl">
-              Find articles on Zimo Web's management and policies here.
+              Find articles on Zimo Web&apos;s management and policies here.
             </h2>
             <button
               className={`h-7 md:h-8 w-auto aspect-square absolute top-0 right-0 rotate-0 group ${
