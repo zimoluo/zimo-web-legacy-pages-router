@@ -25,6 +25,7 @@
 
 .markdown ul ul {
   list-style-type: circle;
+  @apply pl-8;
 }
 
 .markdown ol {
