@@ -20,6 +20,7 @@
 
 .markdown ul {
   list-style-type: disc;
+  @apply mx-0 !important;
 }
 
 .markdown ul ul {
@@ -28,6 +29,7 @@
 
 .markdown ol {
   list-style-type: decimal;
+  @apply mx-0 !important;
 }
 
 .markdown ul,
