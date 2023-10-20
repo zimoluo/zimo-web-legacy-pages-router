@@ -72,18 +72,14 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
           <>
             {" "}
             <Link
-              href={`/${
-                theme === "about" ? "about" : "management"
-              }/terms-of-use`}
+              href="/management/terms-of-use"
               className="hover:underline underline-offset-2"
             >
               Terms&nbsp;of&nbsp;Use
             </Link>
             {" and "}
             <Link
-              href={`/${
-                theme === "about" ? "about" : "management"
-              }/privacy-policy`}
+              href="/management/privacy-policy"
               className="hover:underline underline-offset-2"
             >
               Privacy&nbsp;Policy

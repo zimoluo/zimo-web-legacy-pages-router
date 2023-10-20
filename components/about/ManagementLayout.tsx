@@ -1,41 +1,21 @@
 import { ArticleCardProps } from "@/interfaces/articleCardData";
 import MainPageLayout from "../MainPageLayout";
-import { useManagementTheme } from "../contexts/ManagementThemeContext";
 import { BlogSearchProvider } from "../contexts/BlogSearchContext";
 import Head from "next/head";
 import BlogSearchBox from "../blog/BlogSearchBox";
 import ArticleCardGrid from "../ArticleCardGrid";
-import Image from "next/image";
-import { useState } from "react";
+import { useSettings } from "../contexts/SettingsContext";
+import ChangeManagementThemeButton from "../ChangeManagementThemeButton";
 
 interface Props {
   posts: ArticleCardProps[];
 }
 
 const ManagementLayout = ({ posts }: Props) => {
-  const { managementTheme, setManagementTheme } = useManagementTheme();
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-  function changeTheme() {
-    if (isButtonDisabled) return;
-
-    setIsSpinning(true);
-    setIsButtonDisabled(true);
-
-    setTimeout(
-      () => setManagementTheme(managementTheme === "zimo" ? "about" : "zimo"),
-      300
-    );
-
-    setTimeout(() => {
-      setIsSpinning(false);
-      setIsButtonDisabled(false);
-    }, 600);
-  }
+  const { settings } = useSettings();
 
   return (
-    <MainPageLayout theme={managementTheme}>
+    <MainPageLayout theme={settings.preferredManagementTheme}>
       <Head>
         <title>{`Management - Zimo`}</title>
       </Head>
@@ -46,40 +26,22 @@ const ManagementLayout = ({ posts }: Props) => {
             <h2 className="mb-8 text-center text-xl">
               Find articles on Zimo Web&apos;s management and policies here.
             </h2>
-            <button
-              className={`h-7 md:h-8 w-auto aspect-square absolute top-0 right-0 rotate-0 group ${
-                isSpinning ? "animate-spin-theme-button" : ""
-              }`}
-              onClick={changeTheme}
-              disabled={isButtonDisabled}
-            >
-              <Image
-                src="/zimo-favicon.svg"
-                alt="Change theme"
-                className={`transition-transform duration-300 ease-in-out group-hover:scale-110`}
-                height={32}
-                width={32}
-              />
-              <Image
-                src="/favicon.svg"
-                className={`absolute top-0 right-0 transition-all duration-300 ease-in-out group-hover:scale-110 ${
-                  managementTheme === "zimo" ? "opacity-0" : "opacity-100"
-                }`}
-                alt="Change theme"
-                height={32}
-                width={32}
-              />
-            </button>
+            <div className="absolute top-0 right-0 h-7 md:h-8 w-auto aspect-square">
+              <ChangeManagementThemeButton />
+            </div>
           </div>
           <nav className="mb-4 flex items-center md:justify-end px-8 md:px-36">
             <div className="w-full">
               <BlogSearchBox
                 keyword="management article"
-                theme={managementTheme}
+                theme={settings.preferredManagementTheme}
               />
             </div>
           </nav>
-          <ArticleCardGrid posts={posts} theme={managementTheme} />
+          <ArticleCardGrid
+            posts={posts}
+            theme={settings.preferredManagementTheme}
+          />
         </section>
       </BlogSearchProvider>
     </MainPageLayout>

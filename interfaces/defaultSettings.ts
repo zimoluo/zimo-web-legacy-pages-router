@@ -10,4 +10,5 @@ export const defaultSettings: SettingsState = {
   disableEntryPopUp: false,
   disableBackgroundBlur: false,
   enableGallery: false,
+  preferredManagementTheme: "zimo",
 };

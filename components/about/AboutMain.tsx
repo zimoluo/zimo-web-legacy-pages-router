@@ -3,6 +3,7 @@ import AboutHeader from "./AboutHeader";
 import ShareButton from "../ShareButton";
 import { useRouter } from "next/router";
 import { getFullMarkdown } from "@/lib/about/util";
+import ChangeManagementThemeButton from "../ChangeManagementThemeButton";
 
 const AboutMain = ({
   title,
@@ -40,6 +41,9 @@ const AboutMain = ({
             platform="copy"
             theme={isIndex ? "zimo" : "about"}
           />
+          <div className="h-6 w-6">
+            <ChangeManagementThemeButton />
+          </div>
         </div>
         <AboutHeader
           title={title}

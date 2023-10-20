@@ -3,7 +3,6 @@ import { lightBgColorMap, textColorMap } from "@/interfaces/themeMaps";
 import { calendarDate } from "@/lib/about/util";
 import { formatDate } from "@/lib/util";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useSettings } from "./contexts/SettingsContext";
 
 type Props = ArticleCardProps & {
@@ -21,9 +20,6 @@ const ArticleCard = ({
   useCalendarDate = false,
   omitSectionType = false,
 }: Props) => {
-  const routerPathname = useRouter().pathname;
-  const isAbout = routerPathname.startsWith("/about");
-
   const { settings } = useSettings();
 
   const sectionMap: { [key: string]: string } = {
@@ -37,13 +33,7 @@ const ArticleCard = ({
   const textColorClass = textColorMap[theme];
 
   return (
-    <Link
-      href={`/${
-        (isAbout || theme === "about") && section === "management"
-          ? "about"
-          : section
-      }/${slug}`}
-    >
+    <Link href={`/${section}/${slug}`}>
       <div
         className={`px-4 pt-4 pb-7 rounded-xl ${
           settings.disableBackgroundBlur ? "" : "backdrop-blur-md"

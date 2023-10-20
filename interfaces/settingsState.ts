@@ -10,4 +10,5 @@ interface SettingsState {
   disableEntryPopUp: boolean;
   disableBackgroundBlur: boolean;
   enableGallery: boolean;
+  preferredManagementTheme: "zimo" | "about";
 }

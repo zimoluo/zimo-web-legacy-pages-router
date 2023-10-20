@@ -1,6 +1,7 @@
 import MainPageLayout from "@/components/MainPageLayout";
 import ReadingBlur from "@/components/ReadingBlur";
 import AboutMain from "@/components/about/AboutMain";
+import { useSettings } from "@/components/contexts/SettingsContext";
 import { getAllPosts, getPostBySlug } from "@/lib/about/aws-api";
 import Head from "next/head";
 type PostType = {
@@ -10,13 +11,15 @@ type PostType = {
 export default function Post({ post }: PostType) {
   const title = `${post.title} | Management - Zimo`;
 
+  const { settings } = useSettings();
+
   const urlShare =
     typeof window !== "undefined"
       ? `${window.location.origin}/management/${post.slug}`
       : "";
 
   return (
-    <MainPageLayout theme="zimo">
+    <MainPageLayout theme={settings.preferredManagementTheme}>
       <Head>
         <title>{title}</title>
         <meta property="og:type" content="article" />
@@ -47,7 +50,7 @@ export default function Post({ post }: PostType) {
         content={post.content}
         date={post.date}
         slug={post.slug}
-        isIndex={true}
+        isIndex={settings.preferredManagementTheme === "zimo"}
       ></AboutMain>
     </MainPageLayout>
   );
