@@ -122,6 +122,29 @@ const MenuContent = ({ theme }: Props) => {
             }
           </React.Fragment>
         ))}
+        {routerPathname.startsWith("/management") && (
+          <>
+            <div className="md:flex md:items-center my-4 ">
+              <div className="md:flex-grow text-lg md:text-xl min-w-background-richness">
+                Preferred Theme
+              </div>
+              <SettingsNotchBar
+                setValue={(newValue: string | number) => {
+                  updateSettings({
+                    preferredManagementTheme: newValue as "zimo" | "about",
+                  });
+                }}
+                values={["zimo", "about"]}
+                text={["Grayscale", "Colorful"]}
+                theme={theme}
+                entry={settings.preferredManagementTheme}
+              />
+            </div>
+            <div
+              className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+            />
+          </>
+        )}
         <div className="md:flex md:items-center my-4 ">
           <div className="md:flex-grow text-lg md:text-xl min-w-background-richness">
             Background Richness
@@ -187,29 +210,6 @@ const MenuContent = ({ theme }: Props) => {
                 text={["*yawn*", "Slack", "Normal", "Hustle", "*yeet*"]}
                 theme={theme}
                 entry={settings.floatingCodeSpeed}
-              />
-            </div>
-            <div
-              className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
-            />
-          </>
-        )}
-        {routerPathname.startsWith("/management") && (
-          <>
-            <div className="md:flex md:items-center my-4 ">
-              <div className="md:flex-grow text-lg md:text-xl min-w-background-richness">
-                Preferred Theme
-              </div>
-              <SettingsNotchBar
-                setValue={(newValue: string | number) => {
-                  updateSettings({
-                    preferredManagementTheme: newValue as "zimo" | "about",
-                  });
-                }}
-                values={["zimo", "about"]}
-                text={["Grayscale", "Colorful"]}
-                theme={theme}
-                entry={settings.preferredManagementTheme}
               />
             </div>
             <div
