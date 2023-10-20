@@ -200,6 +200,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
             <button
               onClick={evaluateBan}
               className={`mr-3.5 ${isBanning ? "cursor-wait" : ""}`}
+              disabled={isBanning}
             >
               <Image
                 alt="Ban or Unban User"
@@ -220,6 +221,7 @@ const CommentCard: React.FC<Props> = ({ theme, index }) => {
         <button
           onClick={evaluateLike}
           className={`${isLiking ? "cursor-wait" : ""} relative group`}
+          disabled={isLiking}
         >
           <Image
             alt="Like Button"

@@ -181,7 +181,7 @@ const ReplyTypeBox: React.FC<Props> = ({
         onKeyDown={handleKeyDown}
       />
       {user && user.state !== "banned" && (
-        <button onClick={sendReply} className="z-10">
+        <button onClick={sendReply} className="z-10" disabled={isSending}>
           <Image
             src="/send-comment.svg"
             className={`h-4 absolute w-auto aspect-square bottom-4 right-5 opacity-80 cursor-pointer transform transition-transform duration-300 hover:scale-110 ${svgFilterClass} ${

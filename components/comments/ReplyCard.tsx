@@ -130,6 +130,7 @@ const ReplyCard: React.FC<Props> = ({
             <button
               onClick={evaluateBan}
               className={`mr-3 ${isBanning ? "cursor-wait" : ""}`}
+              disabled={isBanning}
             >
               <Image
                 alt="Ban or Unban User"

@@ -76,6 +76,7 @@ const DeleteCommentButton: React.FC<Props> = ({
       <button
         onClick={evaluateGarbageCan}
         className={`absolute right-1 ${isDeleting ? "cursor-wait" : ""}`}
+        disabled={isDeleting}
       >
         <Image
           alt={`Delete ${isReply ? "Reply" : "Comment"}`}

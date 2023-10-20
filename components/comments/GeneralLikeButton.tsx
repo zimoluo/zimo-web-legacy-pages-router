@@ -103,6 +103,7 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
       <button
         onClick={evaluateLike}
         className={`${isLiking ? "cursor-wait" : ""} relative group`}
+        disabled={isLiking}
       >
         <Image
           alt="Like Button"
