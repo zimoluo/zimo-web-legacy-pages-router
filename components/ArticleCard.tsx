@@ -19,6 +19,7 @@ const ArticleCard = ({
   date,
   className = "",
   useCalendarDate = false,
+  omitSectionType = false,
 }: Props) => {
   const routerPathname = useRouter().pathname;
   const isAbout = routerPathname.startsWith("/about");
@@ -61,11 +62,11 @@ const ArticleCard = ({
         <div className="absolute bottom-1 right-2.5 text-sm font-bold">
           {`${
             date
-              ? `${
-                  useCalendarDate ? calendarDate(date) : formatDate(date)
-                }  ·  `
+              ? `${useCalendarDate ? calendarDate(date) : formatDate(date)}${
+                  omitSectionType ? "" : "  ·  "
+                }`
               : ""
-          }${sectionMap[section]}`}
+          }${omitSectionType ? "" : sectionMap[section]}`}
         </div>
       </div>
     </Link>

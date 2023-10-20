@@ -30,6 +30,7 @@ export const getStaticProps = async () => {
     ...post,
     section: "management",
     useCalendarDate: true,
+    omitSectionType: true,
   }));
 
   return {

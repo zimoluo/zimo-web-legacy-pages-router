@@ -19,6 +19,7 @@ const ArticleCardWrapper = ({
   timeout,
   duration = 280,
   useCalendarDate = false,
+  omitSectionType = false,
 }: Props) => {
   const [computedHeight, setComputedHeight] = useState("160px");
   const [displayMaxHeight, setDisplayMaxHeight] = useState("160px");
@@ -71,6 +72,7 @@ const ArticleCardWrapper = ({
         date={date}
         description={description}
         useCalendarDate={useCalendarDate}
+        omitSectionType={omitSectionType}
       />
     </div>
   );

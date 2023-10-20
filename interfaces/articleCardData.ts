@@ -8,4 +8,5 @@ export interface ArticleCardProps {
   date?: string;
   theme: ThemeType;
   useCalendarDate?: boolean;
+  omitSectionType?: boolean;
 }

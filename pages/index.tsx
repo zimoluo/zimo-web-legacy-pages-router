@@ -94,6 +94,17 @@ export default function Home() {
               />
             </section>
           </div>
+          <Link href="/management">
+            <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-base mt-6">
+              <h3 className="text-xl font-bold mb-2">Website Management</h3>
+              <p>
+                Articles regarding the management and policies of Zimo Web can
+                be found{" "}
+                <span className="underline-offset-2 hover:underline">here</span>
+                .
+              </p>
+            </article>
+          </Link>
           {!settings.disableComments && !securityCommentShutDown && (
             <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-base mt-6">
               <h3 className="text-xl font-bold mb-2">Say something...</h3>
@@ -112,17 +123,6 @@ export default function Home() {
               </CommentProvider>
             </article>
           )}
-          <Link href="/management">
-            <article className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-base mt-6">
-              <h3 className="text-xl font-bold mb-2">Website Management</h3>
-              <p>
-                Articles regarding the management and policies of Zimo Web can
-                be found{" "}
-                <span className="underline-offset-2 hover:underline">here</span>
-                .
-              </p>
-            </article>
-          </Link>
         </div>
       </div>
     </MainPageLayout>
