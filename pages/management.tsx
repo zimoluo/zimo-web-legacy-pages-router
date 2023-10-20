@@ -1,5 +1,4 @@
 import ManagementLayout from "@/components/about/ManagementLayout";
-import { ManagementThemeProvider } from "@/components/contexts/ManagementThemeContext";
 import { ArticleCardProps } from "@/interfaces/articleCardData";
 import { getAllPosts } from "@/lib/about/aws-api";
 
@@ -8,11 +7,7 @@ type Props = {
 };
 
 export default function Home({ allPosts }: Props) {
-  return (
-    <ManagementThemeProvider>
-      <ManagementLayout posts={allPosts} />
-    </ManagementThemeProvider>
-  );
+  return <ManagementLayout posts={allPosts} />;
 }
 
 export const getStaticProps = async () => {

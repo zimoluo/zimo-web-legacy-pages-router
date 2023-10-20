@@ -15,16 +15,23 @@ interface Props {
 const ManagementLayout = ({ posts }: Props) => {
   const { managementTheme, setManagementTheme } = useManagementTheme();
   const [isSpinning, setIsSpinning] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   function changeTheme() {
+    if (isButtonDisabled) return;
+
     setIsSpinning(true);
+    setIsButtonDisabled(true);
 
     setTimeout(
       () => setManagementTheme(managementTheme === "zimo" ? "about" : "zimo"),
       300
     );
 
-    setTimeout(() => setIsSpinning(false), 600);
+    setTimeout(() => {
+      setIsSpinning(false);
+      setIsButtonDisabled(false);
+    }, 600);
   }
 
   return (
@@ -44,6 +51,7 @@ const ManagementLayout = ({ posts }: Props) => {
                 isSpinning ? "animate-spin-theme-button" : ""
               }`}
               onClick={changeTheme}
+              disabled={isButtonDisabled}
             >
               <Image
                 src="/zimo-favicon.svg"
