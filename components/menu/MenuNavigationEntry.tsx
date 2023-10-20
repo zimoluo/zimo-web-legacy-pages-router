@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 
 type Props = {
-  item: "home" | "photos" | "blog" | "projects" | "about";
+  item: "home" | "photos" | "blog" | "projects" | "about" | "management";
   theme: ThemeType;
 };
 
@@ -22,6 +22,7 @@ const MenuNavigationEntry: React.FC<Props> = ({ item, theme }) => {
     blog: "/blog-light.svg",
     projects: "/projects-light.svg",
     about: "/about-light.svg",
+    management: "/management.svg",
   };
 
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
@@ -34,7 +35,7 @@ const MenuNavigationEntry: React.FC<Props> = ({ item, theme }) => {
         <div className="group font-arial cursor-pointer flex items-center my-4">
           <Image
             src={navIconMap[item]}
-            className={`h-8 md:h-10 w-auto aspect-square transform transition-transform duration-300 group-hover:scale-110 md:group-hover:scale-125 ${
+            className={`h-8 md:h-10 w-auto aspect-square transform transition-transform duration-300 group-hover:scale-110 ${
               item === "home" ? "" : svgFilterClass
             } `}
             alt={`${iconTextMap[item]} Icon`}
@@ -42,12 +43,10 @@ const MenuNavigationEntry: React.FC<Props> = ({ item, theme }) => {
             height={40}
           />
           <div className="flex-grow" />
-          <div className={`ml-3 ${textColorClass}`}>
-            {iconTextMap[item]}
-          </div>
+          <div className={`ml-3 ${textColorClass}`}>{iconTextMap[item]}</div>
         </div>
       </Link>
-      {item !== "about" && (
+      {item !== "management" && (
         <div
           className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
         ></div>

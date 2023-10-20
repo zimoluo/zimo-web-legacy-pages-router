@@ -84,13 +84,23 @@ const MenuContent = ({ theme }: Props) => {
       <div
         className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 my-6 text-lg font-bold md:text-xl ${borderColorClass} border-menu-entry border-opacity-20`}
       >
-        {["home", "photos", "blog", "projects", "about"].map((item) => (
-          <MenuNavigationEntry
-            key={item}
-            item={item as "home" | "photos" | "blog" | "projects" | "about"}
-            theme={theme}
-          />
-        ))}
+        {["home", "photos", "blog", "projects", "about", "management"].map(
+          (item) => (
+            <MenuNavigationEntry
+              key={item}
+              item={
+                item as
+                  | "home"
+                  | "photos"
+                  | "blog"
+                  | "projects"
+                  | "about"
+                  | "management"
+              }
+              theme={theme}
+            />
+          )
+        )}
       </div>
 
       <div

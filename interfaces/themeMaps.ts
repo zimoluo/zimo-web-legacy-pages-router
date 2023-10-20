@@ -160,6 +160,7 @@ export const iconTextMap: { [key: string]: string } = {
   blog: "Blog",
   projects: "Projects",
   about: "About",
+  management: "Management",
 };
 
 export const topIconMap: { [key: string]: string } = {
