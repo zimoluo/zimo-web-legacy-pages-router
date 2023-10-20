@@ -49,8 +49,8 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         <div>Zimo Web</div>
       </div>
       <div className={`border-t ${borderColorClass} my-4`}></div>
-      <div className="flex justify-around underline-offset-2 mb-4">
-        <Link href="/" passHref>
+      <div className="grid grid-footer gap-y-2 gap-x-1 justify-center underline-offset-2 text-center mb-4">
+        <Link href="/">
           <div className="hover:underline cursor-pointer">Home</div>
         </Link>
         <Link href="/photos">
@@ -64,6 +64,9 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         </Link>
         <Link href="/about">
           <div className="hover:underline">About</div>
+        </Link>
+        <Link href="/management">
+          <div className="hover:underline">Management</div>
         </Link>
       </div>
       <div className="text-center text-sm">

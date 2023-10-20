@@ -1,5 +1,5 @@
 export const zimoIntro = `
-Zimo. zimo. ZIMO. Eunoe. Kawarage. Choose your call – names comprise the soul. I'm a high school senior in Beijing. I do whatever I like. Say, mathematics. I'm somewhat into complex analysis and previously abstract algebra. I've been doing graph theory for quite a while, too. Currently retired from math to prepare for college app; will be back soon.
+Zimo. zimo. ZIMO. Eunoe. Kawarage. Choose your call – names comprise the soul. I'm a high school senior in Beijing. I do whatever I like. Say, mathematics. I'm somewhat into analysis and previously abstract algebra. I've been doing graph theory for quite a while, too. Currently retired from math to prepare for college app; will be back soon.
 
 I like building projects. Apart from algorithm-focused CS I do a lot of programming – a fancier name would be *software engineering*. Full-stack engineer, kinda chill. My primary language is Python, but I'm currently switching to JavaScript ecosystem. I guess neither of the two is a perfect solution.
 

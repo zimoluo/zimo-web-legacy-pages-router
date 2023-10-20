@@ -692,3 +692,13 @@
     width: max(120px, 80%);
   }
 }
+
+.grid-footer {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 768px) {
+  .grid-footer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
