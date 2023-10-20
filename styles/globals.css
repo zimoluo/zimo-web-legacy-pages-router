@@ -166,6 +166,25 @@
   }
 }
 
+@keyframes chargeSpin {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  40% {
+    transform: rotate(calc(-20deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  50% {
+    transform: rotate(calc(-20deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(360deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}
+
 .zimo-svg-filter {
   filter: invert(0%) sepia(5%) saturate(3965%) hue-rotate(332deg)
     brightness(88%) contrast(84%);

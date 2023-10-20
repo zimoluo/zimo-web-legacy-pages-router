@@ -28,7 +28,7 @@ export default function Home({ allPosts, tag }: Props) {
           </h2>
           <nav className="mb-4 flex items-center md:justify-end px-8 md:px-36">
             <div className="w-full">
-              <BlogSearchBox />
+              <BlogSearchBox keyword="topic article" />
             </div>
           </nav>
           <BlogCardGrid posts={allPosts} />

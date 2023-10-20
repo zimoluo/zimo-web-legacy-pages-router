@@ -57,6 +57,7 @@ const config: Config = {
         "spin-cog": "spin 30s linear infinite",
         "spin-cog-reverse": "spin 30s linear infinite reverse",
         "spin-revolution": "spin 80s linear infinite",
+        "spin-theme-button": "chargeSpin 0.6s ease-in-out",
       },
       boxShadow: {
         "favicon-glow": "inset 0 0 15px 0px #ffffff, 0 0 15px 2px #ffffff",
