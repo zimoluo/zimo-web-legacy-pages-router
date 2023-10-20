@@ -168,6 +168,7 @@ function ShareButton({
       className={`${
         isOpaque ? "opacity-100" : "opacity-0"
       } transition-opacity duration-300 ease-in-out ${className}`}
+      disabled={shareInProgress || !isButtonAvailable}
     >
       {platform === "copy" ? (
         <Head>
