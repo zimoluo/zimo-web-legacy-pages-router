@@ -136,7 +136,7 @@ const MenuContent = ({ theme }: Props) => {
           <>
             <div className="md:flex md:items-center my-4 ">
               <div className="md:flex-grow text-lg md:text-xl min-w-background-richness">
-                Preferred Theme
+                Theme Palette
               </div>
               <SettingsNotchBar
                 setValue={(newValue: string | number) => {
