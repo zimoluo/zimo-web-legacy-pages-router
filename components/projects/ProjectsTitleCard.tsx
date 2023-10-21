@@ -7,6 +7,7 @@ import {
 } from "@/lib/util";
 import { getProjectFavicon } from "@/lib/projects/util";
 import GeneralLikeButton from "../comments/GeneralLikeButton";
+import { awsBucketAddress } from "@/lib/constants";
 
 type Props = {
   title: string;
@@ -73,12 +74,15 @@ const ProjectsTitleCard = ({
                 href={
                   key === "zimo-blog"
                     ? `/blog/${links[key]}`
+                    : key === "download"
+                    ? links[key]
                     : key === "github"
                     ? `https://github.com/${links[key]}`
                     : links[key]
                 }
                 target="_blank"
                 rel="noreferrer"
+                download={key === "download" ? true : undefined}
               >
                 <Image
                   src={`/projects-link/${key}.svg`}
