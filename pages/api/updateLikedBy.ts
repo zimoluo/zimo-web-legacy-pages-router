@@ -1,6 +1,10 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { NextApiRequest, NextApiResponse } from "next";
-import { awsBucket, awsBucketRegion } from "@/lib/constants";
+import {
+  awsBucket,
+  awsBucketRegion,
+  securityS3ShutDown,
+} from "@/lib/constants";
 import { keyId, secretKey } from "@/lib/awskey";
 import { promisify } from "util";
 import * as zlib from "zlib";
@@ -35,6 +39,13 @@ export default async function handler(
     res.status(429).json({
       error:
         "Too many requests. You can only like forty articles within a minute.",
+    });
+    return;
+  }
+
+  if (securityS3ShutDown) {
+    res.status(500).json({
+      error: "Server is under maintenance.",
     });
     return;
   }

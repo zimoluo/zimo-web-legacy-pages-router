@@ -8,7 +8,11 @@ import {
   GetObjectCommand,
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
-import { awsBucket, awsBucketRegion } from "@/lib/constants";
+import {
+  awsBucket,
+  awsBucketRegion,
+  securityS3ShutDown,
+} from "@/lib/constants";
 import { keyId, secretKey } from "@/lib/awskey";
 import * as zlib from "zlib";
 import { promisify } from "util";
@@ -50,6 +54,10 @@ export async function uploadUserToServer(
       throw new Error("This function is not running on server side.");
     }
 
+    if (securityS3ShutDown) {
+      throw new Error("Server is under maintenance.");
+    }
+
     // Convert user to JSON string and compress it using gzip
     const directory = "account/users";
     const compressedUser = await gzip(JSON.stringify(user));
@@ -83,6 +91,10 @@ export async function uploadCommentsToServer(
       throw new Error("This function is not running on server side.");
     }
 
+    if (securityS3ShutDown) {
+      throw new Error("Server is under maintenance.");
+    }
+
     // Convert comments to JSON string and compress it using gzip
     const compressedComments = await gzip(JSON.stringify({ comments }));
 
@@ -114,6 +126,10 @@ export async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
       throw new Error("This function is not running on server side.");
     }
 
+    if (securityS3ShutDown) {
+      throw new Error("Server is under maintenance.");
+    }
+
     const command = new HeadObjectCommand(params);
     await s3.send(command);
     return true;
@@ -127,10 +143,14 @@ export async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
 
 export async function getUserDataBySub(
   sub: string,
-  fields: string[] = [],
+  fields: string[] = []
 ): Promise<{ [key: string]: any }> {
   if (isClient) {
     throw new Error("This function is not running on server side.");
+  }
+
+  if (securityS3ShutDown) {
+    throw new Error("Server is under maintenance.");
   }
 
   const directory = "account/users";
@@ -174,6 +194,10 @@ export async function getComments(filePath: string): Promise<CommentEntry[]> {
   try {
     if (isClient) {
       throw new Error("This function is not running on server side.");
+    }
+
+    if (securityS3ShutDown) {
+      throw new Error("Server is under maintenance.");
     }
 
     const params = {
@@ -220,6 +244,10 @@ export async function getLikedBy(filePath: string): Promise<string[]> {
   try {
     if (isClient) {
       throw new Error("This function is not running on server side.");
+    }
+
+    if (securityS3ShutDown) {
+      throw new Error("Server is under maintenance.");
     }
 
     const params = {
@@ -300,6 +328,14 @@ export async function deleteUserFile(
     };
   }
 
+  if (securityS3ShutDown) {
+    console.error("Server is under maintenance.");
+    return {
+      success: false,
+      message: "Server is under maintenance.",
+    };
+  }
+
   const directory = "account/users";
 
   const params = {
@@ -371,6 +407,11 @@ export async function getUserByPayload(
 ) {
   if (isClient) {
     console.error("This function can only be used by server-side functions.");
+    return null;
+  }
+
+  if (securityS3ShutDown) {
+    console.error("Server is under maintenance.");
     return null;
   }
 

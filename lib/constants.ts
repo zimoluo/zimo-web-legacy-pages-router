@@ -4,3 +4,4 @@ export const awsBucket = "zimo-web-bucket";
 export const awsBucketRegion = "us-east-2";
 
 export const securityCommentShutDown = false;
+export const securityS3ShutDown = false;
