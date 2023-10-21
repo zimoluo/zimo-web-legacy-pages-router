@@ -83,7 +83,7 @@ const ProjectsTitleCard = ({
                 <Image
                   src={`/projects-link/${key}.svg`}
                   alt={formatAltText(key)}
-                  className="h-6 w-auto ml-3"
+                  className="h-7 w-auto ml-3.5 transition-transform duration-300 ease-in-out hover:scale-110"
                   height={24}
                   width={24}
                 />
