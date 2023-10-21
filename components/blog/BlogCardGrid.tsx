@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useBlogSearch } from "../contexts/BlogSearchContext";
 import BlogCardWrapper from "./BlogCardWrapper";
+import { restoreDisplayText } from "@/lib/util";
 
 type Props = {
   posts: (PostData & { unlisted: boolean })[];
@@ -52,7 +53,7 @@ const BlogCardGrid = ({ posts }: Props) => {
       // Otherwise, check against title or description
       return (
         doesMatchTextFilter(post.title, term) ||
-        doesMatchTextFilter(post.description, term)
+        doesMatchTextFilter(restoreDisplayText(post.description), term)
       );
     });
   };

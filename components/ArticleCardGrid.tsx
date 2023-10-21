@@ -3,6 +3,7 @@ import { useBlogSearch } from "./contexts/BlogSearchContext";
 import ArticleCardWrapper from "./ArticleCardWrapper";
 import { ArticleCardProps } from "@/interfaces/articleCardData";
 import { ThemeType } from "@/interfaces/themeMaps";
+import { restoreDisplayText } from "@/lib/util";
 
 type Props = {
   posts: ArticleCardProps[];
@@ -44,7 +45,8 @@ const ArticleCardGrid = ({ posts, theme = "zimo" }: Props) => {
       // If post.description exists, check it against the search term. Otherwise, just check the title.
       return (
         doesMatchTextFilter(post.title, term) ||
-        (post.description && doesMatchTextFilter(post.description, term))
+        (post.description &&
+          doesMatchTextFilter(restoreDisplayText(post.description), term))
       );
     });
   };
