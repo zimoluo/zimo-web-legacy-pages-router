@@ -50,7 +50,7 @@
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
     "unified": "^11.0.2",
-    "vercel": "^32.3.1"
+    "vercel": "^32.5.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.2",
