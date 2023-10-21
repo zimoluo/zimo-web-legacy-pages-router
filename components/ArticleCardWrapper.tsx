@@ -53,7 +53,6 @@ const ArticleCardWrapper = ({
 
   const defaultStyle = {
     maxHeight: displayMaxHeight,
-    overflow: "hidden",
     transition: `max-height ${duration / 1000}s ease-in-out, padding ${
       duration / 1000
     }s ease-in-out, transform ${duration / 1000}s ease-in-out`,
@@ -63,7 +62,11 @@ const ArticleCardWrapper = ({
   };
 
   return (
-    <div style={defaultStyle} ref={cardRef}>
+    <div
+      style={defaultStyle}
+      className="overflow-hidden px-4 -mx-4"
+      ref={cardRef}
+    >
       <ArticleCard
         theme={theme}
         title={title}

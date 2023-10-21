@@ -39,7 +39,6 @@ const BlogCardWrapper = ({
 
   const defaultStyle = {
     maxHeight: displayMaxHeight,
-    overflow: "hidden",
     transition: `max-height ${duration / 1000}s ease-in-out, padding ${
       duration / 1000
     }s ease-in-out, transform ${duration / 1000}s ease-in-out`,
@@ -49,7 +48,11 @@ const BlogCardWrapper = ({
   };
 
   return (
-    <div style={defaultStyle} ref={cardRef}>
+    <div
+      style={defaultStyle}
+      className="overflow-hidden px-4 -mx-4"
+      ref={cardRef}
+    >
       <BlogCard
         title={post.title}
         coverImage={getCoverSrc(post.coverImage, post.slug)}
