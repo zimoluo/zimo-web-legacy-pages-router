@@ -7,7 +7,6 @@ import {
 } from "@/lib/util";
 import { getProjectFavicon } from "@/lib/projects/util";
 import GeneralLikeButton from "../comments/GeneralLikeButton";
-import { awsBucketAddress } from "@/lib/constants";
 
 type Props = {
   title: string;
