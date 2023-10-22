@@ -79,9 +79,9 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
         <Image
           src="/image-view-cross.svg"
           alt="Close Image Window"
-          width={16}
-          height={16}
-          className="h-4 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
+          width={24}
+          height={24}
+          className="h-6 w-auto opacity-80 mix-blend-plus-lighter transform transition-transform duration-300 hover:scale-125"
         />
       </button>
     </div>
