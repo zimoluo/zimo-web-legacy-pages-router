@@ -58,18 +58,37 @@ const parseCustomComponent = (
 const parseMathAndMarkdown = (input: string): string => {
   let output = input;
 
-  // Replace block math: $$...$$
-  output = output.replace(/\$\$(.+?)\$\$/g, (match, p1) => {
-    return katex.renderToString(p1, { throwOnError: false, displayMode: true });
-  });
+  output = output.replace(
+    /(?:^|[^\\])\$\$(.+?)\$\$(?:$|[^\\])/g,
+    (match, p1, offset) => {
+      const before = output.slice(0, offset);
+      const after = output.slice(offset + match.length);
+      return (
+        before +
+        katex.renderToString(p1, { throwOnError: false, displayMode: true }) +
+        after
+      );
+    }
+  );
 
-  // Replace inline math: $...$
-  output = output.replace(/\$(.+?)\$/g, (match, p1) => {
-    return katex.renderToString(p1, {
-      throwOnError: false,
-      displayMode: false,
-    });
-  });
+  output = output.replace(
+    /(?:^|[^\\])\$(.+?)\$(?:$|[^\\])/g,
+    (match, p1, offset) => {
+      const before = output.slice(0, offset);
+      const after = output.slice(offset + match.length);
+      return (
+        before +
+        katex.renderToString(p1, {
+          throwOnError: false,
+          displayMode: false,
+        }) +
+        after
+      );
+    }
+  );
+
+  // Unescape \$ to $
+  output = output.replace(/\\\$/g, "$");
 
   return marked(output);
 };
