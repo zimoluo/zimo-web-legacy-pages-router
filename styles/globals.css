@@ -689,12 +689,12 @@
 }
 
 .navbar-size {
-  width: max(440px, 64%);
+  width: max(440px, calc(68% - 80px));
 }
 
 @media (max-width: 767px) {
   .navbar-size {
-    width: max(120px, 80%);
+    width: max(120px, calc(90% - 80px));
   }
 }
 
