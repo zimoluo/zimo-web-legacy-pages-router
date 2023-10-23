@@ -27,7 +27,10 @@ const ManagementLayout = ({ posts }: Props) => {
         <title>{`Management - Zimo`}</title>
       </Head>
       {clickCount > 27 && (
-        <SpinningFavicon theme={settings.preferredManagementTheme} />
+        <SpinningFavicon
+          theme={settings.preferredManagementTheme}
+          visible={clickCount > 27}
+        />
       )}
       <BlogSearchProvider>
         <section className="min-h-screen mt-20">
