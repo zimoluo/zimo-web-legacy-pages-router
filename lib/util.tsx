@@ -225,15 +225,13 @@ export function formatLocation(location: LocationData): string {
 }
 
 export const enrichTextContent = (content: string): ReactNode[] => {
-  // Add a pattern to escape backticks
   const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
 
   const splitContent = escapedContent.split(
-    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~|`.*?`)/g
+    /(\*\*.*?\*\*|\*.*?\*|~~\{.*?\}\{.*?\}~~|`.*?`|@@\{.*?\}\{.*?\}@@)/g
   );
 
   return splitContent.map((chunk, index) => {
-    // Restore escaped characters
     const restoredChunk = chunk.replace(/%%ESCAPED_([*`])%%/g, "$1");
 
     if (/^\*\*(.*?)\*\*$/.test(restoredChunk)) {
@@ -259,22 +257,32 @@ export const enrichTextContent = (content: string): ReactNode[] => {
     if (codeMatch) {
       return <code key={index}>{codeMatch[1]}</code>;
     }
+    const emailMatch = restoredChunk.match(/^@@\{(.*?)\}\{(.*?)\}@@$/);
+    if (emailMatch) {
+      return (
+        <a
+          key={index}
+          href={`mailto:${emailMatch[2]}`}
+          className="underline underline-offset-2"
+        >
+          {emailMatch[1]}
+        </a>
+      );
+    }
     return <React.Fragment key={index}>{restoredChunk}</React.Fragment>;
   });
 };
 
 export const restoreDisplayText = (content: string): string => {
-  // Step 1: Replace escaped asterisks and backticks
   const escapedContent = content.replace(/\\([*`])/g, "%%ESCAPED_$1%%");
 
-  // Step 2: Remove patterns and retrieve the display text
   const withoutBold = escapedContent.replace(/\*\*(.*?)\*\*/g, "$1");
   const withoutItalic = withoutBold.replace(/\*(.*?)\*/g, "$1");
   const withoutLinks = withoutItalic.replace(/~~\{(.*?)\}\{(.*?)\}~~/g, "$1");
   const withoutCode = withoutLinks.replace(/`(.*?)`/g, "$1");
+  const withoutEmails = withoutCode.replace(/@@\{(.*?)\}\{(.*?)\}@@/g, "$1");
 
-  // Step 3: Restore escaped asterisks and backticks
-  const restoredContent = withoutCode.replace(/%%ESCAPED_([*`])%%/g, "$1");
+  const restoredContent = withoutEmails.replace(/%%ESCAPED_([*`])%%/g, "$1");
 
   return restoredContent;
 };
