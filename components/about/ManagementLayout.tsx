@@ -26,7 +26,7 @@ const ManagementLayout = ({ posts }: Props) => {
       <Head>
         <title>{`Management - Zimo`}</title>
       </Head>
-      {clickCount > 27 && (
+      {clickCount > 26 && (
         <SpinningFavicon
           theme={settings.preferredManagementTheme}
           visible={clickCount > 27}
