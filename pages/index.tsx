@@ -67,6 +67,13 @@ export default function Home() {
               <div className="space-y-2">
                 <ArticleCard
                   theme="zimo"
+                  title="Understanding Website Settings"
+                  section="management"
+                  slug="understanding-website-settings"
+                  date="2023-10-22"
+                />
+                <ArticleCard
+                  theme="zimo"
                   title="Approaching the Moon..."
                   section="photos"
                   slug="approaching-the-moon"
