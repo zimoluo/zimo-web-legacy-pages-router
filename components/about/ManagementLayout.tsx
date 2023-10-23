@@ -17,6 +17,8 @@ const ManagementLayout = ({ posts }: Props) => {
   const { settings } = useSettings();
   const [clickCount, setClickCount] = useState<number>(0);
 
+  const easterEggThreshold = 27;
+
   const incrementClick = () => {
     setClickCount(clickCount + 1);
   };
@@ -26,10 +28,10 @@ const ManagementLayout = ({ posts }: Props) => {
       <Head>
         <title>{`Management - Zimo`}</title>
       </Head>
-      {clickCount > 26 && (
+      {clickCount >= easterEggThreshold - 1 && (
         <SpinningFavicon
           theme={settings.preferredManagementTheme}
-          visible={clickCount > 27}
+          visible={clickCount >= easterEggThreshold}
         />
       )}
       <BlogSearchProvider>
