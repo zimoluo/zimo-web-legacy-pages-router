@@ -253,6 +253,11 @@
   width: auto;
 }
 
+.spinning-favicon-size {
+  height: min(30vw, 30vh);
+  width: auto;
+}
+
 .cog-size {
   height: min(90vw, 90vh);
   width: auto;
@@ -701,4 +706,8 @@
   .grid-footer {
     grid-template-columns: repeat(6, 1fr);
   }
+}
+
+.-z-7 {
+  z-index: -7;
 }

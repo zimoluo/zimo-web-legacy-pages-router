@@ -2,7 +2,13 @@ import { useState } from "react";
 import { useSettings } from "./contexts/SettingsContext";
 import Image from "next/image";
 
-const ChangeManagementThemeButton: React.FC = () => {
+interface Props {
+  incrementClick?: () => void;
+}
+
+const ChangeManagementThemeButton: React.FC<Props> = ({
+  incrementClick = () => {},
+}) => {
   const { settings, updateSettings } = useSettings();
 
   const [isSpinning, setIsSpinning] = useState(false);
@@ -13,6 +19,8 @@ const ChangeManagementThemeButton: React.FC = () => {
 
     setIsSpinning(true);
     setIsButtonDisabled(true);
+
+    incrementClick();
 
     setTimeout(
       () =>
