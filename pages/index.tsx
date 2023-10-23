@@ -64,19 +64,21 @@ export default function Home() {
           <div className="md:grid md:grid-cols-2 mt-6 md:gap-x-6">
             <section className="shadow-lg rounded-xl backdrop-blur-lg bg-neutral-50 bg-opacity-40 px-4 py-4 text-lg">
               <h3 className="text-xl font-bold mb-2">Featured</h3>
-              <div className="space-y-2">
+              <div>
                 <ArticleCard
                   theme="zimo"
                   title="Understanding Website Settings"
                   section="management"
                   slug="understanding-website-settings"
                   date="2023-10-22"
+                  description="This page explains the settings of Zimo Web."
                 />
                 <ArticleCard
                   theme="zimo"
                   title="Approaching the Moon..."
                   section="photos"
                   slug="approaching-the-moon"
+                  className="mt-4"
                   date="2023-09-29"
                 />
                 <ArticleCard
