@@ -7,7 +7,8 @@ import ArticleCardGrid from "../ArticleCardGrid";
 import { useSettings } from "../contexts/SettingsContext";
 import ChangeManagementThemeButton from "../ChangeManagementThemeButton";
 import SpinningFavicon from "../BackgroundAnimations/SpinningFavicon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 interface Props {
   posts: ArticleCardProps[];
@@ -16,6 +17,13 @@ interface Props {
 const ManagementLayout = ({ posts }: Props) => {
   const { settings } = useSettings();
   const [clickCount, setClickCount] = useState<number>(0);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname !== "/management") {
+      setClickCount(0);
+    }
+  }, [router.pathname, setClickCount]);
 
   const easterEggThreshold = 27;
 
