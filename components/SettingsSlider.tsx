@@ -174,7 +174,7 @@ const SettingsNotchBar: React.FC<SettingsNotchBarProps<string | number>> = ({
           style={{ transform: `translateX(${sliderPos}%)` }}
         >
           <div
-            className={`${sliderBorderColorClass} border-slider shadow-lg w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-2.25 ${
+            className={`${sliderBorderColorClass} border-slider shadow-md w-2.5 h-6 rounded-full transition-all ease-in-out -translate-x-1 -translate-y-2.25 ${
               isDragging
                 ? "cursor-grabbing scale-150 bg-slider-highlight"
                 : `cursor-grab scale-135 ${sliderButtonClass}`
