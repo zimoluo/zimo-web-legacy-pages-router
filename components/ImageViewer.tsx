@@ -394,7 +394,7 @@ function ImageViewer({
 
       {currentDescription && !isGridView && (
         <div
-          className={`absolute pointer-events-none bottom-12 z-10 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
+          className={`absolute pointer-events-none image-view-description-position z-10 left-1/2 tracking-wide text-neutral-50 text-opacity-90 bg-neutral-800 bg-opacity-50 text-sm px-3 py-1 rounded-3xl transform -translate-x-1/2 transition-opacity ease-out duration-300 max-w-96 overflow-hidden ${
             descriptionVisible && !hideDescription ? "opacity-100" : "opacity-0"
           }`}
         >

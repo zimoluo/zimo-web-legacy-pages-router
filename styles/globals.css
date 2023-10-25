@@ -711,3 +711,7 @@
 .-z-7 {
   z-index: -7;
 }
+
+.image-view-description-position {
+  bottom: max(18px, min(15%, 3rem));
+}
