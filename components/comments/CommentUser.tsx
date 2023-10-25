@@ -26,7 +26,14 @@ const CommentUser: React.FC<Props> = ({ sub, date, theme }) => {
         "state",
       ]);
 
-      if (data === null) return;
+      if (data === null) {
+        setUserData({
+          name: "Anonymous",
+          profilePic: "/favicon.svg",
+          state: "normal",
+        } as UserInfo);
+        return;
+      }
 
       setUserData(data as UserInfo);
     };

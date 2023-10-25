@@ -34,9 +34,15 @@ const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
 
     const fetchAndSetData = async () => {
       const data = await fetchData(sub);
-      if (data === null) return;
-
-      setUserData(data as UserInfo);
+      if (data === null) {
+        setUserData({
+          name: "Anonymous",
+          profilePic: "/favicon.svg",
+          state: "normal",
+        } as UserInfo);
+      } else {
+        setUserData(data as UserInfo);
+      }
 
       if (toSub) {
         const fetchedToData = await fetchData(toSub);
