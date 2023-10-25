@@ -67,7 +67,7 @@ export default function Home() {
               <div>
                 <ArticleCard
                   theme="zimo"
-                  title="Welcome to Zimo Web"
+                  title="Welcome to Zimo&nbsp;Web"
                   section="blog"
                   slug="welcome-to-zimo-web"
                   date="2023-10-24T12:00:00Z"
