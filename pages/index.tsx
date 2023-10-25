@@ -79,6 +79,7 @@ export default function Home() {
                   section="management"
                   slug="understanding-website-settings"
                   date="2023-10-22"
+                  className="mt-4"
                   description="This page explains the settings of Zimo Web."
                 />
                 <ArticleCard
