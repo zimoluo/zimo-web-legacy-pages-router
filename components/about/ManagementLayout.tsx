@@ -40,6 +40,9 @@ const ManagementLayout = ({ posts }: Props) => {
         <SpinningFavicon
           theme={settings.preferredManagementTheme}
           visible={clickCount >= easterEggThreshold}
+          resetCounter={() => {
+            setClickCount(0);
+          }}
         />
       )}
       <BlogSearchProvider>

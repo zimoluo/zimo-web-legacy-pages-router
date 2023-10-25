@@ -20,8 +20,6 @@ const ChangeManagementThemeButton: React.FC<Props> = ({
     setIsSpinning(true);
     setIsButtonDisabled(true);
 
-    incrementClick();
-
     setTimeout(
       () =>
         updateSettings({
@@ -30,6 +28,8 @@ const ChangeManagementThemeButton: React.FC<Props> = ({
         }),
       300
     );
+
+    setTimeout(() => incrementClick(), 450);
 
     setTimeout(() => {
       setIsSpinning(false);
