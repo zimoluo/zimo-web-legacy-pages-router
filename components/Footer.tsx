@@ -70,27 +70,21 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
         </Link>
       </div>
       <div className="text-center text-sm">
-        &copy; {displayYear} Zimo Luo. All Rights Reserved.
-        {user && (
-          <>
-            {" "}
-            <Link
-              href="/management/terms-of-use"
-              className="hover:underline underline-offset-2"
-            >
-              Terms&nbsp;of&nbsp;Use
-            </Link>
-            {" and "}
-            <Link
-              href="/management/privacy-policy"
-              className="hover:underline underline-offset-2"
-            >
-              Privacy&nbsp;Policy
-            </Link>
-            {" apply."}
-          </>
-        )}{" "}
-        Share feedback{" "}
+        &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
+        <Link
+          href="/management/terms-of-use"
+          className="hover:underline underline-offset-2"
+        >
+          Terms&nbsp;of&nbsp;Use
+        </Link>
+        {" and "}
+        <Link
+          href="/management/privacy-policy"
+          className="hover:underline underline-offset-2"
+        >
+          Privacy&nbsp;Policy
+        </Link>
+        {" apply."} Share feedback{" "}
         <a
           href="https://forms.gle/hiowUpHKcd5qpx6v8"
           target="_blank"
