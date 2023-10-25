@@ -9,18 +9,20 @@ import CommentTypeBox from "../comments/CommentTypeBox";
 import CommentCardColumn from "../comments/CommentCardColumn";
 import { useSettings } from "../contexts/SettingsContext";
 import { securityCommentShutDown } from "@/lib/constants";
+import { ReactNode } from "react";
 
 interface BlogProps {
   title: string;
   description: string;
   authorId: string;
   author: string;
-  content: string;
+  content?: string;
   date: string;
   coverSrc: string;
   displayCover: boolean;
   slug: string;
   tags?: string[];
+  children?: ReactNode;
 }
 
 const BlogMainLayout = ({
@@ -28,12 +30,13 @@ const BlogMainLayout = ({
   description,
   authorId,
   author,
-  content,
+  content = "",
   date,
   coverSrc,
   displayCover,
   slug,
   tags = [],
+  children = undefined,
 }: BlogProps) => {
   const router = useRouter();
   const urlShare =
@@ -75,7 +78,7 @@ const BlogMainLayout = ({
             ></Image>
           </div>
         ) : null}
-        <BlogContent content={content}></BlogContent>
+        {children ? children : <BlogContent content={content} />}
         {!settings.disableComments && !securityCommentShutDown && (
           <>
             <div className={`my-10 border-fuchsia-700 border-t opacity-50`} />
