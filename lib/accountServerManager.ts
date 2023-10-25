@@ -134,9 +134,10 @@ export async function checkIfUserExistsBySub(sub: string): Promise<boolean> {
     await s3.send(command);
     return true;
   } catch (err: any) {
-    if (err.code === "NotFound") {
+    if (err.name === "NotFound" || err.code === "NotFound") {
       return false;
     }
+
     throw err;
   }
 }
