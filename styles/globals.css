@@ -694,7 +694,7 @@
 
 @media (max-width: 767px) {
   .navbar-size {
-    width: max(120px, calc(90% - 80px));
+    width: max(76px, 72%);
   }
 }
 
