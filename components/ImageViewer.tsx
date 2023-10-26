@@ -347,7 +347,7 @@ function ImageViewer({
   }, [currentDescription, isGridView]);
 
   return (
-    <div
+    <figure
       className={`${useHFull ? "h-full" : "w-full"} relative`}
       style={{ aspectRatio: `${widthRatio}/${heightRatio}` }}
     >
@@ -496,7 +496,7 @@ function ImageViewer({
           altText={restoreDisplayText(currentDescription)}
         />
       )}
-    </div>
+    </figure>
   );
 }
 
