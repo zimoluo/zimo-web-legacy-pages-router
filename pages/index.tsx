@@ -105,8 +105,9 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-2">Timeline</h3>
               <Timeline
                 events={{
-                  "2023-8-19": "The idea of Zimo Web was formed.",
-                  "2023-11-1": "Zimo Web was publicly released.",
+                  "2023-8-19": "The construction of Zimo Web begins.",
+                  "2023-10-27":
+                    "Zimo Web is released – exactly one month before my birthday.",
                 }}
                 theme="zimo"
               />
