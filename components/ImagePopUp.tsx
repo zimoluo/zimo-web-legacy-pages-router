@@ -16,6 +16,10 @@ interface Props {
 const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
   const [style, setStyle] = useState<React.CSSProperties>({});
 
+  const handleImageClick = () => {
+    window.open(src, "_blank");
+  };
+
   const instanceRef = useRef({}); // Create a unique object reference
 
   useEffect(() => {
@@ -68,12 +72,13 @@ const ImagePopUp: React.FC<Props> = ({ src, onClose, altText = "" }) => {
       <Image
         src={src}
         alt={`${altText ? altText : "Zoomed-In Image"}`}
-        className="image-popup-size object-contain opacity-0"
+        className="image-popup-size object-contain opacity-0 cursor-zoom-in"
         style={style}
         height={4000}
         width={4000}
         quality={90}
         placeholder={`data:image/svg+xml;base64,${shimmerDataURL(100, 100)}`}
+        onClick={handleImageClick}
       />
       <button className="absolute top-3 right-3 z-50" onClick={onClose}>
         <Image
