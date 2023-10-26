@@ -26,7 +26,8 @@ const BackgroundImage: React.FC<BackgroundImageProps> = ({ theme }) => {
 
   return (
     <div
-      className={`fixed -z-50 pointer-events-none inset-0 flex items-center justify-center h-screen isolate bg-cover bg-center bg-fixed select-none`}
+      aria-hidden="true"
+      className="fixed -z-50 pointer-events-none inset-0 flex items-center justify-center h-screen isolate bg-cover bg-center bg-fixed select-none"
     >
       <Image
         src={backgroundImageSrc}
