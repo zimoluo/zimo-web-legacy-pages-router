@@ -70,7 +70,7 @@ export default function Home() {
                   title="Welcome to Zimo&nbsp;Web"
                   section="blog"
                   slug="welcome-to-zimo-web"
-                  date="2023-10-24T12:00:00Z"
+                  date="2023-10-26T14:08:52Z"
                   description="What has become the reality..."
                 />
                 <ArticleCard
