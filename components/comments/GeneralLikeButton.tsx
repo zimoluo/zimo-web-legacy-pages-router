@@ -19,6 +19,8 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [storedLikedBy, setStoredLikedBy] = useState<string[] | null>(null);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const tooltipTimeoutRef = useRef<any | null>(null);
+
   const isLikingRef = useRef(isLiking);
   const { user } = useUser();
   const lightTextColorClass =
@@ -29,17 +31,27 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
     generalLikeFilledSrc[theme] || generalLikeFilledSrc["zimo"];
 
   const handleMouseEnter = () => {
-    if (!user) setIsTooltipVisible(true);
+    if (!user) {
+      // Clear any existing timeout to prevent unintended behavior
+      if (tooltipTimeoutRef.current) {
+        clearTimeout(tooltipTimeoutRef.current);
+      }
+      setIsTooltipVisible(true);
+    }
   };
 
   const handleMouseLeave = () => {
+    // Clear any existing timeout to prevent unintended behavior
+    if (tooltipTimeoutRef.current) {
+      clearTimeout(tooltipTimeoutRef.current);
+    }
     setIsTooltipVisible(false);
   };
 
   const handleClick = () => {
     if (!user && !isTooltipVisible) {
       setIsTooltipVisible(true);
-      setTimeout(() => {
+      tooltipTimeoutRef.current = setTimeout(() => {
         setIsTooltipVisible(false);
       }, 2000);
     } else {
