@@ -24,3 +24,7 @@
   width: 0.25rem;
   @apply bg-fuchsia-700 rounded-xl pointer-events-none;
 }
+
+.markdown hr {
+  @apply border-fuchsia-700;
+}

@@ -24,3 +24,7 @@
   width: 0.25rem;
   @apply bg-teal-700 rounded-xl pointer-events-none;
 }
+
+.markdown hr {
+  @apply border-teal-700;
+}
