@@ -54,14 +54,18 @@ const GeneralLikeButton: React.FC<Props> = ({
     setIsTooltipVisible(false);
   };
 
+  const initiateShaking = () => {
+    if (!isShaking) {
+      setIsShaking(true);
+      setTimeout(() => {
+        setIsShaking(false);
+      }, 600);
+    }
+  };
+
   const handleClick = () => {
     if (!user) {
-      if (!isShaking) {
-        setIsShaking(true);
-        setTimeout(() => {
-          setIsShaking(false);
-        }, 600);
-      }
+      initiateShaking();
 
       if (!isTooltipVisible) {
         setIsTooltipVisible(true);
@@ -70,6 +74,9 @@ const GeneralLikeButton: React.FC<Props> = ({
         }, 2000);
       }
     } else {
+      if (!shouldRevealFilled) {
+        initiateShaking();
+      }
       evaluateLike();
     }
   };
@@ -150,7 +157,13 @@ const GeneralLikeButton: React.FC<Props> = ({
       <button
         onClick={handleClick}
         className={`${isLiking ? "cursor-wait" : ""} relative group rotate-0 ${
-          isShaking ? "animate-shake-like-button" : ""
+          isShaking
+            ? `${
+                user && theme === "projects"
+                  ? "animate-spin-theme-button"
+                  : "animate-shake-like-button"
+              }`
+            : ""
         }`}
         disabled={isLiking}
         onMouseEnter={handleMouseEnter}
