@@ -16,6 +16,7 @@ const PhotosCommentAreaMobile = ({ slug }: Props) => {
         <GeneralLikeButton
           theme="photos"
           resourceLocation={`photos/likedBy/${slug}.json`}
+          positioned="left"
         />
         <div className="flex-grow" />
         <button

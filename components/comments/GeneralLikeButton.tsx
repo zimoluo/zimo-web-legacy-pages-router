@@ -13,9 +13,14 @@ import Head from "next/head";
 interface Props {
   theme: ThemeType;
   resourceLocation: string;
+  positioned?: "left" | "right";
 }
 
-const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
+const GeneralLikeButton: React.FC<Props> = ({
+  theme,
+  resourceLocation,
+  positioned = "right",
+}) => {
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [storedLikedBy, setStoredLikedBy] = useState<string[] | null>(null);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
@@ -168,7 +173,7 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
         className={`${
           isTooltipVisible ? "opacity-100" : "opacity-0"
         } transition-opacity duration-300 ease-in-out bg-opacity-60 w-40 text-center absolute ${
-          theme !== "photos"
+          positioned === "right"
             ? "right-0 translate-x-4 translate-y-6"
             : "left-0 -translate-x-3 -translate-y-5"
         } bg-neutral-800 text-neutral-50 text-sm px-2.5 py-1 rounded-full select-none pointer-events-none`}

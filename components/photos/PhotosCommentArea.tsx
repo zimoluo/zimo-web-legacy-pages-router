@@ -10,13 +10,13 @@ type Props = {
 };
 
 const PhotosCommentArea = ({ slug, isExpanded, setIsExpanded }: Props) => {
-
   return (
     <div className="border-photos-comment border-orange-700 border-opacity-80 px-5 pt-4 py-1 bg-orange-50 bg-opacity-50 backdrop-blur-md">
       <div className="flex items-center">
         <GeneralLikeButton
           theme="photos"
           resourceLocation={`photos/likedBy/${slug}.json`}
+          positioned="left"
         />
         <div className="flex-grow" />
         <button
