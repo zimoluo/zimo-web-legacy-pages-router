@@ -1,4 +1,4 @@
-import { rgbDataURL, rgbaDataURL } from "@/lib/util";
+import { rgbDataURL } from "@/lib/util";
 
 export type ThemeType = "zimo" | "photos" | "blog" | "projects" | "about";
 
