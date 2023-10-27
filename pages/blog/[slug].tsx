@@ -16,7 +16,9 @@ type PostType = {
 export default function Post({ post }: PostType) {
   const title = `${post.title} | Blog - Zimo`;
   const coverSrc =
-    post.compatibleCover || getCoverSrc(post.coverImage, post.slug);
+    post.compatibleCover ||
+    getCoverSrc(post.coverImage, post.slug) ||
+    "/blog-zimo.svg";
 
   const urlShare =
     typeof window !== "undefined"
@@ -28,10 +30,7 @@ export default function Post({ post }: PostType) {
       <Head>
         <title>{title}</title>
         <meta property="og:type" content="article" />
-        <meta
-          property="og:image"
-          content={coverSrc ? coverSrc : "/blog-zimo.svg"}
-        />
+        <meta property="og:image" content={coverSrc} />
         <meta property="og:image:alt" content={`Cover of ${post.title}`} />
         <meta property="og:title" content={post.title} />
         <meta
@@ -41,10 +40,7 @@ export default function Post({ post }: PostType) {
         <meta property="og:url" content={urlShare} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@WhiteGkings" />
-        <meta
-          name="twitter:image"
-          content={coverSrc ? coverSrc : "/blog-zimo.svg"}
-        />
+        <meta name="twitter:image" content={coverSrc} />
         <meta name="twitter:image:alt" content={`Cover of ${post.title}`} />
         <meta name="twitter:title" content={post.title} />
         <meta
