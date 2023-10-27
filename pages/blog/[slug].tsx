@@ -6,12 +6,17 @@ import { getCoverSrc } from "@/lib/blog/util";
 import Head from "next/head";
 import { restoreDisplayText } from "@/lib/util";
 type PostType = {
-  post: PostData & { displayCover: boolean; originalContent: string };
+  post: PostData & {
+    displayCover: boolean;
+    originalContent: string;
+    compatibleCover?: string;
+  };
 };
 
 export default function Post({ post }: PostType) {
   const title = `${post.title} | Blog - Zimo`;
-  const coverSrc = getCoverSrc(post.coverImage, post.slug);
+  const coverSrc =
+    post.compatibleCover || getCoverSrc(post.coverImage, post.slug);
 
   const urlShare =
     typeof window !== "undefined"
@@ -90,6 +95,7 @@ export async function getStaticProps({ params }: Params) {
     "authorId",
     "displayCover",
     "tags",
+    "compatibleCover",
   ]);
 
   return {
