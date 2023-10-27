@@ -56,10 +56,12 @@ const GeneralLikeButton: React.FC<Props> = ({
 
   const handleClick = () => {
     if (!user) {
-      setIsShaking(true);
-      setTimeout(() => {
-        setIsShaking(false);
-      }, 600);
+      if (!isShaking) {
+        setIsShaking(true);
+        setTimeout(() => {
+          setIsShaking(false);
+        }, 600);
+      }
 
       if (!isTooltipVisible) {
         setIsTooltipVisible(true);
