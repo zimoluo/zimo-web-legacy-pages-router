@@ -18,6 +18,7 @@ interface Props {
 const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [storedLikedBy, setStoredLikedBy] = useState<string[] | null>(null);
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const isLikingRef = useRef(isLiking);
   const { user } = useUser();
   const lightTextColorClass =
@@ -26,6 +27,25 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
     generalLikeEmptySrc[theme] || generalLikeEmptySrc["zimo"];
   const likeButtonFilledImage =
     generalLikeFilledSrc[theme] || generalLikeFilledSrc["zimo"];
+
+  const handleMouseEnter = () => {
+    if (!user) setIsTooltipVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsTooltipVisible(false);
+  };
+
+  const handleClick = () => {
+    if (!user && !isTooltipVisible) {
+      setIsTooltipVisible(true);
+      setTimeout(() => {
+        setIsTooltipVisible(false);
+      }, 2000);
+    } else {
+      evaluateLike();
+    }
+  };
 
   useEffect(() => {
     isLikingRef.current = isLiking;
@@ -95,15 +115,17 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center relative">
       <Head>
         <link rel="preload" as="image" href={likeButtonEmptyImage} />
         <link rel="preload" as="image" href={likeButtonFilledImage} />
       </Head>
       <button
-        onClick={evaluateLike}
+        onClick={handleClick}
         className={`${isLiking ? "cursor-wait" : ""} relative group`}
         disabled={isLiking}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <Image
           alt="Like Button"
@@ -129,6 +151,17 @@ const GeneralLikeButton: React.FC<Props> = ({ theme, resourceLocation }) => {
         }`}
       >
         {storedLikedBy ? storedLikedBy.length : "0"}
+      </div>
+      <div
+        className={`${
+          isTooltipVisible ? "opacity-100" : "opacity-0"
+        } transition-opacity duration-300 ease-in-out bg-opacity-60 w-40 text-center absolute ${
+          theme !== "photos"
+            ? "right-0 translate-x-4 translate-y-6"
+            : "left-0 -translate-x-3 -translate-y-5"
+        } bg-neutral-800 text-neutral-50 text-sm px-2.5 py-1 rounded-full select-none pointer-events-none`}
+      >
+        Sign in to leave a like!
       </div>
     </div>
   );
