@@ -113,7 +113,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         />
 
         <title>{simpleTitle}</title>
-        <meta property="og:site_name" content="Zimo" />
+        <meta property="og:site_name" content="Zimo Web" />
         <meta property="og:type" content="website" />
         <meta name="theme-color" content={siteThemeColor} />
         <meta name="robots" content="index,follow,max-image-preview:large" />
