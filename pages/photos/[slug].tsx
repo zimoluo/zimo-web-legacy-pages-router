@@ -37,7 +37,7 @@ export default function Entry({ entry }: Props) {
         <meta name="keywords" content="Zimo,Photos,Album,Personal Website" />
         <link rel="canonical" href={urlShare} />
       </Head>
-      <ReadingBlur />
+      <ReadingBlur className="md:hidden" />
       <PhotosMain {...entry} />
     </MainPageLayout>
   );

@@ -62,7 +62,7 @@ export default function Entry({ entry }: ProjectType) {
         />
         <link rel="canonical" href={urlShare} />
       </Head>
-      <ReadingBlur />
+      <ReadingBlur className="md:hidden" />
       <ProjectMain {...entry} />
     </MainPageLayout>
   );
