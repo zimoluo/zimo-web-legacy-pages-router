@@ -24,6 +24,7 @@ const GeneralLikeButton: React.FC<Props> = ({
   const [isLiking, setIsLiking] = useState<boolean>(false);
   const [storedLikedBy, setStoredLikedBy] = useState<string[] | null>(null);
   const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
   const tooltipTimeoutRef = useRef<any | null>(null);
 
   const isLikingRef = useRef(isLiking);
@@ -54,11 +55,18 @@ const GeneralLikeButton: React.FC<Props> = ({
   };
 
   const handleClick = () => {
-    if (!user && !isTooltipVisible) {
-      setIsTooltipVisible(true);
-      tooltipTimeoutRef.current = setTimeout(() => {
-        setIsTooltipVisible(false);
-      }, 2000);
+    if (!user) {
+      setIsShaking(true);
+      setTimeout(() => {
+        setIsShaking(false);
+      }, 600);
+
+      if (!isTooltipVisible) {
+        setIsTooltipVisible(true);
+        tooltipTimeoutRef.current = setTimeout(() => {
+          setIsTooltipVisible(false);
+        }, 2000);
+      }
     } else {
       evaluateLike();
     }
@@ -139,7 +147,9 @@ const GeneralLikeButton: React.FC<Props> = ({
       </Head>
       <button
         onClick={handleClick}
-        className={`${isLiking ? "cursor-wait" : ""} relative group`}
+        className={`${isLiking ? "cursor-wait" : ""} relative group rotate-0 ${
+          isShaking ? "animate-shake-like-button" : ""
+        }`}
         disabled={isLiking}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

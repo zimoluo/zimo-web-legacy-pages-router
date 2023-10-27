@@ -36,7 +36,7 @@ const Timeline: React.FC<Props> = ({ events, theme = "zimo" }) => {
   const darkBgClass = notchColorMap[theme];
 
   return (
-    <div className="relative -mx-4 px-4 -my-4 py-4 overflow-hidden">
+    <figure className="relative -mx-4 px-4 -my-4 py-4 overflow-hidden">
       <div className="absolute top-0 bottom-0 left-1/2" />
       {sortedEvents.map(([date, text], index) => (
         <div key={index} className={`relative p-4 left-6 mr-4`}>
@@ -54,7 +54,7 @@ const Timeline: React.FC<Props> = ({ events, theme = "zimo" }) => {
           </div>
         </div>
       ))}
-    </div>
+    </figure>
   );
 };
 

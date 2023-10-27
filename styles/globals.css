@@ -185,6 +185,33 @@
   }
 }
 
+@keyframes shakeSpin {
+  0% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  15% {
+    transform: rotate(calc(-18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  45% {
+    transform: rotate(calc(18deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  60% {
+    transform: rotate(calc(-9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  80% {
+    transform: rotate(calc(9deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+  100% {
+    transform: rotate(calc(0deg + var(--tw-rotate)))
+      translate(var(--tw-translate-x), var(--tw-translate-y));
+  }
+}
+
 .zimo-svg-filter {
   filter: invert(0%) sepia(5%) saturate(3965%) hue-rotate(332deg)
     brightness(88%) contrast(84%);
