@@ -509,11 +509,11 @@
 
 @media (min-width: 768px) {
   .md\:blog-view-middle {
-    width: min(52rem, 95%);
+    width: min(50rem, 95%);
   }
 
   .md\:max-w-80 {
-    max-width: 20rem /* 320px */;
+    max-width: 20rem;
   }
 
   .group:hover .special-top-38-md {
