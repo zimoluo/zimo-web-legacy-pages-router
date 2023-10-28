@@ -14,6 +14,7 @@ import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
+import { isHalloweenSeason } from "@/lib/seasonUtil";
 
 type Props = {
   theme: ThemeType;
@@ -52,6 +53,10 @@ const MenuContent = ({ theme }: Props) => {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
+    if (isHalloweenSeason(new Date(new Date().toUTCString()))) {
+      initialSettings = ["enableHalloweenEffect", ...initialSettings];
+    }
+
     return initialSettings;
   }, [routerPathname]);
 
@@ -67,6 +72,7 @@ const MenuContent = ({ theme }: Props) => {
     disableBackgroundBlur: "Disable Background Blur",
     enableGallery: "Gallery Mode",
     preferredManagementTheme: "Preferred Theme",
+    enableHalloweenEffect: "Halloween Vibe",
   };
 
   return (

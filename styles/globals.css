@@ -746,3 +746,15 @@
 .image-view-description-position {
   bottom: max(18px, min(15%, 3rem));
 }
+
+@keyframes pulse {
+  0%,
+  35%,
+  65%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6667;
+  }
+}

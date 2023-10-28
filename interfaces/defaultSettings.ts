@@ -11,4 +11,5 @@ export const defaultSettings: SettingsState = {
   disableBackgroundBlur: false,
   enableGallery: false,
   preferredManagementTheme: "zimo",
+  enableHalloweenEffect: true,
 };

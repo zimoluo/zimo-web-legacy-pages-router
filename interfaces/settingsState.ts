@@ -11,4 +11,5 @@ interface SettingsState {
   disableBackgroundBlur: boolean;
   enableGallery: boolean;
   preferredManagementTheme: "zimo" | "about";
+  enableHalloweenEffect: boolean;
 }
