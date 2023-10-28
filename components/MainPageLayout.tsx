@@ -76,8 +76,6 @@ const MainPageLayout: React.FC<LayoutProps> = ({
   const simpleTitle = simpleTitleMap[theme] || simpleTitleMap["zimo"];
   const siteThemeColor = siteThemeColorMap[theme] || siteThemeColorMap["zimo"];
 
-  const currentTime = new Date(new Date().toUTCString());
-
   return (
     <main className="flex flex-col min-h-screen">
       <Head>
@@ -123,8 +121,8 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         <meta name="robots" content="index,follow,max-image-preview:large" />
         <meta name="author" content="Zimo" />
       </Head>
-      {((settings.enableHalloweenEffect && isHalloweenSeason(currentTime)) ||
-        isHalloweenDay(currentTime)) && <HalloweenPulse />}
+      {((settings.enableHalloweenEffect && isHalloweenSeason()) ||
+        isHalloweenDay()) && <HalloweenPulse />}
       <BackgroundImage theme={theme} />
       <BackgroundAnimation theme={theme} />
       <Navbar theme={theme} />

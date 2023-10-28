@@ -33,15 +33,16 @@ export const isWithinDateRange = (date: Date, range: DateRange): boolean => {
   return date >= startDate && date <= endDate;
 };
 
-export const isHalloweenSeason = (date: Date): boolean => {
+export const isHalloweenSeason = (): boolean => {
   const halloweenRange: DateRange = {
     start: { month: "october", day: 15 },
     end: { month: "november", day: 5 },
   };
-  return isWithinDateRange(date, halloweenRange);
+  return isWithinDateRange(new Date(new Date().toUTCString()), halloweenRange);
 };
 
-export const isHalloweenDay = (date: Date): boolean => {
+export const isHalloweenDay = (): boolean => {
+  const date = new Date(new Date().toUTCString());
   const month = monthNames[date.getUTCMonth()];
   const day = date.getUTCDate();
   return (

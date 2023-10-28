@@ -27,8 +27,6 @@ const MenuContent = ({ theme }: Props) => {
   const barColorClass = barColorMap[theme];
   const routerPathname = useRouter().pathname;
 
-  const currentTime = new Date(new Date().toUTCString());
-
   const settingsArray = useMemo(() => {
     let initialSettings = [
       "disableComments",
@@ -55,7 +53,7 @@ const MenuContent = ({ theme }: Props) => {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
-    if (isHalloweenSeason(currentTime) && !isHalloweenDay(currentTime)) {
+    if (isHalloweenSeason() && !isHalloweenDay()) {
       initialSettings = ["enableHalloweenEffect", ...initialSettings];
     }
 

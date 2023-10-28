@@ -16,10 +16,9 @@ const BlogBackgroundAnimationPainting: React.FC = () => {
   };
 
   useEffect(() => {
-    const currentDate = new Date(new Date().toUTCString());
     let images = imageSets.original;
 
-    if (isHalloweenSeason(currentDate)) {
+    if (isHalloweenSeason()) {
       images = imageSets.halloween;
     }
 
