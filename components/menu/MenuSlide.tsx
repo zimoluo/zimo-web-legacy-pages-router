@@ -96,7 +96,7 @@ const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
         settings.disableBackgroundBlur ? "bg-opacity-100" : "bg-opacity-60"
       } ${textColorClass} rounded-l-xl md:shadow-lg ${
         !settings.disableBackgroundBlur ? "md:backdrop-blur-xl" : ""
-      } transition-all duration-200 ease-out transform ${
+      } transition-all duration-300 md:duration-200 ease-out transform ${
         isOpen
           ? `${
               !settings.disableBackgroundBlur ? "backdrop-blur-xl" : ""
