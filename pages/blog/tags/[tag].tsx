@@ -14,7 +14,7 @@ export default function Home({ allPosts, tag }: Props) {
   return (
     <MainPageLayout theme="blog">
       <Head>
-        <title>{`${tag}, Topic | Blog - Zimo`}</title>
+        <title>{`${tag}, Topic | Blog - Zimo Web`}</title>
       </Head>
       <BlogSearchProvider>
         <section className="min-h-screen mt-20">

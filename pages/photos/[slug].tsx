@@ -13,7 +13,7 @@ const filePath = "photos/entries";
 
 export default function Entry({ entry }: Props) {
   const displayTitle = restoreDisplayText(entry.title);
-  const title = `${displayTitle} | Album - Zimo`;
+  const title = `${displayTitle} | Album - Zimo Web`;
 
   const urlShare =
     typeof window !== "undefined"

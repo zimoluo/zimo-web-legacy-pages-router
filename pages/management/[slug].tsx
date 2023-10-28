@@ -9,7 +9,7 @@ type PostType = {
 };
 
 export default function Post({ post }: PostType) {
-  const title = `${post.title} | Management - Zimo`;
+  const title = `${post.title} | Management - Zimo Web`;
 
   const { settings } = useSettings();
 

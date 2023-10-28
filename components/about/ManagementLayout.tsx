@@ -34,7 +34,7 @@ const ManagementLayout = ({ posts }: Props) => {
   return (
     <MainPageLayout theme={settings.preferredManagementTheme}>
       <Head>
-        <title>{`Management - Zimo`}</title>
+        <title>Management - Zimo Web</title>
       </Head>
       {clickCount >= easterEggThreshold - 1 && (
         <SpinningFavicon

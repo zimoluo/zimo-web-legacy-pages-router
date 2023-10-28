@@ -14,7 +14,7 @@ type PostType = {
 };
 
 export default function Post({ post }: PostType) {
-  const title = `${post.title} | Blog - Zimo`;
+  const title = `${post.title} | Blog - Zimo Web`;
   const coverSrc = getCoverSrc(post.coverImage, post.slug) || "/blog-zimo.svg";
   const shareCoverSrc = post.compatibleCover || coverSrc;
 

@@ -188,10 +188,10 @@ export const backgroundClassMap: { [key: string]: string } = {
 
 export const simpleTitleMap: { [key: string]: string } = {
   zimo: "Zimo",
-  photos: "Album - Zimo",
-  blog: "Blog - Zimo",
-  projects: "Projects - Zimo",
-  about: "About - Zimo",
+  photos: "Album - Zimo Web",
+  blog: "Blog - Zimo Web",
+  projects: "Projects - Zimo Web",
+  about: "About - Zimo Web",
 };
 
 export const imagesArrowMap: { [key: string]: string } = {
