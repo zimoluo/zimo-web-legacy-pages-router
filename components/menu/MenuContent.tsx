@@ -115,13 +115,17 @@ const MenuContent = ({ theme }: Props) => {
                 {settingsNameMap["enableHalloweenEffect"]}
               </div>
               <SettingsFlip
-                onClick={(status: boolean) => {
-                  updateSettings({
-                    enableHalloweenEffect: status,
-                  });
-                }}
+                onClick={
+                  isHalloweenDay()
+                    ? (status: boolean) => {}
+                    : (status: boolean) => {
+                        updateSettings({
+                          enableHalloweenEffect: status,
+                        });
+                      }
+                }
                 theme={theme}
-                state={settings.enableHalloweenEffect}
+                state={isHalloweenDay() || settings.enableHalloweenEffect}
                 appearance="halloween"
               />
             </div>
