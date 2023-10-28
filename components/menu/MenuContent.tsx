@@ -14,7 +14,7 @@ import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
-import { isHalloweenSeason } from "@/lib/seasonUtil";
+import { isHalloweenDay, isHalloweenSeason } from "@/lib/seasonUtil";
 
 type Props = {
   theme: ThemeType;
@@ -26,6 +26,8 @@ const MenuContent = ({ theme }: Props) => {
   const borderColorClass = menuEntryBorderMap[theme];
   const barColorClass = barColorMap[theme];
   const routerPathname = useRouter().pathname;
+
+  const currentTime = new Date(new Date().toUTCString());
 
   const settingsArray = useMemo(() => {
     let initialSettings = [
@@ -53,7 +55,7 @@ const MenuContent = ({ theme }: Props) => {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
-    if (isHalloweenSeason(new Date(new Date().toUTCString()))) {
+    if (isHalloweenSeason(currentTime) && !isHalloweenDay(currentTime)) {
       initialSettings = ["enableHalloweenEffect", ...initialSettings];
     }
 

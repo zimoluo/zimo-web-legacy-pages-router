@@ -40,3 +40,11 @@ export const isHalloweenSeason = (date: Date): boolean => {
   };
   return isWithinDateRange(date, halloweenRange);
 };
+
+export const isHalloweenDay = (date: Date): boolean => {
+  const month = monthNames[date.getUTCMonth()];
+  const day = date.getUTCDate();
+  return (
+    (month === "october" && day === 31) || (month === "november" && day === 1)
+  );
+};
