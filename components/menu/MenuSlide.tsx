@@ -87,6 +87,7 @@ const MenuSlide: React.FC<Props> = ({ isOpen, onClose, theme }) => {
 
   return (
     <aside
+      aria-hidden={!isOpen}
       ref={menuRef}
       className={`fixed top-0 right-0 z-40 h-screen w-screen w-menu-slide-desktop ${menuBgClass} ${
         theme === "about" && settings.disableBackgroundBlur
