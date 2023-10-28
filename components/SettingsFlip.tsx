@@ -5,14 +5,25 @@ interface Props {
   theme: ThemeType;
   onClick: (status: boolean) => void;
   state: boolean;
+  appearance?: "normal" | "halloween";
 }
 
-const SettingsFlip: React.FC<Props> = ({ theme, onClick, state = false }) => {
+const SettingsFlip: React.FC<Props> = ({
+  theme,
+  onClick,
+  state = false,
+  appearance = "normal",
+}) => {
   function flip() {
     onClick(!state);
   }
 
   const flipFillClass = notchColorMap[theme] || notchColorMap["zimo"];
+
+  const appearanceMap: { [key: string]: string } = {
+    normal: "/settings-flip-button.svg",
+    halloween: "/settings-flip-button-halloween.svg",
+  };
 
   return (
     <button
@@ -32,7 +43,7 @@ const SettingsFlip: React.FC<Props> = ({ theme, onClick, state = false }) => {
         } `}
       />
       <Image
-        src="/settings-flip-button.svg"
+        src={appearanceMap[appearance]}
         className={`h-8 md:h-10 w-auto aspect-square rounded-full absolute top-0 left-0 pointer-events-none select-none transform transition-transform duration-200 ease-out ${
           state ? "translate-x-flip-mobile translate-x-flip" : "translate-x-0"
         } rounded-full`}

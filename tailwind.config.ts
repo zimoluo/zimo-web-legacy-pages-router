@@ -25,6 +25,7 @@ const config: Config = {
       fontFamily: {
         "arial-black": ['"Arial Black"', '"Arial-Black-Local"', "sans-serif"],
         arial: ["Arial", "Arial-Local", "sans-serif"],
+        halloween: ["Halloween"],
       },
       animation: {
         "zimo-scale-1": "move-about-bg 40s ease-in-out infinite",

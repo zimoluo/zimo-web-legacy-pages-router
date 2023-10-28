@@ -387,6 +387,13 @@
 }
 
 @font-face {
+  font-family: "Halloween";
+  src: url("/fonts/Halloween.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "Arial-Local";
   src: url("/fonts/Arial/Arial.ttf");
   font-style: normal;

@@ -53,10 +53,6 @@ const MenuContent = ({ theme }: Props) => {
       initialSettings = ["enableGallery", ...initialSettings];
     }
 
-    if (isHalloweenSeason() && !isHalloweenDay()) {
-      initialSettings = ["enableHalloweenEffect", ...initialSettings];
-    }
-
     return initialSettings;
   }, [routerPathname]);
 
@@ -72,7 +68,7 @@ const MenuContent = ({ theme }: Props) => {
     disableBackgroundBlur: "Disable Background Blur",
     enableGallery: "Gallery Mode",
     preferredManagementTheme: "Preferred Theme",
-    enableHalloweenEffect: "Halloween Vibe",
+    enableHalloweenEffect: "Spooky Halloween",
   };
 
   return (
@@ -112,32 +108,45 @@ const MenuContent = ({ theme }: Props) => {
       <div
         className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 my-6 ${borderColorClass} border-menu-entry border-opacity-20`}
       >
-        {["syncSettings"].map((item, index, array) => (
-          <React.Fragment key={item}>
+        {isHalloweenSeason() && (
+          <>
             <div className="flex items-center my-4 ">
-              <div className="flex-grow text-lg md:text-xl">
-                {settingsNameMap[item]}
+              <div className="flex-grow text-xl md:text-2xl font-halloween">
+                {settingsNameMap["enableHalloweenEffect"]}
               </div>
               <SettingsFlip
-                key={item}
                 onClick={(status: boolean) => {
-                  updateSettings({ [item]: status } as Partial<SettingsState>);
+                  updateSettings({
+                    enableHalloweenEffect: status,
+                  });
                 }}
                 theme={theme}
-                state={
-                  (settings as unknown as Record<string, unknown>)[
-                    item
-                  ] as boolean
-                }
+                state={settings.enableHalloweenEffect}
+                appearance="halloween"
               />
             </div>
-            {
-              <div
-                className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
-              ></div>
-            }
-          </React.Fragment>
-        ))}
+            <div
+              className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+            />
+          </>
+        )}
+        <div className="flex items-center my-4 ">
+          <div className="flex-grow text-lg md:text-xl">
+            {settingsNameMap["syncSettings"]}
+          </div>
+          <SettingsFlip
+            onClick={(status: boolean) => {
+              updateSettings({
+                syncSettings: status,
+              });
+            }}
+            theme={theme}
+            state={settings.syncSettings}
+          />
+        </div>
+        <div
+          className={`my-0 ${borderColorClass} border-menu-rule border-opacity-20`}
+        />
         {routerPathname.startsWith("/management") && (
           <>
             <div className="md:flex md:items-center my-4 ">
