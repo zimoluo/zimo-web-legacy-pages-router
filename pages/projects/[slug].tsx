@@ -58,7 +58,7 @@ export default function Entry({ entry }: ProjectType) {
         <meta name="author" content={entry.authors.join(", ")} />
         <meta
           name="keywords"
-          content="Zimo,Project,Coding,Programming,Personal Website"
+          content="Zimo Web,Project,Coding,Programming,Personal Website"
         />
         <link rel="canonical" href={urlShare} />
       </Head>

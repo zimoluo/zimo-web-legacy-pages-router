@@ -51,7 +51,7 @@ export default function Post({ post }: PostType) {
           content={restoreDisplayText(post.description)}
         />
         <meta name="author" content={post.author} />
-        <meta name="keywords" content="Zimo,Blog,Personal Website" />
+        <meta name="keywords" content="Zimo Web,Blog,Personal Website" />
         <link rel="canonical" href={urlShare} />
       </Head>
       <ReadingBlur />

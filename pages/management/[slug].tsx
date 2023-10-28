@@ -39,7 +39,7 @@ export default function Post({ post }: PostType) {
         <meta name="author" content={post.author} />
         <meta
           name="keywords"
-          content="Zimo,Personal Website,Policy,Management"
+          content="Zimo Web,Personal Website,Policy,Management"
         />
         <link rel="canonical" href={urlShare} />
       </Head>

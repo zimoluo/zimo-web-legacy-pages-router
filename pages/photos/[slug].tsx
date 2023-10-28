@@ -34,7 +34,7 @@ export default function Entry({ entry }: Props) {
         <meta name="twitter:image:alt" content={`${displayTitle}`} />
         <meta name="twitter:title" content={displayTitle} />
         <meta name="author" content={entry.author} />
-        <meta name="keywords" content="Zimo,Photos,Album,Personal Website" />
+        <meta name="keywords" content="Zimo Web,Photos,Album,Personal Website" />
         <link rel="canonical" href={urlShare} />
       </Head>
       <ReadingBlur className="md:hidden" />
