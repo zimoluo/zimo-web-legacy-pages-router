@@ -64,7 +64,7 @@ export default function Post({ post }: PostType) {
         author={post.author}
         content={post.content}
         date={post.date}
-        coverSrc={coverSrc}
+        coverSrc={getCoverSrc(post.coverImage, post.slug) || "/blog-zimo.svg"}
         displayCover={post.displayCover}
         slug={post.slug}
         tags={post.tags}
