@@ -36,7 +36,7 @@ export const isWithinDateRange = (date: Date, range: DateRange): boolean => {
 export const isHalloweenSeason = (date: Date): boolean => {
   const halloweenRange: DateRange = {
     start: { month: "october", day: 15 },
-    end: { month: "november", day: 15 },
+    end: { month: "november", day: 5 },
   };
   return isWithinDateRange(date, halloweenRange);
 };
