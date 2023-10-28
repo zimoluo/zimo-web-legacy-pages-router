@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 24 24" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<g id="user-new" vectornator:layerName="user-new">
-<path d="M2 19C2 15.1 5.1 12 9 12C10.8 12 11.3 12.2 12.6 12.8L13.6 11.2C13.3 11 12.9 10.9 12.7 10.7C14.1 9.6 15 7.9 15 6C15 2.7 12.3 0 9 0C5.7 0 3 2.7 3 6C3 7.9 3.9 9.7 5.4 10.8C2.2 12.2 0 15.3 0 19L0 24L11 24L11 22L2 22L2 19ZM5 6C5 3.8 6.8 2 9 2C11.2 2 13 3.8 13 6C13 8.2 11.2 10 9 10C6.8 10 5 8.2 5 6Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="path"/>
-<path d="M20 18L23.7 20.1L22.7 21.8L19 19.7L19 24L17 24L17 19.7L13.3 21.8L12.3 20.1L16 18L12.3 15.9L13.3 14.2L17 16.3L17 12L19 12L19 16.3L22.7 14.2L23.7 15.9L20 18Z" fill="#000000" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="path"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><g vectornator:layerName="user-new"><path vectornator:layerName="path" d="M2 19c0-3.9 3.1-7 7-7 1.8 0 2.3.2 3.6.8l1-1.6c-.3-.2-.7-.3-.9-.5C14.1 9.6 15 7.9 15 6c0-3.3-2.7-6-6-6S3 2.7 3 6c0 1.9.9 3.7 2.4 4.8C2.2 12.2 0 15.3 0 19v5h11v-2H2v-3ZM5 6c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4-4-1.8-4-4Z"/><path vectornator:layerName="path" d="m20 18 3.7 2.1-1 1.7-3.7-2.1V24h-2v-4.3l-3.7 2.1-1-1.7L16 18l-3.7-2.1 1-1.7 3.7 2.1V12h2v4.3l3.7-2.1 1 1.7L20 18Z"/></g></svg>

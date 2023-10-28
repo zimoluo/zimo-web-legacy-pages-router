@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<g id="Layer-1" vectornator:layerName="Layer 1">
-<path d="M49.0127 512C49.0127 256.299 256.299 49.0127 512 49.0127C767.701 49.0127 974.987 256.299 974.987 512C974.987 767.701 767.701 974.987 512 974.987C256.299 974.987 49.0127 767.701 49.0127 512Z" fill="#fafafa" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Oval 1"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1024 1024"><g vectornator:layerName="Layer 1"><path vectornator:layerName="Oval 1" fill="#fafafa" d="M49.013 512C49.013 256.299 256.299 49.013 512 49.013c255.701 0 462.987 207.286 462.987 462.987 0 255.701-207.286 462.987-462.987 462.987-255.701 0-462.987-207.286-462.987-462.987Z"/></g></svg>

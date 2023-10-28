@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<g id="Layer-1" vectornator:layerName="Layer 1">
-<g opacity="1" vectornator:layerName="Group 1">
-<path d="M49.8878 807.239C75.8399 532.382 70.9446 481.568 147.302 401.505C223.659 321.441 381.073 374.188 449.022 591.696C516.971 809.204 581.379 370.629 662.389 168.747C743.399-33.1349 842.437-75.1908 964.349 578.86C1086.26 1232.91 37.8363 934.877 49.8878 807.239Z" fill="none" opacity="1" stroke="#134e4a" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Curve 1"/>
-<path d="M666.708 381.867C666.708 330.754 709.383 289.319 762.026 289.319C814.668 289.319 857.343 330.754 857.343 381.867C857.343 432.98 814.668 474.415 762.026 474.415C709.383 474.415 666.708 432.98 666.708 381.867Z" fill="none" opacity="1" stroke="#134e4a" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40" vectornator:layerName="Oval 1"/>
-</g>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1024 1024"><g vectornator:layerName="Layer 1"><g vectornator:layerName="Group 1" fill="none" stroke="#134e4a" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="40"><path vectornator:layerName="Curve 1" d="M49.888 807.239c25.952-274.857 21.057-325.671 97.414-405.734 76.357-80.064 233.771-27.317 301.72 190.191 67.949 217.508 132.357-221.067 213.367-422.949 81.01-201.882 180.048-243.938 301.96 410.113C1086.26 1232.91 37.836 934.877 49.888 807.239Z"/><path vectornator:layerName="Oval 1" d="M666.708 381.867c0-51.113 42.675-92.548 95.318-92.548 52.642 0 95.317 41.435 95.317 92.548s-42.675 92.548-95.317 92.548c-52.643 0-95.318-41.435-95.318-92.548Z"/></g></g></svg>

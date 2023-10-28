@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 24 24" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<g id="Untitled" vectornator:layerName="Untitled">
-<path d="M6.34401 19.2337L6.34401 4.76628" fill="none" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" vectornator:layerName="path"/>
-<path d="M17.656 6.64694L17.656 17.353C17.656 18.5743 17.656 19.1849 17.4056 19.4986C17.188 19.7714 16.8578 19.9301 16.5087 19.9297C16.1074 19.9293 15.6306 19.5478 14.6769 18.7849L9.77537 14.8636C8.55178 13.8847 7.93999 13.3954 7.71849 12.804C7.52429 12.2856 7.52429 11.7144 7.71849 11.1959C7.93999 10.6046 8.55178 10.1152 9.77539 9.13634L14.6769 5.21512C15.6306 4.45217 16.1074 4.07069 16.5087 4.07027C16.8578 4.06989 17.188 4.22857 17.4056 4.50133C17.656 4.81497 17.656 5.42563 17.656 6.64694Z" fill="none" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" vectornator:layerName="path 1"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><g vectornator:layerName="Untitled" fill="none" stroke="#000" stroke-width="2.4"><path vectornator:layerName="path" d="M6.344 19.234V4.766"/><path vectornator:layerName="path 1" d="M17.656 6.647v10.706c0 1.221 0 1.832-.25 2.146a1.146 1.146 0 0 1-.897.43c-.402 0-.878-.381-1.832-1.144l-4.902-3.921c-1.223-.98-1.835-1.469-2.057-2.06a2.292 2.292 0 0 1 0-1.608c.222-.591.834-1.08 2.057-2.06l4.902-3.92c.954-.764 1.43-1.145 1.832-1.146.349 0 .679.159.897.431.25.314.25.925.25 2.146Z"/></g></svg>

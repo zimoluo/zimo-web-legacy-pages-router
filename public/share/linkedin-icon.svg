@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<clipPath id="ArtboardFrame">
-<rect height="1024" width="1024" x="0" y="0"/>
-</clipPath>
-<g clip-path="url(#ArtboardFrame)" id="Layer-1" vectornator:layerName="Layer 1">
-<path d="M810.667-7.10543e-14L213.333-7.10543e-14C95.5307-7.10543e-14-7.10543e-14 95.5307-7.10543e-14 213.333L-7.10543e-14 810.667C-7.10543e-14 928.469 95.5307 1024 213.333 1024L810.667 1024C928.512 1024 1024 928.469 1024 810.667L1024 213.333C1024 95.5307 928.512-7.10543e-14 810.667-7.10543e-14ZM341.333 810.667L213.333 810.667L213.333 341.333L341.333 341.333L341.333 810.667ZM277.333 287.232C236.117 287.232 202.667 253.525 202.667 211.968C202.667 170.411 236.117 136.704 277.333 136.704C318.549 136.704 352 170.411 352 211.968C352 253.525 318.592 287.232 277.333 287.232ZM853.333 810.667L725.333 810.667L725.333 571.563C725.333 427.861 554.667 438.741 554.667 571.563L554.667 810.667L426.667 810.667L426.667 341.333L554.667 341.333L554.667 416.64C614.229 306.304 853.333 298.155 853.333 522.283L853.333 810.667Z" fill="#701a75" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="path"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1024 1024"><clipPath id="a"><path d="M0 0h1024v1024H0z"/></clipPath><g vectornator:layerName="Layer 1" clip-path="url(#a)"><path vectornator:layerName="path" fill="#701a75" d="M810.667 0H213.333C95.531 0 0 95.53 0 213.333v597.334C0 928.469 95.53 1024 213.333 1024h597.334C928.512 1024 1024 928.469 1024 810.667V213.333C1024 95.531 928.512 0 810.667 0ZM341.333 810.667h-128V341.333h128v469.334Zm-64-523.435c-41.216 0-74.666-33.707-74.666-75.264 0-41.557 33.45-75.264 74.666-75.264 41.216 0 74.667 33.707 74.667 75.264 0 41.557-33.408 75.264-74.667 75.264Zm576 523.435h-128V571.563c0-143.702-170.666-132.822-170.666 0v239.104h-128V341.333h128v75.307c59.562-110.336 298.666-118.485 298.666 105.643v288.384Z"/></g></svg>

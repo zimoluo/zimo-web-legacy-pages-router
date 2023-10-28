@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1200 1227" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<g id="Untitled" vectornator:layerName="Untitled">
-<path d="M934.941 87.0747L1113.55 87.0747L723.346 533.051L1182.39 1139.93L822.961 1139.93L541.445 771.86L219.327 1139.93L40.6124 1139.93L457.973 662.903L17.6116 87.0747L386.163 87.0747L640.629 423.501L934.941 87.0747ZM872.256 1033.02L971.224 1033.02L332.387 188.364L226.184 188.364L872.256 1033.02Z" fill="#701a75" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="path"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1200 1227"><g vectornator:layerName="Untitled"><path vectornator:layerName="path" fill="#701a75" d="M934.941 87.075h178.609L723.346 533.05l459.044 606.879H822.961L541.445 771.86l-322.118 368.07H40.612l417.361-477.027L17.612 87.075h368.551L640.629 423.5 934.941 87.075Zm-62.685 945.945h98.968L332.387 188.364H226.184l646.072 844.656Z"/></g></svg>

@@ -1,18 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 24 24" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs>
-<path d="M9.81185 21.386C9.81185 20.1776 10.7915 19.1979 12 19.1979C13.2085 19.1979 14.1881 20.1776 14.1881 21.386C14.1881 22.5945 13.2085 23.5742 12 23.5742C10.7915 23.5742 9.81185 22.5945 9.81185 21.386Z" id="Fill"/>
-</defs>
-<g id="Untitled" vectornator:layerName="Untitled">
-<path d="M17.7058 3.12039L20.5587 5.97329M20.5587 5.97329L17.7058 8.82618M20.5587 5.97329L7.24517 5.97329C5.14436 5.97329 3.44131 7.67633 3.44131 9.77715M6.29421 18.3358L3.44131 15.4829M3.44131 15.4829L6.29421 12.63M3.44131 15.4829L16.7548 15.4829C18.8556 15.4829 20.5587 13.7799 20.5587 11.6791" fill="none" opacity="1" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" vectornator:layerName="path"/>
-<g opacity="1" vectornator:layerName="Oval 2">
-<mask height="4.3763" id="StrokeMask" maskUnits="userSpaceOnUse" width="4.3763" x="9.81185" y="19.1979">
-<rect fill="#000000" height="4.3763" stroke="none" width="4.3763" x="9.81185" y="19.1979"/>
-<use fill="#ffffff" fill-rule="evenodd" stroke="none" xlink:href="#Fill"/>
-</mask>
-<use fill="none" mask="url(#StrokeMask)" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" xlink:href="#Fill"/>
-</g>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><defs><path id="a" d="M9.812 21.386a2.188 2.188 0 1 1 4.376 0 2.188 2.188 0 0 1-4.376 0Z"/></defs><g vectornator:layerName="Untitled"><path vectornator:layerName="path" fill="none" stroke="#000" stroke-width="2" d="m17.706 3.12 2.853 2.853m0 0-2.853 2.853m2.853-2.853H7.245a3.804 3.804 0 0 0-3.804 3.804m2.853 8.559-2.853-2.853m0 0 2.853-2.853m-2.853 2.853h13.314c2.1 0 3.804-1.703 3.804-3.804"/><g vectornator:layerName="Oval 2"><mask id="b" width="4.376" height="4.376" x="9.812" y="19.198" maskUnits="userSpaceOnUse"><path d="M9.812 19.198h4.376v4.376H9.812z"/><use xlink:href="#a" fill="#fff" fill-rule="evenodd"/></mask><use xlink:href="#a" fill="none" stroke="#000" stroke-width="1.2" mask="url(#b)"/></g></g></svg>

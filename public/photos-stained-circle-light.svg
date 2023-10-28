@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 1024 1024" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs/>
-<g id="Layer-1" vectornator:layerName="Layer 1">
-<path d="M120 0C53.7258 0 0 53.7258 0 120L0 904C0 970.274 53.7258 1024 120 1024L904 1024C970.274 1024 1024 970.274 1024 904L1024 120C1024 53.7258 970.274 0 904 0L120 0ZM512 272C644.548 272 752 379.452 752 512C752 644.548 644.548 752 512 752C379.452 752 272 644.548 272 512C272 379.452 379.452 272 512 272Z" fill="#ff5700" fill-rule="nonzero" opacity="1" stroke="none" vectornator:layerName="Curve 1"/>
-<path d="M0 120C0 53.7258 53.7258 0 120 0L904 0C970.274 0 1024 53.7258 1024 120L1024 904C1024 970.274 970.274 1024 904 1024L120 1024C53.7258 1024 0 970.274 0 904L0 120Z" fill="#ff5700" fill-rule="nonzero" opacity="0" stroke="none" vectornator:layerName="Rectangle 1"/>
-<path d="M120 0C53.7258 0 0 53.7258 0 120L0 904C0 970.274 53.7258 1024 120 1024L904 1024C970.274 1024 1024 970.274 1024 904L1024 120C1024 53.7258 970.274 0 904 0L120 0ZM452 272L572 272C671.411 272 752 352.589 752 452L752 572C752 671.411 671.411 752 572 752L452 752C352.589 752 272 671.411 272 572L272 452C272 352.589 352.589 272 452 272Z" fill="#ff5700" fill-rule="nonzero" opacity="0" stroke="none" vectornator:layerName="Curve 2"/>
-</g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xml:space="preserve" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 1024 1024"><g vectornator:layerName="Layer 1"><path vectornator:layerName="Curve 1" fill="#ff5700" d="M120 0C53.726 0 0 53.726 0 120v784c0 66.274 53.726 120 120 120h784c66.274 0 120-53.726 120-120V120c0-66.274-53.726-120-120-120H120Zm392 272c132.548 0 240 107.452 240 240S644.548 752 512 752 272 644.548 272 512s107.452-240 240-240Z"/></g></svg>
