@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import {
   iconTextMap,
@@ -9,9 +9,18 @@ import {
   menuEntryBorderMap,
 } from "../../interfaces/themeMaps";
 import Image from "next/image";
+import { useRouter } from "next/router";
+
+type NavigationItem =
+  | "home"
+  | "photos"
+  | "blog"
+  | "projects"
+  | "about"
+  | "management";
 
 type Props = {
-  item: "home" | "photos" | "blog" | "projects" | "about" | "management";
+  item: NavigationItem;
   theme: ThemeType;
 };
 
@@ -25,14 +34,31 @@ const MenuNavigationEntry: React.FC<Props> = ({ item, theme }) => {
     management: "/management.svg",
   };
 
+  const determineSite = (path: string): NavigationItem => {
+    if (path.startsWith("/blog")) return "blog";
+    if (path.startsWith("/projects")) return "projects";
+    if (path.startsWith("/photos")) return "photos";
+    if (path.startsWith("/about")) return "about";
+    if (path.startsWith("/management")) return "management";
+    return "home";
+  };
+
   const svgFilterClass = svgFilterMap[theme] || svgFilterMap["zimo"];
   const textColorClass = textColorMap[theme] || textColorMap["zimo"];
   const borderColorClass = menuEntryBorderMap[theme];
 
+  const routerPathname = useRouter().pathname;
+
+  const currentSite = determineSite(routerPathname);
+
   return (
     <>
       <Link href={`/${item === "home" ? "" : item}`} passHref>
-        <div className="group font-arial cursor-pointer flex items-center my-4">
+        <div
+          className={`group font-arial cursor-pointer flex items-center my-4 ${
+            currentSite === item ? "font-bold" : ""
+          }`}
+        >
           <Image
             src={navIconMap[item]}
             className={`h-8 md:h-10 w-auto aspect-square transform transition-transform duration-300 group-hover:scale-110 ${

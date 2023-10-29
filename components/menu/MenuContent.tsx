@@ -95,7 +95,7 @@ const MenuContent = ({ theme }: Props) => {
       </div>
 
       <div
-        className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 my-6 text-lg font-bold md:text-xl ${borderColorClass} border-menu-entry border-opacity-20`}
+        className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 my-6 text-lg md:text-xl ${borderColorClass} border-menu-entry border-opacity-20`}
       >
         {["home", "photos", "blog", "projects", "about", "management"].map(
           (item) => (
