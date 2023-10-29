@@ -67,10 +67,19 @@ export default function Home() {
               <div>
                 <ArticleCard
                   theme="zimo"
+                  title="Spooky Halloween Update!"
+                  section="blog"
+                  slug="spooky-halloween-update"
+                  date="2023-10-29T05:12:23Z"
+                  description="Scary fast..."
+                />
+                <ArticleCard
+                  theme="zimo"
                   title="Welcome to Zimo&nbsp;Web"
                   section="blog"
                   slug="welcome-to-zimo-web"
                   date="2023-10-26T14:08:52Z"
+                  className="mt-4"
                   description="What has become the reality..."
                 />
                 <ArticleCard
@@ -81,23 +90,6 @@ export default function Home() {
                   date="2023-10-22"
                   className="mt-4"
                   description="This page explains the settings of Zimo Web."
-                />
-                <ArticleCard
-                  theme="zimo"
-                  title="Approaching the Moon..."
-                  section="photos"
-                  slug="approaching-the-moon"
-                  className="mt-4"
-                  date="2023-09-29"
-                />
-                <ArticleCard
-                  theme="zimo"
-                  title="The Ivy Tower"
-                  section="blog"
-                  slug="the-ivy-tower"
-                  date="2023-07-31"
-                  className="mt-4"
-                  description="The ivy tower stands within."
                 />
               </div>
             </section>

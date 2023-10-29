@@ -40,7 +40,11 @@ const parseCustomComponent = (
   try {
     const props = JSON.parse(`{${propsString}}`);
     const Component = componentsMap[componentName];
-    return <Component key={idx} {...props} />;
+    return (
+      <div className="my-10">
+        <Component key={idx} {...props} />
+      </div>
+    );
   } catch (error) {
     console.error(
       `Failed to parse or render component ${componentName}:`,
