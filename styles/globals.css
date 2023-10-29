@@ -754,14 +754,23 @@
   bottom: max(18px, min(15%, 3rem));
 }
 
-@keyframes pulse {
+@keyframes halloweenPulse {
   0%,
-  35%,
-  65%,
   100% {
     opacity: 0;
   }
   50% {
-    opacity: 0.6667;
+    opacity: 0.9;
+  }
+}
+
+@keyframes halloweenEvent {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  8%,
+  92% {
+    opacity: 0.9;
   }
 }

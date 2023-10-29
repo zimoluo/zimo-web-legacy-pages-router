@@ -20,7 +20,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "halloween-pulse":
-          "radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.7) 100%)",
+          "radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.75) 100%)",
+        "halloween-event":
+          "radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.8) 100%)",
       },
       fontFamily: {
         "arial-black": ['"Arial Black"', '"Arial-Black-Local"', "sans-serif"],
@@ -63,7 +65,8 @@ const config: Config = {
         "spin-theme-button": "chargeSpin 0.6s ease-in-out",
         "spin-favicon": "spin 0.55s linear infinite",
         "shake-like-button": "shakeSpin 0.6s ease-in-out",
-        "halloween-pulse": "pulse 7s ease-in-out infinite",
+        "halloween-pulse": "halloweenPulse 1s ease-in-out",
+        "halloween-event": "halloweenEvent 10s ease-in-out",
       },
       boxShadow: {
         "favicon-glow": "inset 0 0 15px 0px #ffffff, 0 0 15px 2px #ffffff",
