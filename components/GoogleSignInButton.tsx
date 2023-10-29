@@ -9,7 +9,6 @@ const GoogleSignInButton: React.FC = () => {
   const { settings, updateSettingsLocally } = useSettings();
 
   const [buttonWidth, setButtonWidth] = useState<number>(100); // initial width in pixels
-  const [iframeFailed, setIframeFailed] = useState<boolean>(false);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -19,7 +18,7 @@ const GoogleSignInButton: React.FC = () => {
       if (mediaWidth < 768) {
         calculatedWidth = mediaWidth - 100;
       } else {
-        calculatedWidth = Math.min(mediaWidth * 0.93, 640) - 100;
+        calculatedWidth = Math.min(mediaWidth * 0.93, 640) - 100; // 40rem is 640px
       }
 
       setButtonWidth(calculatedWidth);
@@ -46,15 +45,10 @@ const GoogleSignInButton: React.FC = () => {
   };
 
   const onFailure = () => {
-    console.log("Failed to load sign in button.");
-    setIframeFailed(true);
+    console.log("Login failed");
   };
 
-  return iframeFailed ? (
-    <p className="ml-6 text-xl md:text-2xl font-bold">
-      Open Zimo Web in a browser to sign in.
-    </p>
-  ) : (
+  return (
     <GoogleLogin
       onSuccess={onSuccess}
       onError={onFailure}
