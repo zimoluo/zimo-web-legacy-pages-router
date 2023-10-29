@@ -15,7 +15,9 @@ function ImagePageIndicator({ totalPages, currentPage, onPageChange }: Props) {
       {Array.from({ length: totalPages }).map((_, index) => (
         <button
           key={index}
-          className={`w-1.5 md:w-2 rounded-full h-auto aspect-square ${
+          className={`${
+            isCompactView ? "w-1.5 md:w-2" : "w-2"
+          } rounded-full h-auto aspect-square ${
             index === currentPage
               ? "bg-neutral-100 bg-opacity-80"
               : "bg-neutral-800 bg-opacity-40"
