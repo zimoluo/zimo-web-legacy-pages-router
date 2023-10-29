@@ -93,12 +93,13 @@ const HalloweenPulse: React.FC = () => {
       <Image
         src={eventImage}
         alt="Halloween Effect"
+        aria-hidden="true"
         height={100}
         width={100}
         className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity}`}
       />
       {eventAudio && (
-        <audio key={eventAudio} autoPlay>
+        <audio key={eventAudio} autoPlay aria-hidden="true">
           <source
             src={eventAudio}
             type={eventAudio.endsWith(".mp3") ? "audio/mp3" : "audio/wav"}
