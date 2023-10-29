@@ -12,16 +12,23 @@ const HalloweenPulse: React.FC = () => {
   const [eventAudio, setEventAudio] = useState("");
   const [previousEvent, setPreviousEvent] = useState<any>(null);
   const [opacity, setOpacity] = useState("opacity-0");
+  const [eventAnimation, setEventAnimation] = useState("");
 
   const events = [
-    { image: "/halloween-event/bats.svg", audio: "/halloween-event/bats.wav" },
+    {
+      image: "/halloween-event/bats.svg",
+      audio: "/halloween-event/bats.wav",
+      animation: "",
+    },
     {
       image: "/halloween-event/pumpkin.svg",
       audio: "/halloween-event/pumpkin.mp3",
+      animation: "animate-pumpkin-scale",
     },
     {
       image: "/halloween-event/witch.svg",
       audio: "/halloween-event/witch.wav",
+      animation: "animate-witch-move",
     },
   ];
 
@@ -48,6 +55,7 @@ const HalloweenPulse: React.FC = () => {
           const selectedEvent = availableEvents[selectedIndex];
           setEventImage(selectedEvent.image);
           setEventAudio(selectedEvent.audio);
+          setEventAnimation(selectedEvent.animation);
           setPreviousEvent(events.indexOf(selectedEvent));
 
           setAnimation("animate-halloween-event");
@@ -61,6 +69,7 @@ const HalloweenPulse: React.FC = () => {
           setTimeout(() => {
             setEventImage("");
             setEventAudio("");
+            setEventAnimation("");
           }, 9500);
         } else {
           setAnimation("animate-halloween-pulse");
@@ -102,7 +111,7 @@ const HalloweenPulse: React.FC = () => {
         aria-hidden="true"
         height={100}
         width={100}
-        className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity}`}
+        className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${eventAnimation}`}
       />
       {eventAudio && (
         <audio key={eventAudio} autoPlay aria-hidden="true">

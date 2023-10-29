@@ -774,3 +774,30 @@
     opacity: 0.9;
   }
 }
+
+@keyframes pumpkinScale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.3333);
+  }
+}
+
+@keyframes pumpkinScale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.3333);
+  }
+}
+
+@keyframes witchMove {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: translateX(-30vw) translateY(-20vw) scale(0.82);
+  }
+}

@@ -67,6 +67,8 @@ const config: Config = {
         "shake-like-button": "shakeSpin 0.6s ease-in-out",
         "halloween-pulse": "halloweenPulse 1s ease-in-out",
         "halloween-event": "halloweenEvent 10s ease-in-out",
+        "pumpkin-scale": "pumpkinScale 10s ease-in-out",
+        "witch-move": "witchMove 10s ease-in-out",
       },
       boxShadow: {
         "favicon-glow": "inset 0 0 15px 0px #ffffff, 0 0 15px 2px #ffffff",
