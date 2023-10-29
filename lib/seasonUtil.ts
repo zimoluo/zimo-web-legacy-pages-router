@@ -43,8 +43,8 @@ export const isHalloweenSeason = (): boolean => {
 
 export const isHalloweenDay = (): boolean => {
   const date = new Date();
-  const month = monthNames[date.getUTCMonth()];
-  const day = date.getUTCDate();
+  const month = monthNames[date.getMonth()];
+  const day = date.getDate();
   return (
     (month === "october" && day === 31) || (month === "november" && day === 1)
   );
