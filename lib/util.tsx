@@ -6,12 +6,6 @@ import { remark } from "remark";
 import html from "remark-html";
 import React from "react";
 
-let JSDOM: typeof import("jsdom").JSDOM | null = null;
-
-if (typeof window === "undefined") {
-  JSDOM = require("jsdom").JSDOM;
-}
-
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
 
