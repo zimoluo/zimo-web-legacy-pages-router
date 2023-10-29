@@ -22,7 +22,7 @@ const config: Config = {
         "halloween-pulse":
           "radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.75) 100%)",
         "halloween-event":
-          "radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.8) 100%)",
+          "radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.8) 100%)",
       },
       fontFamily: {
         "arial-black": ['"Arial Black"', '"Arial-Black-Local"', "sans-serif"],
