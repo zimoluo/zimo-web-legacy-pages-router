@@ -10,7 +10,7 @@ import MenuNavigationEntry from "./MenuNavigationEntry";
 import SettingsFlip from "../SettingsFlip";
 import { useSettings } from "../contexts/SettingsContext";
 import SettingsNotchBar from "../SettingsSlider";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
@@ -23,6 +23,15 @@ type Props = {
 const MenuContent = ({ theme }: Props) => {
   const { user } = useUser();
   const { settings, updateSettings } = useSettings();
+
+  const [isHalloweenDayClient, setIsHalloweenDayClient] = useState(false);
+  const [isHalloweenSeasonClient, setIsHalloweenSeasonClient] = useState(false);
+
+  useEffect(() => {
+    setIsHalloweenDayClient(isHalloweenDay());
+    setIsHalloweenSeasonClient(isHalloweenSeason());
+  }, []);
+
   const borderColorClass = menuEntryBorderMap[theme];
   const barColorClass = barColorMap[theme];
   const routerPathname = useRouter().pathname;
@@ -108,7 +117,7 @@ const MenuContent = ({ theme }: Props) => {
       <div
         className={`rounded-2xl w-full ${barColorClass} shadow-lg px-6 py-0 my-6 ${borderColorClass} border-menu-entry border-opacity-20`}
       >
-        {isHalloweenSeason() && (
+        {isHalloweenSeasonClient && (
           <>
             <div className="flex items-center my-4 ">
               <div className="flex-grow text-xl md:text-2xl font-halloween">
@@ -116,7 +125,7 @@ const MenuContent = ({ theme }: Props) => {
               </div>
               <SettingsFlip
                 onClick={
-                  isHalloweenDay()
+                  isHalloweenDayClient
                     ? (status: boolean) => {}
                     : (status: boolean) => {
                         updateSettings({
@@ -125,7 +134,7 @@ const MenuContent = ({ theme }: Props) => {
                       }
                 }
                 theme={theme}
-                state={isHalloweenDay() || settings.enableHalloweenEffect}
+                state={isHalloweenDayClient || settings.enableHalloweenEffect}
                 appearance="halloween"
               />
             </div>

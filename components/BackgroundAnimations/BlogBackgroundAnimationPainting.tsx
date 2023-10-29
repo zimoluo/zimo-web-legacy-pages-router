@@ -4,6 +4,11 @@ import { isHalloweenSeason } from "@/lib/seasonUtil";
 
 const BlogBackgroundAnimationPainting: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isHalloweenClient, setIsHalloweenClient] = useState(false);
+
+  useEffect(() => {
+    setIsHalloweenClient(isHalloweenSeason());
+  }, []);
 
   const imageSets = {
     original: ["mountain", "tower", "eunoe"],
@@ -18,7 +23,7 @@ const BlogBackgroundAnimationPainting: React.FC = () => {
   useEffect(() => {
     let images = imageSets.original;
 
-    if (isHalloweenSeason()) {
+    if (isHalloweenClient) {
       images = imageSets.halloween;
     }
 

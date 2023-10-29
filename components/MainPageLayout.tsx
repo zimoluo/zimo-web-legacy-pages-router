@@ -12,7 +12,7 @@ import {
 } from "../interfaces/themeMaps";
 import { useUser } from "./contexts/UserContext";
 import { restoreClientUser } from "@/lib/accountClientManager";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSettings } from "./contexts/SettingsContext";
 import { defaultSettings } from "@/interfaces/defaultSettings";
 import HalloweenPulse from "./HalloweenPulse";
@@ -31,6 +31,13 @@ const MainPageLayout: React.FC<LayoutProps> = ({
 }) => {
   const { user, setUser } = useUser();
   const { updateSettingsLocally, settings } = useSettings();
+  const [isHalloweenDayClient, setIsHalloweenDayClient] = useState(false);
+  const [isHalloweenSeasonClient, setIsHalloweenSeasonClient] = useState(false);
+
+  useEffect(() => {
+    setIsHalloweenDayClient(isHalloweenDay());
+    setIsHalloweenSeasonClient(isHalloweenSeason());
+  }, []);
 
   useEffect(() => {
     async function restoreUserInfo() {
@@ -121,8 +128,8 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         <meta name="robots" content="index,follow,max-image-preview:large" />
         <meta name="author" content="Zimo" />
       </Head>
-      {((settings.enableHalloweenEffect && isHalloweenSeason()) ||
-        isHalloweenDay()) && <HalloweenPulse />}
+      {((settings.enableHalloweenEffect && isHalloweenSeasonClient) ||
+        isHalloweenDayClient) && <HalloweenPulse />}
       <BackgroundImage theme={theme} />
       <BackgroundAnimation theme={theme} />
       <Navbar theme={theme} />
