@@ -8,7 +8,7 @@ const GoogleSignInButton: React.FC = () => {
   const { setUser } = useUser();
   const { settings, updateSettingsLocally } = useSettings();
 
-  const [buttonWidth, setButtonWidth] = useState<number>(100); // initial width in pixels
+  const [buttonWidth, setButtonWidth] = useState<number>(100);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -18,7 +18,7 @@ const GoogleSignInButton: React.FC = () => {
       if (mediaWidth < 768) {
         calculatedWidth = mediaWidth - 100;
       } else {
-        calculatedWidth = Math.min(mediaWidth * 0.93, 640) - 100; // 40rem is 640px
+        calculatedWidth = Math.min(mediaWidth * 0.93, 640) - 100;
       }
 
       setButtonWidth(calculatedWidth);
