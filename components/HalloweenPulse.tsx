@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Head from "next/head";
 
 const HalloweenPulse: React.FC = () => {
   const [animation, setAnimation] = useState("");
@@ -85,6 +86,11 @@ const HalloweenPulse: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <link rel="preload" as="image" href="/halloween-event/pumpkin.svg" />
+        <link rel="preload" as="image" href="/halloween-event/bats.svg" />
+        <link rel="preload" as="image" href="/halloween-event/witch.svg" />
+      </Head>
       <div
         className={`fixed inset-0 w-screen h-screen z-90 ${background} ${animation} opacity-0 pointer-events-none select-none`}
         aria-hidden="true"
