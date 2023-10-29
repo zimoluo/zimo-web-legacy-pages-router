@@ -12,4 +12,5 @@ export const defaultSettings: SettingsState = {
   enableGallery: false,
   preferredManagementTheme: "zimo",
   enableHalloweenEffect: false,
+  disableSoundEffect: false,
 };

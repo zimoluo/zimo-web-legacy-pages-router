@@ -12,4 +12,5 @@ interface SettingsState {
   enableGallery: boolean;
   preferredManagementTheme: "zimo" | "about";
   enableHalloweenEffect: boolean;
+  disableSoundEffect: boolean;
 }

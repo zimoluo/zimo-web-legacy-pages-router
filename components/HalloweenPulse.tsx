@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
+import { useSettings } from "./contexts/SettingsContext";
 
 const HalloweenPulse: React.FC = () => {
   const [animation, setAnimation] = useState("");
@@ -13,6 +14,8 @@ const HalloweenPulse: React.FC = () => {
   const [previousEvent, setPreviousEvent] = useState<any>(null);
   const [opacity, setOpacity] = useState("opacity-0");
   const [eventAnimation, setEventAnimation] = useState("");
+
+  const { settings } = useSettings();
 
   const events = [
     {
@@ -113,7 +116,7 @@ const HalloweenPulse: React.FC = () => {
         width={100}
         className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${eventAnimation}`}
       />
-      {eventAudio && (
+      {eventAudio && !settings.disableSoundEffect && (
         <audio key={eventAudio} autoPlay aria-hidden="true">
           <source
             src={eventAudio}

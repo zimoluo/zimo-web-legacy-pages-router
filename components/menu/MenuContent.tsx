@@ -41,6 +41,7 @@ const MenuContent = ({ theme }: Props) => {
       "disableComments",
       "disableGestures",
       "disableBackgroundBlur",
+      "disableSoundEffect",
     ];
 
     if (routerPathname.startsWith("/blog")) {
@@ -65,7 +66,7 @@ const MenuContent = ({ theme }: Props) => {
     return initialSettings;
   }, [routerPathname]);
 
-  const settingsNameMap: { [key: string]: string } = {
+  const settingsNameMap: { [key in keyof Partial<SettingsState>]: string } = {
     syncSettings: "Sync Settings",
     backgroundRichness: "Background Richness",
     navigationBar: "Navigation Bar",
@@ -78,6 +79,7 @@ const MenuContent = ({ theme }: Props) => {
     enableGallery: "Gallery Mode",
     preferredManagementTheme: "Preferred Theme",
     enableHalloweenEffect: "Spooky Halloween",
+    disableSoundEffect: "Disable Sound Effect",
   };
 
   return (
@@ -259,7 +261,7 @@ const MenuContent = ({ theme }: Props) => {
           <React.Fragment key={item}>
             <div className="flex items-center my-4 ">
               <div className="flex-grow text-lg md:text-xl">
-                {settingsNameMap[item]}
+                {settingsNameMap[item as keyof SettingsState]}
               </div>
               <SettingsFlip
                 key={item}
