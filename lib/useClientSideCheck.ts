@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function useClientSideCheck(checkFunction: () => boolean) {
+function useClientSideCheck(checkFunction: () => boolean): boolean {
   const [status, setStatus] = useState(false);
 
   useEffect(() => {
