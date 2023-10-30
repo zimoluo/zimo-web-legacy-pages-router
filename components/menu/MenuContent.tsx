@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
 import { isHalloweenDay, isHalloweenSeason } from "@/lib/seasonUtil";
-import useClientSideCheck from "@/lib/useClientSideCheck";
+import { useClientSideFlag } from "@/lib/clientLogicHooks";
 
 type Props = {
   theme: ThemeType;
@@ -25,8 +25,8 @@ const MenuContent = ({ theme }: Props) => {
   const { user } = useUser();
   const { settings, updateSettings } = useSettings();
 
-  const isHalloweenDayClient = useClientSideCheck(isHalloweenDay);
-  const isHalloweenSeasonClient = useClientSideCheck(isHalloweenSeason);
+  const isHalloweenDayClient = useClientSideFlag(isHalloweenDay);
+  const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
   const borderColorClass = menuEntryBorderMap[theme];
   const barColorClass = barColorMap[theme];
