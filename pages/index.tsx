@@ -100,6 +100,7 @@ export default function Home() {
                   "2023-8-19": "The construction of Zimo Web begins.",
                   "2023-10-27":
                     "Zimo Web is released – exactly one month before my birthday.",
+                  "2023-10-29": "The Spooky Halloween update is released.",
                 }}
                 theme="zimo"
               />
