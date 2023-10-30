@@ -12,7 +12,7 @@ import {
 } from "../interfaces/themeMaps";
 import { useUser } from "./contexts/UserContext";
 import { restoreClientUser } from "@/lib/accountClientManager";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useSettings } from "./contexts/SettingsContext";
 import { defaultSettings } from "@/interfaces/defaultSettings";
 import HalloweenPulse from "./HalloweenPulse";
