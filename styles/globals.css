@@ -792,3 +792,15 @@
     transform: translateX(-30vw) translateY(-20vw) scale(0.82);
   }
 }
+
+.blog-card-cover-width {
+  max-width: 15rem;
+  min-width: 7rem;
+}
+
+@media (min-width: 768px) {
+  .blog-card-cover-width {
+    max-width: 20rem;
+    min-width: 9rem;
+  }
+}

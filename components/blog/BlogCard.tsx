@@ -53,9 +53,9 @@ const BlogCard = ({
           </div>
 
           <div className="flex items-center">
-            <div className="w-auto h-28 md:h-36 ml-2 rounded-xl overflow-hidden max-w-60 md:max-w-80">
+            <div className="w-auto h-28 md:h-36 ml-1.5 md:ml-2 rounded-xl overflow-hidden blog-card-cover-width">
               <Image
-                className="h-full w-auto object-cover"
+                className="h-full w-auto object-cover object-center"
                 src={coverImage}
                 alt={`Cover of ${title}`}
                 width={320}
