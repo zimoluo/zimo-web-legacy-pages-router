@@ -46,9 +46,9 @@ const s3 = new S3Client({
 const gzip = promisify(zlib.gzip);
 
 export const allowedCommentPath =
-  /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|]+\.json$|^about\/homepage\/messages\.json$/;
+  /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|A-Z]+\.json$|^about\/homepage\/messages\.json$/;
 export const allowedLikeButtonPath =
-  /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|]+\.json$/;
+  /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|A-Z]+\.json$/;
 
 export async function uploadUserToServer(
   user: Omit<UserData, "sub">,
