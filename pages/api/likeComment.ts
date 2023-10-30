@@ -4,6 +4,7 @@ import {
   getSubFromSessionToken,
   uploadCommentsToServer,
   getComments,
+  allowedCommentPath,
 } from "@/lib/accountServerManager";
 import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
@@ -26,10 +27,7 @@ export default async function handler(
   try {
     const { filePath, index, existingComment } = req.body;
 
-    const regex =
-      /^(blog|photos|projects)\/comments\/[^\/\\:*?"<>|]+\.json$|^about\/homepage\/messages\.json$/;
-
-    if (!regex.test(filePath)) {
+    if (!allowedCommentPath.test(filePath)) {
       throw new Error("Illegal file path to be uploaded.");
     }
 

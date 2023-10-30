@@ -12,6 +12,7 @@ import {
   getLikedBy,
   getUserDataBySub,
   getSubFromSessionToken,
+  allowedLikeButtonPath,
 } from "@/lib/accountServerManager";
 import { rateLimiterMiddleware } from "@/lib/rateLimiter";
 
@@ -53,9 +54,7 @@ export default async function handler(
   try {
     const { filePath } = req.body;
 
-    const regex = /^(blog|photos|projects)\/likedBy\/[^\/\\:*?"<>|]+\.json$/;
-
-    if (!regex.test(filePath)) {
+    if (!allowedLikeButtonPath.test(filePath)) {
       throw new Error("Illegal file path to be uploaded.");
     }
 
