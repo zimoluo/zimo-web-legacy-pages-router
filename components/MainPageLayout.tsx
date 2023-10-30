@@ -17,6 +17,7 @@ import { useSettings } from "./contexts/SettingsContext";
 import { defaultSettings } from "@/interfaces/defaultSettings";
 import HalloweenPulse from "./HalloweenPulse";
 import { isHalloweenDay, isHalloweenSeason } from "@/lib/seasonUtil";
+import useClientSideCheck from "@/lib/useClientSideCheck";
 
 interface LayoutProps {
   theme: ThemeType;
@@ -31,13 +32,9 @@ const MainPageLayout: React.FC<LayoutProps> = ({
 }) => {
   const { user, setUser } = useUser();
   const { updateSettingsLocally, settings } = useSettings();
-  const [isHalloweenDayClient, setIsHalloweenDayClient] = useState(false);
-  const [isHalloweenSeasonClient, setIsHalloweenSeasonClient] = useState(false);
 
-  useEffect(() => {
-    setIsHalloweenDayClient(isHalloweenDay());
-    setIsHalloweenSeasonClient(isHalloweenSeason());
-  }, []);
+  const isHalloweenDayClient = useClientSideCheck(isHalloweenDay);
+  const isHalloweenSeasonClient = useClientSideCheck(isHalloweenSeason);
 
   useEffect(() => {
     async function restoreUserInfo() {

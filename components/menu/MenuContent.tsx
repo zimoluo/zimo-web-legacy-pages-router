@@ -10,11 +10,12 @@ import MenuNavigationEntry from "./MenuNavigationEntry";
 import SettingsFlip from "../SettingsFlip";
 import { useSettings } from "../contexts/SettingsContext";
 import SettingsNotchBar from "../SettingsSlider";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
 import { isHalloweenDay, isHalloweenSeason } from "@/lib/seasonUtil";
+import useClientSideCheck from "@/lib/useClientSideCheck";
 
 type Props = {
   theme: ThemeType;
@@ -24,13 +25,8 @@ const MenuContent = ({ theme }: Props) => {
   const { user } = useUser();
   const { settings, updateSettings } = useSettings();
 
-  const [isHalloweenDayClient, setIsHalloweenDayClient] = useState(false);
-  const [isHalloweenSeasonClient, setIsHalloweenSeasonClient] = useState(false);
-
-  useEffect(() => {
-    setIsHalloweenDayClient(isHalloweenDay());
-    setIsHalloweenSeasonClient(isHalloweenSeason());
-  }, []);
+  const isHalloweenDayClient = useClientSideCheck(isHalloweenDay);
+  const isHalloweenSeasonClient = useClientSideCheck(isHalloweenSeason);
 
   const borderColorClass = menuEntryBorderMap[theme];
   const barColorClass = barColorMap[theme];
