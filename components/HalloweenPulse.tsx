@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
 import { useSettings } from "./contexts/SettingsContext";
+import { useUser } from "./contexts/UserContext";
 
 const HalloweenPulse: React.FC = () => {
   const [animation, setAnimation] = useState("");
@@ -15,7 +16,25 @@ const HalloweenPulse: React.FC = () => {
   const [opacity, setOpacity] = useState("opacity-0");
   const [eventAnimation, setEventAnimation] = useState("");
 
+  const [isDaniel, setIsDaniel] = useState<boolean>(false);
+
   const { settings } = useSettings();
+
+  const { user } = useUser();
+
+  const enableDanielMode = () => {
+    setChance(69);
+    setCooldown(0);
+  };
+
+  useEffect(() => {
+    if (user !== null && user.sub === "117782554998970091665") {
+      setIsDaniel(true);
+      enableDanielMode();
+    } else {
+      setIsDaniel(false);
+    }
+  }, [user]);
 
   const events = [
     {
@@ -66,6 +85,15 @@ const HalloweenPulse: React.FC = () => {
           setOpacity("opacity-100");
           setChance(randomBetween(4, 6));
           setCooldown(2);
+
+          // Special gift for Daniel LMAO
+          if (isDaniel) {
+            enableDanielMode();
+            setEventAnimation("");
+            setEventAudio("/halloween-event/caltech.wav");
+            setEventImage("/halloween-event/caltech.svg");
+          }
+
           eventTriggeredLast = true;
 
           setTimeout(() => setOpacity("opacity-0"), 9000);
@@ -116,7 +144,7 @@ const HalloweenPulse: React.FC = () => {
         width={100}
         className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${eventAnimation}`}
       />
-      {eventAudio && !settings.disableSoundEffect && (
+      {eventAudio && (!settings.disableSoundEffect || isDaniel) && (
         <audio key={eventAudio} autoPlay aria-hidden="true">
           <source
             src={eventAudio}
