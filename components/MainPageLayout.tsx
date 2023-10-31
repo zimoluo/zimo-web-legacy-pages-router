@@ -31,10 +31,15 @@ const MainPageLayout: React.FC<LayoutProps> = ({
   className = "",
 }) => {
   const { user, setUser } = useUser();
-  const { updateSettingsLocally, settings } = useSettings();
+  const { updateSettingsLocally, settings, updateSettings } = useSettings();
 
-  const isHalloweenDayClient = useClientSideFlag(isHalloweenDay);
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
+
+  useEffect(() => {
+    if (isHalloweenDay()) {
+      updateSettings({ enableHalloweenEffect: true });
+    }
+  });
 
   useEffect(() => {
     async function restoreUserInfo() {
@@ -125,8 +130,9 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         <meta name="robots" content="index,follow,max-image-preview:large" />
         <meta name="author" content="Zimo" />
       </Head>
-      {((settings.enableHalloweenEffect && isHalloweenSeasonClient) ||
-        isHalloweenDayClient) && <HalloweenPulse />}
+      {settings.enableHalloweenEffect && isHalloweenSeasonClient && (
+        <HalloweenPulse />
+      )}
       <BackgroundImage theme={theme} />
       <BackgroundAnimation theme={theme} />
       <Navbar theme={theme} />

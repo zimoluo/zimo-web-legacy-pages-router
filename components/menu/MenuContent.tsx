@@ -14,7 +14,7 @@ import React, { useMemo } from "react";
 import { useRouter } from "next/router";
 import SettingsUtilityButton from "../SettingsUtilityButton";
 import { securityCommentShutDown } from "@/lib/constants";
-import { isHalloweenDay, isHalloweenSeason } from "@/lib/seasonUtil";
+import { isHalloweenSeason } from "@/lib/seasonUtil";
 import { useClientSideFlag } from "@/lib/clientLogicHooks";
 
 type Props = {
@@ -25,7 +25,6 @@ const MenuContent = ({ theme }: Props) => {
   const { user } = useUser();
   const { settings, updateSettings } = useSettings();
 
-  const isHalloweenDayClient = useClientSideFlag(isHalloweenDay);
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
 
   const borderColorClass = menuEntryBorderMap[theme];
@@ -122,17 +121,13 @@ const MenuContent = ({ theme }: Props) => {
                 {settingsNameMap["enableHalloweenEffect"]}
               </div>
               <SettingsFlip
-                onClick={
-                  isHalloweenDayClient
-                    ? (status: boolean) => {}
-                    : (status: boolean) => {
-                        updateSettings({
-                          enableHalloweenEffect: status,
-                        });
-                      }
-                }
+                onClick={(status: boolean) => {
+                  updateSettings({
+                    enableHalloweenEffect: status,
+                  });
+                }}
                 theme={theme}
-                state={isHalloweenDayClient || settings.enableHalloweenEffect}
+                state={settings.enableHalloweenEffect}
                 appearance="halloween"
               />
             </div>
