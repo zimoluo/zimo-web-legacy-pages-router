@@ -39,7 +39,7 @@ const MainPageLayout: React.FC<LayoutProps> = ({
     if (isHalloweenDay()) {
       updateSettings({ enableHalloweenEffect: true });
     }
-  });
+  }, []);
 
   useEffect(() => {
     async function restoreUserInfo() {
