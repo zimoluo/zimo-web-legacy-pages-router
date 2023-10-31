@@ -45,7 +45,5 @@ export const isHalloweenDay = (): boolean => {
   const date = new Date();
   const month = monthNames[date.getMonth()];
   const day = date.getDate();
-  return (
-    (month === "october" && day === 31) || (month === "november" && day === 1)
-  );
+  return month === "october" && day === 31;
 };
