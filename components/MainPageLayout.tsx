@@ -31,15 +31,9 @@ const MainPageLayout: React.FC<LayoutProps> = ({
   className = "",
 }) => {
   const { user, setUser } = useUser();
-  const { updateSettingsLocally, settings, updateSettings } = useSettings();
+  const { updateSettingsLocally, settings } = useSettings();
 
   const isHalloweenSeasonClient = useClientSideFlag(isHalloweenSeason);
-
-  useEffect(() => {
-    if (isHalloweenDay()) {
-      updateSettings({ enableHalloweenEffect: true });
-    }
-  }, []);
 
   useEffect(() => {
     async function restoreUserInfo() {
@@ -73,6 +67,10 @@ const MainPageLayout: React.FC<LayoutProps> = ({
         }
       } catch (error) {
         console.error("Error in restoring user session:", error);
+      }
+
+      if (isHalloweenDay()) {
+        updateSettingsLocally({ enableHalloweenEffect: true });
       }
     }
 
