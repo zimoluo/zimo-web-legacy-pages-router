@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Head from "next/head";
 import { useSettings } from "./contexts/SettingsContext";
-import { useUser } from "./contexts/UserContext";
 
 interface HalloweenEvent {
   image: string;
@@ -21,14 +20,11 @@ const HalloweenPulse: React.FC = () => {
   const [eventAudio, setEventAudio] = useState<string>("");
   const [opacity, setOpacity] = useState<string>("opacity-0");
   const [eventAnimation, setEventAnimation] = useState<string>("");
-  const [isDaniel, setIsDaniel] = useState<boolean>(false);
 
   // Contexts
   const { settings } = useSettings();
-  const { user } = useUser();
 
   // Constants
-  const DANIEL_USER_SUB = "117782554998970091665";
   const events: HalloweenEvent[] = [
     {
       image: "/halloween-event/bats.svg",
@@ -47,12 +43,6 @@ const HalloweenPulse: React.FC = () => {
     },
   ];
 
-  // Helper Functions
-  const enableDanielMode = () => {
-    setChance(69);
-    setCooldown(0);
-  };
-
   const triggerEvent = (event: HalloweenEvent) => {
     setEventImage(event.image);
     setEventAudio(event.audio);
@@ -63,14 +53,6 @@ const HalloweenPulse: React.FC = () => {
     setChance(randomBetween(4, 6));
     setCooldown(2);
     setWaitingTime(randomBetween(12, 18));
-
-    // Special settings for Daniel
-    if (isDaniel) {
-      enableDanielMode();
-      setEventAnimation("");
-      setEventAudio("/halloween-event/caltech.wav");
-      setEventImage("/halloween-event/caltech.svg");
-    }
 
     // Reset after animation
     setTimeout(() => setOpacity("opacity-0"), 9000);
@@ -85,15 +67,6 @@ const HalloweenPulse: React.FC = () => {
     setAnimation("");
     setBackground("");
   };
-
-  // Effects
-  useEffect(() => {
-    setIsDaniel(user?.sub === DANIEL_USER_SUB);
-  }, [user]);
-
-  useEffect(() => {
-    if (isDaniel) enableDanielMode();
-  }, [isDaniel]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -112,7 +85,7 @@ const HalloweenPulse: React.FC = () => {
     }, waitingTime * 1000);
 
     return () => clearTimeout(timer);
-  }, [chance, cooldown, waitingTime, isDaniel]);
+  }, [chance, cooldown, waitingTime]);
 
   // JSX Rendering
   return (
@@ -121,9 +94,6 @@ const HalloweenPulse: React.FC = () => {
         {events.map((event) => (
           <link key={event.image} rel="preload" as="image" href={event.image} />
         ))}
-        {isDaniel && (
-          <link rel="preload" as="image" href="/halloween-event/caltech.svg" />
-        )}
       </Head>
       <div
         className={`fixed inset-0 w-screen h-screen z-90 ${background} ${animation} opacity-0 pointer-events-none select-none`}
@@ -138,7 +108,7 @@ const HalloweenPulse: React.FC = () => {
         width={100}
         className={`w-screen h-screen pointer-events-none select-none inset-0 fixed z-80 duration-300 transition-opacity ease-in-out ${opacity} ${eventAnimation}`}
       />
-      {eventAudio && (!settings.disableSoundEffect || isDaniel) && (
+      {eventAudio && !settings.disableSoundEffect && (
         <audio key={eventAudio} autoPlay aria-hidden="true">
           <source
             src={eventAudio}
