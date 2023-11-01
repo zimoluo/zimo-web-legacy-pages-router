@@ -13,4 +13,5 @@ interface SettingsState {
   preferredManagementTheme: "zimo" | "about";
   enableHalloweenEffect: boolean;
   disableSoundEffect: boolean;
+  preferInitialGridView: boolean;
 }

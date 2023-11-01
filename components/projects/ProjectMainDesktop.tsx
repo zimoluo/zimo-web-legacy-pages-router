@@ -3,6 +3,7 @@ import ProjectTextSide from "./ProjectTextSide";
 import ImageViewer from "../ImageViewer";
 import { imagesParser } from "@/lib/util";
 import { useEffect, useState } from "react";
+import { useSettings } from "../contexts/SettingsContext";
 
 export default function ProjectMainDesktop({
   title,
@@ -17,6 +18,8 @@ export default function ProjectMainDesktop({
 }: ProjectData) {
   const [gridWidth, setGridWidth] = useState<number | null>(null);
   const [gridHeight, setGridHeight] = useState<number | null>(null);
+
+  const { settings } = useSettings();
 
   const textPartWidth = 800;
   const minimumWidth = 1000;
@@ -66,6 +69,8 @@ export default function ProjectMainDesktop({
             original={parsedImage.original}
             theme="projects"
             useHFull={true}
+            forceGridViewCenter={false}
+            defaultGridView={settings.preferInitialGridView}
           />
         </div>
         <div

@@ -13,4 +13,5 @@ export const defaultSettings: SettingsState = {
   preferredManagementTheme: "zimo",
   enableHalloweenEffect: false,
   disableSoundEffect: false,
+  preferInitialGridView: false,
 };

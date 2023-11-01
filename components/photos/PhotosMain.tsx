@@ -71,6 +71,8 @@ export default function PhotosMain({
               aspectRatio={parsedImage.aspectRatio}
               original={parsedImage.original}
               theme="photos"
+              forceGridViewCenter={false}
+              defaultGridView={settings.preferInitialGridView}
             />
           </div>
           {!settings.disableComments && !securityCommentShutDown && (

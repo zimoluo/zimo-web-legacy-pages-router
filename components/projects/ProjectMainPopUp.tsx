@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSettings } from "../contexts/SettingsContext";
 
 export default function ProjectMainPopUp({
   title,
@@ -30,6 +31,8 @@ export default function ProjectMainPopUp({
 
   const textPartWidth = 800;
   const minimumWidth = 1000;
+
+  const { settings } = useSettings();
 
   const handleResize = () => {
     const vh = window.innerHeight * 0.8; // 80vh
@@ -163,6 +166,8 @@ export default function ProjectMainPopUp({
             original={parsedImage.original}
             theme="projects"
             useHFull={true}
+            forceGridViewCenter={false}
+            defaultGridView={settings.preferInitialGridView}
           />
         </div>
         <div

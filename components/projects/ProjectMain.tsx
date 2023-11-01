@@ -4,6 +4,7 @@ import ImageViewer from "../ImageViewer";
 import { imagesParser } from "@/lib/util";
 import ProjectMainDesktop from "./ProjectMainDesktop";
 import { useEffect, useState } from "react";
+import { useSettings } from "../contexts/SettingsContext";
 
 export default function ProjectMain({
   title,
@@ -17,6 +18,8 @@ export default function ProjectMain({
   content,
 }: ProjectData) {
   const parsedImage = imagesParser(images);
+
+  const { settings } = useSettings();
 
   const [shouldRender, setShouldRender] = useState<0 | 1 | 2>(0);
 
@@ -61,6 +64,7 @@ export default function ProjectMain({
               aspectRatio={parsedImage.aspectRatio}
               original={parsedImage.original}
               theme="projects"
+              defaultGridView={settings.preferInitialGridView}
             />
           </div>
           <div className="mx-0 mt-4">

@@ -51,7 +51,11 @@ const MenuContent = ({ theme }: Props) => {
       routerPathname.startsWith("/photos") ||
       routerPathname.startsWith("/projects")
     ) {
-      initialSettings = ["disableEntryPopUp", ...initialSettings];
+      initialSettings = [
+        "preferInitialGridView",
+        "disableEntryPopUp",
+        ...initialSettings,
+      ];
     }
 
     if (routerPathname.startsWith("/photos")) {
@@ -75,6 +79,7 @@ const MenuContent = ({ theme }: Props) => {
     preferredManagementTheme: "Preferred Theme",
     enableHalloweenEffect: "Spooky Halloween",
     disableSoundEffect: "Disable Sound Effect",
+    preferInitialGridView: "Default to Grid View",
   };
 
   return (

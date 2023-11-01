@@ -174,6 +174,8 @@ export default function PhotosMainPopUp({
               original={parsedImage.original}
               theme="photos"
               useHFull={true}
+              forceGridViewCenter={false}
+              defaultGridView={settings.preferInitialGridView}
             />
           </div>
           <div
