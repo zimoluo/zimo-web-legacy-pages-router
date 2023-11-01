@@ -103,24 +103,6 @@ export const formatAltText = (key: string) => {
     .join(" ");
 };
 
-export const applyImageViewerTransition = (
-  element: HTMLElement,
-  transform: string,
-  duration: number,
-  onComplete: () => void
-) => {
-  element.style.transition = `transform ${duration}s ease-out`;
-  element.style.transform = transform;
-
-  const onTransitionEnd = () => {
-    element.style.transition = "none";
-    element.removeEventListener("transitionend", onTransitionEnd);
-    onComplete();
-  };
-
-  element.addEventListener("transitionend", onTransitionEnd);
-};
-
 export function imagesParser(input: ImagesData): ImagesData {
   const { url, text = [], aspectRatio, original } = input;
   let outputText: string[] = [];
@@ -151,17 +133,6 @@ export function imagesParser(input: ImagesData): ImagesData {
     original: safeOriginal,
   };
 }
-
-export const calculateGridViewTransformStyle = (
-  index: number,
-  gridLength: number
-) => {
-  return `translate(${
-    ((index % gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
-  }%, ${
-    (Math.floor(index / gridLength) / gridLength - 0.5 + 0.5 / gridLength) * 100
-  }%) scale(${1 / gridLength - 0.008})`;
-};
 
 // Global state to keep track of active popups
 let activePopups: any[] = [];

@@ -41,8 +41,8 @@ const parseCustomComponent = (
     const props = JSON.parse(`{${propsString}}`);
     const Component = componentsMap[componentName];
     return (
-      <div className="my-10">
-        <Component key={idx} {...props} />
+      <div className="my-10" key={idx}>
+        <Component {...props} />
       </div>
     );
   } catch (error) {
