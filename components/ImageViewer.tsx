@@ -311,12 +311,12 @@ function ImageViewer({
   useEffect(() => {
     if (!isInitialized) return;
 
-    if (defaultGridView) {
+    if (evaluatedDefaultGridView) {
       setGridViewOnStatic();
     } else {
       setGridViewOffStatic(0);
     }
-  }, [defaultGridView, isInitialized]);
+  }, [evaluatedDefaultGridView, isInitialized]);
 
   useEffect(() => {
     if (isGridView) return;
