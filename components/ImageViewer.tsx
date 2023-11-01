@@ -5,7 +5,11 @@ import ImagePageIndicator from "./ImagePageIndicator";
 import { enrichTextContent, restoreDisplayText } from "@/lib/util";
 import ImagePopUp from "./ImagePopUp";
 import DarkOverlay from "./DarkOverlay";
-import { imageViewerPlaceholder, imagesArrowMap } from "@/interfaces/themeMaps";
+import {
+  imageViewerPlaceholder,
+  imagesArrowMap,
+  lightBgColorMap,
+} from "@/interfaces/themeMaps";
 import { useSettings } from "./contexts/SettingsContext";
 import Head from "next/head";
 
@@ -61,6 +65,7 @@ function ImageViewer({
   const { settings } = useSettings();
 
   const arrowSrc = imagesArrowMap[theme];
+  const lightBgClass = lightBgColorMap[theme];
 
   const gridLength = computeGridDimensions(url.length);
 
@@ -394,32 +399,36 @@ function ImageViewer({
       >
         <div ref={imageContainerRef} className="flex w-full h-full">
           {url.map((src, index) => (
-            <Image
+            <button
               key={index}
-              src={src}
-              alt={actualDescriptions[index] || `Image ${index}`}
-              className={`absolute inset-0 w-full h-full object-cover ${
+              className={`absolute inset-0 w-full h-full overflow-hidden ${
                 isGridView ? "cursor-pointer rounded-xl" : ""
-              }`}
-              height={Math.min(
-                1000,
-                Math.round((1000 / widthRatio) * heightRatio)
-              )}
-              width={Math.min(
-                1000,
-                Math.round((1000 / heightRatio) * widthRatio)
-              )}
-              priority={true}
+              } ${lightBgClass}`}
               style={{
                 transform: evaluatedDefaultGridView
                   ? calculateGridViewTransformStyle(index)
                   : `translateX(${index * 100}%)`,
               }}
               onClick={() => isGridView && turnOffGridView(index)}
-              placeholder="blur"
-              blurDataURL={imageViewerPlaceholder[theme]}
-              role={isGridView ? "button" : undefined}
-            />
+              disabled={!isGridView}
+            >
+              <Image
+                src={src}
+                alt={actualDescriptions[index] || `Image ${index}`}
+                className="w-full h-full object-cover object-center"
+                height={Math.min(
+                  1000,
+                  Math.round((1000 / widthRatio) * heightRatio)
+                )}
+                width={Math.min(
+                  1000,
+                  Math.round((1000 / heightRatio) * widthRatio)
+                )}
+                priority={true}
+                placeholder="blur"
+                blurDataURL={imageViewerPlaceholder[theme]}
+              />
+            </button>
           ))}
         </div>
       </div>
