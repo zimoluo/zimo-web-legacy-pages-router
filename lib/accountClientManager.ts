@@ -118,8 +118,8 @@ export function removeAllCachedUserData() {
   }
 }
 
-export async function evaluateGoogleIdToken(
-  idToken: string,
+export async function evaluateGoogleAuthCode(
+  codeAuth: string,
   localSettingsData: SettingsState
 ): Promise<UserData | null> {
   try {
@@ -129,7 +129,7 @@ export async function evaluateGoogleIdToken(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ idToken, localSettingsData }),
+      body: JSON.stringify({ codeAuth, localSettingsData }),
     });
 
     // If the response status is not ok, throw an error

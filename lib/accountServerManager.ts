@@ -1,6 +1,5 @@
 import { OAuth2Client } from "google-auth-library";
-import { clientId } from "@/lib/googlekey";
-import jwt_decode from "jwt-decode";
+import { clientId, clientSecret } from "@/lib/googlekey";
 import {
   S3Client,
   HeadObjectCommand,
@@ -23,9 +22,6 @@ import { NextApiRequest } from "next";
 import { jwtKey } from "@/lib/encryptionkey";
 
 const isClient = typeof window !== "undefined";
-
-const ensureSecureDecode =
-  process.env.ZIMO_WEB_ENSURE_SECURE_DECODING === "true";
 
 if (!keyId) {
   throw new Error("AWS_KEY_ID is undefined!");
@@ -362,30 +358,31 @@ export async function deleteUserFile(
 }
 
 export async function fetchDecodedToken(
-  token: string
+  codeAuth: string
 ): Promise<AccountPayloadData | null> {
   if (isClient) {
     console.error("This function can only be used by server-side functions.");
     return null;
   }
 
-  if (!token) {
-    console.error("Token is missing");
+  if (!codeAuth) {
+    console.error("Authenticate code is missing");
     return null;
   }
 
   try {
-    let payload;
-    if (ensureSecureDecode) {
-      const client = new OAuth2Client();
-      const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: clientId,
-      });
-      payload = ticket.getPayload();
-    } else {
-      payload = jwt_decode(token) as any;
+    const client = new OAuth2Client(clientId, clientSecret, "postmessage");
+    const { tokens } = await client.getToken(codeAuth);
+    const idToken = tokens.id_token;
+    if (!idToken) {
+      throw new Error("Invalid id token!");
     }
+
+    const ticket = await client.verifyIdToken({
+      idToken: idToken,
+      audience: clientId,
+    });
+    const payload = ticket.getPayload();
 
     if (!payload) {
       throw new Error("Failed to verify token.");

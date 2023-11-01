@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { evaluateGoogleIdToken } from "@/lib/accountClientManager";
-import { GoogleLogin } from "@react-oauth/google";
+import React from "react";
+import { evaluateGoogleAuthCode } from "@/lib/accountClientManager";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useUser } from "./contexts/UserContext";
 import { useSettings } from "./contexts/SettingsContext";
 
@@ -8,33 +8,9 @@ const GoogleSignInButton: React.FC = () => {
   const { setUser } = useUser();
   const { settings, updateSettingsLocally } = useSettings();
 
-  const [buttonWidth, setButtonWidth] = useState<number>(100);
-
-  useEffect(() => {
-    const updateWidth = () => {
-      const mediaWidth = window.innerWidth;
-      let calculatedWidth: number;
-
-      if (mediaWidth < 768) {
-        calculatedWidth = mediaWidth - 100;
-      } else {
-        calculatedWidth = Math.min(mediaWidth * 0.93, 640) - 100;
-      }
-
-      setButtonWidth(calculatedWidth);
-    };
-
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-
-    return () => {
-      window.removeEventListener("resize", updateWidth);
-    };
-  }, []);
-
-  const onSuccess = async (tokenResponse: any) => {
-    const id_token = tokenResponse.credential;
-    const userData = await evaluateGoogleIdToken(id_token, settings);
+  const validateCode = async (codeResponse: any) => {
+    const codeAuth = codeResponse.code;
+    const userData = await evaluateGoogleAuthCode(codeAuth, settings);
     if (userData === null) {
       return;
     }
@@ -44,22 +20,14 @@ const GoogleSignInButton: React.FC = () => {
     }
   };
 
-  const onFailure = () => {
-    console.log("Login failed");
-  };
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => {
+      validateCode(codeResponse);
+    },
+    flow: "auth-code",
+  });
 
-  return (
-    <GoogleLogin
-      onSuccess={onSuccess}
-      onError={onFailure}
-      theme="outline"
-      shape="pill"
-      logo_alignment="left"
-      size="large"
-      text="signin_with"
-      width={buttonWidth}
-    />
-  );
+  return <button onClick={login}>click me to try new sign in</button>;
 };
 
 export default GoogleSignInButton;

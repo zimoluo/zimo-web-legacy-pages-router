@@ -40,10 +40,10 @@ export default async function handler(
     return;
   }
 
-  const { idToken, localSettingsData } = req.body;
+  const { codeAuth, localSettingsData } = req.body;
 
   try {
-    const decodedPayload = await fetchDecodedToken(idToken);
+    const decodedPayload = await fetchDecodedToken(codeAuth);
 
     if (decodedPayload === null) {
       throw new Error("Invalid payload.");
