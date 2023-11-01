@@ -42,8 +42,8 @@ const MenuContent = ({ theme }: Props) => {
     if (routerPathname.startsWith("/blog")) {
       initialSettings = [
         "disableCenterPainting",
-        ...initialSettings,
         "disableSerifFont",
+        ...initialSettings,
       ];
     }
 
