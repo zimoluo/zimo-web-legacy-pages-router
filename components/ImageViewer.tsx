@@ -197,7 +197,7 @@ function ImageViewer({
             }
           }
         });
-      }, 5);
+      }, 0);
     }
   };
 
@@ -243,7 +243,7 @@ function ImageViewer({
                 });
                 setButtonVisibility(chosenIndex);
                 setGridView(false);
-              }, 5);
+              }, 0);
 
               // Remove the event listener to avoid multiple calls
               node.removeEventListener("transitionend", handleTransitionEnd);
