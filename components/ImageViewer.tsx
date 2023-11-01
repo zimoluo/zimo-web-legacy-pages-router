@@ -182,23 +182,24 @@ function ImageViewer({
         }
       });
 
-      setTimeout(() => {
-        imageNodes.forEach((node, index) => {
-          if (node instanceof HTMLElement) {
-            if (index === currentPage) {
-              node.style.transform = calculateGridViewTransformStyle(index);
-              node.style.transition = "all 0.2s ease-out";
+      // Browser hack to force update the set layout. Seems to be more robust than setTimeOut 0.
+      container.offsetHeight;
 
-              const handleTransitionEnd = () => {
-                node.style.zIndex = "-1";
-                node.removeEventListener("transitionend", handleTransitionEnd);
-              };
+      imageNodes.forEach((node, index) => {
+        if (node instanceof HTMLElement) {
+          if (index === currentPage) {
+            node.style.transform = calculateGridViewTransformStyle(index);
+            node.style.transition = "all 0.2s ease-out";
 
-              node.addEventListener("transitionend", handleTransitionEnd);
-            }
+            const handleTransitionEnd = () => {
+              node.style.zIndex = "-1";
+              node.removeEventListener("transitionend", handleTransitionEnd);
+            };
+
+            node.addEventListener("transitionend", handleTransitionEnd);
           }
-        });
-      }, 0);
+        }
+      });
     }
   };
 
@@ -228,23 +229,23 @@ function ImageViewer({
                 }
               });
 
-              setTimeout(() => {
-                imageNodes.forEach((node, index) => {
-                  if (node instanceof HTMLElement) {
-                    if (index === chosenIndex) {
-                      node.style.zIndex = "-1";
-                      container.style.transition = "none 0s";
-                      container.style.transform = `translate(${
-                        -index * 100
-                      }%, 0%)`;
-                      node.style.transition = "none 0s";
-                      node.style.transform = `translate(${index * 100}%, 0%)`;
-                    }
+              container.offsetHeight;
+
+              imageNodes.forEach((node, index) => {
+                if (node instanceof HTMLElement) {
+                  if (index === chosenIndex) {
+                    node.style.zIndex = "-1";
+                    container.style.transition = "none 0s";
+                    container.style.transform = `translate(${
+                      -index * 100
+                    }%, 0%)`;
+                    node.style.transition = "none 0s";
+                    node.style.transform = `translate(${index * 100}%, 0%)`;
                   }
-                });
-                setButtonVisibility(chosenIndex);
-                setGridView(false);
-              }, 0);
+                }
+              });
+              setButtonVisibility(chosenIndex);
+              setGridView(false);
 
               // Remove the event listener to avoid multiple calls
               node.removeEventListener("transitionend", handleTransitionEnd);
