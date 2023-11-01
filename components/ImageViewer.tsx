@@ -149,7 +149,7 @@ function ImageViewer({
                 index,
                 gridLength
               );
-              node.style.transition = "all 0.2s ease-out";
+              node.style.transition = "all 0.2s ease-in-out";
 
               const handleTransitionEnd = () => {
                 node.style.zIndex = "-1";
@@ -174,7 +174,7 @@ function ImageViewer({
         if (node instanceof HTMLElement) {
           if (index === chosenIndex) {
             node.style.transform = `translate(0%, 0%) scale(1.0)`;
-            node.style.transition = "all 0.2s ease-out";
+            node.style.transition = "all 0.2s ease-in-out";
             node.style.zIndex = "50";
 
             const handleTransitionEnd = () => {
