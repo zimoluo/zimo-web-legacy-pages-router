@@ -116,7 +116,7 @@ function ImageViewer({
     setGridView(true);
     if (imageContainerRef.current) {
       const container = imageContainerRef.current;
-      const imageNodes = Array.from(imageContainerRef.current.childNodes);
+      const imageNodes = Array.from(container.childNodes);
 
       imageNodes.forEach((node, index) => {
         if (node instanceof HTMLElement) {
@@ -141,7 +141,6 @@ function ImageViewer({
         }
       });
 
-      // Delay third forEach loop by 0.1 seconds (100 milliseconds)
       setTimeout(() => {
         imageNodes.forEach((node, index) => {
           if (node instanceof HTMLElement) {
@@ -154,7 +153,6 @@ function ImageViewer({
 
               const handleTransitionEnd = () => {
                 node.style.zIndex = "-1";
-
                 node.removeEventListener("transitionend", handleTransitionEnd);
               };
 
@@ -162,14 +160,14 @@ function ImageViewer({
             }
           }
         });
-      }, 100);
+      }, 0);
     }
   };
 
   const turnOffGridView = (chosenIndex: number) => {
     if (imageContainerRef.current) {
       const container = imageContainerRef.current;
-      const imageNodes = Array.from(imageContainerRef.current.childNodes);
+      const imageNodes = Array.from(container.childNodes);
       setCurrentPage(chosenIndex);
 
       imageNodes.forEach((node, index) => {
@@ -208,7 +206,7 @@ function ImageViewer({
                 });
                 setButtonVisibility(chosenIndex);
                 setGridView(false);
-              }, 100);
+              }, 0);
 
               // Remove the event listener to avoid multiple calls
               node.removeEventListener("transitionend", handleTransitionEnd);
