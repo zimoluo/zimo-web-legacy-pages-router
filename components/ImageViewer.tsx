@@ -62,6 +62,7 @@ function ImageViewer({
   const [pageFlipGridViewFlag, setPageFlipGridViewFlag] = useState(true);
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const [isGridView, setGridView] = useState(evaluatedDefaultGridView);
+  const [isInitialized, setIsInitialized] = useState(false);
   const { settings } = useSettings();
 
   const arrowSrc = imagesArrowMap[theme];
@@ -255,6 +256,67 @@ function ImageViewer({
       });
     }
   };
+
+  const setGridViewOnStatic = () => {
+    if (!pageFlipGridViewFlag) return;
+    if (!(url.length > 1)) return;
+
+    setGridView(true);
+    if (imageContainerRef.current) {
+      const container = imageContainerRef.current;
+      const imageNodes = Array.from(container.childNodes);
+
+      container.style.transform = "translateX(0%)";
+
+      imageNodes.forEach((node, index) => {
+        if (node instanceof HTMLElement) {
+          node.style.transition = "none 0s";
+          node.style.transform = calculateGridViewTransformStyle(index);
+          node.style.zIndex = "-1";
+        }
+      });
+    }
+  };
+
+  const setGridViewOffStatic = (chosenIndex: number) => {
+    if (imageContainerRef.current) {
+      const container = imageContainerRef.current;
+      const imageNodes = Array.from(container.childNodes);
+      setCurrentPage(chosenIndex);
+
+      imageNodes.forEach((node, index) => {
+        if (node instanceof HTMLElement) {
+          if (index === chosenIndex) {
+            imageNodes.forEach((node, index) => {
+              if (node instanceof HTMLElement) {
+                node.style.transition = "none 0s";
+                node.style.transform = `translate(${
+                  index * 100
+                }%, 0%) scale(1.0)`;
+                node.style.zIndex = "-1";
+              }
+            });
+          }
+        }
+      });
+      setButtonVisibility(chosenIndex);
+      setGridView(false);
+    }
+  };
+
+  useEffect(() => {
+    setIsInitialized(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+
+    if (defaultGridView) {
+      setGridViewOnStatic();
+    } else {
+      setGridViewOffStatic(0);
+    }
+  }, [defaultGridView, isInitialized]);
 
   useEffect(() => {
     if (isGridView) return;
