@@ -197,7 +197,7 @@ function ImageViewer({
             }
           }
         });
-      }, 0);
+      }, 5);
     }
   };
 
@@ -243,7 +243,7 @@ function ImageViewer({
                 });
                 setButtonVisibility(chosenIndex);
                 setGridView(false);
-              }, 0);
+              }, 5);
 
               // Remove the event listener to avoid multiple calls
               node.removeEventListener("transitionend", handleTransitionEnd);
@@ -411,6 +411,7 @@ function ImageViewer({
               }}
               onClick={() => isGridView && turnOffGridView(index)}
               disabled={!isGridView}
+              aria-disabled={!isGridView}
             >
               <Image
                 src={src}
