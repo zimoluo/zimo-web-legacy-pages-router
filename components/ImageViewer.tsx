@@ -411,6 +411,7 @@ function ImageViewer({
               }}
               onClick={() => isGridView && turnOffGridView(index)}
               disabled={!isGridView}
+              aria-disabled={!isGridView}
             >
               <Image
                 src={src}
