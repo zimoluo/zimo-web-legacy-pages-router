@@ -88,7 +88,7 @@ const MenuContent = ({ theme }: Props) => {
         className={`rounded-full w-full ${barColorClass} shadow-lg px-4 py-4 mt-6 mb-14 ${borderColorClass} border-menu-entry border-opacity-20 flex items-center`}
       >
         {user === null ? (
-          <GoogleSignInButton />
+          <GoogleSignInButton theme={theme} />
         ) : (
           <MenuUserCard theme={theme} />
         )}
