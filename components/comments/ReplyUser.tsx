@@ -68,7 +68,7 @@ const ReplyUser: React.FC<Props> = ({ sub, date, theme, toSub }) => {
 
   return (
     <div className={`flex ${textColorClass} items-center`}>
-      <div className="flex justify-center items-center w-8 h-auto mr-3">
+      <div className="flex justify-center items-center w-8 h-auto mr-1.5 md:mr-3">
         <div className="w-full h-auto rounded-full overflow-hidden flex justify-center items-center">
           <Image
             src={userProfile}
