@@ -9,7 +9,6 @@ import {
 } from "../interfaces/themeMaps";
 import Image from "next/image";
 import { useSettings } from "./contexts/SettingsContext";
-import { useUser } from "./contexts/UserContext";
 
 type FooterProps = {
   theme: ThemeType;
@@ -23,7 +22,6 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
   const borderColorClass = borderColorMap[theme] || borderColorMap["zimo"];
 
   const { settings } = useSettings();
-  const { user } = useUser();
 
   const currentYear = new Date().getFullYear();
   const displayYear = currentYear > 2023 ? `2023-${currentYear}` : "2023";
@@ -69,7 +67,7 @@ const Footer: React.FC<FooterProps> = ({ theme }) => {
           <div className="hover:underline">Management</div>
         </Link>
       </div>
-      <div className="text-center text-sm">
+      <div className="text-center text-sm" suppressHydrationWarning={true}>
         &copy; {displayYear} Zimo Luo. All Rights Reserved.{" "}
         <Link
           href="/management/terms-of-use"
