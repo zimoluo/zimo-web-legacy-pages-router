@@ -490,11 +490,11 @@
 }
 
 .max-w-60 {
-  max-width: 15rem /* 240px */;
+  max-width: 15rem;
 }
 
 .max-w-96 {
-  max-width: 24rem /* 384px */;
+  max-width: 24rem;
 }
 
 .image-popup-size {
