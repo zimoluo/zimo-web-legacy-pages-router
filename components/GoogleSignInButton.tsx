@@ -62,7 +62,7 @@ const GoogleSignInButton: React.FC = () => {
     >
       <Image
         src="/google-logo.svg"
-        className="h-12 md:h-16 w-auto aspect-square"
+        className="my-1 h-10 md:h-14 w-auto aspect-square"
         height={64}
         width={64}
         alt="Google's logo"
