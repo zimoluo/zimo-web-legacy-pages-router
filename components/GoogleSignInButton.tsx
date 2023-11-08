@@ -68,7 +68,7 @@ const GoogleSignInButton: React.FC = () => {
         alt="Google's logo"
       />
       <div
-        className={`text-lg md:text-xl ml-2.5 font-bold transition-opacity duration-300 ease-in-out ${
+        className={`text-lg md:text-xl ml-4 font-bold transition-opacity duration-300 ease-in-out ${
           isPromptVisible ? "opacity-100" : "opacity-0"
         }`}
         ref={promptRef}
